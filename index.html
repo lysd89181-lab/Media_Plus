@@ -596,7 +596,7 @@
         const catIcons = {"تيك توك":"tiktok.jpg","انستجرام":"Instagram.jpg","فيسبوك":"Facebook.jpg","سناب":"Snapchat.jpg","يوتيوب":"yotuop.jpg","تويتر":"twiter.jpg","تليجرام":"teli.jpg","واتساب":"watsap.jpg","ببجي":"popgi.jpg","شاهد":"shahed.jpg","توثيق":"tawtheg.jpg","بينانس":"binns.jpg"};
         function getCatIcon(c){if(!c)return'mp.jpg';for(let k in catIcons){if(c.includes(k))return catIcons[k];}return'mp.jpg';}
 
-        // ============ دالة تطبيع أرقام الهواتف الموحدة ============
+        // ============ دالة تطبيع أرقام الهواتف (الإصدار الذكي) ============
         function normalizePhone(phone) {
             if (!phone) return '';
             let cleaned = phone.toString().replace(/[\s\-\(\)\.\,\+]/g, '');
@@ -606,19 +606,33 @@
                 cleaned = cleaned.substring(3);
             }
             
-            // إزالة الصفر الأول دائماً (سواء كان 092 أو 091 أو 094)
+            // إزالة الصفر الأول دائماً
             if (cleaned.startsWith('0')) {
                 cleaned = cleaned.substring(1);
             }
             
-            // إضافة 92 في البداية إذا كان الرقم يبدأ بـ 1 أو 4 (لأرقام ليبيانا)
+            // فحص أول رقم بعد التنظيف
             if (cleaned.startsWith('1') || cleaned.startsWith('4')) {
+                // يبدأ بـ 1 أو 4: هذا رقم ليبيانا (مثل 91xxxxxxx أو 94xxxxxxx) -> نضيف 92
                 cleaned = '92' + cleaned;
             }
+            // إذا بدأ بـ 9: نتركه كما هو (مثل 91xxxxxxx أو 92xxxxxxx أو 94xxxxxxx)
             
             return cleaned;
         }
-        // ============ نهاية دالة التطبيع ============
+
+        // ============ دالة توحيد المبلغ (معالجة مشكلة الدرهم 42.000 -> 42) ============
+        function normalizeAmount(amount) {
+            if (amount === null || amount === undefined) return null;
+            // إذا كان المبلغ نصاً (مثل "42.000") نحوله لرقم صحيح
+            let num = parseFloat(amount.toString().replace(/\./g, '').replace(',', '.'));
+            // إذا كان الرقم كبيراً جداً (مثلاً 42000 بدل 42) نقسمه على 1000
+            if (num > 10000 && num % 1000 === 0) {
+                num = num / 1000;
+            }
+            return num;
+        }
+        // ============ نهاية دوال التطبيع ============
 
         let lp=0;const lb=document.getElementById('loader-bar'),ls=document.getElementById('loader-screen');
         const li=setInterval(()=>{lp+=5;if(lb)lb.style.width=lp+'%';if(lp>=100){clearInterval(li);setTimeout(()=>{if(ls)ls.style.opacity='0';setTimeout(()=>{if(ls)ls.style.display='none';},500);},100);}},100);
@@ -712,22 +726,41 @@
         function loadOrders(){if(!userData.uid)return;db.collection('orders').where('uid','==',userData.uid).orderBy('timestamp','desc').limit(30).onSnapshot(snap=>{const el=document.getElementById('orders-list');if(!el)return;if(snap.empty){el.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد طلبات</p></div>';return;}el.innerHTML=snap.docs.map(d=>{const o=d.data();const cls=o.status==='مكتمل'||o.status==='completed'?'completed':o.status==='قيد التنفيذ'||o.status==='pending'?'pending':'failed';const dt=o.timestamp?.toDate?.().toLocaleDateString('ar-SA')||'';const link=o.Link||o.url||o.target||'—';const shortLink=link.length>30?link.substring(0,30)+'...':link;return'<div class="order-card"><div class="order-header"><span class="order-name">'+(o.serviceName||'—')+'</span><span class="status-badge '+cls+'">'+(o.status||'?')+'</span></div><div class="order-info"><div>الكمية: <span>'+(o.quantity||0)+'</span></div><div>المبلغ: <span style="color:var(--primary-blue);">'+(o.totalPrice||o.price||0).toFixed(2)+' د.ل</span></div><div style="grid-column:span 2;">الرابط: <a href="'+link+'" target="_blank" style="color:var(--primary-blue);">'+shortLink+'</a></div><div>التاريخ: <span>'+dt+'</span></div><div>الحالة: <span>'+(o.status||'—')+'</span></div></div></div>';}).join('');});}
 
         function extractLibyanaInfo(message) {
-            const amountMatch = message.match(/تم تحويل (\d+(\.\d+)?) د\.ل/);
+            const amountMatch = message.match(/تم تحويل (\d+[\.\,]?\d*) د\.ل/);
             const phoneMatch = message.match(/الرقم (\d+)/);
-            return { amount: amountMatch ? parseFloat(amountMatch[1]) : null, phone: phoneMatch ? phoneMatch[1] : null, provider: 'Libyana' };
+            return { 
+                amount: amountMatch ? normalizeAmount(amountMatch[1]) : null, 
+                phone: phoneMatch ? phoneMatch[1] : null, 
+                provider: 'Libyana' 
+            };
         }
         function extractAlmadarInfo(message) {
-            const amountMatch = message.match(/بقيمة (\d+(\.\d+)?) د\.ل/);
+            const amountMatch = message.match(/بقيمة (\d+[\.\,]?\d*) د\.ل/);
             const phoneMatch = message.match(/المشترك (\d+)/);
-            return { amount: amountMatch ? parseFloat(amountMatch[1]) : null, phone: phoneMatch ? phoneMatch[1] : null, provider: 'Almadar' };
+            return { 
+                amount: amountMatch ? normalizeAmount(amountMatch[1]) : null, 
+                phone: phoneMatch ? phoneMatch[1] : null, 
+                provider: 'Almadar' 
+            };
         }
         function extractDepositInfo(depositData) {
             const sender = depositData.phone || '';
             const message = depositData.message || '';
-            let info = { amount: null, phone: null, provider: 'unknown' };
-            if (sender === '121' || sender.includes('121')) { info = extractLibyanaInfo(message); info.provider = 'Libyana'; }
-            else if (sender === '122' || sender.includes('122') || sender.toLowerCase().includes('almadar')) { info = extractAlmadarInfo(message); info.provider = 'Almadar'; }
-            else { info = extractLibyanaInfo(message); if (!info.amount) info = extractAlmadarInfo(message); if (info.amount) info.provider = 'Libyana'; }
+            let info = { amount: null, phone: null, provider: 'unknown', messageId: depositData.messageId || null };
+            if (sender === '121' || sender.includes('121')) { 
+                const extracted = extractLibyanaInfo(message);
+                info = { ...info, ...extracted, provider: 'Libyana' };
+            }
+            else if (sender === '122' || sender.includes('122') || sender.toLowerCase().includes('almadar')) { 
+                const extracted = extractAlmadarInfo(message);
+                info = { ...info, ...extracted, provider: 'Almadar' };
+            }
+            else { 
+                let extracted = extractLibyanaInfo(message); 
+                if (!extracted.amount) extracted = extractAlmadarInfo(message); 
+                if (extracted.amount) extracted.provider = 'Libyana';
+                info = { ...info, ...extracted };
+            }
             return info;
         }
         async function findUserByPhone(phoneNumber) {
@@ -735,11 +768,9 @@
             const cleanPhone = normalizePhone(phoneNumber);
             if (!cleanPhone) return null;
             
-            // البحث بنفس الصيغة بالضبط
             let snapshot = await db.collection('users').where('phone', '==', cleanPhone).limit(1).get();
             if (!snapshot.empty) { const userDoc = snapshot.docs[0]; return { uid: userDoc.id, username: userDoc.data().username || 'مستخدم' }; }
             
-            // البحث بآخر 9 أرقام إذا لم يجد تطابق تام
             if (cleanPhone.length >= 9) {
                 const last9 = cleanPhone.slice(-9);
                 snapshot = await db.collection('users').where('phone', '>=', last9).where('phone', '<=', last9 + '\uf8ff').limit(10).get();
@@ -788,11 +819,9 @@
                 return;
             }
             
-            // استخدام دالة التطبيع الجديدة
             const normalizedInputPhone = normalizePhone(phone);
             if (!normalizedInputPhone) {
-                const msg = selectedProvider === 'libyana' ? 'صيغة رقم ليبيانا: 092xxxxxx أو 094xxxxxx' : 'صيغة رقم المدار: 218xxxxxxxxx';
-                showCheckResult('error', '❌', 'صيغة رقم الهاتف غير صحيحة', msg);
+                showCheckResult('error', '❌', 'صيغة رقم الهاتف غير صحيحة', 'تأكد من إدخال رقم الهاتف الصحيح');
                 return;
             }
             
@@ -814,20 +843,25 @@
                 snapshot.forEach(doc => {
                     if (matchedDeposit) return;
                     const d = doc.data();
+                    // تجاهل الإيداعات المكتملة أو المكررة
                     if (d.status === 'completed' || d.status === 'مكتمل') return;
+                    if (d.status === 'processed' || d.autoProcessed === true) return;
+                    
                     const info = extractDepositInfo(d);
                     if (info.phone && info.amount && info.provider.toLowerCase() === selectedProvider.toLowerCase()) {
-                        // تطبيع رقم الهاتف المستخرج من الرسالة
                         const normalizedDepPhone = normalizePhone(info.phone);
                         const last9Dep = normalizedDepPhone.slice(-9);
                         const amountTolerance = 0.10;
+                        
+                        // التحقق من تطابق آخر 9 أرقام والمبلغ
                         if (last9Dep === last9Input && Math.abs(info.amount - amount) <= amountTolerance) {
                             matchedDeposit = { 
                                 id: doc.id, 
                                 ...d, 
                                 extractedAmount: info.amount, 
                                 extractedPhone: normalizedDepPhone, 
-                                provider: info.provider 
+                                provider: info.provider,
+                                messageId: info.messageId || doc.id
                             };
                         }
                     }
@@ -838,6 +872,22 @@
                         'لم يتم اكتشاف أي تحويل مطابق',
                         'تأكد من إتمام التحويل وتطابق رقم الهاتف والمبلغ والمزود',
                         'قد يستغرق ظهور التحويل دقيقة إلى دقيقتين');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-search"></i> تأكيد التحويل';
+                    return;
+                }
+                
+                // منع تكرار الشحن بنفس الـ messageId
+                const duplicateCheck = await db.collection('deposits')
+                    .where('messageId', '==', matchedDeposit.messageId)
+                    .where('autoProcessed', '==', true)
+                    .limit(1)
+                    .get();
+                    
+                if (!duplicateCheck.empty) {
+                    showCheckResult('error', '❌', 
+                        'تم شحن هذا التحويل مسبقاً',
+                        'لا يمكن شحن نفس التحويل مرتين');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-search"></i> تأكيد التحويل';
                     return;
@@ -857,11 +907,12 @@
                         matchedUser: user.username,
                         matchedUid: user.uid,
                         autoProcessed: true,
-                        completedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        messageId: matchedDeposit.messageId
                     });
                     
                     const now = new Date().toLocaleString('ar-SA');
-                    await sendTelegram(`✅ <b>شحن تلقائي!</b>\n👤 المستخدم: ${user.username}\n💰 المبلغ: ${matchedDeposit.extractedAmount.toFixed(2)} د.ل\n📱 المزود: ${matchedDeposit.provider}\n⏰ الوقت: ${now}`);
+                    await sendTelegram(`✅ <b>شحن تلقائي!</b>\n👤 المستخدم: ${user.username}\n💰 المبلغ: ${matchedDeposit.extractedAmount.toFixed(2)} د.ل\n📱 المزود: ${matchedDeposit.provider}\n🆔 معرف الرسالة: ${matchedDeposit.messageId}\n⏰ الوقت: ${now}`);
                     
                     showCheckResult('success', '🎉',
                         'تم شحن رصيدك بنجاح!',
@@ -882,7 +933,8 @@
                         extractedPhone: matchedDeposit.extractedPhone,
                         provider: matchedDeposit.provider,
                         autoProcessed: false,
-                        note: 'رقم الهاتف غير مطابق للمستخدم'
+                        note: 'رقم الهاتف غير مطابق للمستخدم',
+                        messageId: matchedDeposit.messageId
                     });
                 } else {
                     showCheckResult('info', '⏳', 'تم اكتشاف تحويل وهو قيد المراجعة', 'سيتم شحن رصيدك خلال دقائق');
@@ -909,7 +961,7 @@
                     const dt = x.timestamp?.toDate?.().toLocaleDateString('ar-SA') || '—';
                     const amount = x.extractedAmount || x.amount || 0;
                     const provider = x.provider === 'Libyana' ? 'ليبيانا' : x.provider === 'Almadar' ? 'المدار' : '';
-                    return `<div class="order-card"><div class="order-header"><span style="color:var(--primary-blue);font-weight:700;">${parseFloat(amount).toFixed(2)} د.ل</span><span class="status-badge ${cls}">${x.status||'؟'}</span></div><div class="order-info"><div>الرقم: <span>${x.phone||x.senderPhone||''}</span></div><div>التاريخ: <span>${dt}</span></div>${provider?`<div>المزود: <span>${provider}</span></div>`:''}${x.autoProcessed?'<div style="grid-column:span 2;"><span style="color:var(--success);">🤖 تمت المعالجة تلقائياً</span></div>':''}</div></div>`;
+                    return `<div class="order-card"><div class="order-header"><span style="color:var(--primary-blue);font-weight:700;">${parseFloat(amount).toFixed(2)} د.ل</span><span class="status-badge ${cls}">${x.status||'؟'}</span></div><div class="order-info"><div>الرقم: <span>${x.phone||x.senderPhone||''}</span></div><div>التاريخ: <span>${dt}</span></div>${provider?`<div>المزود: <span>${provider}</span></div>`:''}${x.autoProcessed?'<div style="grid-column:span 2;"><span style="color:var(--success);">🤖 تمت المعالجة تلقائياً</span></div>':''}${x.messageId?`<div style="grid-column:span 2;"><small>🆔 ${x.messageId.substring(0,12)}...</small></div>`:''}</div></div>`;
                 }).join('');
             });
         }
@@ -924,7 +976,7 @@
         function toast(msg,type){const t=document.getElementById('main-toast');if(t){t.innerText=msg;t.className='toast '+(type||'')+' active';setTimeout(()=>t.classList.remove('active'),3000);}}
         function copyText(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>toast('✅ تم النسخ','success'));}else{const ta=document.createElement('textarea');ta.value=txt;ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ تم النسخ','success');}}
         document.addEventListener('contextmenu',e=>e.preventDefault());
-        console.log('🔥 Media Plus - Auto Deposit with Unified Phone Matching Active');
+        console.log('🔥 Media Plus - Auto Deposit with Duplicate Prevention & Amount Normalization Active');
     </script>
 </body>
 </html>
