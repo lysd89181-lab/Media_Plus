@@ -2,439 +2,363 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة الوصول الذكية | Media Plus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Plus | تسجيل الدخول وبناء الحساب</title>
     
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
-        /* ================================================================
-           MEDIA PLUS - ULTRA-PROFESSIONAL AUTH CSS
-           ================================================================
-        */
-        :root {
-            --p: #2196F3; --s: #64B5F6; --bg: #f8fafc;
-            --card: #ffffff; --border: #e2e8f0;
-            --text: #1e293b; --muted: #94a3b8; --danger: #ef4444;
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: radial-gradient(circle at center, #16173a 0%, #0b0c22 100%);
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden;
-            background-image: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 50%, #f8fafc 100%);
+        .glass-card {
+            background: rgba(22, 23, 51, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 166, 35, 0.15);
         }
-
-        /* خلفية النيون المتحركة */
-        .bg-glow { 
-            position: absolute; 
-            width: 300px; 
-            height: 300px; 
-            background: var(--p); 
-            filter: blur(150px); 
-            opacity: 0.08; 
-            z-index: 0; 
-            animation: float 10s infinite alternate; 
+        .gold-text {
+            color: #f5a623;
         }
-        @keyframes float { 
-            from { transform: translate(-50%, -50%); } 
-            to { transform: translate(50%, 50%); } 
+        .gold-bg {
+            background-color: #f5a623;
         }
-
-        .auth-container { width: 100%; max-width: 480px; padding: 25px; z-index: 10; }
-
-        .auth-card {
-            background: var(--card); 
-            border-radius: 35px; 
-            border: 1px solid var(--border);
-            padding: 45px 35px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-            backdrop-filter: blur(25px); 
-            position: relative;
+        .input-focus:focus {
+            border-color: #f5a623;
+            box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.2);
         }
-
-        .auth-header { text-align: center; margin-bottom: 30px; }
-        .logo-box { 
-            width: 80px; 
-            height: 80px; 
-            margin: 0 auto 15px; 
-            border: 2px solid var(--p); 
-            border-radius: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: 0 0 20px rgba(33,150,243,0.2); 
-            background: #f0f7ff; 
-            transform: rotate(-5deg);
-            overflow: hidden;
+        /* تأثيرات التحميل والخلفية المتحركة */
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(245, 166, 35, 0.2);
         }
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 18px;
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
-        .logo-box i { font-size: 35px; color: var(--p); }
-
-        .auth-header h2 { 
-            font-family: 'Orbitron'; 
-            font-size: 24px; 
-            color: var(--p);
-            text-shadow: 0 2px 10px rgba(33,150,243,0.1);
+        .bg-pulse {
+            animation: pulseGlow 4s infinite ease-in-out;
         }
-        .auth-header p { color: var(--muted); font-size: 12px; }
-
-        /* ميزات الخانات الجديدة */
-        .input-group { position: relative; margin-bottom: 20px; }
-        .input-group label { 
-            display: block; 
-            font-size: 12px; 
-            font-weight: 700; 
-            color: var(--muted); 
-            margin-bottom: 8px; 
-            margin-right: 5px; 
-        }
-        
-        .input-wrapper { position: relative; }
-        .input-wrapper i.main-icon { 
-            position: absolute; 
-            right: 15px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: var(--p); 
-            font-size: 16px; 
-        }
-        .input-wrapper i.toggle-pass { 
-            position: absolute; 
-            left: 15px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: var(--muted); 
-            cursor: pointer; 
-            transition: 0.3s; 
-        }
-        .input-wrapper i.toggle-pass:hover { color: var(--p); }
-
-        .input-wrapper input {
-            width: 100%; 
-            background: #f8fafc; 
-            border: 1px solid var(--border);
-            padding: 14px 45px 14px 45px; 
-            border-radius: 12px; 
-            color: var(--text);
-            font-family: 'Cairo'; 
-            font-size: 14px; 
-            transition: 0.4s ease;
-        }
-        .input-wrapper input:focus { 
-            border-color: var(--p); 
-            box-shadow: 0 0 0 3px rgba(33,150,243,0.1); 
-            outline: none; 
-            background: #fff; 
-        }
-
-        /* قوة كلمة المرور */
-        .pass-strength { 
-            height: 4px; 
-            width: 100%; 
-            background: #e2e8f0; 
-            margin-top: 8px; 
-            border-radius: 2px; 
-            overflow: hidden; 
-            display: none; 
-        }
-        .pass-bar { height: 100%; width: 0%; transition: 0.5s; }
-
-        /* خيارات إضافية (تذكرني + نسيت كلمة المرور) */
-        .extra-options { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 25px; 
-            font-size: 12px; 
-        }
-        .remember-me { 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            color: var(--muted); 
-            cursor: pointer; 
-        }
-        .remember-me input { accent-color: var(--p); }
-        .forgot-link { 
-            color: var(--p); 
-            text-decoration: none; 
-            font-weight: 700; 
-        }
-
-        .btn-auth {
-            width: 100%; 
-            padding: 15px; 
-            border-radius: 12px; 
-            border: none;
-            background: linear-gradient(135deg, #2196F3, #1976D2); 
-            color: #fff; 
-            font-family: 'Cairo'; 
-            font-weight: 900;
-            font-size: 16px; 
-            cursor: pointer; 
-            transition: 0.4s;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px;
-            box-shadow: 0 8px 25px rgba(33,150,243,0.3);
-        }
-        .btn-auth:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 12px 30px rgba(33,150,243,0.4); 
-        }
-
-        .toggle-mode { 
-            text-align: center; 
-            margin-top: 25px; 
-            font-size: 13px; 
-            color: var(--muted); 
-        }
-        .toggle-mode span { 
-            color: var(--p); 
-            font-weight: 900; 
-            cursor: pointer; 
-            margin-right: 5px; 
-        }
-
-        #status-msg { 
-            padding: 10px; 
-            border-radius: 10px; 
-            font-size: 12px; 
-            margin-bottom: 15px; 
-            display: none; 
-            text-align: center; 
-        }
-        .msg-error { 
-            background: rgba(239,68,68,0.1); 
-            color: var(--danger); 
-            border: 1px solid var(--danger); 
-        }
-        .msg-success { 
-            background: rgba(33,150,243,0.1); 
-            color: var(--p); 
-            border: 1px solid var(--p); 
-        }
-
-        .loader { 
-            width: 18px; 
-            height: 18px; 
-            border: 2px solid #fff; 
-            border-top: 2px solid transparent; 
-            border-radius: 50%; 
-            animation: spin 0.8s linear infinite; 
-            display: none; 
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body class="text-gray-200 min-h-screen flex items-center justify-center p-4 relative overflow-x-hidden">
 
-    <div class="bg-glow" style="top: 20%; left: 20%;"></div>
-    <div class="bg-glow" style="bottom: 20%; right: 20%;"></div>
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-900/20 rounded-full blur-3xl bg-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-amber-500/10 rounded-full blur-3xl bg-pulse" style="animation-delay: 2s;"></div>
 
-    <div class="auth-container">
-        <div class="auth-card">
+    <div class="w-full max-w-lg z-10 space-y-6">
+        
+        <div class="text-center space-y-2">
+            <div class="inline-flex items-center gap-2 bg-[#161733] border border-gray-800 px-4 py-2 rounded-2xl shadow-lg">
+                <span class="gold-bg text-black px-2.5 py-0.5 rounded-lg text-sm font-black">Media</span>
+                <span class="text-lg font-bold text-white tracking-wide">Plus</span>
+            </div>
+            <p class="text-xs text-gray-400">بوابتك الآمنة لشحن شدات ببجي والبطاقات الرقمية الفورية</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 md:p-8 shadow-2xl glow-effect space-y-6 relative overflow-hidden">
             
-            <div id="status-msg"></div>
-
-            <div class="auth-header">
-                <div class="logo-box">
-                    <img src="mp.jpg" alt="Media Plus" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa fa-shield-halved\'></i>';">
-                </div>
-                <h2 id="form-title">تسجيل الدخول</h2>
-                <p id="form-sub">أدخل بياناتك للوصول إلى حسابك في Media Plus</p>
+            <div class="flex bg-[#0b0c22] p-1 rounded-2xl border border-gray-800/80">
+                <button id="btnTabLogin" onclick="toggleAuthMode('login')" class="w-1/2 text-center py-3 rounded-xl text-xs font-bold transition-all gold-bg text-black shadow-md">
+                    <i class="fa-solid fa-right-to-bracket ml-1"></i> تسجيل الدخول
+                </button>
+                <button id="btnTabRegister" onclick="toggleAuthMode('register')" class="w-1/2 text-center py-3 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-user-plus ml-1"></i> حـساب جديد
+                </button>
             </div>
 
-            <form id="auth-form" onsubmit="handleAuth(event)">
-                
-                <div class="input-group" id="name-group" style="display:none;">
-                    <label>الاسم بالكامل</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="u-name" placeholder="مثال: محمد الضاوي">
-                        <i class="fa fa-user main-icon"></i>
+            <div id="authAlert" class="hidden p-3 rounded-xl text-xs flex items-center gap-2 border"></div>
+
+            <form id="loginForm" onsubmit="handleUserLogin(event)" class="space-y-4">
+                <div class="space-y-1.5">
+                    <label class="text-xs text-gray-400 block font-bold">البريد الإلكتروني المسجل</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 text-sm"><i class="fa-solid fa-envelope"></i></span>
+                        <input type="email" id="loginEmail" required placeholder="name@example.com" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-10 pl-4 text-white text-xs outline-none input-focus transition-all text-left" dir="ltr">
                     </div>
                 </div>
 
-                <div class="input-group">
-                    <label>البريد الإلكتروني</label>
-                    <div class="input-wrapper">
-                        <input type="email" id="u-email" required placeholder="admin@mediaplus.ly">
-                        <i class="fa fa-at main-icon"></i>
+                <div class="space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <label class="text-xs text-gray-400 font-bold">كلمة المرور</label>
+                        <button type="button" onclick="triggerPasswordReset()" class="text-[11px] gold-text hover:underline">نسيت كلمة السر؟</button>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 text-sm"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-10 pl-12 text-white text-xs outline-none input-focus transition-all text-left" dir="ltr">
+                        <button type="button" onclick="togglePasswordVisibility('loginPassword', this)" class="absolute inset-y-0 left-0 flex items-center px-3.5 text-gray-500 hover:text-gray-300 text-xs"><i class="fa-solid fa-eye"></i></button>
                     </div>
                 </div>
 
-                <div class="input-group">
-                    <label>كلمة المرور</label>
-                    <div class="input-wrapper">
-                        <input type="password" id="u-pass" required placeholder="••••••••" oninput="checkStrength(this.value)">
-                        <i class="fa fa-lock main-icon"></i>
-                        <i class="fa fa-eye toggle-pass" onclick="togglePass()"></i>
-                    </div>
-                    <div class="pass-strength" id="strength-box">
-                        <div class="pass-bar" id="strength-bar"></div>
-                    </div>
-                </div>
-
-                <div class="extra-options">
-                    <label class="remember-me">
-                        <input type="checkbox" id="remember"> تذكرني
-                    </label>
-                    <a href="javascript:void(0)" class="forgot-link" onclick="resetPassword()">نسيت كلمة المرور؟</a>
-                </div>
-
-                <button type="submit" class="btn-auth" id="submit-btn">
-                    <span id="btn-text">دخول آمن</span>
-                    <div class="loader" id="btn-loader"></div>
+                <button type="submit" id="loginSubmitBtn" class="w-full gold-bg hover:bg-yellow-600 text-black font-bold py-3.5 px-4 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2 mt-2">
+                    <span>تسجيل الدخول الفوري</span> <i class="fa-solid fa-arrow-left"></i>
                 </button>
             </form>
 
-            <div class="toggle-mode">
-                <p id="toggle-text">جديد على منصتنا؟ <span onclick="switchMode()">إنشاء حساب</span></p>
-            </div>
+            <form id="registerForm" onsubmit="handleUserRegister(event)" class="hidden space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label class="text-xs text-gray-400 block font-bold">الاسم الكامل المزدوج</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 text-sm"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" id="regName" required placeholder="مثال: أحمد الوداني" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-10 pl-4 text-white text-xs outline-none input-focus transition-all">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs text-gray-400 block font-bold">رقم الهاتف (ليبيا)</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 text-sm"><i class="fa-solid fa-phone"></i></span>
+                            <input type="tel" id="regPhone" required placeholder="091XXXXXXX" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-10 pl-4 text-white text-xs outline-none input-focus transition-all text-left" dir="ltr">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs text-gray-400 block font-bold">البريد الإلكتروني الجديد</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 text-sm"><i class="fa-solid fa-envelope"></i></span>
+                        <input type="email" id="regEmail" required placeholder="username@gmail.com" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-10 pl-4 text-white text-xs outline-none input-focus transition-all text-left" dir="ltr">
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-xs text-gray-400 block font-bold">إنشاء كلمة مرور قوية</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 text-sm"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="regPassword" oninput="checkPasswordStrengthMeter(this.value)" required placeholder="اختر كلمة سر معقدة" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-10 pl-12 text-white text-xs outline-none input-focus transition-all text-left" dir="ltr">
+                        <button type="button" onclick="togglePasswordVisibility('regPassword', this)" class="absolute inset-y-0 left-0 flex items-center px-3.5 text-gray-500 hover:text-gray-300 text-xs"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                    <div class="pt-1.5 space-y-1">
+                        <div class="h-1 w-full bg-[#0b0c22] rounded-full overflow-hidden flex gap-0.5">
+                            <div id="strengthBar1" class="h-full w-1/3 bg-gray-800 transition-colors"></div>
+                            <div id="strengthBar2" class="h-full w-1/3 bg-gray-800 transition-colors"></div>
+                            <div id="strengthBar3" class="h-full w-1/3 bg-gray-800 transition-colors"></div>
+                        </div>
+                        <p id="strengthLabel" class="text-[10px] text-gray-500 text-left">مقياس الحماية الأمنية للرمز</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-2 pt-1">
+                    <input type="checkbox" id="regTerms" required class="accent-[#f5a623] h-4 w-4 mt-0.5 rounded cursor-pointer">
+                    <label for="regTerms" class="text-[11px] text-gray-400 select-none cursor-pointer">أوافق بالكامل على شروط الاستخدام وقوانين الشحن الفوري عبر الـ ID في سيرفر Media Plus.</label>
+                </div>
+
+                <button type="submit" id="registerSubmitBtn" class="w-full bg-amber-500/10 hover:bg-amber-500/20 text-[#f5a623] border border-amber-500/30 font-bold py-3.5 px-4 rounded-xl text-xs transition-all shadow flex items-center justify-center gap-2">
+                    <span>إنشاء الحساب وحفظ البيانات</span> <i class="fa-solid fa-user-check"></i>
+                </button>
+            </form>
 
         </div>
+
+        <p class="text-center text-[11px] text-gray-600">&copy; 2026 Media Plus. جميع الحقوق محفوظة لشبكة الخدمات الإلكترونية.</p>
     </div>
 
     <script>
-        const config = {
+        // تكوين مشروع الفايربيس (مطابق تماماً لمشروعك الأصلي لضمان الربط التلقائي)
+        const firebaseConfig = {
             apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
             authDomain: "cd-card-87365.firebaseapp.com",
             projectId: "cd-card-87365",
-            appId: "1:397926299412:web:efbe9ae9aae29df368f401"
+            storageBucket: "cd-card-87365.firebasestorage.app"
         };
-        firebase.initializeApp(config);
+        
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        let isLogin = true;
-
-        // 1. ميزة إظهار/إخفاء كلمة المرور
-        function togglePass() {
-            const passInput = document.getElementById('u-pass');
-            const icon = document.querySelector('.toggle-pass');
-            if (passInput.type === "password") {
-                passInput.type = "text";
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passInput.type = "password";
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
+        // فحص الجلسة الحالية؛ إذا كان مسجلاً مسبقاً يتم توجيهه للرئيسية فوراً
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // ميزة ذكية للتحقق؛ إذا كان المسؤول مسجلاً يوجهه للأدمن وإلا يذهب للرئيسية
+                db.collection("users").doc(user.uid).get().then(doc => {
+                    if (doc.exists && doc.data().role === "admin") {
+                        window.location.href = "admin.html";
+                    } else {
+                        window.location.href = "index.html";
+                    }
+                }).catch(() => {
+                    window.location.href = "index.html";
+                });
             }
-        }
+        });
 
-        // 2. ميزة فحص قوة كلمة المرور
-        function checkStrength(val) {
-            const box = document.getElementById('strength-box');
-            const bar = document.getElementById('strength-bar');
-            if (isLogin) { box.style.display = "none"; return; }
+        // آلية التبديل المرن بين النوافذ (Login VS Register) دون إعادة تحميل الصفحة
+        function toggleAuthMode(mode) {
+            const btnLogin = document.getElementById("btnTabLogin");
+            const btnRegister = document.getElementById("btnTabRegister");
+            const formLogin = document.getElementById("loginForm");
+            const formRegister = document.getElementById("registerForm");
             
-            box.style.display = "block";
-            let score = 0;
-            if (val.length > 6) score += 40;
-            if (/[A-Z]/.test(val)) score += 30;
-            if (/[0-9]/.test(val)) score += 30;
+            hideAlert();
 
-            bar.style.width = score + "%";
-            if (score <= 40) bar.style.background = "#ef4444";
-            else if (score <= 70) bar.style.background = "#f59e0b";
-            else bar.style.background = "#2196F3";
-        }
-
-        // 3. التبديل بين الأنماط
-        function switchMode() {
-            isLogin = !isLogin;
-            document.getElementById('name-group').style.display = isLogin ? "none" : "block";
-            document.getElementById('form-title').innerText = isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد";
-            document.getElementById('btn-text').innerText = isLogin ? "دخول آمن" : "تسجيل الحساب";
-            document.getElementById('toggle-text').innerHTML = isLogin ? 
-                'جديد على منصتنا؟ <span onclick="switchMode()">إنشاء حساب</span>' : 
-                'لديك حساب؟ <span onclick="switchMode()">سجل دخولك</span>';
-            document.getElementById('strength-box').style.display = "none";
-        }
-
-        // 4. معالجة الدخول والتسجيل
-        async function handleAuth(e) {
-            e.preventDefault();
-            const email = document.getElementById('u-email').value;
-            const pass = document.getElementById('u-pass').value;
-            const name = document.getElementById('u-name').value;
-            setLoading(true);
-
-            try {
-                if(isLogin) {
-                    await auth.signInWithEmailAndPassword(email, pass);
-                    msg("مرحباً بك مجدداً! جاري التحويل...", "success");
-                    checkUserRole();
-                } else {
-                    const res = await auth.createUserWithEmailAndPassword(email, pass);
-                    await db.collection("users").doc(res.user.uid).set({
-                        username: name,
-                        email: email,
-                        balance: 0.00,
-                        role: "user",
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    msg("تم التسجيل بنجاح!", "success");
-                    setTimeout(() => window.location.href = "index.html", 1500);
-                }
-            } catch (err) {
-                msg(err.message, "error");
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        // 5. استعادة كلمة المرور
-        async function resetPassword() {
-            const email = prompt("أدخل بريدك الإلكتروني لإرسال رابط الاستعادة:");
-            if (email) {
-                try {
-                    await auth.sendPasswordResetEmail(email);
-                    alert("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك.");
-                } catch (err) {
-                    alert("خطأ: " + err.message);
-                }
-            }
-        }
-
-        async function checkUserRole() {
-            const user = auth.currentUser;
-            const doc = await db.collection("users").doc(user.uid).get();
-            if (doc.exists && doc.data().role === "admin") {
-                window.location.href = "admin.html";
+            if (mode === 'login') {
+                btnLogin.className = "w-1/2 text-center py-3 rounded-xl text-xs font-bold transition-all gold-bg text-black shadow-md";
+                btnRegister.className = "w-1/2 text-center py-3 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white";
+                formLogin.classList.remove("hidden");
+                formRegister.classList.add("hidden");
             } else {
-                window.location.href = "index.html";
+                btnRegister.className = "w-1/2 text-center py-3 rounded-xl text-xs font-bold transition-all gold-bg text-black shadow-md";
+                btnLogin.className = "w-1/2 text-center py-3 rounded-xl text-xs font-bold transition-all text-gray-400 hover:text-white";
+                formRegister.classList.remove("hidden");
+                formLogin.classList.add("hidden");
             }
         }
 
-        function msg(text, type) {
-            const m = document.getElementById('status-msg');
-            m.innerText = text;
-            m.className = type === "success" ? "msg-success" : "msg-error";
-            m.style.display = "block";
+        // إظهار وإخفاء كلمات المرور عند النقر على أيقونة العين
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector("i");
+            if (input.type === "password") {
+                input.type = "text";
+                icon.className = "fa-solid fa-eye-slash";
+            } else {
+                input.type = "password";
+                icon.className = "fa-solid fa-eye";
+            }
         }
 
-        function setLoading(s) {
-            document.getElementById('btn-loader').style.display = s ? "block" : "none";
-            document.getElementById('btn-text').style.opacity = s ? "0.5" : "1";
-            document.getElementById('submit-btn').disabled = s;
+        // فحص قوة كلمة المرور ديناميكياً وعرض المؤشر بالألوان للزبون
+        function checkPasswordStrengthMeter(pass) {
+            const b1 = document.getElementById("strengthBar1");
+            const b2 = document.getElementById("strengthBar2");
+            const b3 = document.getElementById("strengthBar3");
+            const label = document.getElementById("strengthLabel");
+
+            // إعادة تعيين الألوان الافتراضية
+            b1.className = b2.className = b3.className = "h-full w-1/3 bg-gray-800 transition-colors";
+
+            if (!pass) {
+                label.innerText = "مقياس الحماية الأمنية للرمز";
+                label.className = "text-[10px] text-gray-500 text-left";
+                return;
+            }
+
+            if (pass.length < 6) {
+                b1.classList.remove("bg-gray-800");
+                b1.classList.add("bg-red-500");
+                label.innerText = "ضعيفة جداً (أقل من 6 أحرف)";
+                label.className = "text-[10px] text-red-400 text-left";
+            } else if (pass.length >= 6 && pass.length < 10) {
+                b1.classList.remove("bg-gray-800"); b2.classList.remove("bg-gray-800");
+                b1.classList.add("bg-amber-500"); b2.classList.add("bg-amber-500");
+                label.innerText = "متوسطة الحماية";
+                label.className = "text-[10px] text-amber-400 text-left";
+            } else {
+                b1.classList.remove("bg-gray-800"); b2.classList.remove("bg-gray-800"); b3.classList.remove("bg-gray-800");
+                b1.classList.add("bg-emerald-500"); b2.classList.add("bg-emerald-500"); b3.classList.add("bg-emerald-500");
+                label.innerText = "قوية جداً ومحمية بالكامل ✓";
+                label.className = "text-[10px] text-emerald-400 text-left";
+            }
+        }
+
+        // معالجة وإرسال بيانات تسجيل الدخول لـ Firebase Auth
+        function handleUserLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById("loginEmail").value.trim();
+            const pass = document.getElementById("loginPassword").value;
+            const btn = document.getElementById("loginSubmitBtn");
+
+            setButtonLoading(btn, true, "جاري تسجيل الدخول...");
+
+            auth.signInWithEmailAndPassword(email, pass)
+            .then(() => {
+                showAlert("success", "تم تسجيل الدخول بنجاح! جاري التوجيه...");
+            })
+            .catch(error => {
+                setButtonLoading(btn, false, "تسجيل الدخول الفوري");
+                let errorMsg = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+                if (error.code === "auth/user-not-found") errorMsg = "لا يوجد حساب مسجل بهذا البريد.";
+                showAlert("error", errorMsg);
+            });
+        }
+
+        // معالجة حساب زبون جديد وحفظ وثيقته المالية الافتراضية بـ Firestore
+        function handleUserRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById("regName").value.trim();
+            const phone = document.getElementById("regPhone").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const pass = document.getElementById("regPassword").value;
+            const btn = document.getElementById("registerSubmitBtn");
+
+            // التحقق من صحة رقم الهاتف الليبي الأساسي (مثال بسيط للفلترة)
+            if (phone.length < 9) {
+                showAlert("error", "يرجى كتابة رقم هاتف ليبي صحيح مكون من 9 أرقام على الأقل.");
+                return;
+            }
+
+            setButtonLoading(btn, true, "جاري بناء الحساب السحابي...");
+
+            auth.createUserWithEmailAndPassword(email, pass)
+            .then(cred => {
+                // إنشاء وحفظ مستند المستخدم في Firestore مباشرة
+                return db.collection("users").doc(cred.user.uid).set({
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    balance: 0.0000, // رصيد افتراضي أولي بالدينار الليبي
+                    role: "user",   // الرتبة الافتراضية للمشتركين
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            })
+            .then(() => {
+                showAlert("success", "تم إنشاء حسابك بنجاح! جاري الدخول للمتجر الرئيسي...");
+            })
+            .catch(error => {
+                setButtonLoading(btn, false, "إنشاء الحساب وحفظ البيانات");
+                let errorMsg = "فشلت عملية إنشاء الحساب.";
+                if (error.code === "auth/email-already-in-use") errorMsg = "هذا البريد الإلكتروني مستخدم مسبقاً في حساب آخر.";
+                showAlert("error", errorMsg);
+            });
+        }
+
+        // إطلاق نافذة استعادة كلمة المرور وإرسال بريد إعادة التعيين تلقائياً
+        function triggerPasswordReset() {
+            const email = prompt("يرجى كتابة بريدك الإلكتروني لإرسال رابط إعادة تعيين كلمة السر الفوري:");
+            if (!email) return;
+
+            auth.sendPasswordResetEmail(email.trim())
+            .then(() => {
+                alert("تم إرسال رابط تعيين كلمة السر إلى بريدك الإلكتروني بنجاح، تفقد البريد الوارد أو المزعج (Spam).");
+            })
+            .catch(err => {
+                alert("عذراً، فشل إرسال البريد: " + err.message);
+            });
+        }
+
+        // أداة برمجية مساعدة للتحكم بحالة الأزرار أثناء معالجة الطلبات بالشبكة
+        function setButtonLoading(button, isLoading, text) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin ml-2"></i> ${text}`;
+            } else {
+                button.disabled = false;
+                button.innerHTML = text;
+            }
+        }
+
+        // دوال إظهار وإخفاء شريط التنبيهات الشامل للتجربة الاحترافية
+        function showAlert(type, message) {
+            const alertBox = document.getElementById("authAlert");
+            alertBox.classList.remove("hidden", "bg-red-500/10", "text-red-400", "border-red-500/20", "bg-emerald-500/10", "text-emerald-400", "border-emerald-500/20");
+            
+            if (type === 'error') {
+                alertBox.classList.add("bg-red-500/10", "text-red-400", "border-red-500/20");
+                alertBox.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <span>${message}</span>`;
+            } else {
+                alertBox.classList.add("bg-emerald-500/10", "text-emerald-400", "border-emerald-500/20");
+                alertBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
+            }
+        }
+
+        function hideAlert() {
+            document.getElementById("authAlert").classList.add("hidden");
         }
     </script>
 </body>
