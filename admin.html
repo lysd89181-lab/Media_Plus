@@ -23,85 +23,52 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #0b0c22; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #24264d; border-radius: 4px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
+        @keyframes shake { 0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-5px)}20%,40%,60%,80%{transform:translateX(5px)}}
+        @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.5}}
         .shake { animation: shake 0.5s ease-in-out; }
+        .animate-spin { animation: spin 1s linear infinite; }
+        .animate-pulse { animation: pulse 1.5s ease-in-out infinite; }
     </style>
 </head>
 <body class="text-gray-200 min-h-screen flex flex-col md:flex-row">
 
-    <!-- ==================== شاشة إدخال الرمز ==================== -->
     <div id="adminGuardScreen" class="fixed inset-0 bg-[#0b0c22] z-[999] flex flex-col items-center justify-center text-center p-4">
         <div class="card-bg p-8 rounded-2xl border border-gray-800 shadow-2xl max-w-sm w-full space-y-5" id="guardCard">
-            <div class="w-16 h-16 bg-[#202142] rounded-full flex items-center justify-center text-2xl gold-text mx-auto border border-gray-700">
-                <i class="fa-solid fa-lock"></i>
-            </div>
+            <div class="w-16 h-16 bg-[#202142] rounded-full flex items-center justify-center text-2xl gold-text mx-auto border border-gray-700"><i class="fa-solid fa-lock"></i></div>
             <h2 class="text-lg font-bold text-white">لوحة تحكم Media Plus</h2>
             <p class="text-xs text-gray-400">أدخل رمز الوصول للمتابعة</p>
-            
             <div class="space-y-3">
-                <div class="relative">
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                        <i class="fa-solid fa-key"></i>
-                    </span>
-                    <input type="password" id="accessCode" placeholder="أدخل رمز الوصول" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl py-3 pr-9 pl-3 text-white text-sm text-center focus:outline-none focus:border-[#f5a623] transition-all" autocomplete="off" onkeydown="if(event.key==='Enter') checkAccessCode()">
-                </div>
-                <button onclick="checkAccessCode()" class="w-full gold-bg hover:bg-yellow-600 text-black font-bold py-3 rounded-xl text-sm transition-all shadow-md">
-                    <i class="fa-solid fa-arrow-left"></i> دخول
-                </button>
+                <div class="relative"><span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500"><i class="fa-solid fa-key"></i></span><input type="password" id="accessCode" placeholder="أدخل رمز الوصول" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl py-3 pr-9 pl-3 text-white text-sm text-center focus:outline-none focus:border-[#f5a623]" autocomplete="off" onkeydown="if(event.key==='Enter')checkAccessCode()"></div>
+                <button onclick="checkAccessCode()" class="w-full gold-bg hover:bg-yellow-600 text-black font-bold py-3 rounded-xl text-sm transition-all shadow-md"><i class="fa-solid fa-arrow-left"></i> دخول</button>
                 <p id="accessError" class="text-red-400 text-xs hidden">❌ رمز الوصول غير صحيح</p>
             </div>
-            
-            <a href="index.html" class="block text-gray-500 hover:text-white text-xs transition-colors">العودة للمتجر</a>
+            <a href="index.html" class="block text-gray-500 hover:text-white text-xs">العودة للمتجر</a>
         </div>
     </div>
 
-    <!-- ==================== الشريط الجانبي ==================== -->
     <aside class="sidebar-bg w-full md:w-64 border-b md:border-b-0 md:border-l border-gray-800 flex flex-col justify-between shrink-0">
         <div>
             <div class="p-5 border-b border-gray-800 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="gold-bg text-black px-2 py-0.5 rounded text-sm font-black">Media</span>
-                    <span class="text-md font-bold text-white">Plus الإدارة</span>
-                </div>
-                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v5.0</span>
+                <div class="flex items-center gap-2"><span class="gold-bg text-black px-2 py-0.5 rounded text-sm font-black">Media</span><span class="text-md font-bold text-white">Plus الإدارة</span></div>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v8.0</span>
             </div>
-
             <nav class="p-3 space-y-1">
-                <button onclick="switchTab('dashboardTab', this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3">
-                    <i class="fa-solid fa-chart-pie"></i> الإحصائيات
-                </button>
-                <button onclick="switchTab('ordersTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3">
-                    <i class="fa-solid fa-cart-shopping"></i> الطلبات
-                </button>
-                <button onclick="switchTab('categoriesTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3">
-                    <i class="fa-solid fa-tags"></i> الأقسام
-                </button>
-                <button onclick="switchTab('productsTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3">
-                    <i class="fa-solid fa-cubes"></i> المنتجات
-                </button>
-                <button onclick="switchTab('usersTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3">
-                    <i class="fa-solid fa-users"></i> المستخدمين
-                </button>
+                <button onclick="switchTab('dashboardTab',this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
+                <button onclick="switchTab('ordersTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-cart-shopping"></i> الطلبات</button>
+                <button onclick="switchTab('categoriesTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-tags"></i> الأقسام</button>
+                <button onclick="switchTab('productsTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-cubes"></i> المنتجات</button>
+                <button onclick="switchTab('apiTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-cloud-download"></i> جلب عبر API</button>
+                <button onclick="switchTab('usersTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-users"></i> المستخدمين</button>
             </nav>
         </div>
-
         <div class="p-4 border-t border-gray-800 bg-[#08091a] flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg gold-bg text-black flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user-gear"></i></div>
-                <div><p class="text-xs font-bold text-white">المدير</p><p class="text-[9px] text-gray-500">تحكم كامل</p></div>
-            </div>
-            <button onclick="location.reload()" class="text-gray-500 hover:text-red-400 text-sm" title="تسجيل خروج"><i class="fa-solid fa-power-off"></i></button>
+            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg gold-bg text-black flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user-gear"></i></div><div><p class="text-xs font-bold text-white">المدير</p><p class="text-[9px] text-gray-500">تحكم كامل</p></div></div>
+            <button onclick="location.reload()" class="text-gray-500 hover:text-red-400 text-sm"><i class="fa-solid fa-power-off"></i></button>
         </div>
     </aside>
 
-    <!-- ==================== المحتوى الرئيسي ==================== -->
     <main class="flex-grow p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6 overflow-x-hidden">
 
-        <!-- الإحصائيات -->
         <section id="dashboardTab" class="admin-tab space-y-6">
             <h1 class="text-xl font-black text-white">📊 نظرة عامة</h1>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -112,98 +79,88 @@
             </div>
         </section>
 
-        <!-- الطلبات -->
         <section id="ordersTab" class="admin-tab hidden space-y-4">
-            <div class="flex justify-between">
-                <h1 class="text-xl font-black text-white">📦 الطلبات</h1>
-                <button onclick="deleteSelectedOrders()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف المحدد</button>
-            </div>
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-right text-xs">
-                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase">
-                            <tr>
-                                <th class="p-4"><input type="checkbox" id="selectAllOrders" onclick="toggleSelectAll('orderCheckbox', this)" class="accent-[#f5a623]"></th>
-                                <th class="p-4">العميل</th><th class="p-4">المنتج</th><th class="p-4">ID</th>
-                                <th class="p-4">المبلغ</th><th class="p-4">الحالة</th><th class="p-4">إجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersTableBody"><tr><td colspan="7" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="flex justify-between"><h1 class="text-xl font-black text-white">📦 الطلبات</h1><button onclick="deleteSelectedOrders()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف المحدد</button></div>
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllOrders" onclick="toggleSelectAll('orderCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">العميل</th><th class="p-4">المنتج</th><th class="p-4">ID</th><th class="p-4">المبلغ</th><th class="p-4">الحالة</th><th class="p-4">إجراء</th></tr></thead><tbody id="ordersTableBody"><tr><td colspan="7" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div></div>
         </section>
 
-        <!-- الأقسام -->
         <section id="categoriesTab" class="admin-tab hidden space-y-6">
-            <div class="flex justify-between">
-                <h1 class="text-xl font-black text-white">🏷️ الأقسام</h1>
-                <button onclick="openCategoryModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة قسم</button>
-            </div>
-            <div id="categoryModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-lg mx-auto space-y-4">
-                <div class="flex justify-between"><h3 id="catModalTitle" class="text-sm font-bold">قسم جديد</h3><button onclick="closeCategoryModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div>
-                <form onsubmit="saveCategory(event)" class="space-y-3 text-xs">
-                    <input type="hidden" id="catId">
-                    <div><label class="text-gray-400">اسم القسم *</label><input type="text" id="catName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">رابط الصورة</label><input type="text" id="catImage" placeholder="https://raw.githubusercontent.com/..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div>
-                    <div><label class="text-gray-400">الترتيب</label><input type="number" id="catOrder" value="1" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button>
-                </form>
-            </div>
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
-                <table class="w-full text-right text-xs">
-                    <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">ترتيب</th><th class="p-4">تحكم</th></tr></thead>
-                    <tbody id="categoriesTableBody"><tr><td colspan="4" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
-                </table>
-            </div>
+            <div class="flex justify-between"><h1 class="text-xl font-black text-white">🏷️ الأقسام</h1><button onclick="openCategoryModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة قسم</button></div>
+            <div id="categoryModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-lg mx-auto space-y-4"><div class="flex justify-between"><h3 id="catModalTitle" class="text-sm font-bold">قسم جديد</h3><button onclick="closeCategoryModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveCategory(event)" class="space-y-3 text-xs"><input type="hidden" id="catId"><div><label class="text-gray-400">اسم القسم *</label><input type="text" id="catName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">رابط الصورة</label><input type="text" id="catImage" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div><div><label class="text-gray-400">الترتيب</label><input type="number" id="catOrder" value="1" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></form></div>
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden"><table class="w-full text-right text-xs"><thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">ترتيب</th><th class="p-4">تحكم</th></tr></thead><tbody id="categoriesTableBody"><tr><td colspan="4" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div>
         </section>
 
-        <!-- المنتجات -->
         <section id="productsTab" class="admin-tab hidden space-y-6">
-            <div class="flex justify-between">
-                <h1 class="text-xl font-black text-white">🎮 المنتجات</h1>
-                <div class="flex gap-2">
-                    <button onclick="deleteSelectedProducts()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف</button>
-                    <button onclick="openProductModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة</button>
+            <div class="flex justify-between"><h1 class="text-xl font-black text-white">🎮 المنتجات</h1><div class="flex gap-2"><button onclick="deleteSelectedProducts()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف</button><button onclick="openProductModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة</button></div></div>
+            <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4"><div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><input type="hidden" id="prodId"><div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></select></div><div><label class="text-gray-400">النوع</label><select id="prodType" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="id">ID لاعب</option><option value="phone">رقم هاتف</option><option value="none">بدون إدخال</option></select></div><div class="md:col-span-2"><label class="text-gray-400">رابط الصورة</label><input type="text" id="prodImage" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div><div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></textarea></div><div class="md:col-span-2"><label class="text-gray-400">الحالة</label><select id="prodActive" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="true">✅ نشط</option><option value="false">❌ مخفي</option></select></div><div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></div></form></div>
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">د.ل</th><th class="p-4">$</th><th class="p-4">قسم</th><th class="p-4">نوع</th><th class="p-4">حالة</th><th class="p-4">مبيعات</th><th class="p-4">تحكم</th></tr></thead><tbody id="productsTableBody"><tr><td colspan="10" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div></div>
+        </section>
+
+        <section id="apiTab" class="admin-tab hidden space-y-6">
+            <h1 class="text-xl font-black text-white">🔗 جلب الخدمات عبر API</h1>
+            <p class="text-xs text-gray-400">أدخل رابط API كامل ومفتاح الوصول لجلب الخدمات تلقائياً من أي مزود</p>
+            
+            <div class="card-bg p-5 rounded-2xl border border-gray-800 space-y-4">
+                <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-gear gold-text"></i> إعدادات API</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="space-y-1.5"><label class="text-[10px] text-gray-400">رابط API الكامل *</label><input type="url" id="apiUrl" placeholder="https://api.example.com/v1/products" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white text-xs focus:outline-none focus:border-[#f5a623] font-mono"></div>
+                    <div class="space-y-1.5"><label class="text-[10px] text-gray-400">مفتاح API (اختياري)</label><input type="text" id="apiKey" placeholder="sk-xxxxxxxxxxxx" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white text-xs focus:outline-none focus:border-[#f5a623] font-mono"></div>
+                    <div class="space-y-1.5"><label class="text-[10px] text-gray-400">نسبة الربح %</label><input type="number" id="apiProfit" value="10" step="0.1" min="0" max="100" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white text-xs focus:outline-none focus:border-[#f5a623]"></div>
                 </div>
-            </div>
-            <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4">
-                <div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div>
-                <form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <input type="hidden" id="prodId">
-                    <div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">السعر (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">السعر ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></select></div>
-                    <div><label class="text-gray-400">النوع</label><select id="prodType" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="id">ID لاعب</option><option value="phone">رقم هاتف</option><option value="none">بدون إدخال</option></select></div>
-                    <div class="md:col-span-2"><label class="text-gray-400">رابط الصورة</label><input type="text" id="prodImage" placeholder="https://raw.githubusercontent.com/..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div>
-                    <div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></textarea></div>
-                    <div class="md:col-span-2"><label class="text-gray-400">الحالة</label><select id="prodActive" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="true">✅ نشط</option><option value="false">❌ مخفي</option></select></div>
-                    <div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></div>
-                </form>
-            </div>
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-right text-xs">
-                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase">
-                            <tr><th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox', this)" class="accent-[#f5a623]"></th><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">د.ل</th><th class="p-4">$</th><th class="p-4">قسم</th><th class="p-4">نوع</th><th class="p-4">حالة</th><th class="p-4">مبيعات</th><th class="p-4">تحكم</th></tr>
-                        </thead>
-                        <tbody id="productsTableBody"><tr><td colspan="10" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
-                    </table>
+
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="fetchFromAPI()" class="gold-bg hover:bg-yellow-600 text-black font-bold px-6 py-3 rounded-xl text-xs flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-cloud-download"></i> جلب الخدمات
+                    </button>
+                    <button onclick="saveAPISettings()" class="bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white px-4 py-3 rounded-xl text-xs font-bold transition-all">
+                        <i class="fa-solid fa-floppy-disk"></i> حفظ الإعدادات
+                    </button>
+                    <button onclick="loadMockData()" class="bg-purple-600/20 text-purple-400 border border-purple-500/30 hover:bg-purple-600 hover:text-white px-4 py-3 rounded-xl text-xs font-bold transition-all">
+                        <i class="fa-solid fa-database"></i> بيانات تجريبية
+                    </button>
+                    <button onclick="fetchFromLibyaCards()" class="bg-cyan-600/20 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-600 hover:text-white px-4 py-3 rounded-xl text-xs font-bold transition-all">
+                        <i class="fa-solid fa-link"></i> LibyaCards
+                    </button>
                 </div>
+
+                <div id="apiStatus" class="hidden bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-xs text-amber-400 animate-pulse">
+                    <i class="fa-solid fa-circle-notch animate-spin"></i> جاري المعالجة...
+                </div>
+                <div id="apiResult" class="hidden rounded-xl p-3 text-xs"></div>
+            </div>
+
+            <div id="apiPreview" class="hidden space-y-4">
+                <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-eye gold-text"></i> معاينة البيانات المجلوبة</h3>
+                <div class="card-bg p-4 rounded-2xl border border-gray-800 space-y-3">
+                    <h4 class="text-xs font-bold text-gray-400">📂 الأقسام (${fetchedCategories.length})</h4>
+                    <div id="apiCategoriesList" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
+                </div>
+                <div class="card-bg p-4 rounded-2xl border border-gray-800 space-y-3">
+                    <h4 class="text-xs font-bold text-gray-400">🎮 المنتجات (${fetchedProducts.length})</h4>
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase">
+                                <tr><th class="p-3">الاسم</th><th class="p-3">السعر الأصلي</th><th class="p-3">+ الربح</th><th class="p-3">السعر النهائي</th><th class="p-3">القسم</th></tr>
+                            </thead>
+                            <tbody id="apiProductsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <button onclick="importAllToStore()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all shadow-lg">
+                    <i class="fa-solid fa-check-double"></i> استيراد الكل إلى المتجر
+                </button>
+            </div>
+
+            <div class="card-bg p-4 rounded-2xl border border-gray-800 space-y-3">
+                <h3 class="text-sm font-bold text-white"><i class="fa-solid fa-clock-rotate-left gold-text"></i> سجل آخر العمليات</h3>
+                <div id="apiLogs" class="text-xs text-gray-500">لا يوجد سجل سابق</div>
             </div>
         </section>
 
-        <!-- المستخدمين -->
         <section id="usersTab" class="admin-tab hidden space-y-4">
             <h1 class="text-xl font-black text-white">👥 المستخدمين</h1>
             <input type="text" oninput="searchUsers(this.value)" placeholder="🔍 بحث..." class="w-full max-w-xs bg-[#0b0c22] border border-gray-700 rounded-xl py-2.5 px-4 text-white text-xs">
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
-                <table class="w-full text-right text-xs">
-                    <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">اسم</th><th class="p-4">هاتف</th><th class="p-4">إيميل</th><th class="p-4">رصيد</th><th class="p-4">رتبة</th><th class="p-4">شحن/خصم</th></tr></thead>
-                    <tbody id="usersTableBody"><tr><td colspan="6" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
-                </table>
-            </div>
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden"><table class="w-full text-right text-xs"><thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">اسم</th><th class="p-4">هاتف</th><th class="p-4">إيميل</th><th class="p-4">رصيد</th><th class="p-4">رتبة</th><th class="p-4">شحن/خصم</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="6" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div>
         </section>
 
     </main>
@@ -222,53 +179,37 @@
         const ACCESS_CODE = "mansor";
         let allUsers = [];
         let allCategoriesList = [];
+        let fetchedCategories = [];
+        let fetchedProducts = [];
+        let profitPercentage = 10;
 
-        // ==================== التحقق من رمز الوصول ====================
         function checkAccessCode() {
-            const code = document.getElementById("accessCode").value.trim();
-            const errorEl = document.getElementById("accessError");
-            const card = document.getElementById("guardCard");
-
-            if (code === ACCESS_CODE) {
+            if (document.getElementById("accessCode").value.trim() === ACCESS_CODE) {
                 document.getElementById("adminGuardScreen").classList.add("hidden");
                 initDashboard();
             } else {
-                errorEl.classList.remove("hidden");
-                card.classList.add("shake");
-                setTimeout(() => card.classList.remove("shake"), 500);
+                document.getElementById("accessError").classList.remove("hidden");
+                document.getElementById("guardCard").classList.add("shake");
+                setTimeout(() => document.getElementById("guardCard").classList.remove("shake"), 500);
                 document.getElementById("accessCode").value = "";
             }
         }
 
-        function initDashboard() {
-            loadStats();
-            loadOrders();
-            loadCategories();
-            loadProducts();
-            loadUsers();
-        }
+        function initDashboard() { loadStats(); loadOrders(); loadCategories(); loadProducts(); loadUsers(); loadAPISettings(); loadAPILogs(); }
 
         function switchTab(tabId, btn) {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
             document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('gold-bg', 'text-black'); b.classList.add('text-gray-400'); });
-            btn.classList.add('gold-bg', 'text-black');
-            btn.classList.remove('text-gray-400');
+            btn.classList.add('gold-bg', 'text-black'); btn.classList.remove('text-gray-400');
         }
 
-        function toggleSelectAll(className, master) {
-            document.querySelectorAll(`.${className}`).forEach(cb => cb.checked = master.checked);
-        }
+        function toggleSelectAll(className, master) { document.querySelectorAll(`.${className}`).forEach(cb => cb.checked = master.checked); }
 
-        // ==================== الإحصائيات ====================
         function loadStats() {
             db.collection("orders").get().then(snap => {
                 let rev = 0, pend = 0;
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    if (d.status === "completed") rev += Number(d.amount || d.price || 0);
-                    if (d.status === "pending") pend++;
-                });
+                snap.forEach(doc => { const d = doc.data(); if (d.status === "completed") rev += Number(d.amount || d.price || 0); if (d.status === "pending") pend++; });
                 document.getElementById("statRevenue").innerText = rev.toFixed(2) + ' د.ل';
                 document.getElementById("statPendingOrders").innerText = pend;
             });
@@ -276,94 +217,255 @@
             db.collection("products").where("active", "==", true).get().then(s => document.getElementById("statActiveProducts").innerText = s.size);
         }
 
-        // ==================== الطلبات ====================
         function loadOrders() {
             db.collection("orders").orderBy("createdAt", "desc").onSnapshot(snap => {
-                const tbody = document.getElementById("ordersTableBody");
-                tbody.innerHTML = "";
+                const tbody = document.getElementById("ordersTableBody"); tbody.innerHTML = "";
                 if (snap.empty) { tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6 text-gray-500">لا توجد طلبات</td></tr>'; return; }
                 snap.forEach(doc => {
                     const o = doc.data();
-                    const badge = o.status === "completed" ? '✅ مكتمل' : '⏳ معلق';
-                    const tr = document.createElement("tr");
-                    tr.className = "border-b border-gray-800/40";
-                    tr.innerHTML = `
-                        <td class="p-4"><input type="checkbox" value="${doc.id}" class="orderCheckbox accent-[#f5a623]"></td>
-                        <td class="p-4 text-white">${o.userName || '---'}</td>
-                        <td class="p-4 gold-text">${o.serviceName || o.cardName || '---'}</td>
-                        <td class="p-4 font-mono">${o.playerID || '---'}</td>
-                        <td class="p-4">${(o.amount || o.price || 0).toFixed(2)} د.ل</td>
-                        <td class="p-4">${badge}</td>
-                        <td class="p-4">${o.status === 'pending' ? `<button onclick="updateOrderStatus('${doc.id}')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">قبول</button>` : '<span class="text-gray-500">تم</span>'}</td>
-                    `;
+                    const tr = document.createElement("tr"); tr.className = "border-b border-gray-800/40";
+                    tr.innerHTML = `<td class="p-4"><input type="checkbox" value="${doc.id}" class="orderCheckbox accent-[#f5a623]"></td><td class="p-4 text-white">${o.userName||'---'}</td><td class="p-4 gold-text">${o.serviceName||o.cardName||'---'}</td><td class="p-4 font-mono">${o.playerID||'---'}</td><td class="p-4">${(o.amount||o.price||0).toFixed(2)} د.ل</td><td class="p-4">${o.status==='completed'?'✅ مكتمل':'⏳ معلق'}</td><td class="p-4">${o.status==='pending'?`<button onclick="updateOrderStatus('${doc.id}')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">قبول</button>`:'<span class="text-gray-500">تم</span>'}</td>`;
                     tbody.appendChild(tr);
                 });
             });
         }
 
-        function updateOrderStatus(id) { db.collection("orders").doc(id).update({ status: "completed" }).then(() => loadStats()); }
-
+        function updateOrderStatus(id) { db.collection("orders").doc(id).update({ status: "completed" }).then(loadStats); }
         function deleteSelectedOrders() {
             const cbs = document.querySelectorAll('.orderCheckbox:checked');
-            if (!cbs.length) return alert("حدد طلباً واحداً");
+            if (!cbs.length) return alert("حدد طلباً");
             if (!confirm(`حذف ${cbs.length} طلب؟`)) return;
-            const batch = db.batch();
-            cbs.forEach(cb => batch.delete(db.collection("orders").doc(cb.value)));
+            const batch = db.batch(); cbs.forEach(cb => batch.delete(db.collection("orders").doc(cb.value)));
             batch.commit().then(() => { document.getElementById("selectAllOrders").checked = false; loadStats(); });
         }
 
-        // ==================== الأقسام ====================
         function loadCategories() {
             db.collection("categories").orderBy("order").onSnapshot(snap => {
-                allCategoriesList = [];
-                const tbody = document.getElementById("categoriesTableBody");
-                tbody.innerHTML = "";
-                snap.forEach(doc => {
-                    const c = doc.data(); c.id = doc.id; allCategoriesList.push(c);
-                    tbody.innerHTML += `<tr class="border-b border-gray-800/40"><td class="p-4"><img src="${c.image||c.cover||''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td><td class="p-4 text-white font-bold">${c.name}</td><td class="p-4">${c.order||0}</td><td class="p-4"><button onclick="editCategory('${doc.id}')" class="text-blue-400 text-[11px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteCategory('${doc.id}')" class="text-red-400 text-[11px]"><i class="fa-solid fa-trash"></i></button></td></tr>`;
-                });
+                allCategoriesList = []; const tbody = document.getElementById("categoriesTableBody"); tbody.innerHTML = "";
+                snap.forEach(doc => { const c = doc.data(); c.id = doc.id; allCategoriesList.push(c); tbody.innerHTML += `<tr class="border-b border-gray-800/40"><td class="p-4"><img src="${c.image||c.cover||''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td><td class="p-4 text-white font-bold">${c.name}</td><td class="p-4">${c.order||0}</td><td class="p-4"><button onclick="editCategory('${doc.id}')" class="text-blue-400 text-[11px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteCategory('${doc.id}')" class="text-red-400 text-[11px]"><i class="fa-solid fa-trash"></i></button></td></tr>`; });
                 updateCategorySelect();
             });
         }
 
-        function updateCategorySelect() {
-            const select = document.getElementById("prodCategory");
-            if (!select) return;
-            select.innerHTML = '<option value="">اختر القسم...</option>';
-            allCategoriesList.forEach(c => select.innerHTML += `<option value="${c.id}">${c.name}</option>`);
-        }
-
-        function openCategoryModal() { document.getElementById("catId").value = ""; document.getElementById("catName").value = ""; document.getElementById("catImage").value = ""; document.getElementById("catOrder").value = "1"; document.getElementById("catModalTitle").innerText = "إضافة قسم"; document.getElementById("categoryModal").classList.remove("hidden"); }
-        function editCategory(id) { const c = allCategoriesList.find(x => x.id === id); if(!c) return; document.getElementById("catId").value = id; document.getElementById("catName").value = c.name||""; document.getElementById("catImage").value = c.image||c.cover||""; document.getElementById("catOrder").value = c.order||1; document.getElementById("catModalTitle").innerText = "تعديل قسم"; document.getElementById("categoryModal").classList.remove("hidden"); }
+        function updateCategorySelect() { const s = document.getElementById("prodCategory"); if (s) { s.innerHTML = '<option value="">اختر القسم...</option>'; allCategoriesList.forEach(c => s.innerHTML += `<option value="${c.id}">${c.name}</option>`); } }
+        function openCategoryModal() { document.getElementById("catId").value=""; document.getElementById("catName").value=""; document.getElementById("catImage").value=""; document.getElementById("catOrder").value="1"; document.getElementById("catModalTitle").innerText="إضافة قسم"; document.getElementById("categoryModal").classList.remove("hidden"); }
+        function editCategory(id) { const c=allCategoriesList.find(x=>x.id===id); if(!c)return; document.getElementById("catId").value=id; document.getElementById("catName").value=c.name||""; document.getElementById("catImage").value=c.image||c.cover||""; document.getElementById("catOrder").value=c.order||1; document.getElementById("catModalTitle").innerText="تعديل قسم"; document.getElementById("categoryModal").classList.remove("hidden"); }
         function closeCategoryModal() { document.getElementById("categoryModal").classList.add("hidden"); }
-        function saveCategory(e) { e.preventDefault(); const id = document.getElementById("catId").value; const data = { name: document.getElementById("catName").value, image: document.getElementById("catImage").value, cover: document.getElementById("catImage").value, order: parseInt(document.getElementById("catOrder").value)||1 }; if(id) db.collection("categories").doc(id).update(data); else db.collection("categories").add(data); closeCategoryModal(); }
-        function deleteCategory(id) { if(confirm("حذف هذا القسم؟")) db.collection("categories").doc(id).delete(); }
+        function saveCategory(e) { e.preventDefault(); const id=document.getElementById("catId").value; const d={name:document.getElementById("catName").value,image:document.getElementById("catImage").value,cover:document.getElementById("catImage").value,order:parseInt(document.getElementById("catOrder").value)||1}; if(id)db.collection("categories").doc(id).update(d); else db.collection("categories").add(d); closeCategoryModal(); }
+        function deleteCategory(id) { if(confirm("حذف؟"))db.collection("categories").doc(id).delete(); }
 
-        // ==================== المنتجات ====================
         function loadProducts() {
             db.collection("products").orderBy("order").onSnapshot(snap => {
-                const tbody = document.getElementById("productsTableBody");
-                tbody.innerHTML = "";
-                snap.forEach(doc => {
-                    const p = doc.data();
-                    const cat = allCategoriesList.find(c => c.id === p.categoryId);
-                    tbody.innerHTML += `<tr class="border-b border-gray-800/40"><td class="p-4"><input type="checkbox" value="${doc.id}" class="productCheckbox accent-[#f5a623]"></td><td class="p-4"><img src="${p.image||p.img||''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td><td class="p-4 text-white font-bold">${p.name}</td><td class="p-4 gold-text">${(p.priceLYD||p.price||0).toFixed(3)}</td><td class="p-4">${(p.priceUSD||0).toFixed(2)}$</td><td class="p-4">${cat?cat.name:'---'}</td><td class="p-4">${p.type==='phone'?'📞':p.type==='none'?'📦':'🎮'}</td><td class="p-4">${p.active!==false?'✅':'❌'}</td><td class="p-4">${p.sales||0}</td><td class="p-4"><button onclick="editProduct('${doc.id}')" class="text-blue-400 text-[11px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteProduct('${doc.id}')" class="text-red-400 text-[11px]"><i class="fa-solid fa-trash"></i></button></td></tr>`;
-                });
+                const tbody=document.getElementById("productsTableBody"); tbody.innerHTML="";
+                snap.forEach(doc=>{const p=doc.data();const cat=allCategoriesList.find(c=>c.id===p.categoryId);tbody.innerHTML+=`<tr class="border-b border-gray-800/40"><td class="p-4"><input type="checkbox" value="${doc.id}" class="productCheckbox accent-[#f5a623]"></td><td class="p-4"><img src="${p.image||p.img||''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td><td class="p-4 text-white font-bold">${p.name}</td><td class="p-4 gold-text">${(p.priceLYD||p.price||0).toFixed(3)}</td><td class="p-4">${(p.priceUSD||0).toFixed(2)}$</td><td class="p-4">${cat?cat.name:'---'}</td><td class="p-4">${p.type==='phone'?'📞':p.type==='none'?'📦':'🎮'}</td><td class="p-4">${p.active!==false?'✅':'❌'}</td><td class="p-4">${p.sales||0}</td><td class="p-4"><button onclick="editProduct('${doc.id}')" class="text-blue-400 text-[11px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteProduct('${doc.id}')" class="text-red-400 text-[11px]"><i class="fa-solid fa-trash"></i></button></td></tr>`;});
             });
         }
 
-        function openProductModal() { document.getElementById("prodId").value = ""; document.getElementById("prodName").value = ""; document.getElementById("prodPriceLYD").value = ""; document.getElementById("prodPriceUSD").value = ""; document.getElementById("prodImage").value = ""; document.getElementById("prodDescription").value = ""; document.getElementById("prodActive").value = "true"; document.getElementById("prodType").value = "id"; document.getElementById("prodModalTitle").innerText = "إضافة منتج"; document.getElementById("productModal").classList.remove("hidden"); }
-        function editProduct(id) { db.collection("products").doc(id).get().then(doc => { if(!doc.exists) return; const p = doc.data(); document.getElementById("prodId").value = id; document.getElementById("prodName").value = p.name||""; document.getElementById("prodPriceLYD").value = p.priceLYD||p.price||0; document.getElementById("prodPriceUSD").value = p.priceUSD||0; document.getElementById("prodImage").value = p.image||p.img||""; document.getElementById("prodDescription").value = p.description||""; document.getElementById("prodActive").value = String(p.active!==false); document.getElementById("prodType").value = p.type||"id"; document.getElementById("prodCategory").value = p.categoryId||""; document.getElementById("prodModalTitle").innerText = "تعديل منتج"; document.getElementById("productModal").classList.remove("hidden"); }); }
+        function openProductModal() { document.getElementById("prodId").value=""; document.getElementById("prodName").value=""; document.getElementById("prodPriceLYD").value=""; document.getElementById("prodPriceUSD").value=""; document.getElementById("prodImage").value=""; document.getElementById("prodDescription").value=""; document.getElementById("prodActive").value="true"; document.getElementById("prodType").value="id"; document.getElementById("prodModalTitle").innerText="إضافة منتج"; document.getElementById("productModal").classList.remove("hidden"); }
+        function editProduct(id) { db.collection("products").doc(id).get().then(doc=>{if(!doc.exists)return;const p=doc.data();document.getElementById("prodId").value=id;document.getElementById("prodName").value=p.name||"";document.getElementById("prodPriceLYD").value=p.priceLYD||p.price||0;document.getElementById("prodPriceUSD").value=p.priceUSD||0;document.getElementById("prodImage").value=p.image||p.img||"";document.getElementById("prodDescription").value=p.description||"";document.getElementById("prodActive").value=String(p.active!==false);document.getElementById("prodType").value=p.type||"id";document.getElementById("prodCategory").value=p.categoryId||"";document.getElementById("prodModalTitle").innerText="تعديل منتج";document.getElementById("productModal").classList.remove("hidden");}); }
         function closeProductModal() { document.getElementById("productModal").classList.add("hidden"); }
-        function saveProduct(e) { e.preventDefault(); const id = document.getElementById("prodId").value; const data = { name: document.getElementById("prodName").value, priceLYD: parseFloat(document.getElementById("prodPriceLYD").value)||0, price: parseFloat(document.getElementById("prodPriceLYD").value)||0, priceUSD: parseFloat(document.getElementById("prodPriceUSD").value)||0, image: document.getElementById("prodImage").value, img: document.getElementById("prodImage").value, description: document.getElementById("prodDescription").value, active: document.getElementById("prodActive").value==="true", type: document.getElementById("prodType").value, categoryId: document.getElementById("prodCategory").value, order: Date.now() }; if(id) db.collection("products").doc(id).update(data); else db.collection("products").add({...data, sales:0}); closeProductModal(); loadStats(); }
-        function deleteProduct(id) { if(confirm("حذف هذا المنتج؟")) db.collection("products").doc(id).delete(); }
-        function deleteSelectedProducts() { const cbs = document.querySelectorAll('.productCheckbox:checked'); if(!cbs.length) return alert("حدد منتجاً واحداً"); if(!confirm(`حذف ${cbs.length} منتج؟`)) return; const batch = db.batch(); cbs.forEach(cb => batch.delete(db.collection("products").doc(cb.value))); batch.commit().then(() => { document.getElementById("selectAllProducts").checked = false; loadStats(); }); }
+        function saveProduct(e) { e.preventDefault(); const id=document.getElementById("prodId").value; const d={name:document.getElementById("prodName").value,priceLYD:parseFloat(document.getElementById("prodPriceLYD").value)||0,price:parseFloat(document.getElementById("prodPriceLYD").value)||0,priceUSD:parseFloat(document.getElementById("prodPriceUSD").value)||0,image:document.getElementById("prodImage").value,img:document.getElementById("prodImage").value,description:document.getElementById("prodDescription").value,active:document.getElementById("prodActive").value==="true",type:document.getElementById("prodType").value,categoryId:document.getElementById("prodCategory").value,order:Date.now()}; if(id)db.collection("products").doc(id).update(d); else db.collection("products").add({...d,sales:0}); closeProductModal(); loadStats(); }
+        function deleteProduct(id) { if(confirm("حذف؟"))db.collection("products").doc(id).delete(); }
+        function deleteSelectedProducts() { const cbs=document.querySelectorAll('.productCheckbox:checked'); if(!cbs.length)return alert("حدد منتجاً"); if(!confirm(`حذف ${cbs.length}؟`))return; const batch=db.batch(); cbs.forEach(cb=>batch.delete(db.collection("products").doc(cb.value))); batch.commit().then(()=>{document.getElementById("selectAllProducts").checked=false;loadStats();}); }
 
-        // ==================== المستخدمين ====================
+        // ==================== API ====================
+        function loadAPISettings() {
+            db.collection("settings").doc("api_config").get().then(doc => {
+                if (doc.exists) { const c=doc.data(); document.getElementById("apiUrl").value=c.url||''; document.getElementById("apiKey").value=c.key||''; document.getElementById("apiProfit").value=c.profit||10; profitPercentage=c.profit||10; }
+            });
+        }
+
+        function saveAPISettings() {
+            const url=document.getElementById("apiUrl").value.trim();
+            const key=document.getElementById("apiKey").value.trim();
+            profitPercentage=parseFloat(document.getElementById("apiProfit").value)||10;
+            db.collection("settings").doc("api_config").set({url,key,profit:profitPercentage}).then(()=>alert("✅ تم الحفظ")).catch(()=>alert("❌ خطأ"));
+        }
+
+        function loadAPILogs() {
+            db.collection("activity_logs").orderBy("createdAt","desc").limit(5).get().then(snap=>{
+                const c=document.getElementById("apiLogs"); c.innerHTML="";
+                if(snap.empty){c.innerHTML='<p class="text-xs text-gray-500">لا يوجد سجل</p>';return;}
+                snap.forEach(doc=>{const l=doc.data();c.innerHTML+=`<div class="flex justify-between text-[11px] py-2 border-b border-gray-800/30"><span>${l.action||'عملية'}</span><span class="text-gray-500">${l.createdAt?new Date(l.createdAt.toDate()).toLocaleString('ar-LY'):''}</span></div>`;});
+            });
+        }
+
+        function loadMockData() {
+            fetchedCategories = [
+                { id: "pubg", name: "ببجي موبايل", image: "https://i.imgur.com/eXbN8Yx.jpg" },
+                { id: "freefire", name: "فري فاير", image: "https://i.imgur.com/vHkWq1W.jpg" },
+                { id: "fortnite", name: "فورتنايت", image: "https://images.unsplash.com/photo-1589241062272-c0a000e28dc5?q=80" },
+                { id: "netflix", name: "نتفليكس", image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80" }
+            ];
+            fetchedProducts = [
+                { name: "شدات ببجي 60UC", price: 1.00, categoryId: "pubg", type: "id", image: "https://i.imgur.com/eXbN8Yx.jpg" },
+                { name: "شدات ببجي 300UC", price: 5.00, categoryId: "pubg", type: "id", image: "https://i.imgur.com/eXbN8Yx.jpg" },
+                { name: "جواهر فري فاير 110", price: 1.20, categoryId: "freefire", type: "id", image: "https://i.imgur.com/vHkWq1W.jpg" },
+                { name: "فورتنايت 1000 V-Bucks", price: 8.00, categoryId: "fortnite", type: "id", image: "https://images.unsplash.com/photo-1589241062272-c0a000e28dc5?q=80" },
+                { name: "نتفليكس شهر", price: 7.00, categoryId: "netflix", type: "none", image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80" }
+            ];
+            document.getElementById("apiStatus").classList.add("hidden");
+            document.getElementById("apiResult").classList.remove("hidden");
+            document.getElementById("apiResult").className = "bg-purple-500/10 border border-purple-500/20 rounded-xl p-3 text-xs text-purple-400";
+            document.getElementById("apiResult").innerHTML = `🔄 تم تحميل ${fetchedCategories.length} أقسام و ${fetchedProducts.length} منتج تجريبي`;
+            document.getElementById("apiPreview").classList.remove("hidden");
+            renderAPIPreview();
+            db.collection("activity_logs").add({action:"تحميل بيانات تجريبية",createdAt:firebase.firestore.FieldValue.serverTimestamp()}).then(loadAPILogs);
+        }
+
+        async function fetchFromLibyaCards() {
+            const key = document.getElementById("apiKey").value.trim() || "BjRLdFipMdSkzpSf90ljjpMlSWFN7Y5MQi1BPkUdyqOGMgpQobBnpNaJWCnY";
+            profitPercentage = parseFloat(document.getElementById("apiProfit").value) || 10;
+            const statusEl = document.getElementById("apiStatus");
+            const resultEl = document.getElementById("apiResult");
+            const preview = document.getElementById("apiPreview");
+            
+            statusEl.classList.remove("hidden");
+            statusEl.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> جاري جلب البيانات من LibyaCards...';
+            resultEl.classList.add("hidden");
+            preview.classList.add("hidden");
+            
+            const urls = [
+                `https://api.libyacards.com/api?key=${key}`,
+                `https://api.libyacards.com/api/products?key=${key}`,
+                `https://api.libyacards.com/api/provider/digital-products?key=${key}`,
+                `https://api.libyacards.com/api?api_key=${key}`,
+                `https://api.libyacards.com/api/products?api_key=${key}`
+            ];
+            
+            let data = null;
+            let successUrl = "";
+            
+            for (const url of urls) {
+                try {
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin"></i> تجربة: ${url.substring(0,50)}...`;
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        const contentType = response.headers.get('content-type');
+                        if (contentType && contentType.includes('application/json')) {
+                            data = await response.json();
+                            successUrl = url;
+                            break;
+                        }
+                    }
+                } catch (e) { console.log("❌", e.message); }
+            }
+            
+            if (data) {
+                console.log("✅ نجح:", successUrl, data);
+                fetchedCategories = data.categories || data.Categories || data.types || [];
+                fetchedProducts = data.products || data.Products || data.services || data.Services || data.items || data.data || [];
+                
+                statusEl.classList.add("hidden");
+                resultEl.classList.remove("hidden");
+                resultEl.className = "bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-xs text-emerald-400";
+                resultEl.innerHTML = `✅ تم جلب ${fetchedCategories.length} أقسام و ${fetchedProducts.length} منتج`;
+                preview.classList.remove("hidden");
+                renderAPIPreview();
+                db.collection("activity_logs").add({action:"جلب من LibyaCards",url:successUrl,createdAt:firebase.firestore.FieldValue.serverTimestamp()}).then(loadAPILogs);
+            } else {
+                statusEl.classList.add("hidden");
+                resultEl.classList.remove("hidden");
+                resultEl.className = "bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-xs text-red-400";
+                resultEl.innerHTML = '❌ فشل الاتصال بجميع الروابط. <button onclick="loadMockData()" class="text-purple-400 underline">تحميل تجريبي</button>';
+            }
+        }
+
+        async function fetchFromAPI() {
+            const url = document.getElementById("apiUrl").value.trim();
+            const key = document.getElementById("apiKey").value.trim();
+            profitPercentage = parseFloat(document.getElementById("apiProfit").value) || 10;
+            if (!url) return alert("⚠️ أدخل رابط API");
+            
+            const statusEl = document.getElementById("apiStatus");
+            const resultEl = document.getElementById("apiResult");
+            const preview = document.getElementById("apiPreview");
+            
+            statusEl.classList.remove("hidden");
+            statusEl.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> جاري الاتصال...';
+            resultEl.classList.add("hidden");
+            preview.classList.add("hidden");
+            
+            let data = null;
+            let success = false;
+            
+            const methods = [
+                { headers: { 'Authorization': `Bearer ${key}`, 'Accept': 'application/json' } },
+                { headers: { 'X-API-Key': key, 'Accept': 'application/json' } },
+                { headers: { 'api-key': key, 'Accept': 'application/json' } },
+                { url: url.includes('?') ? `${url}&api_key=${key}` : `${url}?api_key=${key}`, headers: { 'Accept': 'application/json' } },
+                { url: url.includes('?') ? `${url}&key=${key}` : `${url}?key=${key}`, headers: { 'Accept': 'application/json' } }
+            ];
+            
+            for (const method of methods) {
+                try {
+                    const fetchUrl = method.url || url;
+                    const response = await fetch(fetchUrl, { headers: method.headers });
+                    if (response.ok) {
+                        const contentType = response.headers.get('content-type');
+                        if (contentType && contentType.includes('application/json')) {
+                            data = await response.json();
+                            success = true;
+                            break;
+                        }
+                    }
+                } catch (e) { console.log("❌", e.message); }
+            }
+            
+            if (success && data) {
+                let cats = [], prods = [];
+                if (data.categories) cats = data.categories;
+                else if (data.data?.categories) cats = data.data.categories;
+                else if (data.Categories) cats = data.Categories;
+                else if (data.types) cats = data.types;
+                else { const all = data.products || data.services || data.items || data.data || []; const names = [...new Set(all.map(p => p.category || p.categoryId || p.type).filter(Boolean))]; cats = names.map((n,i) => ({ id: `cat_${i}`, name: n })); }
+                
+                if (data.products) prods = data.products;
+                else if (data.data?.products) prods = data.data.products;
+                else if (data.services) prods = data.services;
+                else if (data.data?.services) prods = data.data.services;
+                else if (data.items) prods = data.items;
+                else if (Array.isArray(data)) prods = data;
+                else if (Array.isArray(data.data)) prods = data.data;
+                
+                fetchedCategories = cats;
+                fetchedProducts = prods;
+                
+                statusEl.classList.add("hidden");
+                resultEl.classList.remove("hidden");
+                resultEl.className = "bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-xs text-emerald-400";
+                resultEl.innerHTML = `✅ تم جلب ${cats.length} أقسام و ${prods.length} منتج`;
+                preview.classList.remove("hidden");
+                renderAPIPreview();
+                db.collection("activity_logs").add({action:`جلب من API`,url,createdAt:firebase.firestore.FieldValue.serverTimestamp()}).then(loadAPILogs);
+            } else {
+                statusEl.classList.add("hidden");
+                resultEl.classList.remove("hidden");
+                resultEl.className = "bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-xs text-red-400";
+                resultEl.innerHTML = '❌ فشل الاتصال. <button onclick="loadMockData()" class="text-purple-400 underline">تحميل تجريبي</button>';
+            }
+        }
+
+        function renderAPIPreview() {
+            document.getElementById("apiCategoriesList").innerHTML = fetchedCategories.map(c => `<div class="bg-[#0b0c22] p-3 rounded-xl border border-gray-700 text-center"><img src="${c.image||c.cover||''}" class="w-10 h-10 rounded-lg mx-auto mb-1 object-cover" onerror="this.style.display='none'"><p class="text-[11px] font-bold text-white">${c.name||c.title||'قسم'}</p></div>`).join('');
+            document.getElementById("apiProductsTable").innerHTML = fetchedProducts.map(p => { const op = parseFloat(p.price||p.priceUSD||0); const pa = (op*profitPercentage)/100; const fp = op+pa; const cat = fetchedCategories.find(c => c.id===p.categoryId); return `<tr class="border-b border-gray-800/40 text-[11px]"><td class="p-3 text-white font-bold">${p.name||'منتج'}</td><td class="p-3 text-gray-400">${op.toFixed(2)}$</td><td class="p-3 text-amber-400">+${profitPercentage}%</td><td class="p-3 gold-text font-bold">${(fp*6.80).toFixed(3)} د.ل</td><td class="p-3">${cat?cat.name:'---'}</td></tr>`; }).join('');
+        }
+
+        async function importAllToStore() {
+            if (!fetchedCategories.length && !fetchedProducts.length) return alert("⚠️ لا توجد بيانات");
+            if (!confirm(`استيراد ${fetchedCategories.length} أقسام و ${fetchedProducts.length} منتج؟`)) return;
+            const s = document.getElementById("apiStatus"); s.classList.remove("hidden"); s.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> جاري الاستيراد...';
+            try {
+                for (const cat of fetchedCategories) { const ex = allCategoriesList.find(c => c.name===cat.name||c.id===cat.id); const cd = { name: cat.name||cat.title||'قسم', image: cat.image||cat.cover||'', cover: cat.image||cat.cover||'', order: Date.now() }; if (ex) await db.collection("categories").doc(ex.id).update(cd); else { const r = await db.collection("categories").add(cd); allCategoriesList.push({ id: r.id, ...cd }); } }
+                for (const prod of fetchedProducts) { const op = parseFloat(prod.price||prod.priceUSD||0); const fp = op + (op*profitPercentage)/100; const cat = allCategoriesList.find(c => c.name===(fetchedCategories.find(fc=>fc.id===prod.categoryId)?.name)||c.id===prod.categoryId); await db.collection("products").add({ name: prod.name||'منتج', priceLYD: parseFloat((fp*6.80).toFixed(3)), price: parseFloat((fp*6.80).toFixed(3)), priceUSD: parseFloat(fp.toFixed(2)), image: prod.image||prod.img||'', img: prod.image||prod.img||'', description: prod.description||'', active: true, type: prod.type||'id', categoryId: cat?cat.id:'', sales: 0, order: Date.now() }); }
+                s.classList.add("hidden"); alert("✅ تم الاستيراد بنجاح!"); document.getElementById("apiPreview").classList.add("hidden"); document.getElementById("apiResult").classList.add("hidden"); loadCategories(); loadProducts(); loadStats(); loadAPILogs();
+            } catch (e) { s.classList.add("hidden"); alert("❌ " + e.message); }
+        }
+
         function loadUsers() { db.collection("users").onSnapshot(snap => { allUsers = []; snap.forEach(doc => { const u = doc.data(); u.uid = doc.id; allUsers.push(u); }); renderUsersTable(allUsers); }); }
-        function renderUsersTable(arr) { const tbody = document.getElementById("usersTableBody"); tbody.innerHTML = ""; if(!arr.length) { tbody.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-gray-500">لا يوجد مستخدمين</td></tr>'; return; } arr.forEach(u => { tbody.innerHTML += `<tr class="border-b border-gray-800/40"><td class="p-4 text-white">${u.username||u.name||'---'}</td><td class="p-4 font-mono">${u.phone||'---'}</td><td class="p-4 text-[11px]">${u.email||'---'}</td><td class="p-4 gold-text">${(u.balance||0).toFixed(4)}</td><td class="p-4">${u.role==='admin'?'👑 أدمن':'👤 مستخدم'}</td><td class="p-4"><input type="number" step="0.01" id="wallet_${u.uid}" class="w-16 bg-[#0b0c22] border border-gray-700 rounded p-1 text-center text-white text-xs" placeholder="مبلغ"><button onclick="updateWallet('${u.uid}','add')" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px]">+</button> <button onclick="updateWallet('${u.uid}','sub')" class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px]">-</button></td></tr>`; }); }
-        function updateWallet(uid, type) { const val = parseFloat(document.getElementById(`wallet_${uid}`).value); if(!val||val<=0) return; const user = allUsers.find(u=>u.uid===uid); if(!user) return; const newBal = type==='add' ? (user.balance||0)+val : Math.max(0,(user.balance||0)-val); db.collection("users").doc(uid).update({ balance: newBal }).then(() => { document.getElementById(`wallet_${uid}`).value=""; loadStats(); }); }
-        function searchUsers(term) { const t = term.toLowerCase().trim(); if(!t) { renderUsersTable(allUsers); return; } renderUsersTable(allUsers.filter(u => (u.username||'').toLowerCase().includes(t) || (u.name||'').toLowerCase().includes(t) || (u.phone||'').includes(t) || (u.email||'').toLowerCase().includes(t))); }
+        function renderUsersTable(arr) { const t = document.getElementById("usersTableBody"); t.innerHTML = ""; if (!arr.length) { t.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-gray-500">لا يوجد</td></tr>'; return; } arr.forEach(u => { t.innerHTML += `<tr class="border-b border-gray-800/40"><td class="p-4 text-white">${u.username||u.name||'---'}</td><td class="p-4 font-mono">${u.phone||'---'}</td><td class="p-4 text-[11px]">${u.email||'---'}</td><td class="p-4 gold-text">${(u.balance||0).toFixed(4)}</td><td class="p-4">${u.role==='admin'?'👑':'👤'}</td><td class="p-4"><input type="number" step="0.01" id="wallet_${u.uid}" class="w-16 bg-[#0b0c22] border border-gray-700 rounded p-1 text-center text-white text-xs" placeholder="مبلغ"><button onclick="updateWallet('${u.uid}','add')" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px]">+</button> <button onclick="updateWallet('${u.uid}','sub')" class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px]">-</button></td></tr>`; }); }
+        function updateWallet(uid, type) { const v = parseFloat(document.getElementById(`wallet_${uid}`).value); if (!v || v <= 0) return; const u = allUsers.find(x => x.uid === uid); if (!u) return; const nb = type === 'add' ? (u.balance||0)+v : Math.max(0,(u.balance||0)-v); db.collection("users").doc(uid).update({ balance: nb }).then(() => { document.getElementById(`wallet_${uid}`).value = ""; loadStats(); }); }
+        function searchUsers(term) { const t = term.toLowerCase().trim(); if (!t) { renderUsersTable(allUsers); return; } renderUsersTable(allUsers.filter(u => (u.username||'').toLowerCase().includes(t) || (u.name||'').toLowerCase().includes(t) || (u.phone||'').includes(t) || (u.email||'').toLowerCase().includes(t))); }
     </script>
 </body>
     </html>
