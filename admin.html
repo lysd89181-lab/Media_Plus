@@ -22,23 +22,29 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #0b0c22; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #24264d; border-radius: 4px; }
+        .animate-spin { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="text-gray-200 min-h-screen flex flex-col md:flex-row">
 
+    <!-- ==================== شاشة الحماية ==================== -->
     <div id="adminGuardScreen" class="fixed inset-0 bg-[#0b0c22] z-[999] flex flex-col items-center justify-center text-center p-4">
         <div class="card-bg p-8 rounded-2xl border border-gray-800 shadow-2xl max-w-sm w-full space-y-4">
-            <div class="w-16 h-16 bg-[#202142] rounded-full flex items-center justify-center text-2xl gold-text mx-auto border border-gray-700 animate-pulse"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="w-16 h-16 bg-[#202142] rounded-full flex items-center justify-center text-2xl gold-text mx-auto border border-gray-700 animate-pulse">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
             <h2 class="text-lg font-bold text-white">نظام التحقق من الصلاحيات</h2>
-            <p id="guardMessage" class="text-xs text-gray-400">جاري فحص رتبة الحساب...</p>
+            <p id="guardMessage" class="text-xs text-gray-400">جاري فحص رتبة الحساب في قاعدة البيانات...</p>
             <div id="guardSpinner" class="text-xl gold-text"><i class="fa-solid fa-circle-notch animate-spin"></i></div>
             <div id="guardActions" class="hidden pt-2 space-y-2">
-                <button onclick="bypassGuardForTesting()" class="w-full gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl">تخطي للفحص (وضع المطور)</button>
-                <a href="index.html" class="block bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold px-4 py-2 rounded-xl">العودة للرئيسية</a>
+                <button onclick="bypassGuardForTesting()" class="w-full gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-md">تخطي للفحص (وضع المطور)</button>
+                <a href="index.html" class="block bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition-colors">العودة للرئيسية</a>
             </div>
         </div>
     </div>
 
+    <!-- ==================== الشريط الجانبي ==================== -->
     <aside class="sidebar-bg w-full md:w-64 border-b md:border-b-0 md:border-l border-gray-800 flex flex-col justify-between shrink-0">
         <div>
             <div class="p-5 border-b border-gray-800 flex items-center justify-between">
@@ -46,59 +52,115 @@
                     <span class="gold-bg text-black px-2 py-0.5 rounded text-sm font-black">Media</span>
                     <span class="text-md font-bold text-white">Plus الإدارة</span>
                 </div>
-                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v4.0</span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded font-mono">v5.0</span>
             </div>
+
             <nav class="p-3 space-y-1">
-                <button onclick="switchTab('dashboardTab', this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
-                <button onclick="switchTab('ordersTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-cart-shopping"></i> الطلبات</button>
-                <button onclick="switchTab('categoriesTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-tags"></i> الأقسام</button>
-                <button onclick="switchTab('productsTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-cubes"></i> المنتجات والخدمات</button>
-                <button onclick="switchTab('usersTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-users"></i> المستخدمين</button>
+                <button onclick="switchTab('dashboardTab', this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-chart-pie text-sm"></i> <span>📊 الإحصائيات</span>
+                </button>
+                <button onclick="switchTab('ordersTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-cart-shopping text-sm"></i> <span>📦 الطلبات</span>
+                </button>
+                <button onclick="switchTab('categoriesTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-tags text-sm"></i> <span>🏷️ الأقسام</span>
+                </button>
+                <button onclick="switchTab('productsTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-cubes text-sm"></i> <span>🎮 المنتجات والخدمات</span>
+                </button>
+                <button onclick="switchTab('usersTab', this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#161733] px-4 py-3 rounded-xl text-xs flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-users text-sm"></i> <span>👥 المستخدمين</span>
+                </button>
             </nav>
         </div>
+
         <div class="p-4 border-t border-gray-800 bg-[#08091a] flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg gold-bg text-black flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user-gear"></i></div>
-                <div><p class="text-xs font-bold text-white" id="adminLabelName">المدير</p><p class="text-[9px] text-gray-500">تحكم كامل</p></div>
+                <div>
+                    <p class="text-xs font-bold text-white max-w-[120px] truncate" id="adminLabelName">المدير العام</p>
+                    <p class="text-[9px] text-gray-500">التحكم الكامل</p>
+                </div>
             </div>
-            <button onclick="firebase.auth().signOut();" class="text-gray-500 hover:text-red-400 text-sm"><i class="fa-solid fa-power-off"></i></button>
+            <button onclick="auth.signOut()" class="text-gray-500 hover:text-red-400 text-sm p-1 transition-colors">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
         </div>
     </aside>
 
+    <!-- ==================== المحتوى الرئيسي ==================== -->
     <main class="flex-grow p-4 md:p-8 max-w-7xl w-full mx-auto space-y-6 overflow-x-hidden">
 
         <!-- ==================== لوحة الإحصائيات ==================== -->
         <section id="dashboardTab" class="admin-tab space-y-6">
-            <h1 class="text-xl font-black text-white">📊 نظرة عامة</h1>
+            <div>
+                <h1 class="text-xl font-black text-white">📊 نظرة عامة على النظام</h1>
+                <p class="text-xs text-gray-400 mt-0.5">متابعة فورية للمبيعات والخدمات والعمليات</p>
+            </div>
+
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="card-bg p-4 rounded-2xl border border-gray-800"><p class="text-[10px] text-gray-400">إجمالي المبيعات</p><p class="text-xl font-black gold-text" id="statRevenue">0.00 د.ل</p></div>
-                <div class="card-bg p-4 rounded-2xl border border-gray-800"><p class="text-[10px] text-gray-400">طلبات معلقة</p><p class="text-xl font-black text-red-400" id="statPendingOrders">0</p></div>
-                <div class="card-bg p-4 rounded-2xl border border-gray-800"><p class="text-[10px] text-gray-400">المستخدمين</p><p class="text-xl font-black text-blue-400" id="statTotalUsers">0</p></div>
-                <div class="card-bg p-4 rounded-2xl border border-gray-800"><p class="text-[10px] text-gray-400">منتجات نشطة</p><p class="text-xl font-black text-emerald-400" id="statActiveProducts">0</p></div>
+                <div class="card-bg p-4 rounded-2xl border border-gray-800 flex items-center justify-between shadow">
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">إجمالي المبيعات</p>
+                        <p class="text-xl font-black gold-text" id="statRevenue">0.00 <span class="text-xs font-normal">د.ل</span></p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-md"><i class="fa-solid fa-sack-dollar"></i></div>
+                </div>
+                <div class="card-bg p-4 rounded-2xl border border-gray-800 flex items-center justify-between shadow">
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">طلبات معلقة</p>
+                        <p class="text-xl font-black text-red-400" id="statPendingOrders">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 text-md"><i class="fa-solid fa-clock"></i></div>
+                </div>
+                <div class="card-bg p-4 rounded-2xl border border-gray-800 flex items-center justify-between shadow">
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">المستخدمين</p>
+                        <p class="text-xl font-black text-blue-400" id="statTotalUsers">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-md"><i class="fa-solid fa-users"></i></div>
+                </div>
+                <div class="card-bg p-4 rounded-2xl border border-gray-800 flex items-center justify-between shadow">
+                    <div class="space-y-1">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">منتجات نشطة</p>
+                        <p class="text-xl font-black text-emerald-400" id="statActiveProducts">0</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-md"><i class="fa-solid fa-bolt"></i></div>
+                </div>
             </div>
         </section>
 
         <!-- ==================== الطلبات ==================== -->
         <section id="ordersTab" class="admin-tab hidden space-y-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-black text-white">📦 الطلبات</h1>
-                <button onclick="deleteSelectedOrders()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف المحدد</button>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-xl font-black text-white">📦 إدارة طلبات الشراء</h1>
+                    <p class="text-xs text-gray-400 mt-0.5">مراجعة الطلبات وتحديث حالتها مع الحذف الجماعي</p>
+                </div>
+                <button onclick="deleteSelectedOrders()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-trash-can"></i> حذف الطلبات المحددة
+                </button>
             </div>
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
+
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden shadow-xl">
                 <div class="overflow-x-auto custom-scrollbar">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase">
+                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase tracking-wider border-b border-gray-800">
                             <tr>
-                                <th class="p-4"><input type="checkbox" id="selectAllOrders" onclick="toggleSelectAll('orderCheckbox', this)" class="accent-[#f5a623]"></th>
+                                <th class="p-4 text-center w-12">
+                                    <input type="checkbox" id="selectAllOrders" onclick="toggleSelectAll('orderCheckbox', this)" class="accent-[#f5a623] h-4 w-4 rounded cursor-pointer">
+                                </th>
                                 <th class="p-4">العميل</th>
                                 <th class="p-4">المنتج</th>
                                 <th class="p-4">ID اللاعب</th>
                                 <th class="p-4">المبلغ</th>
                                 <th class="p-4">الحالة</th>
-                                <th class="p-4">الإجراء</th>
+                                <th class="p-4 text-center">الإجراء</th>
                             </tr>
                         </thead>
-                        <tbody id="ordersTableBody"><tr><td colspan="7" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
+                        <tbody id="ordersTableBody" class="divide-y divide-gray-800/60">
+                            <tr><td colspan="7" class="text-center p-8 text-gray-500">جاري تحميل سجلات الطلبات...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -106,64 +168,148 @@
 
         <!-- ==================== الأقسام ==================== -->
         <section id="categoriesTab" class="admin-tab hidden space-y-6">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-black text-white">🏷️ الأقسام</h1>
-                <button onclick="openCategoryModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة قسم</button>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-xl font-black text-white">🏷️ إدارة الأقسام</h1>
+                    <p class="text-xs text-gray-400 mt-0.5">التحكم في أسماء وعناوين الأقسام المعروضة في المتجر</p>
+                </div>
+                <button onclick="openCategoryModal()" class="gold-bg hover:bg-yellow-600 text-black text-xs font-bold px-4 py-2.5 rounded-xl shadow-md flex items-center gap-2 transition-all">
+                    <i class="fa-solid fa-plus"></i> إضافة قسم جديد
+                </button>
             </div>
 
             <!-- مودال القسم -->
-            <div id="categoryModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-lg mx-auto space-y-4">
-                <div class="flex justify-between"><h3 id="catModalTitle" class="text-sm font-bold">قسم جديد</h3><button onclick="closeCategoryModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div>
+            <div id="categoryModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 shadow-2xl max-w-md mx-auto space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                    <h3 id="catModalTitle" class="text-sm font-bold text-white">إضافة قسم جديد</h3>
+                    <button onclick="closeCategoryModal()" class="text-gray-500 hover:text-white text-md"><i class="fa-solid fa-xmark"></i></button>
+                </div>
                 <form onsubmit="saveCategory(event)" class="space-y-3 text-xs">
                     <input type="hidden" id="catId">
-                    <div><label class="text-gray-400">اسم القسم *</label><input type="text" id="catName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">رابط الصورة (GitHub)</label><input type="text" id="catImage" placeholder="https://raw.githubusercontent.com/..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div>
-                    <div><label class="text-gray-400">الترتيب</label><input type="number" id="catOrder" value="1" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <button type="submit" class="gold-bg text-black font-bold py-3 px-6 rounded-xl w-full">حفظ</button>
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">اسم القسم <span class="text-red-500">*</span></label>
+                        <input type="text" id="catName" required placeholder="مثال: شدات ببجي" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">رابط الصورة (GitHub)</label>
+                        <input type="text" id="catImage" placeholder="https://raw.githubusercontent.com/..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623] font-mono text-[11px]">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">الترتيب</label>
+                        <input type="number" id="catOrder" value="1" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                    </div>
+                    <div class="pt-2">
+                        <button type="submit" class="gold-bg hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-xl text-xs shadow w-full">حفظ القسم</button>
+                    </div>
                 </form>
             </div>
 
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
-                <table class="w-full text-right text-xs">
-                    <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">الصورة</th><th class="p-4">الاسم</th><th class="p-4">الترتيب</th><th class="p-4">تحكم</th></tr></thead>
-                    <tbody id="categoriesTableBody"><tr><td colspan="4" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
-                </table>
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden shadow-lg">
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-right text-xs">
+                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase border-b border-gray-800">
+                            <tr>
+                                <th class="p-4">الصورة</th>
+                                <th class="p-4">اسم القسم</th>
+                                <th class="p-4">الترتيب</th>
+                                <th class="p-4 text-center">التحكم</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTableBody" class="divide-y divide-gray-800/60">
+                            <tr><td colspan="4" class="text-center p-8 text-gray-500">جاري مزامنة الأقسام...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <!-- ==================== المنتجات ==================== -->
         <section id="productsTab" class="admin-tab hidden space-y-6">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-black text-white">🎮 المنتجات والخدمات</h1>
-                <div class="flex gap-2">
-                    <button onclick="deleteSelectedProducts()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف المحدد</button>
-                    <button onclick="openProductModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة منتج</button>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-xl font-black text-white">🎮 إدارة المنتجات والخدمات</h1>
+                    <p class="text-xs text-gray-400 mt-0.5">التحكم الكامل بجميع منتجات المتجر</p>
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="deleteSelectedProducts()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-trash-can"></i> حذف المحدد
+                    </button>
+                    <button onclick="openProductModal()" class="gold-bg hover:bg-yellow-600 text-black text-xs font-bold px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 transition-all shrink-0">
+                        <i class="fa-solid fa-plus"></i> إضافة منتج
+                    </button>
                 </div>
             </div>
 
             <!-- مودال المنتج -->
-            <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4">
-                <div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div>
+            <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 shadow-2xl max-w-2xl mx-auto space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                    <h3 id="prodModalTitle" class="text-sm font-bold text-white">إضافة منتج جديد</h3>
+                    <button onclick="closeProductModal()" class="text-gray-500 hover:text-white text-md"><i class="fa-solid fa-xmark"></i></button>
+                </div>
                 <form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                     <input type="hidden" id="prodId">
-                    <div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">السعر بالدينار (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">السعر بالدولار ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div>
-                    <div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></select></div>
-                    <div><label class="text-gray-400">النوع</label><select id="prodType" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="id">معرف لاعب (ID)</option><option value="phone">رقم هاتف</option><option value="none">بدون إدخال</option></select></div>
-                    <div class="md:col-span-2"><label class="text-gray-400">رابط الصورة (GitHub)</label><input type="text" id="prodImage" placeholder="https://raw.githubusercontent.com/..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div>
-                    <div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></textarea></div>
-                    <div class="md:col-span-2"><label class="text-gray-400">حالة التفعيل</label><select id="prodActive" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="true">نشط ✅</option><option value="false">مخفي ❌</option></select></div>
-                    <div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 px-6 rounded-xl w-full">حفظ المنتج</button></div>
+                    
+                    <div class="md:col-span-2 space-y-1.5">
+                        <label class="text-gray-400 block font-bold">اسم المنتج <span class="text-red-500">*</span></label>
+                        <input type="text" id="prodName" required placeholder="مثال: شدات ببجي 60UC" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">السعر بالدينار (د.ل) <span class="text-red-500">*</span></label>
+                        <input type="number" step="0.001" id="prodPriceLYD" required placeholder="10.350" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">السعر بالدولار ($)</label>
+                        <input type="number" step="0.01" id="prodPriceUSD" placeholder="1.00" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">القسم</label>
+                        <select id="prodCategory" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                            <option value="">اختر القسم...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="text-gray-400 block font-bold">نوع الخدمة</label>
+                        <select id="prodType" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                            <option value="id">🎮 معرف لاعب (ID)</option>
+                            <option value="phone">📞 رقم هاتف</option>
+                            <option value="none">📦 بدون إدخال</option>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2 space-y-1.5">
+                        <label class="text-gray-400 block font-bold">رابط الصورة (GitHub)</label>
+                        <input type="text" id="prodImage" placeholder="https://raw.githubusercontent.com/username/repo/main/image.jpg" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623] font-mono text-[11px]">
+                    </div>
+                    
+                    <div class="md:col-span-2 space-y-1.5">
+                        <label class="text-gray-400 block font-bold">الوصف</label>
+                        <textarea id="prodDescription" rows="2" placeholder="وصف مختصر للمنتج..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]"></textarea>
+                    </div>
+                    
+                    <div class="md:col-span-2 space-y-1.5">
+                        <label class="text-gray-400 block font-bold">حالة التفعيل</label>
+                        <select id="prodActive" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-[#f5a623]">
+                            <option value="true">✅ نشط - معروض للبيع</option>
+                            <option value="false">❌ مخفي - غير معروض</option>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2 pt-2">
+                        <button type="submit" class="gold-bg hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-xl text-xs shadow w-full">حفظ المنتج</button>
+                    </div>
                 </form>
             </div>
 
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden shadow-lg">
                 <div class="overflow-x-auto custom-scrollbar">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase">
+                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase border-b border-gray-800">
                             <tr>
-                                <th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox', this)" class="accent-[#f5a623]"></th>
+                                <th class="p-4 text-center w-12"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox', this)" class="accent-[#f5a623] h-4 w-4 rounded cursor-pointer"></th>
                                 <th class="p-4">الصورة</th>
                                 <th class="p-4">الاسم</th>
                                 <th class="p-4">السعر (د.ل)</th>
@@ -172,10 +318,12 @@
                                 <th class="p-4">النوع</th>
                                 <th class="p-4">الحالة</th>
                                 <th class="p-4">المبيعات</th>
-                                <th class="p-4">تحكم</th>
+                                <th class="p-4 text-center">تحكم</th>
                             </tr>
                         </thead>
-                        <tbody id="productsTableBody"><tr><td colspan="10" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
+                        <tbody id="productsTableBody" class="divide-y divide-gray-800/60">
+                            <tr><td colspan="10" class="text-center p-8 text-gray-500">جاري مزامنة المنتجات...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -183,19 +331,42 @@
 
         <!-- ==================== المستخدمين ==================== -->
         <section id="usersTab" class="admin-tab hidden space-y-4">
-            <h1 class="text-xl font-black text-white">👥 المستخدمين</h1>
-            <input type="text" oninput="searchUsers(this.value)" placeholder="🔍 بحث عن مستخدم..." class="w-full max-w-xs bg-[#0b0c22] border border-gray-700 rounded-xl py-2.5 px-4 text-white text-xs">
-            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden">
-                <table class="w-full text-right text-xs">
-                    <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">الاسم</th><th class="p-4">الهاتف</th><th class="p-4">الإيميل</th><th class="p-4">الرصيد</th><th class="p-4">الرتبة</th><th class="p-4">شحن/خصم</th></tr></thead>
-                    <tbody id="usersTableBody"><tr><td colspan="6" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody>
-                </table>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-xl font-black text-white">👥 إدارة المستخدمين</h1>
+                    <p class="text-xs text-gray-400 mt-0.5">استعراض حسابات المستخدمين وتعديل أرصدتهم</p>
+                </div>
+                <div class="relative max-w-xs w-full">
+                    <input type="text" oninput="searchUsers(this.value)" placeholder="🔍 بحث عن مستخدم..." class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl py-2.5 pr-9 pl-3 text-white text-xs focus:outline-none focus:border-[#f5a623]">
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 text-xs"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+            </div>
+
+            <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden shadow-xl">
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-right text-xs">
+                        <thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase border-b border-gray-800">
+                            <tr>
+                                <th class="p-4">اسم المستخدم</th>
+                                <th class="p-4">الهاتف</th>
+                                <th class="p-4">البريد الإلكتروني</th>
+                                <th class="p-4">الرصيد (د.ل)</th>
+                                <th class="p-4">الرتبة</th>
+                                <th class="p-4 text-center">شحن / خصم</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody" class="divide-y divide-gray-800/60">
+                            <tr><td colspan="6" class="text-center p-8 text-gray-500">جاري جلب بيانات المستخدمين...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
     </main>
 
     <script>
+        // ==================== Firebase ====================
         const firebaseConfig = {
             apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
             authDomain: "cd-card-87365.firebaseapp.com",
@@ -212,17 +383,21 @@
         // ==================== الحماية ====================
         auth.onAuthStateChanged(user => {
             if (user) {
-                db.collection("users").doc(user.uid).get().then(doc => {
+                db.collection("users").doc(user.uid).get()
+                .then(doc => {
                     if (doc.exists && doc.data().role === "admin") {
                         document.getElementById("adminGuardScreen").classList.add("hidden");
-                        document.getElementById("adminLabelName").innerText = doc.data().name || "المدير";
+                        document.getElementById("adminLabelName").innerText = doc.data().username || doc.data().name || "المدير العام";
                         initDashboard();
                     } else {
-                        showGuardFailure("⚠️ ليس لديك صلاحيات الأدمن!");
+                        showGuardFailure("⚠️ هذا الحساب لا يملك صلاحيات الأدمن! الرجاء التواصل مع مدير النظام.");
                     }
-                }).catch(() => showGuardFailure("❌ خطأ في فحص الصلاحيات"));
+                })
+                .catch(() => {
+                    showGuardFailure("❌ حدث خطأ أثناء فحص الصلاحيات. تأكد من اتصالك بالإنترنت.");
+                });
             } else {
-                showGuardFailure("🔒 يرجى تسجيل الدخول أولاً");
+                showGuardFailure("🔒 يرجى تسجيل الدخول بحساب مسؤول للوصول إلى لوحة التحكم.");
             }
         });
 
@@ -234,7 +409,7 @@
 
         function bypassGuardForTesting() {
             document.getElementById("adminGuardScreen").classList.add("hidden");
-            document.getElementById("adminLabelName").innerText = "وضع المطور";
+            document.getElementById("adminLabelName").innerText = "وضع المطور والفحص";
             initDashboard();
         }
 
@@ -244,15 +419,20 @@
             loadCategories();
             loadProducts();
             loadUsers();
-            loadCategoriesIntoSelect();
         }
 
+        // ==================== تبديل الألسنة ====================
         function switchTab(tabId, btn) {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.add('hidden'));
             document.getElementById(tabId).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('gold-bg', 'text-black'); b.classList.add('text-gray-400'); });
-            btn.classList.add('gold-bg', 'text-black');
-            btn.classList.remove('text-gray-400');
+            
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('gold-bg', 'text-black', 'font-bold');
+                b.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-[#161733]');
+            });
+            
+            btn.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-[#161733]');
+            btn.classList.add('gold-bg', 'text-black', 'font-bold');
         }
 
         function toggleSelectAll(className, master) {
@@ -268,7 +448,7 @@
                     if (d.status === "completed") rev += Number(d.amount || d.price || 0);
                     if (d.status === "pending") pend++;
                 });
-                document.getElementById("statRevenue").innerText = rev.toFixed(2) + ' د.ل';
+                document.getElementById("statRevenue").innerHTML = `${rev.toFixed(2)} <span class="text-xs font-normal">د.ل</span>`;
                 document.getElementById("statPendingOrders").innerText = pend;
             });
             db.collection("users").get().then(s => document.getElementById("statTotalUsers").innerText = s.size);
@@ -280,20 +460,30 @@
             db.collection("orders").orderBy("createdAt", "desc").onSnapshot(snap => {
                 const tbody = document.getElementById("ordersTableBody");
                 tbody.innerHTML = "";
-                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6 text-gray-500">لا توجد طلبات</td></tr>'; return; }
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6 text-gray-500">لا توجد طلبات شراء حالياً.</td></tr>';
+                    return;
+                }
                 snap.forEach(doc => {
                     const o = doc.data();
-                    const badge = o.status === "completed" ? '<span class="text-emerald-400">✅ مكتمل</span>' : '<span class="text-red-400">⏳ معلق</span>';
+                    const badge = o.status === "completed" 
+                        ? '<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px]">✅ مكتمل</span>' 
+                        : '<span class="bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-[10px]">⏳ معلق</span>';
+                    
                     const tr = document.createElement("tr");
-                    tr.className = "border-b border-gray-800/40";
+                    tr.className = "hover:bg-[#1c1d3a] border-b border-gray-800/40 text-gray-300";
                     tr.innerHTML = `
-                        <td class="p-4"><input type="checkbox" value="${doc.id}" class="orderCheckbox accent-[#f5a623]"></td>
-                        <td class="p-4 text-white">${o.userName || '---'}</td>
-                        <td class="p-4 gold-text">${o.serviceName || o.cardName || '---'}</td>
-                        <td class="p-4 font-mono">${o.playerID || '---'}</td>
-                        <td class="p-4">${(o.amount || o.price || 0).toFixed(2)} د.ل</td>
+                        <td class="p-4 text-center"><input type="checkbox" value="${doc.id}" class="orderCheckbox accent-[#f5a623] h-4 w-4 rounded cursor-pointer"></td>
+                        <td class="p-4 font-bold text-white">${o.userName || '---'}</td>
+                        <td class="p-4 gold-text font-medium">${o.serviceName || o.cardName || '---'}</td>
+                        <td class="p-4 font-mono font-bold text-white">${o.playerID || '---'}</td>
+                        <td class="p-4 font-bold">${(o.amount || o.price || 0).toFixed(2)} د.ل</td>
                         <td class="p-4">${badge}</td>
-                        <td class="p-4">${o.status === 'pending' ? `<button onclick="updateOrderStatus('${doc.id}')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">قبول</button>` : '<span class="text-gray-500">تم</span>'}</td>
+                        <td class="p-4 text-center">
+                            ${o.status === 'pending' 
+                                ? `<button onclick="updateOrderStatus('${doc.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded text-[10px] shadow">قبول</button>` 
+                                : '<span class="text-gray-500 text-[10px]">تمت المعالجة</span>'}
+                        </td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -306,11 +496,15 @@
 
         function deleteSelectedOrders() {
             const cbs = document.querySelectorAll('.orderCheckbox:checked');
-            if (!cbs.length) return alert("حدد طلباً واحداً على الأقل");
-            if (!confirm(`حذف ${cbs.length} طلب؟`)) return;
+            if (!cbs.length) { alert("يرجى تحديد طلب واحد على الأقل."); return; }
+            if (!confirm(`هل أنت متأكد من حذف ${cbs.length} طلب نهائياً؟`)) return;
             const batch = db.batch();
             cbs.forEach(cb => batch.delete(db.collection("orders").doc(cb.value)));
-            batch.commit().then(() => { document.getElementById("selectAllOrders").checked = false; loadStats(); });
+            batch.commit().then(() => {
+                document.getElementById("selectAllOrders").checked = false;
+                loadStats();
+                alert("✅ تم حذف الطلبات المحددة بنجاح.");
+            });
         }
 
         // ==================== الأقسام ====================
@@ -319,27 +513,32 @@
                 allCategoriesList = [];
                 const tbody = document.getElementById("categoriesTableBody");
                 tbody.innerHTML = "";
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center p-6 text-gray-500">لا توجد أقسام مضافة حالياً.</td></tr>';
+                }
                 snap.forEach(doc => {
                     const c = doc.data(); c.id = doc.id;
                     allCategoriesList.push(c);
                     const tr = document.createElement("tr");
-                    tr.className = "border-b border-gray-800/40";
+                    tr.className = "hover:bg-[#1c1d3a] border-b border-gray-800/40 text-gray-300";
                     tr.innerHTML = `
-                        <td class="p-4"><img src="${c.image || c.cover || ''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td>
-                        <td class="p-4 text-white font-bold">${c.name}</td>
-                        <td class="p-4">${c.order || 0}</td>
                         <td class="p-4">
-                            <button onclick="editCategory('${doc.id}')" class="text-blue-400 hover:underline text-[11px]"><i class="fa-solid fa-pen"></i> تعديل</button>
-                            <button onclick="deleteCategory('${doc.id}')" class="text-red-400 hover:underline text-[11px] mr-2"><i class="fa-solid fa-trash"></i> حذف</button>
+                            <img src="${c.image || c.cover || ''}" class="w-10 h-10 rounded-lg object-cover bg-[#0b0c22]" onerror="this.style.display='none'">
+                        </td>
+                        <td class="p-4 font-bold text-white">${c.name}</td>
+                        <td class="p-4">${c.order || 0}</td>
+                        <td class="p-4 text-center">
+                            <button onclick="editCategory('${doc.id}')" class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 bg-blue-500/10 rounded border border-blue-500/10"><i class="fa-solid fa-pen"></i> تعديل</button>
+                            <button onclick="deleteCategory('${doc.id}')" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-red-500/10 rounded border border-red-500/10 mr-1"><i class="fa-solid fa-trash-can"></i> حذف</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
                 });
-                loadCategoriesIntoSelect();
+                updateCategorySelect();
             });
         }
 
-        function loadCategoriesIntoSelect() {
+        function updateCategorySelect() {
             const select = document.getElementById("prodCategory");
             if (!select) return;
             select.innerHTML = '<option value="">اختر القسم...</option>';
@@ -385,7 +584,9 @@
         }
 
         function deleteCategory(id) {
-            if (confirm("حذف هذا القسم؟")) db.collection("categories").doc(id).delete();
+            if (confirm("⚠️ هل أنت متأكد من حذف هذا القسم؟")) {
+                db.collection("categories").doc(id).delete();
+            }
         }
 
         // ==================== المنتجات ====================
@@ -393,25 +594,31 @@
             db.collection("products").orderBy("order").onSnapshot(snap => {
                 const tbody = document.getElementById("productsTableBody");
                 tbody.innerHTML = "";
-                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="10" class="text-center p-6 text-gray-500">لا توجد منتجات</td></tr>'; return; }
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="10" class="text-center p-6 text-gray-500">لا توجد منتجات مضافة حالياً.</td></tr>';
+                    return;
+                }
                 snap.forEach(doc => {
                     const p = doc.data();
                     const cat = allCategoriesList.find(c => c.id === p.categoryId);
+                    const typeLabel = p.type === 'phone' ? '📞 هاتف' : p.type === 'none' ? '📦 مباشر' : '🎮 ID';
+                    const activeLabel = p.active !== false ? '✅ نشط' : '❌ مخفي';
+                    
                     const tr = document.createElement("tr");
-                    tr.className = "border-b border-gray-800/40";
+                    tr.className = "hover:bg-[#1c1d3a] border-b border-gray-800/40 text-gray-300";
                     tr.innerHTML = `
-                        <td class="p-4"><input type="checkbox" value="${doc.id}" class="productCheckbox accent-[#f5a623]"></td>
-                        <td class="p-4"><img src="${p.image || p.img || ''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td>
-                        <td class="p-4 text-white font-bold">${p.name}</td>
-                        <td class="p-4 gold-text">${(p.priceLYD || p.price || 0).toFixed(3)}</td>
+                        <td class="p-4 text-center"><input type="checkbox" value="${doc.id}" class="productCheckbox accent-[#f5a623] h-4 w-4 rounded cursor-pointer"></td>
+                        <td class="p-4"><img src="${p.image || p.img || ''}" class="w-10 h-10 rounded-lg object-cover bg-[#0b0c22]" onerror="this.style.display='none'"></td>
+                        <td class="p-4 font-bold text-white text-xs">${p.name}</td>
+                        <td class="p-4 font-bold gold-text">${(p.priceLYD || p.price || 0).toFixed(3)}</td>
                         <td class="p-4 text-gray-400">${(p.priceUSD || 0).toFixed(2)}$</td>
                         <td class="p-4">${cat ? cat.name : '---'}</td>
-                        <td class="p-4">${p.type === 'phone' ? '📞 هاتف' : p.type === 'none' ? '📦 مباشر' : '🎮 ID'}</td>
-                        <td class="p-4">${p.active !== false ? '✅ نشط' : '❌ مخفي'}</td>
+                        <td class="p-4">${typeLabel}</td>
+                        <td class="p-4">${activeLabel}</td>
                         <td class="p-4">${p.sales || 0}</td>
-                        <td class="p-4">
-                            <button onclick="editProduct('${doc.id}')" class="text-blue-400 hover:underline text-[11px]"><i class="fa-solid fa-pen"></i> تعديل</button>
-                            <button onclick="deleteProduct('${doc.id}')" class="text-red-400 hover:underline text-[11px] mr-2"><i class="fa-solid fa-trash"></i> حذف</button>
+                        <td class="p-4 text-center">
+                            <button onclick="editProduct('${doc.id}')" class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 bg-blue-500/10 rounded border border-blue-500/10"><i class="fa-solid fa-pen"></i> تعديل</button>
+                            <button onclick="deleteProduct('${doc.id}')" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-red-500/10 rounded border border-red-500/10 mr-1"><i class="fa-solid fa-trash-can"></i> حذف</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -428,6 +635,7 @@
             document.getElementById("prodDescription").value = "";
             document.getElementById("prodActive").value = "true";
             document.getElementById("prodType").value = "id";
+            document.getElementById("prodCategory").value = "";
             document.getElementById("prodModalTitle").innerText = "إضافة منتج جديد";
             document.getElementById("productModal").classList.remove("hidden");
         }
@@ -445,7 +653,7 @@
                 document.getElementById("prodActive").value = String(p.active !== false);
                 document.getElementById("prodType").value = p.type || "id";
                 document.getElementById("prodCategory").value = p.categoryId || "";
-                document.getElementById("prodModalTitle").innerText = "تعديل المنتج";
+                document.getElementById("prodModalTitle").innerText = "تعديل المنتج: " + (p.name || "");
                 document.getElementById("productModal").classList.remove("hidden");
             });
         }
@@ -468,29 +676,43 @@
                 categoryId: document.getElementById("prodCategory").value,
                 order: Date.now()
             };
-            if (id) db.collection("products").doc(id).update(data);
-            else db.collection("products").add({...data, sales: 0});
+            if (id) {
+                db.collection("products").doc(id).update(data);
+            } else {
+                db.collection("products").add({...data, sales: 0});
+            }
             closeProductModal();
+            loadStats();
         }
 
         function deleteProduct(id) {
-            if (confirm("حذف هذا المنتج؟")) db.collection("products").doc(id).delete();
+            if (confirm("⚠️ هل أنت متأكد من حذف هذا المنتج؟")) {
+                db.collection("products").doc(id).delete();
+            }
         }
 
         function deleteSelectedProducts() {
             const cbs = document.querySelectorAll('.productCheckbox:checked');
-            if (!cbs.length) return alert("حدد منتجاً واحداً على الأقل");
-            if (!confirm(`حذف ${cbs.length} منتج؟`)) return;
+            if (!cbs.length) { alert("يرجى تحديد منتج واحد على الأقل."); return; }
+            if (!confirm(`⚠️ هل أنت متأكد من حذف ${cbs.length} منتج نهائياً؟`)) return;
             const batch = db.batch();
             cbs.forEach(cb => batch.delete(db.collection("products").doc(cb.value)));
-            batch.commit().then(() => document.getElementById("selectAllProducts").checked = false);
+            batch.commit().then(() => {
+                document.getElementById("selectAllProducts").checked = false;
+                loadStats();
+                alert("✅ تم حذف المنتجات المحددة بنجاح.");
+            });
         }
 
         // ==================== المستخدمين ====================
         function loadUsers() {
             db.collection("users").onSnapshot(snap => {
                 allUsers = [];
-                snap.forEach(doc => { const u = doc.data(); u.uid = doc.id; allUsers.push(u); });
+                snap.forEach(doc => {
+                    const u = doc.data();
+                    u.uid = doc.id;
+                    allUsers.push(u);
+                });
                 renderUsersTable(allUsers);
             });
         }
@@ -498,19 +720,29 @@
         function renderUsersTable(arr) {
             const tbody = document.getElementById("usersTableBody");
             tbody.innerHTML = "";
+            if (!arr.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-gray-500">لا يوجد مستخدمين مطابقين.</td></tr>';
+                return;
+            }
             arr.forEach(u => {
                 const tr = document.createElement("tr");
-                tr.className = "border-b border-gray-800/40";
+                tr.className = "hover:bg-[#1c1d3a] border-b border-gray-800/40 text-gray-300 text-xs";
                 tr.innerHTML = `
-                    <td class="p-4 text-white">${u.name || '---'}</td>
+                    <td class="p-4 font-bold text-white">${u.username || u.name || '---'}</td>
                     <td class="p-4 font-mono">${u.phone || '---'}</td>
-                    <td class="p-4 text-[11px]">${u.email || '---'}</td>
-                    <td class="p-4 gold-text">${(u.balance || 0).toFixed(4)}</td>
-                    <td class="p-4">${u.role === 'admin' ? '👑 أدمن' : '👤 مستخدم'}</td>
+                    <td class="p-4 font-mono text-gray-400 text-[11px]">${u.email || '---'}</td>
+                    <td class="p-4 font-bold gold-text">${(u.balance || 0).toFixed(4)} د.ل</td>
                     <td class="p-4">
-                        <input type="number" step="0.01" id="wallet_${u.uid}" class="w-16 bg-[#0b0c22] border border-gray-700 rounded p-1 text-center text-white text-xs" placeholder="مبلغ">
-                        <button onclick="updateWallet('${u.uid}', 'add')" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px]">+</button>
-                        <button onclick="updateWallet('${u.uid}', 'sub')" class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px]">-</button>
+                        <span class="px-2 py-0.5 rounded text-[10px] ${u.role === 'admin' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/20' : 'bg-blue-500/10 text-blue-400'}">
+                            ${u.role === 'admin' ? '👑 أدمن' : '👤 مستخدم'}
+                        </span>
+                    </td>
+                    <td class="p-4 text-center">
+                        <div class="flex items-center justify-center gap-1">
+                            <input type="number" step="0.01" id="wallet_${u.uid}" placeholder="مبلغ" class="w-16 bg-[#0b0c22] border border-gray-700 rounded-lg p-1.5 text-center text-white text-xs focus:outline-none focus:border-[#f5a623]">
+                            <button onclick="updateWallet('${u.uid}', 'add')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded text-[11px] shadow-sm"><i class="fa-solid fa-plus"></i></button>
+                            <button onclick="updateWallet('${u.uid}', 'sub')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-[11px] shadow-sm"><i class="fa-solid fa-minus"></i></button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -522,8 +754,8 @@
             if (!val || val <= 0) return;
             const user = allUsers.find(u => u.uid === uid);
             if (!user) return;
-            const newBal = type === 'add' ? (user.balance || 0) + val : (user.balance || 0) - val;
-            db.collection("users").doc(uid).update({ balance: Math.max(0, newBal) }).then(() => {
+            const newBal = type === 'add' ? (user.balance || 0) + val : Math.max(0, (user.balance || 0) - val);
+            db.collection("users").doc(uid).update({ balance: newBal }).then(() => {
                 document.getElementById(`wallet_${uid}`).value = "";
                 loadStats();
             });
@@ -532,8 +764,13 @@
         function searchUsers(term) {
             const t = term.toLowerCase().trim();
             if (!t) { renderUsersTable(allUsers); return; }
-            renderUsersTable(allUsers.filter(u => (u.name||'').toLowerCase().includes(t) || (u.phone||'').includes(t) || (u.email||'').toLowerCase().includes(t)));
+            renderUsersTable(allUsers.filter(u => 
+                (u.username || '').toLowerCase().includes(t) || 
+                (u.name || '').toLowerCase().includes(t) || 
+                (u.phone || '').includes(t) || 
+                (u.email || '').toLowerCase().includes(t)
+            ));
         }
     </script>
 </body>
-    </html>
+</html>
