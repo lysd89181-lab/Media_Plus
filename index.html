@@ -2,981 +2,184 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Plus | متجرك الشخصي للبطاقات الرقمية</title>
     
-    <title>Media Plus | Premium Services</title>
-    <link rel="icon" type="image/jpeg" href="mp.jpg">
-    <link rel="apple-touch-icon" href="mp.jpg">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
-        :root {
-            --primary-blue: #2196F3;
-            --primary-light: #64B5F6;
-            --primary-lighter: #90CAF9;
-            --primary-glow: rgba(33, 150, 243, 0.3);
-            --bg-white: #f8fafc;
-            --bg-card: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.95);
-            --border-color: #e2e8f0;
-            --text-main: #1e293b;
-            --text-dim: #94a3b8;
-            --text-light: #64748b;
-            --danger: #ef4444;
-            --gold: #f59e0b;
-            --success: #10b981;
-            --white: #ffffff;
-            --bg-input: #f1f5f9;
-            --font-primary: 'Almarai', 'Cairo', sans-serif;
-            --font-quran: 'Amiri', serif;
-            --muted: #94a3b8;
-            --danger-glow: rgba(239, 68, 68, 0.3);
-            --success-glow: rgba(16, 185, 129, 0.3);
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 15px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-primary); -webkit-tap-highlight-color: transparent; }
-
         body {
-            background-color: var(--bg-white);
-            color: var(--text-main);
-            direction: rtl;
-            overflow-x: hidden;
-            background-image: linear-gradient(180deg, #f0f7ff 0%, #f8fafc 100%);
-            min-height: 100vh;
-            padding-bottom: 120px;
+            font-family: 'Tajawal', sans-serif;
+            background-color: #0b0c22;
         }
-
-        small, .stat-lbl, .field-label {
-            color: var(--primary-blue) !important;
-            font-weight: 800 !important;
-            font-size: 11px !important;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-shadow: none;
+        .card-bg {
+            background-color: #161733;
         }
-
-        .stat-num, .price-val, .val-total, input { font-family: Arial, Helvetica, sans-serif !important; letter-spacing: 0; }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
-        @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 5px var(--primary-glow); } 50% { box-shadow: 0 0 20px var(--primary-glow), 0 0 30px var(--primary-glow); } }
-        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
-
-        #loader-screen { position: fixed; inset: 0; background: #fff; z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s opacity ease; }
-        .loader-logo { color: var(--primary-blue); font-size: 38px; font-weight: 900; margin-bottom: 20px; text-shadow: 0 2px 10px var(--primary-glow); }
-        .loader-progress-container { width: 120px; height: 4px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
-        .loader-progress-fill { width: 0%; height: 100%; background: var(--primary-blue); box-shadow: 0 0 15px var(--primary-blue); transition: width 0.3s; }
-
-        .notif-toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px);
-            background: #ffffff; border: 2px solid var(--primary-blue); border-radius: 16px;
-            padding: 16px 24px; z-index: 999999; min-width: 300px; max-width: 90vw;
-            box-shadow: var(--shadow-lg), 0 0 20px var(--primary-glow);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; align-items: center; gap: 14px;
+        .gold-text {
+            color: #f5a623;
         }
-        .notif-toast.show { transform: translateX(-50%) translateY(0); animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .notif-toast.hide { transform: translateX(-50%) translateY(-120px); animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .notif-toast .notif-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(33,150,243,0.1); border: 1px solid var(--primary-blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .notif-toast .notif-icon i { font-size: 20px; color: var(--primary-blue); }
-        .notif-toast .notif-content { flex: 1; }
-        .notif-toast .notif-title { font-weight: 900; color: var(--primary-blue); font-size: 14px; margin-bottom: 2px; }
-        .notif-toast .notif-message { color: var(--text-light); font-size: 12px; line-height: 1.4; }
-        .notif-toast .notif-close { cursor: pointer; color: var(--muted); padding: 8px; transition: 0.2s; flex-shrink: 0; font-size: 18px; }
-        .notif-toast .notif-close:hover { color: var(--danger); }
-
-        .glass-header { position: sticky; top: 0; z-index: 1000; background: var(--bg-glass); backdrop-filter: blur(40px); padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
-        .header-logo-section { display: flex; align-items: center; gap: 15px; cursor: pointer; }
-        .header-menu-btn { background: #f1f5f9; padding: 12px; border-radius: 15px; display: flex; align-items: center; justify-content: center; transition: 0.2s; color: var(--primary-blue); }
-        .header-menu-btn:active { transform: scale(0.9); background: #e2e8f0; }
-        .header-logo-text { font-weight: 900; color: var(--primary-blue); font-size: 24px; }
-        .header-logo-img { width: 42px; height: 42px; border-radius: 12px; border: 2px solid var(--primary-blue); box-shadow: 0 0 15px var(--primary-glow); object-fit: cover; background: #fff; }
-
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; display: none; backdrop-filter: blur(8px); }
-        .main-sidebar { position: fixed; top: 0; right: -100%; width: 310px; height: 100vh; background: #fff; z-index: 9999; transition: 0.4s; border-left: 1px solid var(--border-color); padding: 50px 0; overflow-y: auto; box-shadow: var(--shadow-lg); }
-        .sidebar-active .main-sidebar { right: 0; }
-        .sidebar-active .sidebar-overlay { display: block; }
-        .sidebar-brand { padding: 0 40px 50px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .sidebar-brand-name { color: var(--primary-blue); font-size: 30px; font-weight: 900; }
-        .nav-link { padding: 20px 35px; display: flex; align-items: center; gap: 18px; color: var(--text-dim); text-decoration: none; font-weight: 700; transition: 0.2s; border-right: 4px solid transparent; cursor: pointer; font-size: 15px; }
-        .nav-link i { font-size: 20px; width: 30px; text-align: center; }
-        .nav-link.active { color: var(--primary-blue); background: rgba(33,150,243,0.05); border-right-color: var(--primary-blue); }
-        .nav-link:hover { color: var(--text-main); background: rgba(33,150,243,0.03); }
-
-        .app-container { padding: 20px 15px 140px; max-width: 600px; margin: 0 auto; }
-
-        .stats-vertical-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px; }
-        .stat-row { background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: 24px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; box-shadow: var(--shadow-sm); }
-        .stat-row:active { transform: scale(0.98); background: #f8fafc; }
-        .stat-num { font-size: 24px; font-weight: 900; color: #1e293b; }
-        .stat-num.neon { color: var(--primary-blue); }
-
-        .premium-card { background: var(--bg-card); border-radius: 30px; padding: 28px; border: 1px solid var(--border-color); margin-bottom: 25px; animation: fadeInUp 0.5s ease; box-shadow: var(--shadow-md); }
-
-        .service-info-box {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: 0.2s;
+        .gold-bg {
+            background-color: #f5a623;
         }
-        .service-info-box:active { transform: scale(0.98); background: #f1f5f9; }
-        .service-info-label {
-            color: var(--primary-blue);
-            font-weight: 900;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .game-card img {
+            transition: transform 0.3s ease;
         }
-        .service-info-value {
-            color: #1e293b;
-            font-weight: 700;
-            font-size: 15px;
-            text-align: left;
-            direction: ltr;
-            max-width: 60%;
-            word-break: break-word;
+        .game-card:hover img {
+            transform: scale(1.05);
         }
-        .service-info-value.green { color: var(--primary-blue); font-weight: 900; }
-        .service-info-value.blue { color: var(--primary-light); }
-        .service-info-value.gold { color: var(--gold); }
-
-        .desc-box-readonly {
-            background: rgba(33,150,243,0.03);
-            border: 1px solid var(--primary-blue);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 18px;
-            display: none;
-            animation: fadeInUp 0.4s ease;
-            box-shadow: 0 0 15px rgba(33,150,243,0.05);
-        }
-        .desc-box-readonly.active { display: block; }
-        .desc-title { color: var(--primary-blue); font-weight: 900; margin-bottom: 8px; display: block; font-size: 14px; }
-        .desc-text { color: #475569; font-size: 13px; line-height: 1.6; }
-
-        .input-wrapper { position: relative; margin-bottom: 20px; }
-        .main-input { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); padding: 20px 24px; border-radius: 18px; color: #1e293b; font-size: 15px; outline: none; transition: 0.2s; }
-        .main-input:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(33,150,243,0.1); }
-        .main-input[readonly] { background-color: #f1f5f9 !important; border-color: var(--primary-blue) !important; color: var(--primary-blue) !important; cursor: not-allowed; opacity: 0.9; }
-        .select-btn { background: var(--bg-input); border: 1px solid var(--border-color); padding: 16px 24px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; min-height: 64px; transition: 0.2s; }
-        .select-btn:active { transform: scale(0.98); }
-        .select-btn .selected-content { display: flex; align-items: center; gap: 12px; }
-        .select-btn .selected-content img { 
-            width: 42px; height: 42px; border-radius: 50%; object-fit: cover; 
-            border: 2px solid var(--primary-blue); box-shadow: 0 0 15px var(--primary-glow);
-            background: #fff;
-        }
-        .dropdown-panel { position: absolute; top: 105%; left: 0; right: 0; background: #fff; border: 1px solid var(--border-color); border-radius: 20px; z-index: 600; max-height: 350px; overflow-y: auto; display: none; box-shadow: var(--shadow-lg); }
-        .dropdown-panel.show { display: block; animation: fadeInUp 0.4s ease; }
-        .drop-item { padding: 18px 24px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #475569; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; }
-        .drop-item:hover { background: rgba(33,150,243,0.05); color: #1e293b; }
-        .drop-item:active { background: rgba(33,150,243,0.1); }
-        .drop-item img { 
-            width: 42px; height: 42px; border-radius: 50%; object-fit: cover; 
-            border: 2px solid var(--primary-blue); box-shadow: 0 0 15px var(--primary-glow);
-            background: #fff;
-        }
-
-        .provider-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
-        .provider-option { flex: 1; padding: 16px; border-radius: 16px; border: 2px solid var(--border-color); background: var(--bg-input); cursor: pointer; text-align: center; font-weight: 700; font-size: 14px; transition: 0.2s; color: var(--text-dim); }
-        .provider-option.active-libyana { border-color: #2196F3; background: rgba(33,150,243,0.08); color: #2196F3; box-shadow: 0 0 15px rgba(33,150,243,0.2); }
-        .provider-option.active-almadar { border-color: #8b5cf6; background: rgba(139,92,246,0.08); color: #8b5cf6; box-shadow: 0 0 15px rgba(139,92,246,0.2); }
-        .provider-option i { font-size: 20px; display: block; margin-bottom: 8px; }
-
-        .action-btn { width: 100%; padding: 22px; background: linear-gradient(135deg, #2196F3, #1976D2); color: #fff; border: none; border-radius: 22px; font-weight: 900; font-size: 18px; cursor: pointer; transition: 0.2s; box-shadow: 0 8px 25px rgba(33,150,243,0.3); display: flex; align-items: center; justify-content: center; gap: 14px; }
-        .action-btn:active { transform: scale(0.96); background: linear-gradient(135deg, #1976D2, #1565C0); }
-        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .action-btn.danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; box-shadow: 0 8px 25px var(--danger-glow); }
-        .action-btn.gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; box-shadow: 0 8px 25px rgba(245,158,11,0.3); }
-
-        .paste-btn { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); background: rgba(33,150,243,0.1); border: 1px solid var(--primary-blue); color: var(--primary-blue); width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
-        .paste-btn:active { transform: translateY(-50%) scale(0.9); background: rgba(33,150,243,0.2); }
-
-        .total-box { background: #f8fafc; padding: 30px; border-radius: 30px; text-align: center; border: 1px solid var(--border-color); margin-bottom: 30px; }
-        .total-box .big-amount { color: #1e293b; font-size: 45px; font-weight: 900; }
-        .total-box .currency { font-size: 18px; color: var(--primary-blue); }
-
-        .price-breakdown {
-            background: rgba(33,150,243,0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            display: none;
-            animation: fadeInUp 0.4s ease;
-        }
-        .price-breakdown.active { display: block; }
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .price-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .price-label { color: var(--text-light); font-size: 13px; display: flex; align-items: center; gap: 8px; }
-        .price-value { font-weight: 700; font-size: 14px; color: #1e293b; }
-        .price-value.discount { color: var(--danger); text-decoration: line-through; font-size: 14px; }
-        .price-value.final { color: var(--primary-blue); font-weight: 900; font-size: 16px; }
-        .discount-badge {
-            background: rgba(239,68,68,0.1);
-            color: var(--danger);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .price-display-container {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .original-price-strikethrough {
-            color: var(--text-dim);
-            text-decoration: line-through;
-            font-size: 14px;
-            font-weight: 700;
-            opacity: 0.7;
-        }
-        .discount-flag {
-            background: linear-gradient(135deg, #ef4444, #f87171);
-            color: #fff;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 900;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 8px var(--danger-glow);
-        }
-
-        .order-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
-        .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .order-name { font-weight: 700; color: #1e293b; }
-        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; }
-        .status-badge.completed { background: rgba(33,150,243,0.1); color: var(--primary-blue); }
-        .status-badge.pending { background: rgba(245,158,11,0.1); color: var(--gold); }
-        .status-badge.failed { background: rgba(239,68,68,0.1); color: var(--danger); }
-        .order-info { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px; color: #94a3b8; }
-        .order-info span { color: #1e293b; font-weight: 700; }
-
-        .ticket-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; margin-bottom: 10px; box-shadow: var(--shadow-sm); }
-        .admin-reply { background: #f0f7ff; padding: 12px; border-radius: 10px; border: 1px solid var(--primary-blue); margin-top: 10px; }
-
-        .wallet-image-container { border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: var(--shadow-sm); }
-        .wallet-image-container img { width: 100%; display: block; object-fit: cover; }
-        .wallet-guide { margin-top: 25px; background: rgba(33,150,243,0.03); border-radius: 24px; padding: 25px; border: 1px dashed var(--primary-blue); }
-        .step-item { display: flex; gap: 15px; margin-bottom: 18px; align-items: flex-start; }
-        .step-idx { background: var(--primary-blue); color: #fff; min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; box-shadow: 0 0 10px var(--primary-glow); }
-        .step-desc { color: #475569; font-size: 13px; line-height: 1.6; }
-        .number-display-row { background: #f8fafc; border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .number-display-row .number-text { font-weight: 800; color: #1e293b; font-size: 18px; direction: ltr; text-align: right; }
-        .number-display-row .number-label { color: var(--primary-blue); font-weight: 900; font-size: 12px; }
-        .copy-number-btn { background: rgba(33,150,243,0.1); border: 1px solid var(--primary-blue); color: var(--primary-blue); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; margin-right: 8px; white-space: nowrap; }
-        .copy-number-btn:hover { background: rgba(33,150,243,0.2); }
-        .copy-number-btn:active { transform: scale(0.95); }
-
-        .channel-card { background: #f8fafc; border: 1px solid var(--border-color); padding: 22px; border-radius: 24px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; transition: 0.3s; color: var(--text-main); }
-        .channel-card:active { transform: scale(0.98); background: #f1f5f9; }
-        .channel-card-content { display: flex; align-items: center; gap: 20px; }
-        .channel-icon-circle { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(33,150,243,0.1); }
-
-        .video-card { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 20px; padding: 15px; margin-bottom: 15px; }
-        .video-frame { width: 100%; height: 200px; border-radius: 15px; border: 1px solid var(--primary-blue); margin-bottom: 10px; }
-
-        .quran-box-container { background: linear-gradient(135deg, #f0f7ff, #e8f4fd); border: 2px solid var(--primary-blue); border-radius: 35px; padding: 40px 30px; text-align: center; margin-top: 60px; box-shadow: 0 0 30px var(--primary-glow); }
-        .quran-box-container .quran-icon { font-size: 40px; color: var(--primary-blue); margin-bottom: 20px; }
-        .ayah-content { font-family: var(--font-quran); font-size: 22px; line-height: 2.6; color: #1e293b; }
-        .ayah-source { color: var(--primary-blue); font-size: 14px; font-weight: 700; margin-top: 15px; }
-
-        .affiliate-link-box { background: #f8fafc; border: 1px dashed var(--primary-blue); border-radius: 16px; padding: 16px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; word-break: break-all; }
-        .affiliate-link-box code { color: var(--primary-blue); font-size: 12px; font-family: monospace; }
-
-        .pane { display: none; }
-        .pane.active { display: block; animation: fadeInUp 0.7s ease; }
-
-        .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1e293b; border: 1px solid var(--primary-blue); color: #fff; padding: 16px 35px; border-radius: 60px; z-index: 100001; transition: 0.6s; font-size: 14px; font-weight: 800; white-space: nowrap; max-width: 90vw; text-align: center; box-shadow: var(--shadow-lg); }
-        .toast.active { transform: translateX(-50%) translateY(0); }
-        .toast.error { border-color: var(--danger); background: #fef2f2; color: var(--danger); }
-        .toast.success { border-color: var(--success); background: #ecfdf5; color: var(--success); }
-
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-glass); backdrop-filter: blur(30px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0 15px; z-index: 900; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #94a3b8; font-size: 10px; cursor: pointer; padding: 5px 10px; border-radius: 12px; transition: 0.2s; }
-        .bottom-nav-item.active { color: var(--primary-blue); }
-        .bottom-nav-item i { font-size: 18px; }
-        .bottom-nav-item:active { transform: scale(0.9); }
-
-        .empty-state { text-align: center; padding: 40px 20px; color: #94a3b8; }
-        .empty-state p { font-size: 14px; }
-
-        .stat-row.discount-active {
-            border-color: var(--primary-blue) !important;
-            animation: glowPulse 2s infinite;
-            background: #f0f7ff;
-        }
-
-        .check-result {
-            padding: 20px;
-            border-radius: 16px;
-            margin: 15px 0;
-            display: none;
-            text-align: center;
-            font-weight: 700;
-            font-size: 14px;
-            animation: bounceIn 0.5s ease;
-            line-height: 1.8;
-        }
-        .check-result.success {
-            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-            border: 2px solid var(--success);
-            color: #065f46;
-            display: block;
-        }
-        .check-result.error {
-            background: linear-gradient(135deg, #fef2f2, #fee2e2);
-            border: 2px solid var(--danger);
-            color: #991b1b;
-            display: block;
-        }
-        .check-result.info {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border: 2px solid var(--primary-blue);
-            color: #1e40af;
-            display: block;
-        }
-        .check-result .big-icon {
-            font-size: 50px;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .check-result .amount-display {
-            font-size: 28px;
-            font-weight: 900;
-            display: block;
-            margin: 8px 0;
-        }
-        .check-result .provider-badge-inline {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            margin: 5px;
-        }
-        .check-result .provider-libyana {
-            background: rgba(33,150,243,0.2);
-            color: #1e40af;
-        }
-        .check-result .provider-almadar {
-            background: rgba(139,92,246,0.2);
-            color: #5b21b6;
-        }
-
-        @media (min-width: 768px) { .bottom-nav { display: none; } .app-container { padding-bottom: 40px; } }
     </style>
 </head>
-<body>
+<body class="text-gray-200 min-h-screen flex flex-col justify-between">
 
-    <div id="loader-screen">
-        <div class="loader-logo">MEDIA PLUS</div>
-        <div class="loader-progress-container"><div class="loader-progress-fill" id="loader-bar"></div></div>
-        <div style="margin-top:20px;"><small>PREMIUM DIGITAL SERVICES</small></div>
-    </div>
-
-    <div class="notif-toast" id="notif-toast">
-        <div class="notif-icon"><i class="fas fa-bell"></i></div>
-        <div class="notif-content"><div class="notif-title" id="notif-title">إشعار جديد</div><div class="notif-message" id="notif-message">جاري التحميل...</div></div>
-        <div class="notif-close" onclick="hideNotif()"><i class="fas fa-times"></i></div>
-    </div>
-
-    <div class="toast" id="main-toast"></div>
-
-    <div class="sidebar-overlay" onclick="toggleSidebar(false)"></div>
-    <aside class="main-sidebar">
-        <div class="sidebar-brand"><div class="sidebar-brand-name">MEDIA PLUS</div><small>PREMIUM DIGITAL SERVICES</small></div>
-        <nav>
-            <a href="#" onclick="showPane('store')" class="nav-link active" id="nav-store"><i class="fas fa-home"></i> <span>المتجر</span></a>
-            <a href="#" onclick="showPane('orders')" class="nav-link" id="nav-orders"><i class="fas fa-list-check"></i> <span>طلباتي</span></a>
-            <a href="#" onclick="showPane('wallet')" class="nav-link" id="nav-wallet"><i class="fas fa-wallet"></i> <span>التحويل المباشر</span></a>
-            <a href="#" onclick="showPane('affiliate')" class="nav-link" id="nav-affiliate"><i class="fas fa-users"></i> <span>التسويق</span></a>
-            <a href="#" onclick="showPane('tickets')" class="nav-link" id="nav-tickets"><i class="fas fa-headset"></i> <span>تذاكر الدعم</span></a>
-            <a href="#" onclick="showPane('tutorials')" class="nav-link" id="nav-tutorials"><i class="fab fa-youtube" style="color:#ff0000;"></i> <span>شروحات</span></a>
-            <a href="#" onclick="showPane('web')" class="nav-link" id="nav-web"><i class="fas fa-code"></i> <span>برمجة</span></a>
-            <a href="#" onclick="showPane('channels')" class="nav-link" id="nav-channels"><i class="fas fa-bullhorn"></i> <span>قنواتنا</span></a>
-            <a href="#" onclick="showPane('account')" class="nav-link" id="nav-account"><i class="fas fa-user-gear"></i> <span>الحساب</span></a>
-            <a href="#" onclick="showPane('support')" class="nav-link" id="nav-support"><i class="fas fa-phone"></i> <span>تواصل</span></a>
-        </nav>
-    </aside>
-
-    <header class="glass-header">
-        <div class="header-logo-section" onclick="toggleSidebar(true)">
-            <div class="header-menu-btn"><i class="fas fa-bars-staggered"></i></div>
-            <span class="header-logo-text">MEDIA PLUS</span>
+    <nav class="card-bg border-b border-gray-800 p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex justify-between items-center max-w-lg">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <span class="text-2xl font-bold text-white flex items-center gap-1 selection:bg-transparent">
+                    <span class="gold-bg text-black px-2 py-0.5 rounded text-lg font-black">Media</span> Plus
+                </span>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <div class="bg-[#202142] px-3 py-1.5 rounded-xl flex items-center gap-2 border border-gray-700 shadow-inner">
+                    <i class="fa-solid fa-wallet gold-text"></i>
+                    <span id="userBalance" class="font-bold gold-text text-sm">0.00</span>
+                    <span class="text-[10px] text-gray-400">د.ل</span>
+                </div>
+            </div>
         </div>
-        <img src="mp.jpg" class="header-logo-img" alt="Logo" onerror="this.style.display='none'">
-    </header>
-
-    <div class="app-container">
-
-        <section id="pane-store" class="pane active">
-            <div style="background:var(--bg-card);border:1px solid var(--border-color);padding:30px;border-radius:30px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;box-shadow: var(--shadow-md);">
-                <div><small>أهلاً بك مجدداً</small><div id="u-display-name" style="font-size:26px;font-weight:900;color:#1e293b;margin-top:5px;">جاري التحميل...</div></div>
-                <i class="fas fa-circle-check" style="color:var(--primary-blue);font-size:32px;"></i>
-            </div>
-            <div class="stats-vertical-list">
-                <div class="stat-row"><span class="stat-lbl"><i class="fas fa-coins"></i> رصيدك</span><div class="stat-num neon" id="u-balance">0.00</div></div>
-                <div class="stat-row"><span class="stat-lbl"><i class="fas fa-chart-bar"></i> مصاريفك</span><div class="stat-num" id="u-spent">0.00</div></div>
-                <div class="stat-row" id="discount-stat-row">
-                    <span class="stat-lbl"><i class="fas fa-tag"></i> خصمك</span>
-                    <div class="stat-num neon" id="u-discount">0%</div>
-                </div>
-            </div>
-            <div class="premium-card">
-                <div style="font-weight:900;color:var(--primary-blue);margin-bottom:30px;font-size:20px;"><i class="fas fa-cart-plus"></i> إنشاء طلب جديد</div>
-                <div class="input-wrapper"><label class="field-label"><i class="fas fa-folder"></i> التصنيف</label><div class="select-btn" onclick="toggleDrop('drop-cats')"><div id="label-cat-container" class="selected-content"><img src="mp.jpg" id="cat-img" style="display:none;"><span id="label-cat">اختر التصنيف...</span></div><i class="fas fa-caret-down" style="color:var(--text-dim);"></i></div><div class="dropdown-panel" id="drop-cats"></div></div>
-                <div class="input-wrapper"><label class="field-label"><i class="fas fa-list"></i> الخدمة</label><div class="select-btn" onclick="toggleDrop('drop-srvs')"><div id="label-srv-container" class="selected-content"><img src="mp.jpg" id="srv-img" style="display:none;"><span id="label-srv">حدد التصنيف أولاً</span></div><i class="fas fa-caret-down" style="color:var(--text-dim);"></i></div><div class="dropdown-panel" id="drop-srvs"></div></div>
-
-                <div id="service-details-container" style="display: none; margin-top: 20px;">
-                    <div class="desc-box-readonly active" id="srv-desc-box-new">
-                        <span class="desc-title"><i class="fas fa-circle-info"></i> تفاصيل الخدمة</span>
-                        <div class="desc-text" id="srv-desc-text-new">...</div>
-                    </div>
-                    <div class="service-info-box"><div class="service-info-label"><i class="fas fa-clock"></i> وقت التنفيذ</div><div class="service-info-value blue" id="detail-time-new">—</div></div>
-                    <div class="service-info-box"><div class="service-info-label"><i class="fas fa-tag"></i> نوع التسعير</div><div class="service-info-value gold" id="detail-type-new">—</div></div>
-                    <div class="service-info-box"><div class="service-info-label"><i class="fas fa-dollar-sign"></i> التكلفة</div><div class="service-info-value green" id="detail-price-new"></div></div>
-                    <div class="service-info-box"><div class="service-info-label"><i class="fas fa-arrow-down"></i> الحد الأدنى</div><div class="service-info-value" id="detail-min-new">—</div></div>
-                    <div class="service-info-box"><div class="service-info-label"><i class="fas fa-arrow-up"></i> الحد الأقصى</div><div class="service-info-value" id="detail-max-new">—</div></div>
-                    <div class="price-breakdown" id="price-breakdown-box">
-                        <div style="font-weight:900;color:var(--primary-blue);margin-bottom:15px;font-size:13px;"><i class="fas fa-calculator"></i> تفصيل السعر</div>
-                        <div class="price-row"><span class="price-label"><i class="fas fa-tag"></i> السعر الأساسي للخدمة</span><span class="price-value" id="base-service-price-display">0.00 د.ل</span></div>
-                        <div class="price-row" id="markup-row-display" style="display:none;"><span class="price-label"><i class="fas fa-percent"></i> هامش الربح <span class="discount-badge" style="background:rgba(33,150,243,0.1);color:var(--primary-blue);">30%</span></span><span class="price-value discount" id="markup-amount-display">0.00 د.ل</span></div>
-                        <div class="price-row" id="user-discount-row-display" style="display:none;"><span class="price-label"><i class="fas fa-percent"></i> خصمك <span class="discount-badge" id="user-discount-percent-badge">0%</span></span><span class="price-value discount" id="user-discount-amount-display">0.00 د.ل</span></div>
-                        <div class="price-row" style="border-top: 1px solid var(--primary-blue); margin-top: 5px; padding-top: 15px;"><span class="price-label" style="color:var(--primary-blue);font-weight:900;"><i class="fas fa-money-bill-wave"></i> السعر النهائي</span><span class="price-value final" id="final-price-display">0.00 د.ل</span></div>
-                    </div>
-                </div>
-
-                <div class="input-wrapper" style="position:relative; margin-top: 15px;"><label class="field-label"><i class="fas fa-link"></i> الرابط</label><input type="text" class="main-input" id="field-link" placeholder="الرابط المستهدف" style="padding-left:60px;"><button class="paste-btn" onclick="pasteLink()"><i class="fas fa-paste"></i></button></div>
-                <div class="input-wrapper"><label class="field-label"><i class="fas fa-hashtag"></i> الكمية <span id="qty-hint"></span></label><input type="number" class="main-input" id="field-qty" value="1000" oninput="recalc()"></div>
-                <div class="total-box"><small><i class="fas fa-calculator"></i> المبلغ</small><div class="big-amount"><span id="val-total">0.00</span> <span class="currency">LYD</span></div><div id="discount-display" style="margin-top:5px;"></div></div>
-                <button class="action-btn" id="btn-order" onclick="submitOrder()"><i class="fas fa-cart-plus"></i> إتمام الشراء</button>
-            </div>
-            <div class="quran-box-container">
-                <div class="quran-icon"><i class="fas fa-mosque"></i></div>
-                <small style="display:block;margin-bottom:20px;">آية الكرسي</small>
-                <div class="ayah-content">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</div>
-                <div class="ayah-source"><i class="fas fa-book-quran"></i> سورة البقرة - الآية 255</div>
-            </div>
-        </section>
-
-        <section id="pane-orders" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fas fa-list-check"></i> سجل طلباتي</div><div id="orders-list"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div></div></div>
-        </section>
-
-        <section id="pane-wallet" class="pane">
-            <div class="premium-card">
-                <div style="font-weight:900;color:var(--primary-blue);margin-bottom:25px;"><i class="fas fa-money-bill-wave"></i> التحويل المباشر</div>
-                <div class="wallet-image-container"><img src="lb.jpg" alt="طريقة التحويل" onerror="this.style.display='none';"></div>
-                
-                <div class="provider-toggle">
-                    <div class="provider-option active-libyana" id="provider-libyana" onclick="selectProvider('libyana')">
-                        <i class="fas fa-mobile-screen-button"></i> ليبيانا
-                        <small style="display:block;font-size:10px;color:#64748b;margin-top:4px;">092 / 094</small>
-                    </div>
-                    <div class="provider-option" id="provider-almadar" onclick="selectProvider('almadar')">
-                        <i class="fas fa-sim-card"></i> المدار
-                        <small style="display:block;font-size:10px;color:#64748b;margin-top:4px;">091 / 092</small>
-                    </div>
-                </div>
-
-                <div id="libyana-numbers">
-                    <div class="number-display-row"><div><div class="number-label"><i class="fas fa-mobile-screen-button"></i> ليبيانا (092)</div><div class="number-text">0920414760</div></div><button class="copy-number-btn" onclick="copyText('0920414760')"><i class="fas fa-copy"></i> نسخ</button></div>
-                </div>
-                <div id="almadar-numbers" style="display:none;">
-                    <div class="number-display-row"><div><div class="number-label"><i class="fas fa-mobile-screen-button"></i> مدار</div><div class="number-text">0912377291</div></div><button class="copy-number-btn" onclick="copyText('0912377291')"><i class="fas fa-copy"></i> نسخ</button></div>
-                </div>
-
-                <div class="wallet-guide">
-                    <small><i class="fas fa-list-ol"></i> خطوات التحويل</small>
-                    <div class="step-item"><div class="step-idx">1</div><div class="step-desc">اختر المزود (ليبيانا أو المدار) وحول المبلغ للرقم الظاهر</div></div>
-                    <div class="step-item"><div class="step-idx">2</div><div class="step-desc">أدخل رقم هاتفك والمبلغ الذي قمت بتحويله</div></div>
-                    <div class="step-item"><div class="step-idx">3</div><div class="step-desc">اضغط تأكيد التحويل وسيتم شحن رصيدك تلقائياً</div></div>
-                </div>
-                <div class="input-wrapper"><label class="field-label" id="phone-label"><i class="fas fa-phone"></i> رقم هاتفك (ليبيانا: 092xxxxxx)</label><input type="text" id="field-dep-phone" class="main-input" placeholder="092xxxxxx"></div>
-                <div class="input-wrapper"><label class="field-label"><i class="fas fa-money-bill"></i> القيمة المحولة</label><input type="number" id="field-dep-amount" class="main-input" placeholder="أدخل المبلغ الذي قمت بتحويله" step="0.01" min="0"></div>
-                
-                <div class="check-result" id="check-result"></div>
-                
-                <button class="action-btn" onclick="checkDeposit()" id="btn-check-deposit"><i class="fas fa-search"></i> تأكيد التحويل</button>
-            </div>
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);"><i class="fas fa-clock-rotate-left"></i> سجل الإيداعات</div><div id="deposits-history"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div></div></div>
-        </section>
-
-        <section id="pane-affiliate" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fas fa-users"></i> التسويق بالعمولة</div><div class="stat-row"><span class="stat-lbl"><i class="fas fa-sack-dollar"></i> أرباحك</span><div class="stat-num neon" id="u-affiliate-earnings">0.00</div></div><div class="stat-row"><span class="stat-lbl"><i class="fas fa-user-plus"></i> المسجلين عبرك</span><div class="stat-num" id="u-affiliate-count">0</div></div><div class="affiliate-link-box"><code id="affiliate-link-text">...</code><i class="fas fa-copy" style="color:var(--primary-blue);cursor:pointer;" onclick="copyText(document.getElementById('affiliate-link-text').innerText)"></i></div><button class="action-btn gold" onclick="withdrawAffiliate()"><i class="fas fa-money-bill-wave"></i> سحب الأرباح</button></div>
-        </section>
-
-        <section id="pane-tickets" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fas fa-headset"></i> تذكرة دعم فني</div><div class="input-wrapper"><label class="field-label"><i class="fas fa-pen-to-square"></i> عنوان المشكلة</label><input type="text" id="ticket-subject" class="main-input" placeholder="موضوع المشكلة"></div><div class="input-wrapper"><label class="field-label"><i class="fas fa-align-left"></i> وصف المشكلة</label><textarea id="ticket-message" class="main-input" rows="4" style="resize:none;" placeholder="اشرح مشكلتك بالتفصيل..."></textarea></div><button class="action-btn" onclick="createTicket()"><i class="fas fa-paper-plane"></i> إرسال التذكرة</button></div>
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);"><i class="fas fa-clipboard-list"></i> تذاكري السابقة</div><div id="tickets-list"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div></div></div>
-        </section>
-
-        <section id="pane-tutorials" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fab fa-youtube" style="color:#ff0000;"></i> شروحات يوتيوب</div><div class="video-card"><iframe class="video-frame" src="https://www.youtube.com/embed/Ev50veF7X7k" allowfullscreen></iframe><small><i class="fas fa-play-circle"></i> شرح إنشاء حساب</small></div><div class="video-card"><iframe class="video-frame" src="https://www.youtube.com/embed/v1WKw9-hIQo" allowfullscreen></iframe><small><i class="fas fa-play-circle"></i> شرح الشحن</small></div></div>
-        </section>
-
-        <section id="pane-web" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:15px;"><i class="fas fa-code"></i> طلب برمجة موقع</div><div style="background:rgba(33,150,243,0.05);border:1px dashed var(--primary-blue);padding:16px;border-radius:14px;margin-bottom:20px;"><span>السعر: 70 د.ل</span> | <small>تجديد سنوي: 30 د.ل</small></div><div class="input-wrapper"><label class="field-label"><i class="fas fa-user"></i> اسمك الكامل</label><input class="main-input" id="web-name" placeholder="الاسم الثلاثي"></div><div class="input-wrapper"><label class="field-label"><i class="fas fa-globe"></i> اسم الموقع المطلوب</label><input class="main-input" id="web-site-name" placeholder="مثال: متجري الإلكتروني"></div><div class="input-wrapper"><label class="field-label"><i class="fas fa-lock"></i> كلمة السر المطلوبة</label><input type="password" class="main-input" id="web-pass" placeholder="كلمة سر للوحة التحكم"></div><div class="input-wrapper"><label class="field-label"><i class="fas fa-file-lines"></i> تفاصيل إضافية</label><textarea class="main-input" id="web-details" rows="3" placeholder="اشرح ما تريده بالتفصيل..."></textarea></div><button class="action-btn" onclick="submitWebProject()"><i class="fas fa-paper-plane"></i> إرسال الطلب</button></div>
-        </section>
-
-        <section id="pane-channels" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fas fa-bullhorn"></i> قنواتنا الرسمية</div><a href="https://www.tiktok.com/@cd_card" target="_blank" class="channel-card"><div class="channel-card-content"><div class="channel-icon-circle" style="background:rgba(0,0,0,0.05);"><i class="fab fa-tiktok" style="color:#000;font-size:24px;"></i></div><div><div style="font-weight:800;">تيك توك</div><small>@CD_CARD</small></div></div><i class="fas fa-arrow-left" style="color:var(--text-dim);"></i></a><a href="https://www.facebook.com/share/17wHuQCocu/" target="_blank" class="channel-card"><div class="channel-card-content"><div class="channel-icon-circle" style="background:rgba(24,119,242,0.1);"><i class="fab fa-facebook" style="color:#1877f2;font-size:24px;"></i></div><div><div style="font-weight:800;">فيسبوك</div><small>الصفحة الرسمية</small></div></div><i class="fas fa-arrow-left" style="color:var(--text-dim);"></i></a></div>
-        </section>
-
-        <section id="pane-account" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fas fa-user-circle"></i> معلومات حسابي</div><div class="stat-row"><span class="stat-lbl"><i class="fas fa-signature"></i> الاسم</span><div class="stat-num neon" id="acc-username" style="font-size:16px;">...</div></div><div class="stat-row"><span class="stat-lbl"><i class="fas fa-id-card"></i> المعرف</span><div class="stat-num" id="acc-uid" style="font-size:12px;">...</div></div><div class="stat-row"><span class="stat-lbl"><i class="fas fa-crown"></i> المستوى</span><div class="stat-num neon" id="acc-level">عادي</div></div><div class="stat-row"><span class="stat-lbl"><i class="fas fa-key"></i> API Key</span><div class="stat-num" id="acc-api-key" style="font-size:11px;">...</div></div><button class="action-btn danger" style="margin-top:30px;" onclick="auth.signOut()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button></div>
-        </section>
-
-        <section id="pane-support" class="pane">
-            <div class="premium-card"><div style="font-weight:900;color:var(--primary-blue);margin-bottom:20px;"><i class="fas fa-headphones"></i> تواصل معنا</div><a href="https://wa.me/2181923772910" target="_blank" class="channel-card"><div class="channel-card-content"><div class="channel-icon-circle" style="background:rgba(37,211,102,0.1);"><i class="fab fa-whatsapp" style="color:#25d366;font-size:24px;"></i></div><div><div style="font-weight:800;">واتساب</div><small>01923772910</small></div></div><i class="fas fa-arrow-left" style="color:var(--text-dim);"></i></a></div>
-        </section>
-
-    </div>
-
-    <nav class="bottom-nav">
-        <div class="bottom-nav-item active" data-page="store" onclick="showPane('store')"><i class="fas fa-home"></i><span>متجر</span></div>
-        <div class="bottom-nav-item" data-page="wallet" onclick="showPane('wallet')"><i class="fas fa-money-bill-wave"></i><span>تحويل</span></div>
-        <div class="bottom-nav-item" data-page="orders" onclick="showPane('orders')"><i class="fas fa-list-check"></i><span>طلباتي</span></div>
-        <div class="bottom-nav-item" data-page="affiliate" onclick="showPane('affiliate')"><i class="fas fa-users"></i><span>تسويق</span></div>
-        <div class="bottom-nav-item" data-page="account" onclick="showPane('account')"><i class="fas fa-user"></i><span>حسابي</span></div>
     </nav>
 
+    <main class="container mx-auto px-4 py-4 max-w-lg flex-grow space-y-5">
+        
+        <div class="gold-bg rounded-2xl p-4 text-black relative overflow-hidden shadow-lg flex items-center justify-between">
+            <div class="space-y-1 z-10">
+                <span class="text-[10px] uppercase font-bold bg-black text-white px-2 py-0.5 rounded tracking-wide">متجر MEDIA PLUS الرسمي</span>
+                <h2 class="text-lg font-black">شحن الألعاب والبطاقات العالمية</h2>
+                <p class="text-xs text-neutral-800 font-medium">تسليم فوري ومباشر لحسابك بأسعار منافسة</p>
+            </div>
+            <div class="opacity-10 text-6xl absolute left-4 bottom-2 text-black">
+                <i class="fa-solid fa-bolt-lightning"></i>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-xs font-bold text-gray-400 mb-2 px-1">اختر القسم المناسب لك:</h3>
+            <div class="grid grid-cols-2 gap-2">
+                <button class="gold-bg text-black font-bold p-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all">
+                    <i class="fa-solid fa-gamepad"></i> بطاقات الألعاب
+                </button>
+                <button class="card-bg text-gray-400 hover:text-white p-3 rounded-xl text-xs flex items-center justify-center gap-2 border border-gray-800 transition-all">
+                    <i class="fa-solid fa-box-open"></i> اشتراكات وتطبيقات
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <div class="grid grid-cols-3 gap-3" id="categoriesContainer">
+                
+                <a href="long.html" class="game-card card-bg border border-gray-800 rounded-2xl overflow-hidden p-2 text-center hover:border-[#f5a623] transition-all shadow flex flex-col justify-between items-center group">
+                    <div class="w-full aspect-square rounded-xl overflow-hidden mb-2 shadow-inner">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=150&q=80" alt="PUBG Mobile" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs font-bold block text-gray-200 group-hover:text-[#f5a623] transition-colors truncate max-w-full">شدات ببجي</span>
+                    <span class="text-[9px] text-emerald-400 font-medium mt-0.5 px-1.5 py-0.5 rounded-full bg-emerald-500/10 block">متوفر فوري</span>
+                </a>
+
+                <div class="game-card card-bg border border-gray-800 rounded-2xl overflow-hidden p-2 text-center opacity-70 flex flex-col justify-between items-center cursor-not-allowed">
+                    <div class="w-full aspect-square rounded-xl overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=150&q=80" alt="Free Fire" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <span class="text-xs font-bold block text-gray-400">جواهر فري فاير</span>
+                    <span class="text-[9px] text-gray-500 mt-1 block">قريباً جداً</span>
+                </div>
+
+                <div class="game-card card-bg border border-gray-800 rounded-2xl overflow-hidden p-2 text-center opacity-70 flex flex-col justify-between items-center cursor-not-allowed">
+                    <div class="w-full aspect-square rounded-xl overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=150&q=80" alt="PlayStation" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <span class="text-xs font-bold block text-gray-400">بطاقات ستور PS</span>
+                    <span class="text-[9px] text-gray-500 mt-1 block">قريباً جداً</span>
+                </div>
+
+                <div class="game-card card-bg border border-gray-800 rounded-2xl overflow-hidden p-2 text-center opacity-70 flex flex-col justify-between items-center cursor-not-allowed">
+                    <div class="w-full aspect-square rounded-xl overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=150&q=80" alt="iTunes" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <span class="text-xs font-bold block text-gray-400">كروت iTunes</span>
+                    <span class="text-[9px] text-gray-500 mt-1 block">قريباً جداً</span>
+                </div>
+
+                <div class="game-card card-bg border border-gray-800 rounded-2xl overflow-hidden p-2 text-center opacity-70 flex flex-col justify-between items-center cursor-not-allowed">
+                    <div class="w-full aspect-square rounded-xl overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?auto=format&fit=crop&w=150&q=80" alt="Amazon" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <span class="text-xs font-bold block text-gray-400">بطاقات أمازون</span>
+                    <span class="text-[9px] text-gray-500 mt-1 block">قريباً جداً</span>
+                </div>
+
+                <div class="game-card card-bg border border-gray-800 rounded-2xl overflow-hidden p-2 text-center opacity-70 flex flex-col justify-between items-center cursor-not-allowed">
+                    <div class="w-full aspect-square rounded-xl overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8edd86?auto=format&fit=crop&w=150&q=80" alt="Netflix" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <span class="text-xs font-bold block text-gray-400">اشتراك Netflix</span>
+                    <span class="text-[9px] text-gray-500 mt-1 block">قريباً جداً</span>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="card-bg border-t border-gray-800 p-2 sticky bottom-0 z-50">
+        <div class="container mx-auto max-w-md flex justify-around text-gray-400 text-center text-xs selection:bg-transparent">
+            <a href="index.html" class="gold-text flex flex-col items-center gap-1 py-1">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="font-bold">الرئيسية</span>
+            </a>
+            <a href="#" class="hover:text-white flex flex-col items-center gap-1 py-1 transition-colors">
+                <i class="fa-solid fa-receipt text-lg"></i>
+                <span>طلباتي</span>
+            </a>
+            <a href="#" class="hover:text-white flex flex-col items-center gap-1 py-1 transition-colors">
+                <i class="fa-solid fa-headset text-lg"></i>
+                <span>الدعم</span>
+            </a>
+            <a href="#" class="hover:text-white flex flex-col items-center gap-1 py-1 transition-colors">
+                <i class="fa-solid fa-gear text-lg"></i>
+                <span>الإعدادات</span>
+            </a>
+        </div>
+    </footer>
+
     <script>
-        firebase.initializeApp({apiKey:"AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",authDomain:"cd-card-87365.firebaseapp.com",projectId:"cd-card-87365",appId:"1:397926299412:web:efbe9ae9aae29df368f401"});
+        const firebaseConfig = {
+            apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
+            authDomain: "cd-card-87365.firebaseapp.com",
+            projectId: "cd-card-87365",
+            storageBucket: "cd-card-87365.firebasestorage.app"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        const TELEGRAM_BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
-        const TELEGRAM_CHAT_ID = "7737867483";
-        async function sendTelegram(msg){try{await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:msg,parse_mode:"HTML"})});}catch(e){}}
-
-        let userData = {uid:'',email:'',username:'',balance:0,totalSpent:0,discount:0,points:0,apiKey:'',userLevel:'user',affiliateEarnings:0,affiliateCount:0,affiliatePercent:3,referredBy:null,lastNotification:'',notifiedAt:null};
-        let services = [], curSrv = null, couponDisc = 0;
-        let selectedProvider = 'libyana';
-        const MARKUP_PERCENT = 30;
-
-        const catIcons = {"تيك توك":"tiktok.jpg","انستجرام":"Instagram.jpg","فيسبوك":"Facebook.jpg","سناب":"Snapchat.jpg","يوتيوب":"yotuop.jpg","تويتر":"twiter.jpg","تليجرام":"teli.jpg","واتساب":"watsap.jpg","ببجي":"popgi.jpg","شاهد":"shahed.jpg","توثيق":"tawtheg.jpg","بينانس":"binns.jpg"};
-        function getCatIcon(c){if(!c)return'mp.jpg';for(let k in catIcons){if(c.includes(k))return catIcons[k];}return'mp.jpg';}
-
-        // ============ دالة تطبيع أرقام الهواتف (الإصدار الذكي) ============
-        function normalizePhone(phone) {
-            if (!phone) return '';
-            let cleaned = phone.toString().replace(/[\s\-\(\)\.\,\+]/g, '');
-            
-            // إزالة 218 إذا كانت موجودة في البداية
-            if (cleaned.startsWith('218')) {
-                cleaned = cleaned.substring(3);
-            }
-            
-            // إزالة الصفر الأول دائماً
-            if (cleaned.startsWith('0')) {
-                cleaned = cleaned.substring(1);
-            }
-            
-            // فحص أول رقم بعد التنظيف
-            if (cleaned.startsWith('1') || cleaned.startsWith('4')) {
-                // يبدأ بـ 1 أو 4: هذا رقم ليبيانا (مثل 91xxxxxxx أو 94xxxxxxx) -> نضيف 92
-                cleaned = '92' + cleaned;
-            }
-            // إذا بدأ بـ 9: نتركه كما هو (مثل 91xxxxxxx أو 92xxxxxxx أو 94xxxxxxx)
-            
-            return cleaned;
-        }
-
-        // ============ دالة توحيد المبلغ (معالجة مشكلة الدرهم 42.000 -> 42) ============
-        function normalizeAmount(amount) {
-            if (amount === null || amount === undefined) return null;
-            // إذا كان المبلغ نصاً (مثل "42.000") نحوله لرقم صحيح
-            let num = parseFloat(amount.toString().replace(/\./g, '').replace(',', '.'));
-            // إذا كان الرقم كبيراً جداً (مثلاً 42000 بدل 42) نقسمه على 1000
-            if (num > 10000 && num % 1000 === 0) {
-                num = num / 1000;
-            }
-            return num;
-        }
-        // ============ نهاية دوال التطبيع ============
-
-        let lp=0;const lb=document.getElementById('loader-bar'),ls=document.getElementById('loader-screen');
-        const li=setInterval(()=>{lp+=5;if(lb)lb.style.width=lp+'%';if(lp>=100){clearInterval(li);setTimeout(()=>{if(ls)ls.style.opacity='0';setTimeout(()=>{if(ls)ls.style.display='none';},500);},100);}},100);
-
-        function showNotif(title,message){document.getElementById('notif-title').innerText=title;document.getElementById('notif-message').innerText=message;document.getElementById('notif-toast').classList.add('show');clearTimeout(window.notifTimeout);window.notifTimeout=setTimeout(()=>document.getElementById('notif-toast').classList.remove('show'),5000);}
-        function hideNotif(){document.getElementById('notif-toast').classList.remove('show');}
-
-        async function checkMaintenance(){const doc=await db.collection("settings").doc("app_config").get();if(doc.exists&&doc.data().maintenanceMode)window.location.href='ig.html';}
-        checkMaintenance();
-
-        auth.onAuthStateChanged(u=>{if(u){userData.email=u.email;syncUser(u.uid);}else{window.location.href='login.html';}});
-
-        async function syncUser(uid){
-            db.collection('users').doc(uid).onSnapshot(doc=>{
-                if(doc.exists){
-                    const d=doc.data();userData={...userData,uid,...d};
-                    if(!d.apiKey){const k=btoa(uid+Date.now()).substring(0,32);db.collection('users').doc(uid).update({apiKey:k});}
-                    updateAllUI();loadOrders();loadDeposits();loadTickets();
-                }
-            });
-            loadServices();checkReferral(uid);
-        }
-
-        async function checkReferral(uid){const urlParams=new URLSearchParams(window.location.search);const refCode=urlParams.get('ref');if(refCode&&refCode!==uid){const userDoc=await db.collection('users').doc(uid).get();if(userDoc.exists&&!userDoc.data().referredBy){await db.collection('users').doc(uid).update({referredBy:refCode});await db.collection('users').doc(refCode).update({affiliateCount:firebase.firestore.FieldValue.increment(1)});}}}
-
-        function updateAllUI(){
-            document.getElementById('u-display-name').innerText=userData.username||'مستخدم';
-            document.getElementById('u-balance').innerText=(userData.balance||0).toFixed(2);
-            document.getElementById('u-spent').innerText=(userData.totalSpent||0).toFixed(2);
-            const totalDisc = (userData.discount||0) + couponDisc;
-            document.getElementById('u-discount').innerText = totalDisc + '%';
-            const discountRow = document.getElementById('discount-stat-row');
-            if (totalDisc > 0) { discountRow.classList.add('discount-active'); document.getElementById('u-discount').style.color = '#ef4444'; }
-            else { discountRow.classList.remove('discount-active'); document.getElementById('u-discount').style.color = ''; }
-            document.getElementById('acc-username').innerText=userData.username||'—';
-            document.getElementById('acc-uid').innerText=userData.uid||'—';
-            document.getElementById('acc-level').innerText=userData.userLevel==='vip'?'⭐ VIP':'👤 عادي';
-            document.getElementById('acc-api-key').innerText=userData.apiKey||'—';
-            document.getElementById('u-affiliate-earnings').innerText=(userData.affiliateEarnings||0).toFixed(2);
-            document.getElementById('u-affiliate-count').innerText=userData.affiliateCount||0;
-            document.getElementById('affiliate-link-text').innerText=window.location.origin+window.location.pathname+'?ref='+userData.uid;
-            if(curSrv)recalc();
-        }
-
-        function selectProvider(provider) {
-            selectedProvider = provider;
-            const libyanaBtn = document.getElementById('provider-libyana');
-            const almadarBtn = document.getElementById('provider-almadar');
-            const libyanaNums = document.getElementById('libyana-numbers');
-            const almadarNums = document.getElementById('almadar-numbers');
-            const phoneLabel = document.getElementById('phone-label');
-            const phoneInput = document.getElementById('field-dep-phone');
-            
-            if (provider === 'libyana') {
-                libyanaBtn.classList.add('active-libyana');
-                almadarBtn.classList.remove('active-almadar');
-                libyanaNums.style.display = 'block';
-                almadarNums.style.display = 'none';
-                phoneLabel.innerHTML = '<i class="fas fa-phone"></i> رقم هاتفك (ليبيانا: 092xxxxxx / 094xxxxxx)';
-                phoneInput.placeholder = '092xxxxxx';
-            } else {
-                almadarBtn.classList.add('active-almadar');
-                libyanaBtn.classList.remove('active-libyana');
-                almadarNums.style.display = 'block';
-                libyanaNums.style.display = 'none';
-                phoneLabel.innerHTML = '<i class="fas fa-phone"></i> رقم هاتفك (مدار: 218xxxxxxxxx)';
-                phoneInput.placeholder = '21891xxxxxxx';
-            }
-            document.getElementById('field-dep-phone').value = '';
-            document.getElementById('field-dep-amount').value = '';
-            document.getElementById('check-result').className = 'check-result';
-            document.getElementById('check-result').style.display = 'none';
-        }
-
-        function loadServices(){db.collection('services').onSnapshot(snap=>{services=[];snap.forEach(doc=>{const d=doc.data();if(d.name&&d.name!=='خدمة افتراضية'&&(d.finalPrice||0)>0)services.push({id:doc.id,...d});});services.sort((a,b)=>(a.catOrder||99)-(b.catOrder||99));const cats=[];services.forEach(s=>{const c=s.category||'عام';if(!cats.includes(c))cats.push(c);});const dc=document.getElementById('drop-cats');if(dc)dc.innerHTML=cats.map(c=>'<div class="drop-item" onclick="selectCat(\''+c.replace(/'/g,"\\'")+'\',\''+getCatIcon(c)+'\')"><img src="'+getCatIcon(c)+'" onerror="this.src=\'mp.jpg\'"><span>'+c+'</span></div>').join('');});}
-        
-        function selectCat(c,icon){document.getElementById('cat-img').src=icon;document.getElementById('cat-img').style.display='inline-block';document.getElementById('label-cat').innerText=c;curSrv=null;document.getElementById('label-srv').innerText='اختر الخدمة...';document.getElementById('srv-img').style.display='none';document.getElementById('service-details-container').style.display='none';document.getElementById('val-total').innerText='0.00';document.getElementById('qty-hint').innerText='';document.getElementById('discount-display').innerHTML='';document.getElementById('price-breakdown-box').classList.remove('active');const filtered=services.filter(s=>s.category===c).sort((a,b)=>(a.srvOrder||0)-(b.srvOrder||0));document.getElementById('drop-srvs').innerHTML=filtered.map(s=>'<div class="drop-item" onclick="selectSrv(\''+s.id+'\',\''+icon+'\')"><img src="'+icon+'" onerror="this.src=\'mp.jpg\'"><span>'+s.name+'</span></div>').join('');toggleDrop('drop-cats');}
-        
-        function selectSrv(id,icon){curSrv=services.find(s=>s.id===id);if(!curSrv)return;document.getElementById('srv-img').src=icon;document.getElementById('srv-img').style.display='inline-block';document.getElementById('label-srv').innerText=curSrv.name;document.getElementById('service-details-container').style.display='block';document.getElementById('srv-desc-text-new').innerText=curSrv.description||'خدمة ممتازة.';document.getElementById('detail-time-new').innerText=curSrv.estimatedTime||'غير محدد';document.getElementById('detail-type-new').innerText=(curSrv.priceType==='1'||curSrv.priceType==='fixed')?'سعر ثابت':'متغير /1000';document.getElementById('detail-min-new').innerText=curSrv.minOrder||1;document.getElementById('detail-max-new').innerText=curSrv.maxOrder||10000;const baseServicePrice=parseFloat(curSrv.finalPrice)||0;const markedUpPrice=baseServicePrice*(1+MARKUP_PERCENT/100);const pd=document.getElementById('detail-price-new');if(pd){pd.innerHTML=`<div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap;"><span class="original-price-strikethrough">${markedUpPrice.toFixed(2)} د.ل</span><span class="discount-flag"><i class="fas fa-tag"></i> وفر 30%</span><strong style="color:var(--primary-blue);font-size:16px;">${baseServicePrice.toFixed(2)} د.ل</strong></div>`;}const q=document.getElementById('field-qty');if(curSrv.priceType==='1'||curSrv.priceType==='fixed'){q.readOnly=true;q.value=1;document.getElementById('qty-hint').innerText='(ثابت)';}else{q.readOnly=false;if(q.value==1)q.value=1000;document.getElementById('qty-hint').innerText='';}toggleDrop('drop-srvs');recalc();}
-        
-        function recalc(){if(!curSrv)return;const q=parseFloat(document.getElementById('field-qty').value)||0;const baseServicePrice=parseFloat(curSrv.finalPrice)||0;const markedUpPrice=baseServicePrice*(1+MARKUP_PERCENT/100);const userDiscountPercent=(userData.discount||0)+couponDisc;let finalPricePerUnit=baseServicePrice;if(userDiscountPercent>0){finalPricePerUnit=baseServicePrice*(1-userDiscountPercent/100);}let total;if(curSrv.priceType==='1'||curSrv.priceType==='fixed'){total=finalPricePerUnit;}else{total=(q/1000)*finalPricePerUnit;}document.getElementById('val-total').innerText=total.toFixed(2);updatePriceBreakdown(baseServicePrice,markedUpPrice,finalPricePerUnit,userDiscountPercent,total,q);const dd=document.getElementById('discount-display');if(dd){const originalTotal=curSrv.priceType==='1'||curSrv.priceType==='fixed'?markedUpPrice:(q/1000)*markedUpPrice;const savedAmount=originalTotal-total;dd.innerHTML='<span class="original-price-strikethrough">'+originalTotal.toFixed(2)+' د.ل</span> <span class="discount-flag"><i class="fas fa-tag"></i> وفر '+savedAmount.toFixed(2)+' د.ل</span>';}}
-        
-        function updatePriceBreakdown(basePrice,markedUpPrice,effectivePrice,userDiscount,total,qty){const breakdownBox=document.getElementById('price-breakdown-box');const markupRow=document.getElementById('markup-row-display');const userDiscountRow=document.getElementById('user-discount-row-display');if(!breakdownBox)return;breakdownBox.classList.add('active');const isFixed=curSrv.priceType==='1'||curSrv.priceType==='fixed';const multiplier=isFixed?1:(qty/1000);document.getElementById('base-service-price-display').innerText=(basePrice*multiplier).toFixed(2)+' د.ل';markupRow.style.display='flex';const markupAmount=(markedUpPrice-basePrice)*multiplier;document.getElementById('markup-amount-display').innerText=markupAmount.toFixed(2)+' د.ل';const oldOriginalRow=document.getElementById('original-total-row');if(oldOriginalRow){oldOriginalRow.remove();}const finalPriceRow=document.getElementById('final-price-display').parentElement;if(finalPriceRow){const originalRow=document.createElement('div');originalRow.className='price-row';originalRow.id='original-total-row';originalRow.innerHTML=`<span class="price-label"><i class="fas fa-tag"></i> السعر الأصلي (قبل الخصم)</span><span class="price-value discount" id="original-total-display">${(markedUpPrice*multiplier).toFixed(2)} د.ل</span>`;finalPriceRow.parentNode.insertBefore(originalRow,finalPriceRow);}if(userDiscount>0){userDiscountRow.style.display='flex';const discountAmount=total*(userDiscount/100)/(1-userDiscount/100);document.getElementById('user-discount-amount-display').innerText=discountAmount.toFixed(2)+' د.ل';document.getElementById('user-discount-percent-badge').innerText=userDiscount+'%';}else{userDiscountRow.style.display='none';}document.getElementById('final-price-display').innerText=total.toFixed(2)+' د.ل';}
-        
-        function toggleDrop(id){const el=document.getElementById(id);document.querySelectorAll('.dropdown-panel').forEach(d=>{if(d.id!==id)d.classList.remove('show');});if(el)el.classList.toggle('show');}
-        document.addEventListener('click',e=>{if(!e.target.closest('.select-btn')&&!e.target.closest('.dropdown-panel'))document.querySelectorAll('.dropdown-panel').forEach(d=>d.classList.remove('show'));});
-        async function pasteLink(){try{const text=await navigator.clipboard.readText();if(text)document.getElementById('field-link').value=text;}catch(e){}}
-
-        async function submitOrder(){const link=document.getElementById('field-link').value.trim();const qty=parseFloat(document.getElementById('field-qty').value)||0;const total=parseFloat(document.getElementById('val-total').innerText)||0;const btn=document.getElementById('btn-order');if(!curSrv)return toast('⚠️ اختر خدمة','error');if(!link)return toast('⚠️ أدخل الرابط','error');if(qty<=0)return toast('⚠️ كمية خطأ','error');if(userData.balance<total)return toast('⚠️ رصيد غير كاف','error');btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري...';try{await db.collection('orders').add({uid:userData.uid,username:userData.username||userData.email,serviceId:curSrv.id,serviceName:curSrv.name,url:link,target:link,Link:link,quantity:qty,price:total,totalPrice:total,status:'قيد التنفيذ',timestamp:firebase.firestore.FieldValue.serverTimestamp()});await db.collection('users').doc(userData.uid).update({balance:firebase.firestore.FieldValue.increment(-total),totalSpent:firebase.firestore.FieldValue.increment(total),points:firebase.firestore.FieldValue.increment(Math.floor(total))});if(userData.referredBy){const commission=total*((userData.affiliatePercent||3)/100);await db.collection('users').doc(userData.referredBy).update({affiliateEarnings:firebase.firestore.FieldValue.increment(commission)});}const now=new Date().toLocaleString('ar-SA');await sendTelegram(`🔔 طلب خدمة جديد!\n👤 المستخدم: ${userData.username}\n📦 الخدمة: ${curSrv.name}\n💰 المبلغ: ${total.toFixed(2)} د.ل\n🔗 الرابط: ${link}\n⏰ الوقت: ${now}\n📌 الحالة: قيد التنفيذ`);toast('✅ تم الطلب بنجاح','success');document.getElementById('field-link').value='';couponDisc=0;document.getElementById('discount-display').innerHTML='';updateAllUI();loadOrders();}catch(e){toast('❌ خطأ','error');}finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-cart-plus"></i> إتمام الشراء';}}
-
-        function loadOrders(){if(!userData.uid)return;db.collection('orders').where('uid','==',userData.uid).orderBy('timestamp','desc').limit(30).onSnapshot(snap=>{const el=document.getElementById('orders-list');if(!el)return;if(snap.empty){el.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد طلبات</p></div>';return;}el.innerHTML=snap.docs.map(d=>{const o=d.data();const cls=o.status==='مكتمل'||o.status==='completed'?'completed':o.status==='قيد التنفيذ'||o.status==='pending'?'pending':'failed';const dt=o.timestamp?.toDate?.().toLocaleDateString('ar-SA')||'';const link=o.Link||o.url||o.target||'—';const shortLink=link.length>30?link.substring(0,30)+'...':link;return'<div class="order-card"><div class="order-header"><span class="order-name">'+(o.serviceName||'—')+'</span><span class="status-badge '+cls+'">'+(o.status||'?')+'</span></div><div class="order-info"><div>الكمية: <span>'+(o.quantity||0)+'</span></div><div>المبلغ: <span style="color:var(--primary-blue);">'+(o.totalPrice||o.price||0).toFixed(2)+' د.ل</span></div><div style="grid-column:span 2;">الرابط: <a href="'+link+'" target="_blank" style="color:var(--primary-blue);">'+shortLink+'</a></div><div>التاريخ: <span>'+dt+'</span></div><div>الحالة: <span>'+(o.status||'—')+'</span></div></div></div>';}).join('');});}
-
-        function extractLibyanaInfo(message) {
-            const amountMatch = message.match(/تم تحويل (\d+[\.\,]?\d*) د\.ل/);
-            const phoneMatch = message.match(/الرقم (\d+)/);
-            return { 
-                amount: amountMatch ? normalizeAmount(amountMatch[1]) : null, 
-                phone: phoneMatch ? phoneMatch[1] : null, 
-                provider: 'Libyana' 
-            };
-        }
-        function extractAlmadarInfo(message) {
-            const amountMatch = message.match(/بقيمة (\d+[\.\,]?\d*) د\.ل/);
-            const phoneMatch = message.match(/المشترك (\d+)/);
-            return { 
-                amount: amountMatch ? normalizeAmount(amountMatch[1]) : null, 
-                phone: phoneMatch ? phoneMatch[1] : null, 
-                provider: 'Almadar' 
-            };
-        }
-        function extractDepositInfo(depositData) {
-            const sender = depositData.phone || '';
-            const message = depositData.message || '';
-            let info = { amount: null, phone: null, provider: 'unknown', messageId: depositData.messageId || null };
-            if (sender === '121' || sender.includes('121')) { 
-                const extracted = extractLibyanaInfo(message);
-                info = { ...info, ...extracted, provider: 'Libyana' };
-            }
-            else if (sender === '122' || sender.includes('122') || sender.toLowerCase().includes('almadar')) { 
-                const extracted = extractAlmadarInfo(message);
-                info = { ...info, ...extracted, provider: 'Almadar' };
-            }
-            else { 
-                let extracted = extractLibyanaInfo(message); 
-                if (!extracted.amount) extracted = extractAlmadarInfo(message); 
-                if (extracted.amount) extracted.provider = 'Libyana';
-                info = { ...info, ...extracted };
-            }
-            return info;
-        }
-        async function findUserByPhone(phoneNumber) {
-            if (!phoneNumber) return null;
-            const cleanPhone = normalizePhone(phoneNumber);
-            if (!cleanPhone) return null;
-            
-            let snapshot = await db.collection('users').where('phone', '==', cleanPhone).limit(1).get();
-            if (!snapshot.empty) { const userDoc = snapshot.docs[0]; return { uid: userDoc.id, username: userDoc.data().username || 'مستخدم' }; }
-            
-            if (cleanPhone.length >= 9) {
-                const last9 = cleanPhone.slice(-9);
-                snapshot = await db.collection('users').where('phone', '>=', last9).where('phone', '<=', last9 + '\uf8ff').limit(10).get();
-                let matchedUser = null;
-                snapshot.forEach(doc => {
-                    if (matchedUser) return;
-                    const userPhone = (doc.data().phone || '').replace(/[\s\-\(\)]/g, '');
-                    if (userPhone.slice(-9) === last9) { matchedUser = { uid: doc.id, username: doc.data().username || 'مستخدم' }; }
-                });
-                if (matchedUser) return matchedUser;
-            }
-            return null;
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text || '';
-            return div.innerHTML;
-        }
-
-        function showCheckResult(className, icon, title, message1, message2, message3) {
-            const resultDiv = document.getElementById('check-result');
-            resultDiv.className = `check-result ${className}`;
-            resultDiv.innerHTML = `
-                <span class="big-icon">${escapeHtml(icon)}</span>
-                <strong>${escapeHtml(title)}</strong>
-                ${message1 ? `<br><span>${escapeHtml(message1)}</span>` : ''}
-                ${message2 ? `<br><small>${escapeHtml(message2)}</small>` : ''}
-                ${message3 ? `<br><small style="color:var(--muted);">${escapeHtml(message3)}</small>` : ''}
-            `;
-        }
-
-        async function checkDeposit() {
-            const phone = document.getElementById('field-dep-phone').value.trim();
-            const amountStr = document.getElementById('field-dep-amount').value.trim();
-            const amount = parseFloat(amountStr);
-            const resultDiv = document.getElementById('check-result');
-            const btn = document.getElementById('btn-check-deposit');
-            
-            if (!phone) {
-                showCheckResult('error', '❌', 'أدخل رقم هاتفك أولاً');
-                return;
-            }
-            if (!amountStr || isNaN(amount) || amount <= 0) {
-                showCheckResult('error', '❌', 'أدخل المبلغ الذي قمت بتحويله');
-                return;
-            }
-            
-            const normalizedInputPhone = normalizePhone(phone);
-            if (!normalizedInputPhone) {
-                showCheckResult('error', '❌', 'صيغة رقم الهاتف غير صحيحة', 'تأكد من إدخال رقم الهاتف الصحيح');
-                return;
-            }
-            
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الفحص...';
-            resultDiv.className = 'check-result';
-            resultDiv.style.display = 'none';
-            
-            try {
-                const last9Input = normalizedInputPhone.slice(-9);
-                const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
-                const snapshot = await db.collection('deposits')
-                    .where('timestamp', '>=', thirtyMinutesAgo)
-                    .orderBy('timestamp', 'desc')
-                    .limit(30)
-                    .get();
-                
-                let matchedDeposit = null;
-                snapshot.forEach(doc => {
-                    if (matchedDeposit) return;
-                    const d = doc.data();
-                    // تجاهل الإيداعات المكتملة أو المكررة
-                    if (d.status === 'completed' || d.status === 'مكتمل') return;
-                    if (d.status === 'processed' || d.autoProcessed === true) return;
-                    
-                    const info = extractDepositInfo(d);
-                    if (info.phone && info.amount && info.provider.toLowerCase() === selectedProvider.toLowerCase()) {
-                        const normalizedDepPhone = normalizePhone(info.phone);
-                        const last9Dep = normalizedDepPhone.slice(-9);
-                        const amountTolerance = 0.10;
-                        
-                        // التحقق من تطابق آخر 9 أرقام والمبلغ
-                        if (last9Dep === last9Input && Math.abs(info.amount - amount) <= amountTolerance) {
-                            matchedDeposit = { 
-                                id: doc.id, 
-                                ...d, 
-                                extractedAmount: info.amount, 
-                                extractedPhone: normalizedDepPhone, 
-                                provider: info.provider,
-                                messageId: info.messageId || doc.id
-                            };
-                        }
+        // التحديث التلقائي للرصيد الفعلي للمستخدم
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                db.collection("users").doc(user.uid).onSnapshot(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById("userBalance").innerText = data.balance.toFixed(4);
                     }
                 });
-                
-                if (!matchedDeposit) {
-                    showCheckResult('error', '❌', 
-                        'لم يتم اكتشاف أي تحويل مطابق',
-                        'تأكد من إتمام التحويل وتطابق رقم الهاتف والمبلغ والمزود',
-                        'قد يستغرق ظهور التحويل دقيقة إلى دقيقتين');
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-search"></i> تأكيد التحويل';
-                    return;
-                }
-                
-                // منع تكرار الشحن بنفس الـ messageId
-                const duplicateCheck = await db.collection('deposits')
-                    .where('messageId', '==', matchedDeposit.messageId)
-                    .where('autoProcessed', '==', true)
-                    .limit(1)
-                    .get();
-                    
-                if (!duplicateCheck.empty) {
-                    showCheckResult('error', '❌', 
-                        'تم شحن هذا التحويل مسبقاً',
-                        'لا يمكن شحن نفس التحويل مرتين');
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-search"></i> تأكيد التحويل';
-                    return;
-                }
-                
-                const user = await findUserByPhone(matchedDeposit.extractedPhone || normalizedInputPhone);
-                
-                if (user && matchedDeposit.extractedAmount > 0) {
-                    await db.collection('users').doc(user.uid).update({
-                        balance: firebase.firestore.FieldValue.increment(matchedDeposit.extractedAmount)
-                    });
-                    await db.collection('deposits').doc(matchedDeposit.id).update({
-                        status: 'مكتمل',
-                        extractedAmount: matchedDeposit.extractedAmount,
-                        extractedPhone: matchedDeposit.extractedPhone,
-                        provider: matchedDeposit.provider,
-                        matchedUser: user.username,
-                        matchedUid: user.uid,
-                        autoProcessed: true,
-                        completedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        messageId: matchedDeposit.messageId
-                    });
-                    
-                    const now = new Date().toLocaleString('ar-SA');
-                    await sendTelegram(`✅ <b>شحن تلقائي!</b>\n👤 المستخدم: ${user.username}\n💰 المبلغ: ${matchedDeposit.extractedAmount.toFixed(2)} د.ل\n📱 المزود: ${matchedDeposit.provider}\n🆔 معرف الرسالة: ${matchedDeposit.messageId}\n⏰ الوقت: ${now}`);
-                    
-                    showCheckResult('success', '🎉',
-                        'تم شحن رصيدك بنجاح!',
-                        `المبلغ: ${matchedDeposit.extractedAmount.toFixed(2)} د.ل`,
-                        `المزود: ${matchedDeposit.provider}`,
-                        'تمت إضافة الرصيد إلى حسابك');
-                    await syncUser(userData.uid);
-                    document.getElementById('field-dep-phone').value = '';
-                    document.getElementById('field-dep-amount').value = '';
-                } else if (!user && matchedDeposit.extractedAmount > 0) {
-                    showCheckResult('info', '⏳',
-                        'تم اكتشاف تحويل مطابق',
-                        `المبلغ: ${matchedDeposit.extractedAmount.toFixed(2)} د.ل`,
-                        'لكن رقم الهاتف غير مسجل بحساب. سيتم مراجعة التحويل يدوياً.');
-                    await db.collection('deposits').doc(matchedDeposit.id).update({
-                        status: 'قيد المراجعة',
-                        extractedAmount: matchedDeposit.extractedAmount,
-                        extractedPhone: matchedDeposit.extractedPhone,
-                        provider: matchedDeposit.provider,
-                        autoProcessed: false,
-                        note: 'رقم الهاتف غير مطابق للمستخدم',
-                        messageId: matchedDeposit.messageId
-                    });
-                } else {
-                    showCheckResult('info', '⏳', 'تم اكتشاف تحويل وهو قيد المراجعة', 'سيتم شحن رصيدك خلال دقائق');
-                }
-                loadDeposits();
-            } catch (e) {
-                console.error(e);
-                showCheckResult('error', '❌', 'حدث خطأ في الفحص', 'حاول مرة أخرى');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-search"></i> تأكيد التحويل';
             }
-        }
-
-        function loadDeposits() {
-            if (!userData.uid) return;
-            db.collection('deposits').where('uid', '==', userData.uid).orderBy('timestamp', 'desc').limit(15).onSnapshot(snap => {
-                const el = document.getElementById('deposits-history');
-                if (!el) return;
-                if (snap.empty) { el.innerHTML = '<div class="empty-state"><i class="fas fa-clock-rotate-left"></i><p>لا توجد إيداعات</p></div>'; return; }
-                el.innerHTML = snap.docs.map(d => {
-                    const x = d.data();
-                    const cls = (x.status === 'مكتمل' || x.status === 'completed') ? 'completed' : 'pending';
-                    const dt = x.timestamp?.toDate?.().toLocaleDateString('ar-SA') || '—';
-                    const amount = x.extractedAmount || x.amount || 0;
-                    const provider = x.provider === 'Libyana' ? 'ليبيانا' : x.provider === 'Almadar' ? 'المدار' : '';
-                    return `<div class="order-card"><div class="order-header"><span style="color:var(--primary-blue);font-weight:700;">${parseFloat(amount).toFixed(2)} د.ل</span><span class="status-badge ${cls}">${x.status||'؟'}</span></div><div class="order-info"><div>الرقم: <span>${x.phone||x.senderPhone||''}</span></div><div>التاريخ: <span>${dt}</span></div>${provider?`<div>المزود: <span>${provider}</span></div>`:''}${x.autoProcessed?'<div style="grid-column:span 2;"><span style="color:var(--success);">🤖 تمت المعالجة تلقائياً</span></div>':''}${x.messageId?`<div style="grid-column:span 2;"><small>🆔 ${x.messageId.substring(0,12)}...</small></div>`:''}</div></div>`;
-                }).join('');
-            });
-        }
-
-        async function withdrawAffiliate(){const amt=userData.affiliateEarnings||0;if(amt<=0)return toast('⚠️ لا أرباح','error');Swal.fire({title:'سحب',text:'سحب '+amt.toFixed(2)+' د.ل',icon:'question',showCancelButton:true,confirmButtonText:'نعم',background:'#fff',color:'#1e293b',confirmButtonColor:'#2196F3'}).then(async r=>{if(r.isConfirmed){await db.collection('users').doc(userData.uid).update({balance:firebase.firestore.FieldValue.increment(amt),affiliateEarnings:0});toast('✅ تم السحب','success');}});}
-        async function createTicket(){const sub=document.getElementById('ticket-subject').value.trim();const msg=document.getElementById('ticket-message').value.trim();if(!sub||!msg)return toast('⚠️ املأ الحقول','error');await db.collection('tickets').add({uid:userData.uid,username:userData.username||userData.email,email:userData.email,subject:sub,message:msg,status:'مفتوح',timestamp:firebase.firestore.FieldValue.serverTimestamp()});const now=new Date().toLocaleString('ar-SA');await sendTelegram(`🎫 تذكرة دعم جديدة!\n👤 المستخدم: ${userData.username}\n📝 العنوان: ${sub}\n📄 الوصف: ${msg.substring(0,100)}...\n⏰ الوقت: ${now}\n📌 الحالة: مفتوح`);toast('✅ تم الإرسال','success');document.getElementById('ticket-subject').value='';document.getElementById('ticket-message').value='';loadTickets();}
-        function loadTickets(){if(!userData.uid)return;db.collection('tickets').where('uid','==',userData.uid).orderBy('timestamp','desc').limit(20).onSnapshot(snap=>{const el=document.getElementById('tickets-list');if(!el)return;if(snap.empty){el.innerHTML='<div class="empty-state"><p>لا تذاكر</p></div>';return;}el.innerHTML=snap.docs.map(d=>{const t=d.data();const cls=t.status==='مغلق'?'completed':'pending';const dt=t.timestamp?.toDate?.().toLocaleDateString('ar-SA')||'';return'<div class="ticket-card"><div class="order-header"><span class="ticket-subject">'+t.subject+'</span><span class="status-badge '+cls+'">'+t.status+'</span></div><p style="color:#64748b;font-size:12px;">'+(t.message||'').substring(0,120)+'</p>'+(t.reply?'<div class="admin-reply"><small style="color:var(--primary-blue);">✅ رد الإدارة:</small><p style="color:#1e293b;font-size:11px;">'+t.reply+'</p></div>':'')+'<small>'+dt+'</small></div>';}).join('');});}
-        async function submitWebProject(){const n=document.getElementById('web-name').value.trim();const s=document.getElementById('web-site-name').value.trim();const p=document.getElementById('web-pass').value.trim();const d=document.getElementById('web-details').value.trim();if(!n||!s||!p)return toast('⚠️ املأ الحقول','error');await db.collection('web_orders').add({userId:userData.uid,userName:n,websiteName:s,password:p,details:d,status:'pending',price:70,renewal:30,timestamp:firebase.firestore.FieldValue.serverTimestamp()});toast('✅ تم الإرسال','success');document.getElementById('web-name').value='';document.getElementById('web-site-name').value='';document.getElementById('web-pass').value='';document.getElementById('web-details').value='';}
-
-        function showPane(id){document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));document.querySelectorAll('.bottom-nav-item').forEach(i=>i.classList.remove('active'));document.getElementById('pane-'+id).classList.add('active');const nl=document.getElementById('nav-'+id);if(nl)nl.classList.add('active');const bni=document.querySelector('.bottom-nav-item[data-page="'+id+'"]');if(bni)bni.classList.add('active');toggleSidebar(false);window.scrollTo(0,0);}
-        function toggleSidebar(s){document.body.classList.toggle('sidebar-active',s);}
-        function toast(msg,type){const t=document.getElementById('main-toast');if(t){t.innerText=msg;t.className='toast '+(type||'')+' active';setTimeout(()=>t.classList.remove('active'),3000);}}
-        function copyText(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(()=>toast('✅ تم النسخ','success'));}else{const ta=document.createElement('textarea');ta.value=txt;ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✅ تم النسخ','success');}}
-        document.addEventListener('contextmenu',e=>e.preventDefault());
-        console.log('🔥 Media Plus - Auto Deposit with Duplicate Prevention & Amount Normalization Active');
+        });
     </script>
 </body>
 </html>
