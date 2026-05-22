@@ -2,364 +2,962 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Plus | متجر البطاقات الإلكترونية المتكامل</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#030712">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Media Plus | متجر النيون الاحترافي</title>
+
+    <link rel="manifest" href="data:application/json,{}">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
+        :root {
+            --neon-blue: #00f2fe;
+            --neon-pink: #ff2d95;
+            --dark-bg: #030712;
+            --card-bg: #0a0f1f;
+            --phone-width: 430px;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #0b0c22; /* نفس درجات ألوان ليبيا كارد المتناسقة مع هاتف المحمول */
+            background-color: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
         }
+
+        .phone-container {
+            width: 100%;
+            max-width: var(--phone-width);
+            min-height: 100vh;
+            position: relative;
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            box-shadow: 0 0 80px rgba(0,242,254,0.15);
+        }
+
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #030712;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loadingScreen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-spinner {
+            width: 56px; height: 56px;
+            border: 3px solid rgba(0,242,254,0.2);
+            border-top-color: #00f2fe;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            box-shadow: 0 0 30px rgba(0,242,254,0.5);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #particlesCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.45; }
+
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(0,242,254,0.2), 0 0 3px rgba(0,242,254,0.1); }
+            50% { box-shadow: 0 0 24px rgba(0,242,254,0.5), 0 0 10px rgba(0,242,254,0.3); }
+        }
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            25% { transform: translateY(-4px) rotateY(2deg); }
+            75% { transform: translateY(2px) rotateY(-2deg); }
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: 200px 0; } }
+        @keyframes glassShine { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        @keyframes dotPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.5); opacity: 1; } }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
         .glass-card {
-            background: #16173a;
-            border: 1px solid rgba(245, 166, 35, 0.08);
-        }
-        .gold-text { color: #f5a623; }
-        .gold-bg { background-color: #f5a623; }
-        .input-focus:focus {
-            border-color: #f5a623;
-            box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.15);
-        }
-        .accordion-content {
-            max-height: 0;
+            background: rgba(10, 15, 31, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 12px rgba(0,242,254,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.5s ease forwards;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            position: relative;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
         }
-        .accordion-open .accordion-content {
-            max-height: 500px;
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(0,242,254,0.08) 45%, rgba(0,242,254,0.15) 50%, rgba(0,242,254,0.08) 55%, transparent 60%);
+            animation: glassShine 3s infinite;
+            pointer-events: none;
+        }
+        .glass-card:active {
+            transform: scale(0.96);
+            border-color: rgba(0,242,254,0.8);
+            box-shadow: 0 0 30px rgba(0,242,254,0.5);
+        }
+
+        .neon-text-blue { color: #00f2fe; text-shadow: 0 0 10px rgba(0,242,254,0.5); }
+        .neon-bg-blue { background: linear-gradient(135deg, #00f2fe, #00b4d8); box-shadow: 0 0 20px rgba(0,242,254,0.5); }
+        .neon-input {
+            background-color: #020617;
+            border: 1px solid rgba(0,242,254,0.25);
+            color: #ffffff;
+            transition: all 0.3s ease;
+            border-radius: 14px;
+            font-size: 16px;
+            padding: 14px 18px;
+        }
+        .neon-input:focus { border-color: #00f2fe; box-shadow: 0 0 15px rgba(0,242,254,0.3); outline: none; }
+
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.04) 100%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 14px;
+        }
+
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .marquee-wrapper { overflow: hidden; white-space: nowrap; }
+        .marquee-content { display: inline-block; animation: marquee 15s linear infinite; }
+
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 8px; }
+
+        .page { display: none; animation: fadeInUp 0.4s ease forwards; padding-bottom: 90px; }
+        .page.active { display: block; }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: var(--phone-width);
+            background: var(--card-bg);
+            border-top: 1px solid rgba(0,242,254,0.25);
+            padding: 12px 20px;
+            display: flex; justify-content: space-around; align-items: center;
+            z-index: 40; border-radius: 22px 22px 0 0;
+            box-shadow: 0 -6px 30px rgba(0,0,0,0.6);
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: #6b7280; transition: all 0.25s;
+            font-size: 10px; font-weight: 700; cursor: pointer;
+            padding: 5px 10px; border-radius: 14px; white-space: nowrap;
+        }
+        .nav-item.active { color: #00f2fe; text-shadow: 0 0 8px rgba(0,242,254,0.5); background: rgba(0,242,254,0.08); }
+        .nav-item svg { width: 22px; height: 22px; transition: all 0.25s; }
+        .nav-item.active svg { filter: drop-shadow(0 0 6px rgba(0,242,254,0.6)); }
+
+        .detail-modal-overlay {
+            position: fixed; inset: 0; z-index: 55;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+        }
+        .detail-modal-content {
+            width: 100%; max-width: 380px; max-height: 88vh;
+            overflow-y: auto;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .dot-indicator {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #00f2fe;
+            box-shadow: 0 0 8px rgba(0,242,254,0.6);
+            animation: dotPulse 1.5s infinite;
+        }
+
+        .img-square { aspect-ratio: 1/1; object-fit: cover; border-radius: 14px; }
+
+        .step-number {
+            width: 28px; height: 28px;
+            background: rgba(0,242,254,0.15);
+            border: 1px solid rgba(0,242,254,0.4);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 13px;
+            color: #00f2fe;
+            flex-shrink: 0;
         }
     </style>
 </head>
-<body class="text-gray-200 min-h-screen pb-28 relative overflow-x-hidden select-none">
+<body>
 
-    <nav class="glass-card sticky top-0 z-40 border-b border-gray-950 px-4 py-3.5 flex justify-between items-center max-w-md mx-auto rounded-b-2xl shadow-xl">
-        <div class="flex items-center gap-2">
-            <button id="backToCatsBtn" onclick="showCategoriesView()" class="hidden text-gray-400 hover:text-white bg-[#0b0c22] px-3 py-1.5 rounded-xl border border-gray-800 text-xs flex items-center gap-1 transition-all">
-                <i class="fa-solid fa-arrow-right"></i> الرجوع
-            </button>
-        </div>
-        <div class="flex items-center gap-1.5 bg-[#0b0c22] border border-gray-800 px-3 py-1.5 rounded-xl">
-            <span class="gold-bg text-black px-1.5 py-0.5 rounded-md text-[10px] font-black">Media</span>
-            <span class="text-xs font-bold text-white tracking-wide">Plus</span>
-        </div>
-        <div class="text-xs font-bold bg-[#0b0c22] border border-gray-800 px-3 py-1.5 rounded-xl flex items-center gap-1">
-            <span id="navBalance">0.0000</span> <span class="gold-text">د.ل</span>
-            <i class="fa-solid fa-wallet mr-1 text-gray-400"></i>
-        </div>
-    </nav>
+    <div id="loadingScreen">
+        <div class="loader-spinner mb-4"></div>
+        <p class="text-base font-black neon-text-blue tracking-widest">Media Plus</p>
+        <p class="text-xs text-gray-500 mt-1">جارٍ تجهيز المتجر...</p>
+    </div>
 
-    <main class="max-w-md mx-auto px-3 mt-4 space-y-4">
-        
-        <div id="mainBanner" class="glass-card rounded-2xl p-4 relative overflow-hidden border border-amber-500/10">
-            <div class="z-10 relative space-y-1">
-                <span class="bg-amber-500/10 text-[#f5a623] text-[9px] font-bold px-2 py-0.5 rounded-full border border-amber-500/20"><i class="fa-solid fa-shield-halved"></i> تسليم فوري آمن 100%</span>
-                <h2 id="viewTitle" class="text-xs font-black text-white">اختر البطاقة التي تناسبك</h2>
-                <p id="viewDesc" class="text-[10px] text-gray-400 leading-relaxed">وجهتك الأولى لشراء الكروت والألعاب العالمية والمحلية في ليبيا.</p>
-            </div>
-        </div>
+    <canvas id="particlesCanvas"></canvas>
 
-        <div id="categoriesGrid" class="grid grid-cols-3 gap-2">
-            </div>
+    <div class="phone-container">
 
-        <div id="productsView" class="hidden space-y-2.5">
-            <div id="productsList" class="space-y-2">
-                </div>
-        </div>
-
-    </main>
-
-    <div id="paymentModal" class="hidden fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-[#16173a] border border-gray-800 rounded-3xl p-5 shadow-2xl relative space-y-4 overflow-y-auto max-h-[92vh]">
-            
-            <button onclick="closeFastPayment()" class="absolute top-4 left-4 text-gray-400 hover:text-white bg-[#0b0c22] border border-gray-800 p-2 rounded-xl text-xs transition-all">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="text-center pt-1">
-                <span class="bg-amber-500/10 text-[#f5a623] border border-amber-500/20 px-3 py-1 rounded-full text-[10px] font-bold">تفاصيل وتأكيد طلب الشراء</span>
-            </div>
-
-            <div class="bg-[#0b0c22] p-3 rounded-2xl border border-gray-800 flex items-center gap-4">
-                <img id="modalCardImage" src="" alt="المنتج" class="w-14 h-14 object-cover rounded-xl border border-gray-800">
-                <div class="space-y-1">
-                    <h3 id="modalCardName" class="text-xs font-black text-white"></h3>
-                    <p id="modalCardPrice" class="text-xs font-black gold-text"></p>
+        <!-- شريط العروض -->
+        <div class="relative z-30 bg-gradient-to-r from-cyan-900/50 via-purple-900/50 to-cyan-900/50 border-b border-cyan-500/25 py-2">
+            <div class="marquee-wrapper">
+                <div class="marquee-content text-xs font-bold text-cyan-300">
+                    🔥 عروض دائمة على جميع البطاقات &nbsp;|&nbsp; ⚡ شحن فوري &nbsp;|&nbsp; 💎 أفضل الأسعار في ليبيا
                 </div>
             </div>
+        </div>
 
-            <div class="space-y-1.5">
-                <label id="inputLabel" class="text-[11px] text-gray-400 block font-bold">أدخل معرف اللاعب الخاص بك (ID)</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 text-xs"><i class="fa-solid fa-fingerprint gold-text"></i></span>
-                    <input type="text" id="modalPlayerID" required placeholder="مثال: 569835147" class="w-full bg-[#0b0c22] border border-gray-800 rounded-xl py-3 pr-9 pl-3 text-white text-xs font-bold outline-none input-focus text-left tracking-wider" dir="ltr">
+        <!-- الهيدر -->
+        <nav class="glass-card sticky top-0 z-40 border-b border-cyan-500/25 px-4 py-3.5 flex justify-between items-center mx-2 mt-2 rounded-2xl shadow-2xl">
+            <div class="flex items-center gap-2 bg-[#020617] border border-cyan-500/25 px-3 py-2 rounded-xl">
+                <span class="neon-bg-blue text-black px-2 py-1 rounded-lg text-xs font-black">Media</span>
+                <span class="text-sm font-bold text-white tracking-wide">Plus</span>
+            </div>
+            <div class="text-xs font-bold bg-[#020617] border border-cyan-500/25 px-3 py-2 rounded-xl flex items-center gap-1.5">
+                <span id="navBalance" class="text-white text-sm">0.0000</span>
+                <span class="neon-text-blue font-bold text-xs">د.ل</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+        </nav>
+
+        <!-- الصفحة الرئيسية -->
+        <div id="homePage" class="page active px-3 mt-4 space-y-4">
+            <div class="glass-card rounded-2xl p-5 relative overflow-hidden" style="animation: neonPulse 4s infinite;">
+                <div class="z-10 relative space-y-1.5">
+                    <span class="bg-cyan-500/15 text-[#00f2fe] text-xs font-bold px-3 py-1 rounded-full border border-cyan-500/35 inline-flex items-center gap-1.5">
+                        <span class="dot-indicator"></span> شحن نيون فوري
+                    </span>
+                    <h2 class="text-lg font-black text-white">اختر الخدمة المناسبة</h2>
+                    <p class="text-xs text-gray-400">تصفح أقوى الخدمات بأسعار دائمة.</p>
+                </div>
+                <div class="absolute -left-6 -top-6 w-28 h-28 bg-cyan-500/10 rounded-full blur-3xl"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-gray-400 px-1">
+                <span class="flex items-center gap-1"><span class="dot-indicator"></span> طلبات اليوم: <span id="liveOrderCount" class="font-bold neon-text-blue">--</span></span>
+                <span>آخر عملية: <span id="lastOrderText" class="font-bold text-white">--</span></span>
+            </div>
+
+            <div id="categoriesGrid" class="grid grid-cols-3 gap-3">
+                <div class="skeleton h-32 rounded-2xl"></div>
+                <div class="skeleton h-32 rounded-2xl"></div>
+                <div class="skeleton h-32 rounded-2xl"></div>
+                <div class="skeleton h-32 rounded-2xl"></div>
+                <div class="skeleton h-32 rounded-2xl"></div>
+                <div class="skeleton h-32 rounded-2xl"></div>
+            </div>
+
+            <div id="productsView" class="hidden space-y-3">
+                <button onclick="showCategoriesView()" class="text-cyan-400 text-sm flex items-center gap-1.5 mb-2 font-bold">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    الرجوع للأقسام
+                </button>
+                <div id="productsList" class="space-y-3">
+                    <div class="skeleton h-20 rounded-xl"></div>
+                    <div class="skeleton h-20 rounded-xl"></div>
                 </div>
             </div>
 
-            <button id="modalBuyBtn" onclick="submitModalPurchase()" class="w-full gold-bg hover:bg-yellow-600 text-black font-black py-3.5 px-4 rounded-xl text-xs transition-all shadow-lg flex items-center justify-center gap-2">
-                <span>اشترِ الآن</span> <i class="fa-solid fa-bolt"></i>
-            </button>
+            <div id="similarProductsSection" class="hidden mt-4">
+                <h3 class="text-base font-bold neon-text-blue mb-3 flex items-center gap-2">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-cyan-400"><polygon points="12,2 15,9 22,9 16,14 18,22 12,17 6,22 8,14 2,9 9,9"/></svg>
+                    قد يعجبك أيضاً
+                </h3>
+                <div id="similarProductsList" class="space-y-3"></div>
+            </div>
+        </div>
 
-            <div class="space-y-2 pt-1">
-                <div class="glass-card rounded-xl overflow-hidden accordion-item">
-                    <button onclick="toggleAccordion(this)" class="w-full p-2.5 text-[11px] font-bold text-white flex justify-between items-center bg-[#0b0c22]">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-circle-info gold-text"></i> التفاصيل</span>
-                        <i class="fa-solid fa-chevron-down text-[9px] transition-transform"></i>
+        <!-- صفحة المحفظة -->
+        <div id="walletPage" class="page px-3 mt-4 space-y-5">
+            <h2 class="text-lg font-black neon-text-blue flex items-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+                المحفظة وشحن الرصيد
+            </h2>
+
+            <div class="glass-card p-6 text-center space-y-3 relative overflow-hidden" style="animation: neonPulse 4s infinite;">
+                <div class="absolute inset-0 opacity-20">
+                    <img src="https://raw.githubusercontent.com/mediaplusly/assets/main/lb.jpg" alt="LB" class="w-full h-full object-cover rounded-2xl" onerror="this.style.display='none'">
+                </div>
+                <p class="text-sm text-gray-400 relative z-10">رصيدك الحالي</p>
+                <p class="text-4xl font-black neon-text-blue relative z-10"><span id="walletBalance">0.0000</span> <span class="text-lg">د.ل</span></p>
+                <p class="text-xs text-gray-500 relative z-10">الرصيد متاح للشراء الفوري</p>
+                <div class="flex justify-center gap-2 relative z-10">
+                    <span class="dot-indicator"></span>
+                    <span class="dot-indicator" style="animation-delay: 0.5s;"></span>
+                    <span class="dot-indicator" style="animation-delay: 1s;"></span>
+                </div>
+            </div>
+
+            <div class="glass-card p-5 space-y-4">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                    أرقام التحويل البنكي
+                </h3>
+                <p class="text-xs text-gray-400">حول المبلغ إلى أحد هذه الأرقام ثم تواصل مع الدعم لشحن رصيدك</p>
+
+                <div class="bg-[#020617] p-4 rounded-xl border border-cyan-500/25 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-white">مصارف - ليبيا</p>
+                        <p class="text-xl font-black neon-text-blue tracking-wider" dir="ltr">0912377291</p>
+                    </div>
+                    <button onclick="copyNumber('0912377291')" class="bg-cyan-500/20 p-3 rounded-xl text-cyan-400">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
                     </button>
-                    <div class="accordion-content">
-                        <p class="p-3 text-[10px] text-gray-400 leading-relaxed border-t border-gray-900 bg-[#16173a]/40">
-                            يمكنك الآن شحن شدات ببجي، كروت المدار، ليبيانا، وبطاقات الألعاب الرقمية فورا؛ يرجى كتابة البيانات بشكل دقيق وصحيح ليتم معالجة شحن طلبك تلقائياً وبسرعة فائقة.
-                        </p>
+                </div>
+
+                <div class="bg-[#020617] p-4 rounded-xl border border-cyan-500/25 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-white">مصارف - ليبيا</p>
+                        <p class="text-xl font-black neon-text-blue tracking-wider" dir="ltr">0920414760</p>
+                    </div>
+                    <button onclick="copyNumber('0920414760')" class="bg-cyan-500/20 p-3 rounded-xl text-cyan-400">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card p-5 space-y-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    طريقة شحن الرصيد
+                </h3>
+                <ol class="text-xs text-gray-300 space-y-2.5 pr-5 list-decimal leading-relaxed">
+                    <li>قم بتحويل المبلغ إلى أحد الأرقام أعلاه</li>
+                    <li>احتفظ بصورة إثبات التحويل</li>
+                    <li>تواصل مع الدعم الفني عبر الواتساب أو تيليجرام</li>
+                    <li>سيتم شحن رصيدك خلال دقائق</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- صفحة الدعم -->
+        <div id="supportPage" class="page px-3 mt-4 space-y-5">
+            <h2 class="text-lg font-black neon-text-blue flex items-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                الدعم وقنوات التواصل
+            </h2>
+
+            <div class="space-y-4">
+                <a href="https://wa.me/218912377291" target="_blank" class="glass-card p-4 flex items-center gap-4 cursor-pointer" style="text-decoration: none;">
+                    <div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#4ade80"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-white">واتساب الدعم</p>
+                        <p class="text-[11px] text-gray-400">تواصل معنا مباشرة</p>
+                    </div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+
+                <a href="https://t.me/MediaPlusLY" target="_blank" class="glass-card p-4 flex items-center gap-4 cursor-pointer" style="text-decoration: none;">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#60a5fa"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.19-2.97 5.48-4.95c.24-.21-.05-.33-.37-.12l-6.77 4.27-2.92-.91c-.63-.2-.64-.63.13-.94l11.42-4.4c.53-.2 1 .13.83.94z"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-white">تيليجرام</p>
+                        <p class="text-[11px] text-gray-400">قناة التحديثات والعروض</p>
+                    </div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+
+                <a href="https://facebook.com/MediaPlusLY" target="_blank" class="glass-card p-4 flex items-center gap-4 cursor-pointer" style="text-decoration: none;">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-600/20 flex items-center justify-center">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#3b82f6"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-white">صفحة الفيسبوك</p>
+                        <p class="text-[11px] text-gray-400">تابعنا للمزيد من العروض</p>
+                    </div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+            </div>
+
+            <div class="glass-card p-5 space-y-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                    معلومات التواصل
+                </h3>
+                <div class="bg-[#020617] p-3.5 rounded-xl border border-cyan-500/25">
+                    <p class="text-[11px] text-gray-400">رقم الهاتف</p>
+                    <p class="text-base font-black text-white" dir="ltr">0912377291</p>
+                </div>
+                <p class="text-[11px] text-gray-500 text-center">⏰ الدعم متاح يومياً من 9 صباحاً حتى 11 مساءً</p>
+            </div>
+        </div>
+
+        <!-- صفحة الطلبات -->
+        <div id="ordersPage" class="page px-3 mt-4 space-y-4">
+            <h2 class="text-lg font-black neon-text-blue flex items-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                سجل الطلبات
+            </h2>
+            <div id="ordersList" class="space-y-3">
+                <div class="skeleton h-20 rounded-xl"></div>
+                <div class="skeleton h-20 rounded-xl"></div>
+                <div class="skeleton h-20 rounded-xl"></div>
+            </div>
+        </div>
+
+        <!-- صفحة الحساب -->
+        <div id="accountPage" class="page px-3 mt-4 space-y-5">
+            <h2 class="text-lg font-black neon-text-blue flex items-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                حسابي
+            </h2>
+            <div class="glass-card p-6 space-y-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/20 flex items-center justify-center">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div>
+                        <p id="accountEmail" class="text-base font-bold text-white">--</p>
+                        <p class="text-xs text-gray-400">رصيدك: <span id="accountBalance" class="neon-text-blue font-bold">0.0000 د.ل</span></p>
                     </div>
                 </div>
-                
-                <div class="glass-card rounded-xl overflow-hidden accordion-item">
-                    <button onclick="toggleAccordion(this)" class="w-full p-2.5 text-[11px] font-bold text-white flex justify-between items-center bg-[#0b0c22]">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-gears gold-text"></i> طريقة تفعيل المنتج ⚠️</span>
-                    </button>
-                    <div class="accordion-content">
-                        <p class="p-3 text-[10px] text-gray-400 leading-relaxed border-t border-gray-900">
-                            بالنسبة لشدات الألعاب سيتم إرسالها للـ ID تلقائياً، وبالنسبة لكروت الشحن والاتصالات ستجد رمز الكرت متاحاً فوراً داخل سجل مشترياتك في حسابك.
-                        </p>
-                    </div>
-                </div>
+                <button onclick="logout()" class="w-full bg-red-500/20 text-red-300 border border-red-500/35 py-3.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 active:scale-95">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    تسجيل الخروج
+                </button>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="home" onclick="switchPage('home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" data-page="wallet" onclick="switchPage('wallet')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>المحفظة</span>
+            </div>
+            <div class="nav-item" data-page="orders" onclick="switchPage('orders')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                <span>الطلبات</span>
+            </div>
+            <div class="nav-item" data-page="support" onclick="switchPage('support')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                <span>الدعم</span>
+            </div>
+            <div class="nav-item" data-page="account" onclick="switchPage('account')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>حسابي</span>
             </div>
         </div>
     </div>
 
-    <div class="fixed bottom-0 inset-x-0 glass-card border-t border-gray-950 py-3 px-6 flex justify-between items-center z-40 max-w-md mx-auto rounded-t-2xl shadow-2xl">
-        <button onclick="showCategoriesView()" class="flex flex-col items-center gap-1 gold-text transition-all">
-            <i class="fa-solid fa-house text-sm"></i><span class="text-[9px] font-bold">الرئيسية</span>
-        </button>
-        <button onclick="window.location.href='long.html'" class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-all">
-            <i class="fa-solid fa-user text-sm"></i><span class="text-[9px]">حسابي</span>
-        </button>
+    <!-- ==================== نافذة تفاصيل المنتج (شروط + أحكام + طريقة تفعيل) ==================== -->
+    <div id="detailModal" class="hidden detail-modal-overlay" onclick="closeDetailModal()">
+        <div class="detail-modal-content glass-card p-5 space-y-5" onclick="event.stopPropagation()">
+            
+            <!-- هيدر النافذة -->
+            <div class="flex items-center justify-between">
+                <h3 class="text-base font-black neon-text-blue flex items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    تفاصيل المنتج
+                </h3>
+                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-white p-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <!-- صورة المنتج -->
+            <img id="detailImage" src="" class="w-full img-square border-2 border-cyan-500/25 shadow-lg">
+
+            <!-- اسم وسعر المنتج -->
+            <div class="text-center space-y-1">
+                <h4 id="detailName" class="text-base font-bold text-white"></h4>
+                <p id="detailPrice" class="text-xl font-black neon-text-blue"></p>
+            </div>
+
+            <!-- نقاط المؤشرات -->
+            <div class="flex justify-center gap-2">
+                <span class="dot-indicator"></span>
+                <span class="dot-indicator" style="animation-delay:0.3s; background:#ff2d95; box-shadow: 0 0 8px rgba(255,45,149,0.6);"></span>
+                <span class="dot-indicator" style="animation-delay:0.6s;"></span>
+            </div>
+
+            <!-- الشروط والأحكام -->
+            <div class="bg-[#020617] p-4 rounded-2xl border border-red-500/20 space-y-3">
+                <h5 class="text-sm font-black text-red-400 flex items-center gap-2">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    ⚠️ الشروط والأحكام
+                </h5>
+                <ul class="space-y-2 text-xs text-gray-300 pr-4 list-disc leading-relaxed">
+                    <li>المنتج <span class="text-red-400 font-bold">غير قابل للاسترداد</span> بعد إتمام عملية الشراء.</li>
+                    <li>يجب التأكد من <span class="text-white font-bold">صحة الـ ID</span> أو رقم الهاتف المدخل، المتجر غير مسؤول عن الأخطاء الإملائية.</li>
+                    <li>في حالة وجود مشكلة تقنية، يتم تعويض العميل خلال <span class="text-white font-bold">24 ساعة</span> كحد أقصى.</li>
+                    <li>الأسعار قابلة للتغيير حسب تقلبات السوق دون إشعار مسبق.</li>
+                    <li>يمنع استخدام المنتج لأي غرض مخالف للقوانين الليبية.</li>
+                </ul>
+            </div>
+
+            <!-- طريقة التفعيل -->
+            <div class="bg-[#020617] p-4 rounded-2xl border border-green-500/20 space-y-3">
+                <h5 class="text-sm font-black text-green-400 flex items-center gap-2">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+                    ✅ طريقة تفعيل المنتج
+                </h5>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="step-number">1</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">تأكد من <span class="text-white font-bold">رصيد محفظتك</span> كافٍ لتغطية قيمة المنتج.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="step-number">2</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">أدخل <span class="text-white font-bold">معرف اللاعب (ID)</span> أو رقم الهاتف بدقة تامة في الحقل المخصص.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="step-number">3</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">اضغط على زر <span class="text-cyan-400 font-bold">"تأكيد الدفع الفوري"</span> للمتابعة.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="step-number">4</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">سيتم <span class="text-white font-bold">خصم المبلغ تلقائياً</span> وإرسال الشحنة إلى حسابك.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="step-number">5</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">افتح لعبتك وتأكد من <span class="text-green-400 font-bold">استلام الشحنة</span> داخل صندوق البريد.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ملاحظة مهمة -->
+            <div class="bg-yellow-500/10 p-3 rounded-xl border border-yellow-500/25 flex items-start gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" class="mt-0.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <p class="text-[11px] text-yellow-200 leading-relaxed">
+                    <span class="font-bold">ملاحظة:</span> في حال تأخر الشحن لأكثر من 15 دقيقة، يرجى التواصل مع الدعم الفني مباشرة عبر الواتساب مع إرفاق رقم الطلب.
+                </p>
+            </div>
+
+            <!-- زر المتابعة للشراء -->
+            <button id="detailBuyBtn" onclick="proceedToPayment()" class="w-full neon-bg-blue hover:opacity-90 text-black font-black py-4 rounded-xl text-sm flex items-center justify-center gap-2 active:scale-95 shadow-lg">
+                <span>متابعة للشراء</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9,18 15,12 9,6"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- نافذة الدفع السريع -->
+    <div id="paymentModal" class="hidden fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="w-full max-w-sm bg-[#0a0f1f] border border-cyan-500/35 rounded-3xl p-5 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeFastPayment()" class="absolute top-4 left-4 text-gray-400 hover:text-white bg-[#020617] border border-cyan-500/35 p-2.5 rounded-xl text-xs active:scale-90">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="text-center pt-1">
+                <span class="bg-cyan-500/15 text-[#00f2fe] border border-cyan-500/35 px-3 py-1 rounded-full text-xs font-bold">تأكيد الطلب</span>
+            </div>
+            <div class="bg-[#020617] p-4 rounded-2xl border border-cyan-500/25 flex items-center gap-4">
+                <img id="modalCardImage" src="" class="w-16 h-16 img-square border border-cyan-500/30">
+                <div>
+                    <h3 id="modalCardName" class="text-sm font-black text-white"></h3>
+                    <p id="modalCardPrice" class="text-sm font-black neon-text-blue mt-1"></p>
+                </div>
+            </div>
+            <div id="lastIdsContainer" class="hidden flex gap-2 flex-wrap">
+                <span class="text-[11px] text-gray-500">آخر استخدام:</span>
+                <div id="lastIdsList" class="flex gap-1.5 flex-wrap"></div>
+            </div>
+            <div class="space-y-2">
+                <label id="inputLabel" class="text-xs text-gray-400 block font-bold">أدخل ID اللاعب</label>
+                <input type="text" id="modalPlayerID" required placeholder="مثال: 569835147" class="w-full neon-input text-left" dir="ltr" autocomplete="off">
+            </div>
+            <button id="modalBuyBtn" onclick="submitModalPurchase()" class="w-full neon-bg-blue hover:opacity-90 text-black font-black py-4 rounded-xl text-sm flex items-center justify-center gap-2 active:scale-95">
+                <span>تأكيد الدفع الفوري</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- نافذة النجاح -->
+    <div id="successModal" class="hidden fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4">
+        <div class="w-full max-w-xs bg-[#0a0f1f] border border-cyan-500/35 rounded-3xl p-6 text-center space-y-4 shadow-2xl">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="1.5" class="mx-auto"><circle cx="12" cy="12" r="10"/><polyline points="16,10 11,15 8,12"/></svg>
+            <h2 class="text-lg font-black neon-text-blue">تم الشراء بنجاح!</h2>
+            <p id="successDetails" class="text-xs text-gray-300"></p>
+            <button onclick="closeSuccessModal()" class="bg-cyan-500/20 text-white px-6 py-3 rounded-xl text-sm font-bold border border-cyan-500/35">حسناً</button>
+        </div>
+    </div>
+
+    <!-- إشعار النسخ -->
+    <div id="copyToast" class="hidden fixed bottom-28 left-1/2 transform -translate-x-1/2 z-50 bg-cyan-500/90 text-black px-5 py-3 rounded-xl text-sm font-bold shadow-lg">
+        ✅ تم نسخ الرقم!
     </div>
 
     <script>
-        // إعدادات Firebase الخاصة بمشروع Media Plus الخاص بك
         const firebaseConfig = {
             apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
             authDomain: "cd-card-87365.firebaseapp.com",
             projectId: "cd-card-87365",
             storageBucket: "cd-card-87365.firebasestorage.app"
         };
-        
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
         let userBalance = 0;
         let currentCardCost = 0;
+        let currentCardName = '';
+        let currentCardImage = '';
+        let currentCardType = 'id';
+        let lastUsedIds = JSON.parse(localStorage.getItem('lastUsedIds') || '[]');
+        let allCategories = [];
+        let allProducts = [];
 
-        // 📦 قاعدة بيانات المتجر الممتلئة بأدق التفاصيل والخدمات المفعّلة بالكامل
-        const storeData = {
-            categories: [
-                { id: "pubg", name: "شدات ببجي", cover: "https://i.imgur.com/eXbN8Yx.jpg" },
-                { id: "freefire", name: "فري فاير", cover: "https://i.imgur.com/vHkWq1W.jpg" },
-                { id: "cards", name: "بطاقات الألعاب", cover: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80" },
-                { id: "telecom", name: "مدار وليبيانا", cover: "https://images.unsplash.com/photo-1562408590-e32931084e23?q=80" },
-                { id: "apple", name: "بطاقات آيتونز", cover: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80" },
-                { id: "playstation", name: "بلايستيشن", cover: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?q=80" }
-            ],
-            products: [
-                // 1. خدمات قسم ببجي موبايل (مفصلة في أسطر طولية كما في صورتك)
-                { id: "p1", categoryId: "pubg", name: "شدات ببجي 1$ (60UC)", price: 10.350, img: "https://i.imgur.com/eXbN8Yx.jpg", type: "id" },
-                { id: "p2", categoryId: "pubg", name: "شدات ببجي 5$ (300UC + Free 25)", price: 51.635, img: "https://i.imgur.com/eXbN8Yx.jpg", type: "id" },
-                { id: "p3", categoryId: "pubg", name: "شدات ببجي 10$ (600UC + Free 60)", price: 103.270, img: "https://i.imgur.com/eXbN8Yx.jpg", type: "id" },
-                { id: "p4", categoryId: "pubg", name: "شدات ببجي 25$ (1500UC + Free 300)", price: 258.060, img: "https://i.imgur.com/eXbN8Yx.jpg", type: "id" },
-                { id: "p5", categoryId: "pubg", name: "شدات ببجي 50$ (3000UC + Free 850)", price: 516.120, img: "https://i.imgur.com/eXbN8Yx.jpg", type: "id" },
-                { id: "p6", categoryId: "pubg", name: "شدات ببجي 100$ (6000UC + Free 2100)", price: 1032.240, img: "https://i.imgur.com/eXbN8Yx.jpg", type: "id" },
-                
-                // 2. خدمات فري فاير
-                { id: "f1", categoryId: "freefire", name: "جواهر فري فاير (110 جوهرة)", price: 8.500, img: "https://i.imgur.com/vHkWq1W.jpg", type: "id" },
-                { id: "f2", categoryId: "freefire", name: "جواهر فري فاير (231 جوهرة)", price: 17.000, img: "https://i.imgur.com/vHkWq1W.jpg", type: "id" },
-                
-                // 3. خدمات الاتصالات المحلية في ليبيا
-                { id: "t1", categoryId: "telecom", name: "كارت رصيد ليبيانا فئة 10 دينار", price: 10.350, img: "https://images.unsplash.com/photo-1562408590-e32931084e23?q=80", type: "phone" },
-                { id: "t2", categoryId: "telecom", name: "كارت رصيد مدار فئة 10 دينار", price: 10.350, img: "https://images.unsplash.com/photo-1562408590-e32931084e23?q=80", type: "phone" },
-                
-                // 4. خدمات آيتونز وبلايستيشن
-                { id: "a1", categoryId: "apple", name: "بطاقة آيتونز المتجر الأمريكي 5$", price: 30.500, img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80", type: "none" },
-                { id: "ps1", categoryId: "playstation", name: "بطاقة بلايستيشن ستور 10$", price: 62.000, img: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?q=80", type: "none" }
-            ]
-        };
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('loadingScreen').classList.add('hidden'), 1200);
+            initParticles();
+            fetchStoreData();
+        });
 
-        window.onload = function() {
-            renderCategories();
-            
-            // ربط وحماية محفظة حساب المستخدم من قاعدة بيانات الفايربيس
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    db.collection("users").doc(user.uid).onSnapshot(doc => {
-                        if (doc.exists) {
-                            userBalance = doc.data().balance || 0;
-                            document.getElementById('navBalance').innerText = userBalance.toFixed(4);
-                        }
-                    });
-                } else {
-                    window.location.href = "long.html";
-                }
+        function initParticles() {
+            const canvas = document.getElementById('particlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resize); resize();
+            for (let i = 0; i < 40; i++) {
+                particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5+0.5, dx: (Math.random()-0.5)*0.35, dy: (Math.random()-0.5)*0.35, alpha: Math.random()*0.4+0.15 });
+            }
+            function draw() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+                    ctx.fillStyle = `rgba(0,242,254,${p.alpha})`; ctx.fill();
+                    p.x+=p.dx; p.y+=p.dy;
+                    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+                    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        function fetchStoreData() {
+            db.collection("categories").orderBy("order", "asc").get().then(snap => {
+                allCategories = [];
+                snap.forEach(doc => allCategories.push({ id: doc.id, ...doc.data() }));
+                renderCategories();
+            }).catch(() => {
+                allCategories = [
+                    { id: "pubg", name: "🎯 شدات ببجي", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/pubg.jpg", order: 1 },
+                    { id: "freefire", name: "🔥 فري فاير", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/freefire.jpg", order: 2 },
+                    { id: "fortnite", name: "🏗️ فورتنايت", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/fortnite.jpg", order: 3 },
+                    { id: "steam", name: "🎮 ستيم", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/steam.jpg", order: 4 },
+                    { id: "googleplay", name: "📱 قوقل بلاي", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/googleplay.jpg", order: 5 },
+                    { id: "telecom", name: "📞 مدار وليبيانا", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/telecom.jpg", order: 6 },
+                    { id: "apple", name: "🍎 آيتونز", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/apple.jpg", order: 7 },
+                    { id: "playstation", name: "🎮 بلايستيشن", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/playstation.jpg", order: 8 },
+                    { id: "xbox", name: "🎮 إكس بوكس", cover: "https://raw.githubusercontent.com/mediaplusly/assets/main/xbox.jpg", order: 9 },
+                ];
+                renderCategories();
             });
-        };
 
-        // دالة إنشاء كروت الأقسام (3 أقسام متساوية ومتناسقة في السطر الواحد لشاشة الهاتف)
-        function renderCategories() {
-            const container = document.getElementById('categoriesGrid');
-            container.innerHTML = '';
-
-            storeData.categories.forEach(cat => {
-                const catCard = `
-                    <div onclick="openCategoryProducts('${cat.id}', '${cat.name}')" class="glass-card rounded-2xl overflow-hidden cursor-pointer border border-gray-800/60 active:scale-95 transition-all p-2 flex flex-col items-center text-center shadow-lg">
-                        <div class="w-14 h-14 rounded-full overflow-hidden bg-[#0b0c22] mb-2 border border-gray-700/50">
-                            <img src="${cat.cover}" alt="${cat.name}" class="w-full h-full object-cover">
-                        </div>
-                        <h3 class="text-[11px] font-bold text-gray-100 line-clamp-1">${cat.name}</h3>
-                    </div>
-                `;
-                container.innerHTML += catCard;
+            db.collection("products").orderBy("sales", "desc").get().then(snap => {
+                allProducts = [];
+                snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
+            }).catch(() => {
+                allProducts = [
+                    { id: "p1", categoryId: "pubg", name: "شدات ببجي 1$ (60UC)", price: 10.350, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/pubg1.jpg", type: "id", sales: 150 },
+                    { id: "p2", categoryId: "pubg", name: "شدات ببجي 5$ (300UC)", price: 51.635, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/pubg5.jpg", type: "id", sales: 120 },
+                    { id: "p3", categoryId: "pubg", name: "شدات ببجي 10$ (600UC)", price: 103.270, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/pubg10.jpg", type: "id", sales: 200 },
+                    { id: "f1", categoryId: "freefire", name: "جواهر فري فاير 110", price: 8.500, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/ff110.jpg", type: "id", sales: 80 },
+                    { id: "f2", categoryId: "freefire", name: "جواهر فري فاير 231", price: 17.000, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/ff231.jpg", type: "id", sales: 110 },
+                    { id: "t1", categoryId: "telecom", name: "رصيد ليبيانا 10 د.ل", price: 10.350, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/libyana10.jpg", type: "phone", sales: 300 },
+                    { id: "t2", categoryId: "telecom", name: "رصيد مدار 10 د.ل", price: 10.350, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/madar10.jpg", type: "phone", sales: 280 },
+                    { id: "a1", categoryId: "apple", name: "آيتونز 5$", price: 31.500, img: "https://raw.githubusercontent.com/mediaplusly/assets/main/itunes5.jpg", type: "none", sales: 55 },
+                ];
             });
         }
 
-        // دالة فتح الخدمات وعرضها في أسطر طولية منفصلة (كل خدمة في سطر كامل مثل صورة ليبيا كارد)
-        function openCategoryProducts(catId, catName) {
-            document.getElementById('viewTitle').innerText = catName;
-            document.getElementById('backToCatsBtn').classList.remove('hidden');
-
-            document.getElementById('categoriesGrid').classList.add('hidden');
-            const productsView = document.getElementById('productsView');
-            productsView.classList.remove('hidden');
-
-            const listContainer = document.getElementById('productsList');
-            listContainer.innerHTML = '';
-
-            const filteredProds = storeData.products.filter(p => p.categoryId === catId);
-
-            if(filteredProds.length === 0) {
-                listContainer.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">قريباً.. سيتم إضافة خدمات جديدة لهذا القسم.</p>`;
-                return;
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                db.collection("users").doc(user.uid).onSnapshot(doc => {
+                    if (doc.exists) {
+                        userBalance = doc.data().balance || 0;
+                        document.getElementById('navBalance').innerText = userBalance.toFixed(4);
+                        document.getElementById('walletBalance').innerText = userBalance.toFixed(4);
+                        document.getElementById('accountBalance').innerText = userBalance.toFixed(4) + ' د.ل';
+                        document.getElementById('accountEmail').innerText = user.email || 'مستخدم';
+                    }
+                });
+                loadLiveStats();
+                loadOrders();
+            } else {
+                window.location.href = "long.html";
             }
+        });
 
-            // توليد الخدمات بنظام السطر الكامل الفاخر (كل خدمة في سطر)
-            filteredProds.forEach(p => {
-                const prodRow = `
-                    <div onclick="openFastPayment('${p.name}', ${p.price}, '${p.img}', '${p.type}')" class="glass-card p-3 rounded-xl flex items-center justify-between border border-gray-800/80 active:bg-[#0b0c22] cursor-pointer transition-all shadow-md">
-                        <div class="flex items-center gap-3">
-                            <img src="${p.img}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg bg-[#0b0c22] border border-gray-800">
-                            <div class="space-y-0.5">
-                                <h4 class="text-xs font-bold text-white">${p.name}</h4>
-                                <p class="text-[11px] gold-text font-black">${p.price.toFixed(3)} د.ل</p>
-                            </div>
-                        </div>
-                        <div class="text-gray-500 pl-1 text-xs">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </div>
+        function loadLiveStats() {
+            db.collection("orders").where("status", "==", "completed").onSnapshot(snap => {
+                const today = new Date(); today.setHours(0,0,0,0);
+                let count = 0, last = null;
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    if (data.createdAt && data.createdAt.toDate() >= today) count++;
+                    last = data;
+                });
+                document.getElementById('liveOrderCount').innerText = count || '0';
+                if (last) document.getElementById('lastOrderText').innerText = last.cardName || '--';
+            });
+        }
+
+        function switchPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(page + 'Page').classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+            if (page === 'orders') loadOrders();
+            if (page === 'home') {
+                document.getElementById('categoriesGrid').classList.remove('hidden');
+                document.getElementById('productsView').classList.add('hidden');
+                document.getElementById('similarProductsSection').classList.add('hidden');
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categoriesGrid');
+            container.innerHTML = '';
+            allCategories.forEach((cat, i) => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-3 flex flex-col items-center text-center cursor-pointer';
+                card.style.animationDelay = `${i * 0.05}s`;
+                card.onclick = () => openCategoryProducts(cat.id, cat.name);
+                card.innerHTML = `
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden bg-[#020617] mb-2.5 border-2 border-cyan-500/25 shadow-lg">
+                        <img src="${cat.cover}" alt="${cat.name}" class="w-full h-full img-square" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%224%22 fill=%22%23030612%22/><circle cx=%2212%22 cy=%2212%22 r=%226%22 fill=%22%2300f2fe%22 opacity=%220.3%22/></svg>'">
+                    </div>
+                    <h3 class="text-sm font-bold text-white line-clamp-1">${cat.name}</h3>
+                    <div class="flex gap-1 mt-1.5">
+                        <span class="dot-indicator"></span>
+                        <span class="dot-indicator" style="animation-delay:0.4s;"></span>
                     </div>
                 `;
-                listContainer.innerHTML += prodRow;
+                container.appendChild(card);
+            });
+        }
+
+        function openCategoryProducts(catId, catName) {
+            document.getElementById('categoriesGrid').classList.add('hidden');
+            document.getElementById('productsView').classList.remove('hidden');
+            document.getElementById('similarProductsSection').classList.remove('hidden');
+            const listContainer = document.getElementById('productsList');
+            listContainer.innerHTML = '';
+            let filtered = allProducts.filter(p => p.categoryId === catId).sort((a, b) => (b.sales || 0) - (a.sales || 0));
+            if (filtered.length === 0) {
+                listContainer.innerHTML = '<p class="text-sm text-gray-500 text-center py-8">لا توجد خدمات حالياً</p>';
+                return;
+            }
+            filtered.forEach((p, i) => {
+                const row = document.createElement('div');
+                row.className = 'glass-card p-4 flex items-center justify-between cursor-pointer';
+                row.style.animationDelay = `${i * 0.04}s`;
+                row.innerHTML = `
+                    <div class="flex items-center gap-3.5">
+                        <img src="${p.img}" class="w-16 h-16 img-square bg-[#020617] border border-cyan-500/20" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%224%22 fill=%22%23030612%22/></svg>'">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${p.name}</h4>
+                            <p class="text-sm neon-text-blue font-black mt-1">${p.price.toFixed(3)} د.ل</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="bg-cyan-500/15 p-2.5 rounded-xl text-cyan-400" onclick="event.stopPropagation(); openDetailModal('${p.name.replace(/'/g, "\\'")}', ${p.price}, '${p.img.replace(/'/g, "\\'")}', '${p.type}')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </button>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                `;
+                row.querySelector('img').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openDetailModal(p.name, p.price, p.img, p.type);
+                });
+                row.addEventListener('click', (e) => {
+                    if (!e.target.closest('button') && !e.target.closest('img')) {
+                        openFastPayment(p.name, p.price, p.img, p.type);
+                    }
+                });
+                listContainer.appendChild(row);
+            });
+            renderSimilarProducts(catId);
+        }
+
+        function renderSimilarProducts(excludeCatId) {
+            const container = document.getElementById('similarProductsList');
+            container.innerHTML = '';
+            allProducts.filter(p => p.categoryId !== excludeCatId).slice(0, 3).forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'glass-card p-3.5 flex items-center justify-between cursor-pointer';
+                div.onclick = () => openDetailModal(p.name, p.price, p.img, p.type);
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${p.img}" class="w-12 h-12 img-square" loading="lazy">
+                        <span class="text-xs font-bold">${p.name}</span>
+                    </div>
+                    <span class="text-xs neon-text-blue font-bold">${p.price.toFixed(2)} د.ل</span>
+                `;
+                container.appendChild(div);
             });
         }
 
         function showCategoriesView() {
-            document.getElementById('viewTitle').innerText = "اختر البطاقة التي تناسبك";
-            document.getElementById('backToCatsBtn').classList.add('hidden');
-
             document.getElementById('categoriesGrid').classList.remove('hidden');
             document.getElementById('productsView').classList.add('hidden');
+            document.getElementById('similarProductsSection').classList.add('hidden');
         }
 
-        // فتح واجهة التأكيد والطلب الصافية والآمنة
+        // ==================== نافذة التفاصيل ====================
+        function openDetailModal(name, price, img, type) {
+            currentCardName = name;
+            currentCardCost = parseFloat(price);
+            currentCardImage = img;
+            currentCardType = type;
+
+            document.getElementById('detailName').innerText = name;
+            document.getElementById('detailPrice').innerText = price.toFixed(3) + ' د.ل';
+            document.getElementById('detailImage').src = img;
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        function proceedToPayment() {
+            closeDetailModal();
+            setTimeout(() => {
+                openFastPayment(currentCardName, currentCardCost, currentCardImage, currentCardType);
+            }, 200);
+        }
+
+        // ==================== الطلبات ====================
+        function loadOrders() {
+            const user = auth.currentUser;
+            if (!user) return;
+            const container = document.getElementById('ordersList');
+            container.innerHTML = '<div class="skeleton h-20 rounded-xl"></div>';
+            db.collection("orders").where("userId", "==", user.uid).orderBy("createdAt", "desc").limit(30).get()
+                .then(snap => {
+                    container.innerHTML = '';
+                    if (snap.empty) {
+                        container.innerHTML = '<p class="text-sm text-gray-500 text-center py-8">لا توجد طلبات سابقة</p>';
+                        return;
+                    }
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        const date = data.createdAt ? data.createdAt.toDate().toLocaleDateString('ar-LY') : '--';
+                        const div = document.createElement('div');
+                        div.className = 'glass-card p-4 flex items-center justify-between';
+                        div.innerHTML = `
+                            <div>
+                                <p class="text-sm font-bold text-white">${data.cardName}</p>
+                                <p class="text-[11px] text-gray-400">${date} - ${data.playerID || 'مباشر'}</p>
+                            </div>
+                            <span class="text-sm neon-text-blue font-black">${data.price?.toFixed(3)} د.ل</span>
+                        `;
+                        container.appendChild(div);
+                    });
+                });
+        }
+
         function openFastPayment(name, price, image, type) {
             currentCardCost = parseFloat(price);
-            
+            currentCardName = name;
+            currentCardType = type;
             document.getElementById('modalCardName').innerText = name;
             document.getElementById('modalCardPrice').innerText = currentCardCost.toFixed(3) + ' د.ل';
             document.getElementById('modalCardImage').src = image;
             document.getElementById('modalPlayerID').value = '';
 
-            // تعديل النصوص والمسميات بذكاء بناءً على نوع الخدمة لمنع اللخبطة
-            const label = document.getElementById('inputLabel');
-            if (type === "phone") {
-                label.innerText = "أدخل رقم الهاتف المراد تحويل الرصيد إليه";
-                document.getElementById('modalPlayerID').placeholder = "091xxxxxxx أو 092xxxxxxx";
-            } else if (type === "none") {
-                label.innerText = "تأكيد فوري لشراء الرمز المباشر";
-                document.getElementById('modalPlayerID').placeholder = "اكتب كلمة تأكيد أو اتركها فارغة";
+            if (lastUsedIds.length && type === 'id') {
+                document.getElementById('lastIdsContainer').classList.remove('hidden');
+                document.getElementById('lastIdsList').innerHTML = lastUsedIds.slice(0, 3).map(id =>
+                    `<button class="bg-cyan-500/15 text-cyan-300 text-[11px] px-3 py-1.5 rounded-lg border border-cyan-500/25" onclick="document.getElementById('modalPlayerID').value='${id}'">${id}</button>`
+                ).join('');
             } else {
-                label.innerText = "أدخل معرف اللاعب الخاص بك (ID)";
-                document.getElementById('modalPlayerID').placeholder = "مثال: 569835147";
+                document.getElementById('lastIdsContainer').classList.add('hidden');
             }
-            
+
+            const label = document.getElementById('inputLabel');
+            const input = document.getElementById('modalPlayerID');
+            if (type === 'phone') { label.innerText = 'رقم الهاتف'; input.placeholder = '091xxxxxxx'; }
+            else if (type === 'none') { label.innerText = 'تأكيد الشراء'; input.placeholder = 'اكتب "تأكيد"'; }
+            else { label.innerText = 'معرف اللاعب (ID)'; input.placeholder = 'مثال: 569835147'; }
             document.getElementById('paymentModal').classList.remove('hidden');
         }
 
-        function closeFastPayment() {
-            document.getElementById('paymentModal').classList.add('hidden');
-        }
+        function closeFastPayment() { document.getElementById('paymentModal').classList.add('hidden'); }
 
-        function toggleAccordion(btn) {
-            const item = btn.parentElement;
-            const isOpen = item.classList.contains('accordion-open');
-            
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('accordion-open');
-                i.querySelector('.accordion-content').style.maxHeight = null;
-            });
-
-            if (!isOpen) {
-                item.classList.add('accordion-open');
-                const content = item.querySelector('.accordion-content');
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        }
-
-        // دالة الخصم والرفع للطلبات على الفايربيس
         function submitModalPurchase() {
             const playerID = document.getElementById('modalPlayerID').value.trim();
             const btn = document.getElementById('modalBuyBtn');
-
-            if (userBalance < currentCardCost) {
-                alert("عذراً! رصيدك الحالي غير كافٍ لإتمام هذه المعاملة.");
-                return;
-            }
-
+            if (userBalance < currentCardCost) { alert("⚠️ رصيدك غير كافٍ."); return; }
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin ml-2"></i> جاري إرسال الطلب...`;
-
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-spin"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"/></svg> جاري المعالجة...';
             const user = auth.currentUser;
             const newBalance = userBalance - currentCardCost;
-
-            db.collection("users").doc(user.uid).update({
-                balance: newBalance
-            })
-            .then(() => {
-                return db.collection("orders").add({
-                    userId: user.uid,
-                    cardName: document.getElementById('modalCardName').innerText,
-                    price: currentCardCost,
-                    playerID: playerID || "Direct Purchase",
-                    status: "pending",
+            db.collection("users").doc(user.uid).update({ balance: newBalance })
+                .then(() => db.collection("orders").add({
+                    userId: user.uid, cardName: currentCardName, price: currentCardCost,
+                    playerID: playerID || "Direct", status: "completed",
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }))
+                .then(() => {
+                    if (playerID && !lastUsedIds.includes(playerID)) {
+                        lastUsedIds.unshift(playerID);
+                        if (lastUsedIds.length > 5) lastUsedIds.pop();
+                        localStorage.setItem('lastUsedIds', JSON.stringify(lastUsedIds));
+                    }
+                    closeFastPayment();
+                    showSuccessModal(currentCardName, playerID);
+                    confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
+                })
+                .catch(error => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>تأكيد الدفع الفوري</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"/></svg>';
+                    alert("خطأ: " + error.message);
                 });
-            })
-            .then(() => {
-                alert("🎉 ممتاز! تم خصم القيمة بنجاح، وتجد طلبك قيد المعالجة الآن.");
-                closeFastPayment();
-            })
-            .catch(error => {
-                btn.disabled = false;
-                btn.innerHTML = `<span>اشترِ الآن</span> <i class="fa-solid fa-bolt"></i>`;
-                alert("خطأ في الشبكة: " + error.message);
+        }
+
+        function showSuccessModal(cardName, playerID) {
+            document.getElementById('successDetails').innerText = `تم شحن ${cardName} ${playerID ? 'إلى ' + playerID : ''} بنجاح.`;
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() { document.getElementById('successModal').classList.add('hidden'); }
+
+        function copyNumber(number) {
+            navigator.clipboard.writeText(number).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.classList.remove('hidden');
+                setTimeout(() => toast.classList.add('hidden'), 2000);
             });
         }
+
+        function logout() { auth.signOut().then(() => window.location.href = "long.html"); }
+
+        renderCategories();
     </script>
 </body>
-</html>
-
+                            </html>
