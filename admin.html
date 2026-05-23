@@ -48,7 +48,7 @@
         <div>
             <div class="p-5 border-b border-gray-800 flex items-center justify-between">
                 <div class="flex items-center gap-2"><span class="gold-bg text-black px-2 py-0.5 rounded text-sm font-black">Media</span><span class="text-md font-bold text-white">Plus الإدارة</span></div>
-                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v10.0</span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v11.0</span>
             </div>
             <nav class="p-3 space-y-1">
                 <button onclick="switchTab('dashboardTab',this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
@@ -87,13 +87,15 @@
             <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden"><table class="w-full text-right text-xs"><thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">ترتيب</th><th class="p-4">تحكم</th></tr></thead><tbody id="categoriesTableBody"><tr><td colspan="4" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div>
         </section>
 
+        <!-- ==================== قسم المنتجات ==================== -->
         <section id="productsTab" class="admin-tab hidden space-y-6">
             <div class="flex justify-between items-center flex-wrap gap-2">
                 <h1 class="text-xl font-black text-white">🎮 المنتجات</h1>
-                <div class="flex gap-2">
+                <div class="flex gap-2 flex-wrap">
                     <button onclick="deleteSelectedProducts()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف</button>
                     <button onclick="openProductModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة</button>
                     <button onclick="openBatchReorderModal()" class="bg-amber-600/20 text-amber-400 border border-amber-500/30 hover:bg-amber-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-sort"></i> ترتيب جماعي</button>
+                    <button onclick="openBatchMoveModal()" class="bg-purple-600/20 text-purple-400 border border-purple-500/30 hover:bg-purple-600 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-folder-tree"></i> نقل جماعي</button>
                 </div>
             </div>
 
@@ -101,16 +103,19 @@
             <div id="batchReorderModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-lg mx-auto space-y-4">
                 <div class="flex justify-between"><h3 class="text-sm font-bold text-white">تغيير الترتيب الجماعي</h3><button onclick="closeBatchReorderModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div>
                 <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="text-gray-400 block mb-1">رقم الترتيب الجديد</label>
-                        <input type="number" id="newOrderValue" value="1" min="1" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white">
-                        <p class="text-[10px] text-gray-500 mt-1">كل المنتجات المحددة (المؤشرة ✓) ستأخذ رقم الترتيب هذا وتظهر متجاورة</p>
-                    </div>
-                    <div class="bg-[#0b0c22] p-3 rounded-xl border border-gray-700">
-                        <p class="text-gray-400 text-[10px] mb-2">📋 المنتجات المحددة حالياً: <span id="selectedCount" class="text-amber-400 font-bold">0</span></p>
-                        <p class="text-gray-500 text-[10px]">💡 استخدم الـ Checkbox في الجدول لتحديد المنتجات أولاً</p>
-                    </div>
-                    <button onclick="applyBatchOrder()" class="w-full gold-bg hover:bg-yellow-600 text-black font-bold py-3 rounded-xl text-xs">✅ تطبيق الترتيب على المنتجات المحددة</button>
+                    <div><label class="text-gray-400 block mb-1">رقم الترتيب الجديد</label><input type="number" id="newOrderValue" value="1" min="1" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><p class="text-[10px] text-gray-500 mt-1">كل المنتجات المحددة ستأخذ هذا الترتيب</p></div>
+                    <div class="bg-[#0b0c22] p-3 rounded-xl border border-gray-700"><p class="text-gray-400 text-[10px] mb-2">📋 المحدد: <span id="selectedCount" class="text-amber-400 font-bold">0</span></p></div>
+                    <button onclick="applyBatchOrder()" class="w-full gold-bg hover:bg-yellow-600 text-black font-bold py-3 rounded-xl text-xs">✅ تطبيق</button>
+                </div>
+            </div>
+
+            <!-- مودال النقل الجماعي -->
+            <div id="batchMoveModal" class="hidden card-bg p-5 rounded-2xl border border-purple-500/30 max-w-lg mx-auto space-y-4">
+                <div class="flex justify-between"><h3 class="text-sm font-bold text-white">📦 نقل المنتجات لقسم آخر</h3><button onclick="closeBatchMoveModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div>
+                <div class="space-y-3 text-xs">
+                    <div><label class="text-gray-400 block mb-1">اختر القسم الجديد</label><select id="targetCategorySelect" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="">اختر القسم...</option></select></div>
+                    <div class="bg-[#0b0c22] p-3 rounded-xl border border-gray-700"><p class="text-gray-400 text-[10px] mb-2">📋 المحدد للنقل: <span id="moveSelectedCount" class="text-purple-400 font-bold">0</span></p></div>
+                    <button onclick="applyBatchMove()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-xs">📦 نقل المنتجات المحددة</button>
                 </div>
             </div>
 
@@ -216,11 +221,19 @@
             db.collection("categories").orderBy("order").limit(100).onSnapshot(snap => {
                 allCategoriesList = []; const tbody = document.getElementById("categoriesTableBody"); tbody.innerHTML = "";
                 snap.forEach(doc => { const c = doc.data(); c.id = doc.id; allCategoriesList.push(c); tbody.innerHTML += `<tr class="border-b border-gray-800/40"><td class="p-4"><img src="${c.image||c.cover||''}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'"></td><td class="p-4 text-white font-bold">${c.name}</td><td class="p-4">${c.order||0}</td><td class="p-4"><button onclick="editCategory('${doc.id}')" class="text-blue-400 text-[11px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteCategory('${doc.id}')" class="text-red-400 text-[11px]"><i class="fa-solid fa-trash"></i></button></td></tr>`; });
-                updateCategorySelect();
+                updateAllSelects();
             });
         }
 
-        function updateCategorySelect() { const s = document.getElementById("prodCategory"); if (s) { s.innerHTML = '<option value="">اختر القسم...</option>'; allCategoriesList.forEach(c => s.innerHTML += `<option value="${c.id}">${c.name}</option>`); } }
+        function updateAllSelects() {
+            // تحديث select المنتج
+            const prodSelect = document.getElementById("prodCategory");
+            if (prodSelect) { prodSelect.innerHTML = '<option value="">اختر القسم...</option>'; allCategoriesList.forEach(c => prodSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`); }
+            // تحديث select النقل الجماعي
+            const moveSelect = document.getElementById("targetCategorySelect");
+            if (moveSelect) { moveSelect.innerHTML = '<option value="">اختر القسم...</option>'; allCategoriesList.forEach(c => moveSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`); }
+        }
+
         function openCategoryModal() { document.getElementById("catId").value=""; document.getElementById("catName").value=""; document.getElementById("catImage").value=""; document.getElementById("catOrder").value="1"; document.getElementById("catModalTitle").innerText="إضافة قسم"; document.getElementById("categoryModal").classList.remove("hidden"); }
         function editCategory(id) { const c=allCategoriesList.find(x=>x.id===id); if(!c)return; document.getElementById("catId").value=id; document.getElementById("catName").value=c.name||""; document.getElementById("catImage").value=c.image||c.cover||""; document.getElementById("catOrder").value=c.order||1; document.getElementById("catModalTitle").innerText="تعديل قسم"; document.getElementById("categoryModal").classList.remove("hidden"); }
         function closeCategoryModal() { document.getElementById("categoryModal").classList.add("hidden"); }
@@ -249,7 +262,7 @@
                 const p = doc.data(); const cat = allCategoriesList.find(c => c.id === p.categoryId);
                 const imgSrc = p.image || p.img || '';
                 html += `<tr class="border-b border-gray-800/40">
-                    <td class="p-4"><input type="checkbox" value="${doc.id}" class="productCheckbox accent-[#f5a623]" onchange="updateSelectedCount()"></td>
+                    <td class="p-4"><input type="checkbox" value="${doc.id}" class="productCheckbox accent-[#f5a623]" onchange="updateAllSelectedCounts()"></td>
                     <td class="p-4"><img src="${imgSrc}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'" loading="lazy"></td>
                     <td class="p-4 text-white font-bold text-[11px]">${p.name||'---'}</td>
                     <td class="p-4 gold-text text-[11px]">${(p.priceLYD||p.price||0).toFixed(3)}</td>
@@ -305,34 +318,28 @@
             });
         }
 
-        // ==================== الترتيب الجماعي ====================
+        function updateAllSelectedCounts() {
+            const count = document.querySelectorAll('.productCheckbox:checked').length;
+            const el1 = document.getElementById("selectedCount");
+            const el2 = document.getElementById("moveSelectedCount");
+            if (el1) el1.innerText = count;
+            if (el2) el2.innerText = count;
+        }
+
+        // ==================== ترتيب جماعي ====================
         function openBatchReorderModal() {
-            updateSelectedCount();
+            updateAllSelectedCounts();
             document.getElementById("batchReorderModal").classList.remove("hidden");
         }
-
-        function closeBatchReorderModal() {
-            document.getElementById("batchReorderModal").classList.add("hidden");
-        }
-
-        function updateSelectedCount() {
-            const count = document.querySelectorAll('.productCheckbox:checked').length;
-            const el = document.getElementById("selectedCount");
-            if (el) el.innerText = count;
-        }
+        function closeBatchReorderModal() { document.getElementById("batchReorderModal").classList.add("hidden"); }
 
         async function applyBatchOrder() {
             const checkedBoxes = document.querySelectorAll('.productCheckbox:checked');
-            if (!checkedBoxes.length) return alert("⚠️ يرجى تحديد منتج واحد على الأقل من الجدول");
-            
+            if (!checkedBoxes.length) return alert("⚠️ يرجى تحديد منتج واحد على الأقل");
             const newOrder = parseInt(document.getElementById("newOrderValue").value) || 1;
-            if (!confirm(`سيتم تغيير ترتيب ${checkedBoxes.length} منتج إلى الرقم ${newOrder}. هل أنت متأكد؟`)) return;
-
+            if (!confirm(`سيتم تغيير ترتيب ${checkedBoxes.length} منتج إلى الرقم ${newOrder}. متأكد؟`)) return;
             const batch = db.batch();
-            checkedBoxes.forEach(cb => {
-                batch.update(db.collection("products").doc(cb.value), { order: newOrder });
-            });
-
+            checkedBoxes.forEach(cb => batch.update(db.collection("products").doc(cb.value), { order: newOrder }));
             try {
                 await batch.commit();
                 document.getElementById("selectAllProducts").checked = false;
@@ -340,9 +347,38 @@
                 closeBatchReorderModal();
                 productsPage = 1;
                 loadProducts();
-            } catch (e) {
-                alert("❌ خطأ: " + e.message);
-            }
+            } catch (e) { alert("❌ خطأ: " + e.message); }
+        }
+
+        // ==================== نقل جماعي ====================
+        function openBatchMoveModal() {
+            updateAllSelectedCounts();
+            updateAllSelects(); // تحديث قائمة الأقسام
+            document.getElementById("batchMoveModal").classList.remove("hidden");
+        }
+        function closeBatchMoveModal() { document.getElementById("batchMoveModal").classList.add("hidden"); }
+
+        async function applyBatchMove() {
+            const checkedBoxes = document.querySelectorAll('.productCheckbox:checked');
+            if (!checkedBoxes.length) return alert("⚠️ يرجى تحديد منتج واحد على الأقل");
+            const targetCategoryId = document.getElementById("targetCategorySelect").value;
+            if (!targetCategoryId) return alert("⚠️ يرجى اختيار القسم الجديد");
+            
+            const targetCat = allCategoriesList.find(c => c.id === targetCategoryId);
+            if (!targetCat) return alert("⚠️ القسم غير موجود");
+            
+            if (!confirm(`سيتم نقل ${checkedBoxes.length} منتج إلى قسم "${targetCat.name}". متأكد؟`)) return;
+            
+            const batch = db.batch();
+            checkedBoxes.forEach(cb => batch.update(db.collection("products").doc(cb.value), { categoryId: targetCategoryId }));
+            try {
+                await batch.commit();
+                document.getElementById("selectAllProducts").checked = false;
+                alert(`✅ تم نقل ${checkedBoxes.length} منتج إلى "${targetCat.name}"`);
+                closeBatchMoveModal();
+                loadProducts();
+                loadStats();
+            } catch (e) { alert("❌ خطأ: " + e.message); }
         }
 
         function openProductModal() { document.getElementById("prodId").value=""; document.getElementById("prodName").value=""; document.getElementById("prodPriceLYD").value=""; document.getElementById("prodPriceUSD").value=""; document.getElementById("prodImage").value=""; document.getElementById("prodDescription").value=""; document.getElementById("prodActive").value="true"; document.getElementById("prodType").value="id"; document.getElementById("prodModalTitle").innerText="إضافة منتج"; document.getElementById("productModal").classList.remove("hidden"); }
@@ -358,4 +394,4 @@
         function searchUsers(term) { const t = term.toLowerCase().trim(); if (!t) { renderUsersTable(allUsers); return; } renderUsersTable(allUsers.filter(u => (u.username||'').toLowerCase().includes(t) || (u.name||'').toLowerCase().includes(t) || (u.phone||'').includes(t) || (u.email||'').toLowerCase().includes(t))); }
     </script>
 </body>
-                                                                                                                                         </html>
+</html>
