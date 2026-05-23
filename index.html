@@ -51,7 +51,6 @@
         .page { display: none; } .page.active { display: block; }
         .section-title { font-size: 15px; font-weight: 700; margin: 18px 0 10px; display: flex; align-items: center; gap: 8px; }
 
-        /* ====== الأقسام الرئيسية ====== */
         .cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
         .cat-card {
             background: var(--white); border: 1px solid var(--border); border-radius: 16px;
@@ -70,9 +69,7 @@
             will-change: transform; transform: translateZ(0);
         }
 
-        .prods-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px;
-        }
+        .prods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 10px; }
         .prod-card {
             background: var(--white); border: 1px solid var(--border); border-radius: 16px;
             padding: 10px; text-align: center; cursor: pointer;
@@ -117,7 +114,8 @@
 
         .hidden { display: none !important; }
         .loading { text-align: center; padding: 35px; color: var(--muted); font-size: 13px; }
-        .prod-card img { content-visibility: auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { animation: spin 1s linear infinite; display: inline-block; }
         @media (max-width: 400px) { .prods-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
@@ -150,9 +148,9 @@
                 <div class="cats-grid" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام...</div></div>
             </div>
             <div id="productsView" class="hidden">
-                <button class="back-btn" onclick="showCategories()">
+                <button class="back-btn" onclick="goBack()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    رجوع للأقسام
+                    <span id="backLabel">رجوع للأقسام</span>
                 </button>
                 <div class="section-title" id="productsTitle"></div>
                 <div class="prods-grid" id="prodsGrid"></div>
@@ -228,6 +226,7 @@
         let userBalance = 0;
         let userData = null;
         let currentProduct = null;
+        let navigationHistory = []; // للتنقل بين المستويات
 
         function switchTab(tab) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -241,8 +240,8 @@
                 db.collection("users").doc(user.uid).onSnapshot(doc => {
                     if (doc.exists) { userData = doc.data(); userBalance = userData.balance || 0; updateAllBalances(); }
                 });
-                setTimeout(fetchCategories, 500);
-            } else { fetchCategories(); userBalance = 0; userData = null; }
+                setTimeout(fetchMainCategories, 500);
+            } else { fetchMainCategories(); userBalance = 0; userData = null; }
         });
 
         function updateAllBalances() {
@@ -262,33 +261,64 @@
         function logout() { auth.signOut().then(() => { alert('تم تسجيل الخروج'); switchTab('home'); }); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)); }
 
-        // ====== يجيب الأقسام الرئيسية فقط (ما عندها parentId) ======
-        function fetchCategories() {
+        // ==================== الأقسام الرئيسية ====================
+        function fetchMainCategories() {
+            navigationHistory = [];
+            document.getElementById('categoriesView').classList.remove('hidden');
+            document.getElementById('productsView').classList.add('hidden');
             document.getElementById('catsGrid').innerHTML = '<div class="loading">⏳ جاري الجلب...</div>';
-            db.collection("categories").orderBy("order").limit(50).get()
+            
+            db.collection("categories").where("isSubCategory", "==", false).orderBy("order").limit(50).get()
                 .then(snap => {
                     allCategories = [];
-                    snap.forEach(doc => {
-                        const c = doc.data();
-                        // نجيب الأقسام الرئيسية فقط (ما عندهاش parentId)
-                        if (!c.parentId && !c.isSubCategory) {
-                            allCategories.push({ id: doc.id, ...c });
-                        }
-                    });
+                    snap.forEach(doc => allCategories.push({ id: doc.id, ...doc.data() }));
                     const grid = document.getElementById('catsGrid');
                     if (!allCategories.length) { grid.innerHTML = '<div class="loading">لا توجد أقسام</div>'; return; }
                     let html = '';
                     allCategories.forEach(cat => {
-                        html += `<div class="cat-card" onclick="openCategory('${cat.id}', '${(cat.name||'').replace(/'/g, "\\'")}')"><img src="${cat.image||cat.cover||''}" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`;
+                        html += `<div class="cat-card" onclick="openMainCategory('${cat.id}', '${(cat.name||'').replace(/'/g, "\\'")}')"><img src="${cat.image||cat.cover||''}" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`;
                     });
                     grid.innerHTML = html;
                 });
         }
 
-        function openCategory(catId, catName) {
+        // ==================== فتح قسم رئيسي ====================
+        function openMainCategory(catId, catName) {
+            navigationHistory = [{ type: 'main', id: catId, name: catName }];
             document.getElementById('categoriesView').classList.add('hidden');
             document.getElementById('productsView').classList.remove('hidden');
-            document.getElementById('productsTitle').innerHTML = `🎮 ${catName}`;
+            document.getElementById('productsTitle').innerHTML = `📂 ${catName}`;
+            document.getElementById('backLabel').innerText = 'رجوع للأقسام الرئيسية';
+            
+            // نجيب الأقسام الفرعية لهذا القسم
+            db.collection("categories").where("parentId", "==", catId).orderBy("order").get()
+                .then(snap => {
+                    if (snap.empty) {
+                        // مافيش أقسام فرعية ← اعرض المنتجات مباشرة
+                        showProductsForCategory(catId);
+                    } else {
+                        // فيه أقسام فرعية ← اعرضهم
+                        let html = '<div class="cats-grid">';
+                        snap.forEach(doc => {
+                            const sub = doc.data();
+                            html += `<div class="cat-card" onclick="openSubCategory('${doc.id}', '${(sub.name||'').replace(/'/g, "\\'")}', '${catId}', '${(catName||'').replace(/'/g, "\\'")}')"><img src="${sub.image||sub.cover||''}" loading="lazy" onerror="this.style.display='none'"><h3>${sub.name||'قسم فرعي'}</h3></div>`;
+                        });
+                        html += '</div>';
+                        document.getElementById('prodsGrid').innerHTML = html;
+                    }
+                });
+        }
+
+        // ==================== فتح قسم فرعي ====================
+        function openSubCategory(subId, subName, parentId, parentName) {
+            navigationHistory.push({ type: 'sub', id: subId, name: subName, parentId, parentName });
+            document.getElementById('productsTitle').innerHTML = `🎮 ${subName}`;
+            document.getElementById('backLabel').innerText = `رجوع لـ ${parentName}`;
+            showProductsForCategory(subId);
+        }
+
+        // ==================== عرض المنتجات ====================
+        function showProductsForCategory(catId) {
             const grid = document.getElementById('prodsGrid');
             grid.innerHTML = '<div class="loading">⏳ جاري الجلب...</div>';
             
@@ -307,8 +337,39 @@
                 });
         }
 
-        function showCategories() { document.getElementById('productsView').classList.add('hidden'); document.getElementById('categoriesView').classList.remove('hidden'); }
+        // ==================== زر الرجوع ====================
+        function goBack() {
+            if (navigationHistory.length <= 1) {
+                // رجوع للأقسام الرئيسية
+                fetchMainCategories();
+            } else {
+                // رجوع من قسم فرعي للقسم الرئيسي
+                navigationHistory.pop();
+                const prev = navigationHistory[navigationHistory.length - 1];
+                document.getElementById('productsTitle').innerHTML = `📂 ${prev.name}`;
+                document.getElementById('backLabel').innerText = navigationHistory.length === 1 ? 'رجوع للأقسام الرئيسية' : `رجوع لـ ${prev.parentName || ''}`;
+                
+                // نجيب الأقسام الفرعية للقسم الرئيسي
+                db.collection("categories").where("parentId", "==", prev.id).orderBy("order").get()
+                    .then(snap => {
+                        if (snap.empty) {
+                            showProductsForCategory(prev.id);
+                        } else {
+                            let html = '<div class="cats-grid">';
+                            snap.forEach(doc => {
+                                const sub = doc.data();
+                                html += `<div class="cat-card" onclick="openSubCategory('${doc.id}', '${(sub.name||'').replace(/'/g, "\\'")}', '${prev.id}', '${(prev.name||'').replace(/'/g, "\\'")}')"><img src="${sub.image||sub.cover||''}" loading="lazy" onerror="this.style.display='none'"><h3>${sub.name||'قسم فرعي'}</h3></div>`;
+                            });
+                            html += '</div>';
+                            document.getElementById('prodsGrid').innerHTML = html;
+                        }
+                    });
+            }
+        }
 
+        function showCategories() { fetchMainCategories(); }
+
+        // ==================== المودالات ====================
         function openDetail(img, name, priceLYD, type) {
             currentProduct = { img, name, priceLYD, type };
             document.getElementById('dImg').src = img;
@@ -355,6 +416,7 @@
             document.getElementById('categoriesView').classList.add('hidden');
             document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML = `🔍 بحث: ${term}`;
+            document.getElementById('backLabel').innerText = 'رجوع للأقسام الرئيسية';
             const grid = document.getElementById('prodsGrid');
             grid.innerHTML = '<div class="loading">⏳ جاري البحث...</div>';
             db.collection("products").where("active", "==", true).limit(200).get().then(snap => {
@@ -373,4 +435,4 @@
         document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') searchProducts(); });
     </script>
 </body>
-    </html>
+</html>
