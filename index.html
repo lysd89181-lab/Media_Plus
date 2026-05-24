@@ -116,8 +116,8 @@
             <div class="card-white" style="text-align:center;"><div style="font-size:12px;color:var(--muted);">رصيدك الحالي</div><div class="big-number"><span id="walletBalance">0.000</span> د.ل</div></div>
             <div class="card-white">
                 <h3 style="font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>أرقام التحويل البنكي</h3>
-                <div class="bank-row"><div><div style="font-size:10px;color:var(--muted);">مصارف - ليبيا</div><div class="num">0912377291</div></div><button class="copy-btn" onclick="copyText('0912377291')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div>
-                <div class="bank-row"><div><div style="font-size:10px;color:var(--muted);">مصارف - ليبيا</div><div class="num">0920414760</div></div><button class="copy-btn" onclick="copyText('0920414760')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div>
+                <div class="bank-row"><div><div style="font-size:10px;color:var(--muted);">مدار - ليبيا</div><div class="num">0912377291</div></div><button class="copy-btn" onclick="copyText('0912377291')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div>
+                <div class="bank-row"><div><div style="font-size:10px;color:var(--muted);">ليبيانا - ليبيا</div><div class="num">0920414760</div></div><button class="copy-btn" onclick="copyText('0920414760')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div>
             </div>
             <div class="card-white"><h3 style="font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>طريقة الشحن</h3><ol style="font-size:11px;color:var(--muted);padding-right:16px;line-height:2.2;"><li>حول المبلغ لأحد الأرقام</li><li>احتفظ بالإثبات</li><li>تواصل مع الدعم واتساب</li><li>يتم الشحن خلال دقائق</li></ol></div>
         </div>
@@ -142,6 +142,7 @@
         <div class="modal" onclick="event.stopPropagation()">
             <button class="close" onclick="closeDetailModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
             <img id="dImg" src="" alt=""><h3 id="dName"></h3><div class="price-big" id="dPrice"></div>
+            <div id="dDescription" style="color:#ccc;font-size:11px;text-align:center;margin-bottom:12px;"></div>
             <div class="box red"><h5><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>الشروط والأحكام</h5><ul><li>المنتج <b style="color:#f87171">غير قابل للاسترداد</b></li><li>تأكد من <b style="color:#fff">صحة البيانات</b></li><li>التعويض خلال <b style="color:#fff">24 ساعة</b></li></ul></div>
             <div class="box green"><h5><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>طريقة التفعيل</h5><div class="step"><span class="step-num">1</span>تأكد من رصيدك</div><div class="step"><span class="step-num">2</span>أدخل ID بدقة</div><div class="step"><span class="step-num">3</span>اضغط تأكيد</div><div class="step"><span class="step-num">4</span>تستلم الشحنة</div></div>
             <button class="buy-btn" onclick="openPaymentModal()">متابعة للشراء<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
@@ -180,6 +181,11 @@
         let currentProduct = null;
 
         function switchTab(tab) {
+            // إذا مش مسجل دخول وحاول يفتح المحفظة أو الحساب، حوله لصفحة التسجيل
+            if (!auth.currentUser && (tab === 'wallet' || tab === 'account')) {
+                window.location.href = 'long.html';
+                return;
+            }
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(tab + 'Page').classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -192,7 +198,11 @@
                     if (doc.exists) { userData = doc.data(); userBalance = userData.balance || 0; updateAllBalances(); }
                 });
                 setTimeout(fetchCategories, 500);
-            } else { fetchCategories(); userBalance = 0; userData = null; }
+            } else { 
+                fetchCategories(); 
+                userBalance = 0; 
+                userData = null; 
+            }
         });
 
         function updateAllBalances() {
@@ -258,7 +268,7 @@
                         const img = p.image || p.img || '';
                         const name = p.name || 'منتج';
                         const priceLYD = (p.priceLYD || p.price || 0).toFixed(3);
-                        html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}', ${priceLYD}, '${p.type||'id'}')"><img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4><div class="price">${priceLYD} د.ل</div></div>`;
+                        html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}', ${priceLYD}, '${p.type||'id'}', '${(p.description||'').replace(/'/g, "\\'")}')"><img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4><div class="price">${priceLYD} د.ل</div></div>`;
                     });
                     grid.innerHTML = html;
                 })
@@ -270,15 +280,23 @@
 
         function showCategories() { document.getElementById('productsView').classList.add('hidden'); document.getElementById('categoriesView').classList.remove('hidden'); }
 
-        function openDetail(img, name, priceLYD, type) {
-            currentProduct = { img, name, priceLYD, type };
-            document.getElementById('dImg').src = img; document.getElementById('dName').innerText = name;
-            document.getElementById('dPrice').innerText = priceLYD + ' د.ل'; document.getElementById('detailModal').classList.remove('hidden');
+        function openDetail(img, name, priceLYD, type, description) {
+            currentProduct = { img, name, priceLYD, type, description };
+            document.getElementById('dImg').src = img; 
+            document.getElementById('dName').innerText = name;
+            document.getElementById('dPrice').innerText = priceLYD + ' د.ل';
+            document.getElementById('dDescription').innerText = description || '';
+            document.getElementById('detailModal').classList.remove('hidden');
         }
         function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
 
         function openPaymentModal() {
             if (!currentProduct) return;
+            // إذا مش مسجل، حوله لصفحة التسجيل
+            if (!auth.currentUser) {
+                window.location.href = 'long.html';
+                return;
+            }
             closeDetailModal();
             document.getElementById('pImg').src = currentProduct.img; document.getElementById('pName').innerText = currentProduct.name;
             document.getElementById('pPrice').innerText = currentProduct.priceLYD + ' د.ل'; document.getElementById('pInput').value = '';
@@ -294,8 +312,8 @@
             if (!currentProduct) return;
             const input = document.getElementById('pInput').value.trim();
             const user = auth.currentUser;
+            if (!user) { window.location.href = 'long.html'; return; }
             if (currentProduct.type !== 'none' && !input) return showError('⚠️ أدخل البيانات المطلوبة');
-            if (!user) return showError('⚠️ سجل دخول أولاً');
             if (userBalance < currentProduct.priceLYD) return showError('⚠️ رصيد غير كافٍ');
             const btn = document.getElementById('confirmBtn'); btn.disabled = true; btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinner"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"/></svg> جاري المعالجة...';
             db.collection("users").doc(user.uid).update({ balance: userBalance - currentProduct.priceLYD })
@@ -320,7 +338,7 @@
                     if (!(p.name||'').toLowerCase().includes(term)) return;
                     const img = p.image || p.img || ''; const name = p.name || 'منتج';
                     const priceLYD = (p.priceLYD || p.price || 0).toFixed(3);
-                    html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}', ${priceLYD}, '${p.type||'id'}')"><img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4><div class="price">${priceLYD} د.ل</div></div>`;
+                    html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}', ${priceLYD}, '${p.type||'id'}', '${(p.description||'').replace(/'/g, "\\'")}')"><img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4><div class="price">${priceLYD} د.ل</div></div>`;
                 });
                 grid.innerHTML = html || '<div class="loading">لا توجد نتائج</div>';
             });
