@@ -279,7 +279,7 @@
             if (!userData) return alert('⚠️ سجل دخول أولاً');
             
             const BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
-            const CHAT_ID = "8505632393";
+            const CHAT_ID = "7737867483";
             
             const message = `💰 *إشعار تحويل جديد!*\n\n👤 المستخدم: ${userData.username || userData.name || '---'}\n🆔 ID: ${auth.currentUser.uid}\n📧 الإيميل: ${userData.email || '---'}\n📞 رقم المحول: ${phone}\n💵 المبلغ: ${amount} د.ل\n⏰ الوقت: ${new Date().toLocaleString('ar-LY')}`;
             
