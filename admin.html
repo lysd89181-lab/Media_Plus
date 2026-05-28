@@ -101,7 +101,7 @@
                 <div id="batchMoveModal" class="hidden card-bg p-5 rounded-2xl border border-purple-500/30 max-w-lg mx-auto space-y-4 mb-4"><div class="flex justify-between"><h3 class="text-sm font-bold text-white">📦 نقل المنتجات لقسم آخر</h3><button onclick="closeBatchMoveModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3 text-xs"><div><label class="text-gray-400 block mb-1">اختر القسم الجديد</label><select id="targetCategorySelect" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="">اختر القسم...</option></select></div><div class="bg-[#0b0c22] p-3 rounded-xl border border-gray-700"><p class="text-gray-400 text-[10px] mb-2">📋 المحدد للنقل: <span id="moveSelectedCount" class="text-purple-400 font-bold">0</span></p></div><button onclick="applyBatchMove()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-xs">📦 نقل المنتجات المحددة</button></div></div>
                 <div class="card-bg rounded-2xl border border-gray-800 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0b0c22] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">د.ل</th><th class="p-4">$</th><th class="p-4">ترتيب</th><th class="p-4">حالة</th><th class="p-4">تحكم</th></tr></thead><tbody id="productsTableBody"><tr><td colspan="8" class="text-center p-6 text-gray-500">اختر قسم أولاً</td></tr></tbody></table></div></div>
             </div>
-            <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4"><div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><input type="hidden" id="prodId"><div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></select></div><div><label class="text-gray-400">النوع</label><select id="prodType" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="id">ID لاعب</option><option value="phone">رقم هاتف</option><option value="none">بدون إدخال</option></select></div><div class="md:col-span-2"><label class="text-gray-400">رابط الصورة</label><input type="text" id="prodImage" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]"></div><div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></textarea></div><div class="md:col-span-2"><label class="text-gray-400">الحالة</label><select id="prodActive" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="true">✅ نشط</option><option value="false">❌ مخفي</option></select></div><div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></div></form></div>
+            <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4"><div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><input type="hidden" id="prodId"><div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></select></div><div><label class="text-gray-400">النوع</label><select id="prodType" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="id">ID لاعب</option><option value="phone">رقم هاتف</option><option value="none">بدون إدخال</option></select></div><div class="md:col-span-2"><label class="text-gray-400">رابط الصورة</label><input type="text" id="prodImage" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white font-mono text-[11px]" placeholder="اسم_الصورة.png أو رابط كامل"></div><div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"></textarea></div><div class="md:col-span-2"><label class="text-gray-400">الحالة</label><select id="prodActive" class="w-full bg-[#0b0c22] border border-gray-700 rounded-xl p-3 text-white"><option value="true">✅ نشط</option><option value="false">❌ مخفي</option></select></div><div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></div></form></div>
         </section>
 
         <section id="usersTab" class="admin-tab hidden space-y-4">
@@ -255,34 +255,46 @@
         }
 
         function listenForChanges() {
-            // طلبات جديدة
             db.collection("orders").onSnapshot(snap => {
                 snap.docChanges().forEach(change => {
                     if (change.type === "added") {
                         const o = change.doc.data();
-                        sendTelegramMsg(`🛒 *طلب جديد!*\n\n👤 ${o.userName||'---'}\n🎮 ${o.serviceName||o.cardName}\n💰 ${o.amount||o.price} د.ل\n🆔 ${o.playerID||'---'}`);
+                        if (o.userId) {
+                            db.collection("users").doc(o.userId).get().then(userDoc => {
+                                const u = userDoc.exists ? userDoc.data() : {};
+                                sendTelegramMsg(`🛒 *طلب جديد!*\n\n👤 ${u.username||u.name||'---'}\n📧 ${u.email||'---'}\n📞 ${u.phone||'---'}\n🆔 ${o.userId}\n🎮 ${o.serviceName||o.cardName}\n💰 ${o.amount||o.price} د.ل\n🆔 معرف: ${o.playerID||'---'}\n⏰ ${new Date().toLocaleString('ar-LY')}`);
+                            });
+                        }
                     }
                 });
             });
-            // تحويلات جديدة
             db.collection("deposits").onSnapshot(snap => {
                 snap.docChanges().forEach(change => {
                     if (change.type === "added") {
                         const d = change.doc.data();
-                        sendTelegramMsg(`💰 *تحويل جديد!*\n\n👤 ${d.userName||'---'}\n📞 ${d.phone}\n💵 ${d.amount} د.ل`);
+                        sendTelegramMsg(`💰 *تحويل جديد!*\n\n👤 ${d.userName||'---'}\n📧 ${d.userEmail||'---'}\n🆔 ${d.userId}\n📞 ${d.phone}\n💵 ${d.amount} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`);
                     }
                 });
             });
-            // مستخدمين جدد
             db.collection("users").onSnapshot(snap => {
                 snap.docChanges().forEach(change => {
+                    const u = change.doc.data();
                     if (change.type === "added") {
-                        const u = change.doc.data();
-                        sendTelegramMsg(`👤 *مستخدم جديد!*\n\n👤 ${u.username||u.name||'---'}\n📧 ${u.email||'---'}\n📞 ${u.phone||'---'}`);
+                        sendTelegramMsg(`👤 *مستخدم جديد!*\n\n👤 ${u.username||u.name||'---'}\n📧 ${u.email||'---'}\n📞 ${u.phone||'---'}\n🆔 ${change.doc.id}\n⏰ ${new Date().toLocaleString('ar-LY')}`);
+                    }
+                    if (change.type === "modified") {
+                        const old = allUsers.find(x => x.uid === change.doc.id);
+                        if (old && old.balance !== u.balance) {
+                            const diff = (u.balance||0) - (old.balance||0);
+                            const type = diff > 0 ? 'شحن' : 'خصم';
+                            sendTelegramMsg(`💳 *${type} رصيد!*\n\n👤 ${u.username||u.name||'---'}\n📧 ${u.email||'---'}\n📞 ${u.phone||'---'}\n🆔 ${change.doc.id}\n💰 ${Math.abs(diff).toFixed(3)} د.ل\n💵 الجديد: ${(u.balance||0).toFixed(3)} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`);
+                        }
+                        const idx = allUsers.findIndex(x => x.uid === change.doc.id);
+                        if (idx !== -1) allUsers[idx] = { ...u, uid: change.doc.id };
                     }
                 });
             });
         }
     </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                                                           </html>
