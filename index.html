@@ -83,13 +83,12 @@
         .nav-item.active::before { content: ''; width: 20px; height: 3px; background: var(--primary); border-radius: 3px; margin-bottom: 2px; box-shadow: var(--neon-glow); }
         .nav-item svg { width: 22px; height: 22px; }
 
-        /* آية الكرسي - مربع أسود */
+        /* آية الكرسي */
         .quran-box {
             max-width: 650px; margin: 20px auto; padding: 20px 18px;
-            background: #000;
-            border: var(--neon-border); border-radius: 20px;
+            background: #000; border: var(--neon-border); border-radius: 20px;
             box-shadow: var(--neon-glow), 0 0 20px rgba(0,162,255,0.12);
-            text-align: center; color: #000;
+            text-align: center;
         }
         .quran-box .quran-bismillah { font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 10px; text-shadow: 0 0 6px rgba(0,162,255,0.4); }
         .quran-box .quran-text { font-size: 15px; line-height: 2.4; font-weight: 600; color: #fff; }
@@ -120,17 +119,17 @@
             <div id="categoriesView">
                 <div class="section-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>الأقسام المتاحة</div>
                 <div class="cats-grid" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام...</div></div>
+                <!-- آية الكرسي في الرئيسية فقط -->
+                <div class="quran-box" id="quranBox">
+                    <div class="quran-bismillah">بسم الله الرحمن الرحيم</div>
+                    <div class="quran-text">ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌۭ وَلَا نَوْمٌۭ ۚ لَّهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍۢ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ</div>
+                    <div class="quran-sadaq">صدق الله العظيم - سورة البقرة 255</div>
+                </div>
             </div>
             <div id="productsView" class="hidden">
                 <button class="back-btn" onclick="showCategories()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>رجوع للأقسام</button>
                 <div class="section-title" id="productsTitle"></div>
                 <div class="prods-grid" id="prodsGrid"></div>
-            </div>
-            <!-- آية الكرسي -->
-            <div class="quran-box">
-                <div class="quran-bismillah">بسم الله الرحمن الرحيم</div>
-                <div class="quran-text">ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌۭ وَلَا نَوْمٌۭ ۚ لَّهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍۢ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ</div>
-                <div class="quran-sadaq">صدق الله العظيم - سورة البقرة 255</div>
             </div>
         </div>
     </div>
@@ -270,6 +269,10 @@
         }
 
         function openCategory(catId, catName) {
+            // إخفاء آية الكرسي
+            const quranBox = document.getElementById('quranBox');
+            if (quranBox) quranBox.style.display = 'none';
+            
             document.getElementById('categoriesView').classList.add('hidden');
             document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML = `🎮 ${catName}`;
@@ -293,7 +296,14 @@
                 .catch(err => { grid.innerHTML = '<div class="loading">❌ خطأ</div>'; });
         }
 
-        function showCategories() { document.getElementById('productsView').classList.add('hidden'); document.getElementById('categoriesView').classList.remove('hidden'); }
+        function showCategories() {
+            // إظهار آية الكرسي
+            const quranBox = document.getElementById('quranBox');
+            if (quranBox) quranBox.style.display = 'block';
+            
+            document.getElementById('productsView').classList.add('hidden');
+            document.getElementById('categoriesView').classList.remove('hidden');
+        }
 
         function openDetail(img, name, priceLYD, type, description) {
             currentProduct = { img, name, priceLYD, type, description };
@@ -342,6 +352,10 @@
         function showError(msg) { document.getElementById('pError').innerText = msg; document.getElementById('pError').classList.remove('hidden'); }
 
         function searchProducts() {
+            // إخفاء آية الكرسي
+            const quranBox = document.getElementById('quranBox');
+            if (quranBox) quranBox.style.display = 'none';
+            
             const term = document.getElementById('searchInput').value.toLowerCase().trim();
             if (!term) return;
             document.getElementById('categoriesView').classList.add('hidden');
