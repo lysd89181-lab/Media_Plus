@@ -258,6 +258,7 @@
         function listenForChanges() {
             setTimeout(() => { notificationsEnabled = true; }, 3000);
 
+            // طلبات جديدة فقط
             db.collection("orders").onSnapshot(snap => {
                 snap.docChanges().forEach(change => {
                     if (change.type === "added" && notificationsEnabled) {
@@ -272,31 +273,13 @@
                 });
             });
 
+            // إيداعات جديدة فقط
             db.collection("deposits").onSnapshot(snap => {
                 snap.docChanges().forEach(change => {
                     if (change.type === "added" && notificationsEnabled) {
                         const d = change.doc.data();
-                        sendTelegramMsg(`💰 *تحويل جديد!*\n\n👤 ${d.userName||'---'}\n📧 ${d.userEmail||'---'}\n🆔 ${d.userId}\n📞 ${d.phone}\n💵 ${d.amount} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`);
+                        sendTelegramMsg(`💰 *إيداع جديد!*\n\n👤 ${d.userName||'---'}\n📧 ${d.userEmail||'---'}\n🆔 ${d.userId}\n📞 ${d.phone}\n💵 ${d.amount} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`);
                     }
-                });
-            });
-
-            db.collection("users").onSnapshot(snap => {
-                snap.docChanges().forEach(change => {
-                    const u = change.doc.data();
-                    if (change.type === "added" && notificationsEnabled) {
-                        sendTelegramMsg(`👤 *مستخدم جديد!*\n\n👤 ${u.username||u.name||'---'}\n📧 ${u.email||'---'}\n📞 ${u.phone||'---'}\n🆔 ${change.doc.id}\n⏰ ${new Date().toLocaleString('ar-LY')}`);
-                    }
-                    if (change.type === "modified" && notificationsEnabled) {
-                        const old = allUsers.find(x => x.uid === change.doc.id);
-                        if (old && old.balance !== u.balance) {
-                            const diff = (u.balance||0) - (old.balance||0);
-                            const type = diff > 0 ? 'شحن' : 'خصم';
-                            sendTelegramMsg(`💳 *${type} رصيد!*\n\n👤 ${u.username||u.name||'---'}\n📧 ${u.email||'---'}\n📞 ${u.phone||'---'}\n🆔 ${change.doc.id}\n💰 ${Math.abs(diff).toFixed(3)} د.ل\n💵 الجديد: ${(u.balance||0).toFixed(3)} د.ل`);
-                        }
-                    }
-                    const idx = allUsers.findIndex(x => x.uid === change.doc.id);
-                    if (idx !== -1) allUsers[idx] = { ...u, uid: change.doc.id };
                 });
             });
         }
