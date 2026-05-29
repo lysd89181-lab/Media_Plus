@@ -12,6 +12,7 @@
             --border: #e2e8f0; --hero: #0b1a30; --gold: #f5a623;
             --neon-border: 1px solid rgba(0,162,255,0.25);
             --neon-glow: 0 0 6px rgba(0,162,255,0.12);
+            --red: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background: var(--bg); color: var(--dark); min-height: 100vh; padding-bottom: 75px; -webkit-overflow-scrolling: touch; }
@@ -41,11 +42,25 @@
         .back-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--white); border: var(--neon-border); border-radius: 25px; padding: 7px 16px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 10px; will-change: transform; transform: translateZ(0); box-shadow: var(--neon-glow); }
 
         .prods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
-        .prod-card { background: var(--white); border: var(--neon-border); border-radius: 16px; padding: 10px; text-align: center; cursor: pointer; box-shadow: var(--shadow), var(--neon-glow); transition: transform 0.15s, border-color 0.3s, box-shadow 0.3s; will-change: transform; transform: translateZ(0); content-visibility: auto; contain-intrinsic-size: 200px; }
+        .prod-card {
+            background: var(--white); border: var(--neon-border); border-radius: 16px;
+            padding: 10px; text-align: center; cursor: pointer;
+            box-shadow: var(--shadow), var(--neon-glow); transition: transform 0.15s, border-color 0.3s, box-shadow 0.3s;
+            will-change: transform; transform: translateZ(0); content-visibility: auto; contain-intrinsic-size: 200px;
+            position: relative; overflow: hidden;
+        }
         .prod-card:active { transform: scale(0.95); border-color: var(--blue); box-shadow: 0 0 12px rgba(0,162,255,0.3); }
         .prod-card img { width: 100%; height: 75px; object-fit: contain; border-radius: 10px; margin-bottom: 6px; background: #f8fafc; }
         .prod-card h4 { font-size: 11px; font-weight: 700; margin-bottom: 3px; }
         .prod-card .price { font-size: 12px; color: var(--primary); font-weight: 700; }
+        .prod-card .old-price { font-size: 10px; color: var(--muted); text-decoration: line-through; }
+        .prod-card .discount-badge {
+            position: absolute; top: 8px; left: 8px;
+            background: var(--red); color: #fff; font-size: 10px; font-weight: 900;
+            padding: 3px 7px; border-radius: 8px; box-shadow: 0 0 8px rgba(239,68,68,0.4);
+            z-index: 5;
+        }
+        .prod-card .discount-border { border-color: rgba(239,68,68,0.5); box-shadow: var(--shadow), 0 0 10px rgba(239,68,68,0.15); }
 
         .card-white { background: var(--white); border: var(--neon-border); border-radius: 20px; padding: 18px; box-shadow: var(--shadow), var(--neon-glow); margin-bottom: 14px; }
         .big-number { font-size: 34px; font-weight: 900; color: var(--primary); text-align: center; }
@@ -65,6 +80,8 @@
         .modal img { width: 110px; height: 110px; object-fit: contain; border-radius: 14px; margin: 0 auto 10px; display: block; background: #0b0c22; border: 1px solid #24264d; }
         .modal h3 { font-size: 16px; font-weight: 900; text-align: center; margin-bottom: 4px; }
         .modal .price-big { font-size: 20px; font-weight: 900; color: var(--gold); text-align: center; margin-bottom: 8px; }
+        .modal .old-price-big { font-size: 14px; color: #999; text-decoration: line-through; text-align: center; }
+        .modal .discount-badge-big { background: var(--red); color: #fff; font-size: 12px; font-weight: 900; padding: 4px 10px; border-radius: 10px; display: inline-block; margin-bottom: 6px; box-shadow: 0 0 10px rgba(239,68,68,0.4); }
         .modal .desc-box { background: linear-gradient(135deg, rgba(0,162,255,0.15), rgba(0,162,255,0.05)); border: 1px solid rgba(0,162,255,0.3); border-radius: 12px; padding: 10px 14px; margin: 8px 0 12px 0; text-align: center; }
         .modal .desc-box .desc-label { font-size: 10px; color: var(--blue); font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .modal .desc-box .desc-text { font-size: 12px; color: #fff; font-weight: 600; line-height: 1.5; }
@@ -133,34 +150,18 @@
         <div class="container" style="margin-top:10px;">
             <div class="section-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>المحفظة وشحن الرصيد</div>
             <div class="card-white" style="text-align:center;"><div style="font-size:12px;color:var(--muted);">رصيدك الحالي</div><div class="big-number"><span id="walletBalance">0.000</span> د.ل</div></div>
-            
             <div class="card-white">
                 <h3 style="font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>أرقام التحويل البنكي</h3>
                 <div class="bank-row"><div><div style="font-size:10px;color:var(--muted);">مدار - ليبيا</div><div class="num">0912377291</div></div><button class="copy-btn" onclick="copyText('0912377291')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div>
                 <div class="bank-row"><div><div style="font-size:10px;color:var(--muted);">ليبيانا - ليبيا</div><div class="num">0920414760</div></div><button class="copy-btn" onclick="copyText('0920414760')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div>
             </div>
-            
+            <div class="card-white"><h3 style="font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>طريقة الشحن</h3><ol style="font-size:11px;color:var(--muted);padding-right:16px;line-height:2.2;"><li>حول المبلغ لأحد الأرقام أعلاه</li><li>أدخل رقم هاتفك والمبلغ في النموذج أدناه</li><li>سيتم شحن رصيدك خلال دقائق</li></ol></div>
             <div class="card-white">
-                <h3 style="font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>طريقة الشحن</h3>
-                <ol style="font-size:11px;color:var(--muted);padding-right:16px;line-height:2.2;">
-                    <li>حول المبلغ لأحد الأرقام أعلاه</li>
-                    <li>أدخل رقم هاتفك والمبلغ في النموذج أدناه</li>
-                    <li>سيتم شحن رصيدك خلال دقائق</li>
-                </ol>
-            </div>
-            
-            <div class="card-white">
-                <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-                    إبلاغ عن تحويل
-                </h3>
+                <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>إبلاغ عن تحويل</h3>
                 <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">أدخل رقم هاتفك والمبلغ اللي حولته</p>
                 <input type="text" id="notifyPhone" class="notify-input" placeholder="رقم الهاتف اللي حولت منه" dir="ltr">
                 <input type="number" id="notifyAmount" class="notify-input" placeholder="المبلغ اللي حولته (د.ل)" dir="ltr">
-                <button class="notify-btn" onclick="sendTransferNotification()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-left:6px;"><polyline points="20 6 9 17 4 12"/></svg>
-                    تأكيد التحويل
-                </button>
+                <button class="notify-btn" onclick="sendTransferNotification()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-left:6px;"><polyline points="20 6 9 17 4 12"/></svg>تأكيد التحويل</button>
             </div>
         </div>
     </div>
@@ -183,7 +184,10 @@
     <div id="detailModal" class="modal-overlay hidden" onclick="closeDetailModal()">
         <div class="modal" onclick="event.stopPropagation()">
             <button class="close" onclick="closeDetailModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-            <img id="dImg" src="" alt=""><h3 id="dName"></h3><div class="price-big" id="dPrice"></div>
+            <img id="dImg" src="" alt=""><h3 id="dName"></h3>
+            <div id="dDiscountBadge" class="hidden" style="text-align:center;"></div>
+            <div class="old-price-big hidden" id="dOldPrice"></div>
+            <div class="price-big" id="dPrice"></div>
             <div id="dDescriptionBox" class="desc-box hidden"><div class="desc-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00a2ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>وصف المنتج</div><div class="desc-text" id="dDescription"></div></div>
             <div class="box red"><h5><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>الشروط والأحكام</h5><ul><li>المنتج <b style="color:#f87171">غير قابل للاسترداد</b></li><li>تأكد من <b style="color:#fff">صحة البيانات</b></li><li>التعويض خلال <b style="color:#fff">24 ساعة</b></li></ul></div>
             <div class="box green"><h5><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>طريقة التفعيل</h5><div class="step"><span class="step-num">1</span>تأكد من رصيدك</div><div class="step"><span class="step-num">2</span>أدخل ID بدقة</div><div class="step"><span class="step-num">3</span>اضغط تأكيد</div><div class="step"><span class="step-num">4</span>تستلم الشحنة</div></div>
@@ -223,10 +227,7 @@
         let currentProduct = null;
 
         function switchTab(tab) {
-            if (!auth.currentUser && (tab === 'wallet' || tab === 'account')) {
-                window.location.href = 'long.html';
-                return;
-            }
+            if (!auth.currentUser && (tab === 'wallet' || tab === 'account')) { window.location.href = 'long.html'; return; }
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(tab + 'Page').classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -248,8 +249,7 @@
             if (userData) {
                 const name = userData.username || userData.name || '---';
                 document.getElementById('accName').innerText = name; document.getElementById('accName2').innerText = name;
-                document.getElementById('accEmail').innerText = userData.email || '---';
-                document.getElementById('accEmail2').innerText = userData.email || '---';
+                document.getElementById('accEmail').innerText = userData.email || '---'; document.getElementById('accEmail2').innerText = userData.email || '---';
                 document.getElementById('accPhone').innerText = userData.phone || '---';
             }
         }
@@ -257,95 +257,79 @@
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)); }
 
-        function sendTelegramNotification(orderData) {
-            const BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
-            const CHAT_ID = "7737867483";
-            const message = `🛒 *طلب جديد!*\n\n👤 ${orderData.userName || 'غير معروف'}\n📱 ${orderData.userPhone || '---'}\n🎮 ${orderData.cardName}\n💰 ${orderData.price} د.ل\n🆔 ${orderData.playerID || '---'}\n⏰ ${new Date().toLocaleString('ar-LY')}`;
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
-            }).catch(() => {});
-        }
-
         function sendTransferNotification() {
             const phone = document.getElementById('notifyPhone').value.trim();
             const amount = document.getElementById('notifyAmount').value.trim();
-            if (!phone) return alert('⚠️ أدخل رقم هاتفك');
-            if (!amount) return alert('⚠️ أدخل المبلغ اللي حولته');
+            if (!phone) return alert('⚠️ أدخل رقم هاتفك'); if (!amount) return alert('⚠️ أدخل المبلغ');
             if (!userData) return alert('⚠️ سجل دخول أولاً');
-            
             const BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
             const CHAT_ID = "7737867483";
-            const message = `💰 *إشعار تحويل جديد!*\n\n👤 ${userData.username || userData.name || '---'}\n🆔 ${auth.currentUser.uid}\n📧 ${userData.email || '---'}\n📞 ${phone}\n💵 ${amount} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`;
-            
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
-            })
-            .then(() => {
-                alert('✅ تم إرسال التبليغ بنجاح! سنقوم بشحن رصيدك خلال دقائق.');
-                document.getElementById('notifyPhone').value = '';
-                document.getElementById('notifyAmount').value = '';
-                db.collection("deposits").add({
-                    userId: auth.currentUser.uid, userName: userData.username || userData.name,
-                    userEmail: userData.email, phone: phone, amount: parseFloat(amount),
-                    status: 'pending', createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                }).catch(() => {});
-            })
-            .catch(() => { alert('❌ فشل الإرسال. حاول مرة أخرى.'); });
+            const message = `💰 *إشعار تحويل جديد!*\n\n👤 ${userData.username||userData.name||'---'}\n🆔 ${auth.currentUser.uid}\n📧 ${userData.email||'---'}\n📞 ${phone}\n💵 ${amount} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`;
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT_ID,text:message,parse_mode:'Markdown'})})
+            .then(() => { alert('✅ تم إرسال التبليغ!'); document.getElementById('notifyPhone').value=''; document.getElementById('notifyAmount').value='';
+                db.collection("deposits").add({userId:auth.currentUser.uid,userName:userData.username||userData.name,userEmail:userData.email,phone:phone,amount:parseFloat(amount),status:'pending',createdAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(()=>{});
+            }).catch(() => { alert('❌ فشل الإرسال'); });
         }
 
         function fetchCategories() {
             document.getElementById('catsGrid').innerHTML = '<div class="loading">⏳ جاري الجلب...</div>';
-            db.collection("categories").orderBy("order").limit(50).get()
-                .then(snap => {
-                    allCategories = [];
-                    snap.forEach(doc => allCategories.push({ id: doc.id, ...doc.data() }));
-                    const grid = document.getElementById('catsGrid');
-                    if (!allCategories.length) { grid.innerHTML = '<div class="loading">لا توجد أقسام</div>'; return; }
-                    let html = '';
-                    allCategories.forEach(cat => {
-                        html += `<div class="cat-card" onclick="openCategory('${cat.id}', '${(cat.name||'').replace(/'/g, "\\'")}')"><img src="${cat.image||cat.cover||''}" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`;
-                    });
-                    grid.innerHTML = html;
-                });
+            db.collection("categories").orderBy("order").limit(50).get().then(snap => {
+                allCategories = []; snap.forEach(doc => allCategories.push({id:doc.id,...doc.data()}));
+                const grid = document.getElementById('catsGrid');
+                if (!allCategories.length) { grid.innerHTML = '<div class="loading">لا توجد أقسام</div>'; return; }
+                let html = ''; allCategories.forEach(cat => { html += `<div class="cat-card" onclick="openCategory('${cat.id}','${(cat.name||'').replace(/'/g,"\\'")}')"><img src="${cat.image||cat.cover||''}" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`; });
+                grid.innerHTML = html;
+            });
         }
 
         function openCategory(catId, catName) {
             const quranBox = document.getElementById('quranBox'); if (quranBox) quranBox.style.display = 'none';
-            document.getElementById('categoriesView').classList.add('hidden');
-            document.getElementById('productsView').classList.remove('hidden');
+            document.getElementById('categoriesView').classList.add('hidden'); document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML = `🎮 ${catName}`;
             const grid = document.getElementById('prodsGrid'); grid.innerHTML = '<div class="loading">⏳ جاري الجلب...</div>';
-            db.collection("products").where("categoryId", "==", catId).where("active", "==", true).get()
-                .then(snap => {
-                    if (!snap.size) { grid.innerHTML = '<div class="loading">لا توجد منتجات</div>'; return; }
-                    let products = [];
-                    snap.forEach(doc => { const p = doc.data(); p._id = doc.id; products.push(p); });
-                    products.sort((a, b) => (a.order || 0) - (b.order || 0));
-                    let html = '';
-                    products.forEach(p => {
-                        const img = p.image || p.img || ''; const name = p.name || 'منتج';
-                        const priceLYD = (p.priceLYD || p.price || 0).toFixed(3);
-                        html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}', ${priceLYD}, '${p.type||'id'}', '${(p.description||'').replace(/'/g, "\\'").replace(/\n/g, ' ')}')"><img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4><div class="price">${priceLYD} د.ل</div></div>`;
-                    });
-                    grid.innerHTML = html;
-                }).catch(err => { grid.innerHTML = '<div class="loading">❌ خطأ</div>'; });
+            db.collection("products").where("categoryId","==",catId).where("active","==",true).get().then(snap => {
+                if (!snap.size) { grid.innerHTML = '<div class="loading">لا توجد منتجات</div>'; return; }
+                let products = []; snap.forEach(doc => { const p = doc.data(); p._id = doc.id; products.push(p); });
+                products.sort((a,b) => (a.order||0)-(b.order||0));
+                let html = ''; products.forEach(p => {
+                    const img = p.image||p.img||''; const name = p.name||'منتج';
+                    const priceLYD = p.priceLYD||p.price||0;
+                    const discount = p.discount||0;
+                    const finalPrice = discount > 0 ? priceLYD - (priceLYD*discount/100) : priceLYD;
+                    html += `<div class="prod-card ${discount>0?'discount-border':''}" onclick="openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount})">
+                        ${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}
+                        <img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4>
+                        ${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}
+                        <div class="price">${finalPrice.toFixed(3)} د.ل</div></div>`;
+                });
+                grid.innerHTML = html;
+            }).catch(err => { grid.innerHTML = '<div class="loading">❌ خطأ</div>'; });
         }
 
         function showCategories() {
             const quranBox = document.getElementById('quranBox'); if (quranBox) quranBox.style.display = 'block';
-            document.getElementById('productsView').classList.add('hidden');
-            document.getElementById('categoriesView').classList.remove('hidden');
+            document.getElementById('productsView').classList.add('hidden'); document.getElementById('categoriesView').classList.remove('hidden');
         }
 
-        function openDetail(img, name, priceLYD, type, description) {
-            currentProduct = { img, name, priceLYD, type, description };
+        function openDetail(img, name, priceLYD, type, description, discount) {
+            discount = discount||0;
+            const finalPrice = discount > 0 ? priceLYD - (priceLYD*discount/100) : priceLYD;
+            currentProduct = { img, name, priceLYD: finalPrice, type, description, discount, originalPrice: priceLYD };
             document.getElementById('dImg').src = img; document.getElementById('dName').innerText = name;
-            document.getElementById('dPrice').innerText = priceLYD + ' د.ل';
+            
+            const badge = document.getElementById('dDiscountBadge');
+            const oldPrice = document.getElementById('dOldPrice');
+            if (discount > 0) {
+                badge.classList.remove('hidden'); badge.innerHTML = `<span class="discount-badge-big">🔥 خصم ${discount}%</span>`;
+                oldPrice.classList.remove('hidden'); oldPrice.innerText = `${priceLYD.toFixed(3)} د.ل`;
+                document.getElementById('dPrice').innerHTML = `${finalPrice.toFixed(3)} د.ل <span style="color:#4ade80;font-size:14px;">(وفر ${(priceLYD-finalPrice).toFixed(3)})</span>`;
+            } else {
+                badge.classList.add('hidden'); oldPrice.classList.add('hidden');
+                document.getElementById('dPrice').innerText = finalPrice.toFixed(3) + ' د.ل';
+            }
+            
             const descBox = document.getElementById('dDescriptionBox'), descText = document.getElementById('dDescription');
-            if (description && description.trim()) { descBox.classList.remove('hidden'); descText.innerText = description; }
-            else { descBox.classList.add('hidden'); }
+            if (description&&description.trim()) { descBox.classList.remove('hidden'); descText.innerText = description; } else { descBox.classList.add('hidden'); }
             document.getElementById('detailModal').classList.remove('hidden');
         }
         function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
@@ -355,11 +339,11 @@
             if (!auth.currentUser) { window.location.href = 'long.html'; return; }
             closeDetailModal();
             document.getElementById('pImg').src = currentProduct.img; document.getElementById('pName').innerText = currentProduct.name;
-            document.getElementById('pPrice').innerText = currentProduct.priceLYD + ' د.ل'; document.getElementById('pInput').value = '';
-            document.getElementById('pError').classList.add('hidden');
+            document.getElementById('pPrice').innerText = currentProduct.priceLYD + ' د.ل';
+            document.getElementById('pInput').value = ''; document.getElementById('pError').classList.add('hidden');
             const type = currentProduct.type;
-            document.getElementById('pLabel').innerHTML = type === 'phone' ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> رقم الهاتف' : type === 'none' ? 'اكتب "تأكيد"' : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> معرف اللاعب (ID)';
-            document.getElementById('pInput').placeholder = type === 'phone' ? '091xxxxxxx' : type === 'none' ? 'تأكيد' : 'مثال: 569835147';
+            document.getElementById('pLabel').innerHTML = type==='phone'?'رقم الهاتف':type==='none'?'اكتب "تأكيد"':'معرف اللاعب (ID)';
+            document.getElementById('pInput').placeholder = type==='phone'?'091xxxxxxx':type==='none'?'تأكيد':'مثال: 569835147';
             document.getElementById('paymentModal').classList.remove('hidden');
         }
         function closePaymentModal() { document.getElementById('paymentModal').classList.add('hidden'); }
@@ -369,16 +353,14 @@
             const input = document.getElementById('pInput').value.trim();
             const user = auth.currentUser;
             if (!user) { window.location.href = 'long.html'; return; }
-            if (currentProduct.type !== 'none' && !input) return showError('⚠️ أدخل البيانات المطلوبة');
+            if (currentProduct.type!=='none'&&!input) return showError('⚠️ أدخل البيانات');
             if (userBalance < currentProduct.priceLYD) return showError('⚠️ رصيد غير كافٍ');
             const btn = document.getElementById('confirmBtn'); btn.disabled = true; btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinner"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"/></svg> جاري المعالجة...';
-            db.collection("users").doc(user.uid).update({ balance: userBalance - currentProduct.priceLYD })
-                .then(() => db.collection("orders").add({ userId: user.uid, cardName: currentProduct.name, serviceName: currentProduct.name, amount: currentProduct.priceLYD, price: currentProduct.priceLYD, playerID: input || 'Direct', status: 'completed', createdAt: firebase.firestore.FieldValue.serverTimestamp() }))
-                .then(() => { closePaymentModal(); alert('🎉 تم الشراء بنجاح!\n' + currentProduct.name + '\n' + currentProduct.priceLYD + ' د.ل');
-                    sendTelegramNotification({ userName: userData?.username, userPhone: userData?.phone, cardName: currentProduct.name, price: currentProduct.priceLYD, playerID: input }); })
-                .catch(err => { showError('❌ ' + err.message); btn.disabled = false; btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> تأكيد الدفع الفوري'; });
+            db.collection("users").doc(user.uid).update({balance:userBalance-currentProduct.priceLYD})
+            .then(()=>db.collection("orders").add({userId:user.uid,cardName:currentProduct.name,serviceName:currentProduct.name,amount:currentProduct.priceLYD,price:currentProduct.priceLYD,playerID:input||'Direct',status:'completed',createdAt:firebase.firestore.FieldValue.serverTimestamp()}))
+            .then(()=>{closePaymentModal();alert('🎉 تم الشراء بنجاح!\n'+currentProduct.name+'\n'+currentProduct.priceLYD+' د.ل');})
+            .catch(err=>{showError('❌ '+err.message);btn.disabled=false;btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> تأكيد الدفع الفوري';});
         }
-
         function showError(msg) { document.getElementById('pError').innerText = msg; document.getElementById('pError').classList.remove('hidden'); }
 
         function searchProducts() {
@@ -387,17 +369,17 @@
             document.getElementById('categoriesView').classList.add('hidden'); document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML = `🔍 بحث: ${term}`;
             const grid = document.getElementById('prodsGrid'); grid.innerHTML = '<div class="loading">⏳ جاري البحث...</div>';
-            db.collection("products").where("active", "==", true).get().then(snap => {
-                let html = '';
-                snap.forEach(doc => {
+            db.collection("products").where("active","==",true).get().then(snap => {
+                let html = ''; snap.forEach(doc => {
                     const p = doc.data(); if (!(p.name||'').toLowerCase().includes(term)) return;
-                    const img = p.image || p.img || ''; const name = p.name || 'منتج'; const priceLYD = (p.priceLYD || p.price || 0).toFixed(3);
-                    html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}', ${priceLYD}, '${p.type||'id'}', '${(p.description||'').replace(/'/g, "\\'").replace(/\n/g, ' ')}')"><img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4><div class="price">${priceLYD} د.ل</div></div>`;
+                    const img = p.image||p.img||''; const name = p.name||'منتج'; const priceLYD = p.priceLYD||p.price||0;
+                    const discount = p.discount||0; const finalPrice = discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
+                    html += `<div class="prod-card ${discount>0?'discount-border':''}" onclick="openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount})">${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}<img src="${img}" loading="lazy" onerror="this.style.display='none'"><h4>${name}</h4>${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}<div class="price">${finalPrice.toFixed(3)} د.ل</div></div>`;
                 });
                 grid.innerHTML = html || '<div class="loading">لا توجد نتائج</div>';
             });
         }
-        document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') searchProducts(); });
+        document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key==='Enter') searchProducts(); });
     </script>
 </body>
 </html>
