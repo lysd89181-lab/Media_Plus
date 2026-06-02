@@ -221,6 +221,21 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
+        // ✅ إعدادات Pipedream Webhook الجديدة لـ Media Plus
+        const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
+        const BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
+        const CHAT_ID = "7737867483";
+        
+        async function sendWebhookNotification(data) {
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (e) { console.log('Webhook error:', e.message); }
+        }
+
         let allCategories = [];
         let userBalance = 0;
         let userData = null;
@@ -257,18 +272,34 @@
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)); }
 
+        // ✅ دالة الإيداع مع Pipedream Webhook
         function sendTransferNotification() {
             const phone = document.getElementById('notifyPhone').value.trim();
             const amount = document.getElementById('notifyAmount').value.trim();
             if (!phone) return alert('⚠️ أدخل رقم هاتفك'); if (!amount) return alert('⚠️ أدخل المبلغ');
             if (!userData) return alert('⚠️ سجل دخول أولاً');
-            const BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
-            const CHAT_ID = "7737867483";
-            const message = `💰 *إشعار تحويل جديد!*\n\n👤 ${userData.username||userData.name||'---'}\n🆔 ${auth.currentUser.uid}\n📧 ${userData.email||'---'}\n📞 ${phone}\n💵 ${amount} د.ل\n⏰ ${new Date().toLocaleString('ar-LY')}`;
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT_ID,text:message,parse_mode:'Markdown'})})
-            .then(() => { alert('✅ تم إرسال التبليغ!'); document.getElementById('notifyPhone').value=''; document.getElementById('notifyAmount').value='';
-                db.collection("deposits").add({userId:auth.currentUser.uid,userName:userData.username||userData.name,userEmail:userData.email,phone:phone,amount:parseFloat(amount),status:'pending',createdAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(()=>{});
-            }).catch(() => { alert('❌ فشل الإرسال'); });
+            
+            db.collection("deposits").add({
+                userId: auth.currentUser.uid,
+                userName: userData.username || userData.name,
+                userEmail: userData.email,
+                phone: phone,
+                amount: parseFloat(amount),
+                status: 'pending',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                // ✅ إرسال إشعار منظم عبر Pipedream
+                sendWebhookNotification({
+                    user_name: userData.username || userData.name || '---',
+                    user_email: userData.email || '---',
+                    user_phone: phone,
+                    action_type: 'إيداع جديد 💰',
+                    details: `📱 ليبيانا/مدار\n📞 ${phone}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}`
+                });
+                alert('✅ تم إرسال التبليغ!');
+                document.getElementById('notifyPhone').value = '';
+                document.getElementById('notifyAmount').value = '';
+            }).catch(err => { alert('❌ خطأ: ' + err.message); });
         }
 
         function fetchCategories() {
@@ -356,10 +387,35 @@
             if (currentProduct.type!=='none'&&!input) return showError('⚠️ أدخل البيانات');
             if (userBalance < currentProduct.priceLYD) return showError('⚠️ رصيد غير كافٍ');
             const btn = document.getElementById('confirmBtn'); btn.disabled = true; btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinner"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"/></svg> جاري المعالجة...';
-            db.collection("users").doc(user.uid).update({balance:userBalance-currentProduct.priceLYD})
-            .then(()=>db.collection("orders").add({userId:user.uid,cardName:currentProduct.name,serviceName:currentProduct.name,amount:currentProduct.priceLYD,price:currentProduct.priceLYD,playerID:input||'Direct',status:'completed',createdAt:firebase.firestore.FieldValue.serverTimestamp()}))
-            .then(()=>{closePaymentModal();alert('🎉 تم الشراء بنجاح!\n'+currentProduct.name+'\n'+currentProduct.priceLYD+' د.ل');})
-            .catch(err=>{showError('❌ '+err.message);btn.disabled=false;btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> تأكيد الدفع الفوري';});
+            
+            db.collection("users").doc(user.uid).update({balance: userBalance - currentProduct.priceLYD})
+            .then(() => db.collection("orders").add({
+                userId: user.uid,
+                cardName: currentProduct.name,
+                serviceName: currentProduct.name,
+                amount: currentProduct.priceLYD,
+                price: currentProduct.priceLYD,
+                playerID: input || 'Direct',
+                status: 'completed',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }))
+            .then(() => {
+                closePaymentModal();
+                // ✅ إرسال إشعار منظم عبر Pipedream
+                sendWebhookNotification({
+                    user_name: userData?.username || userData?.name || '---',
+                    user_email: userData?.email || '---',
+                    user_phone: userData?.phone || '---',
+                    action_type: 'طلب جديد 📦',
+                    details: `🎮 ${currentProduct.name}\n📝 ${input || 'مباشر'}\n💰 ${currentProduct.priceLYD.toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}`
+                });
+                alert('🎉 تم الشراء بنجاح!\n' + currentProduct.name + '\n' + currentProduct.priceLYD + ' د.ل');
+            })
+            .catch(err => {
+                showError('❌ ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> تأكيد الدفع الفوري';
+            });
         }
         function showError(msg) { document.getElementById('pError').innerText = msg; document.getElementById('pError').classList.remove('hidden'); }
 
