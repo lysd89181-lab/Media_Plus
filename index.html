@@ -43,24 +43,12 @@
         .back-btn { display: inline-flex; align-items: center; gap: 6px; background: #111827; border: 1px solid rgba(0,162,255,0.2); border-radius: 25px; padding: 8px 18px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 10px; color: var(--white); box-shadow: var(--neon-blue); transition: all 0.3s; }
         .back-btn:hover { border-color: var(--blue); }
 
-        /* ✅ كروت المنتجات 3D */
         .prods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 16px; }
-        .prod-card {
-            position: relative; background: #111827; border-radius: 24px; padding: 14px 10px 12px;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            border: 1px solid rgba(0,162,255,0.12);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 3px 5px rgba(255,255,255,0.04), inset 0 -8px 15px rgba(0,0,0,0.3), var(--neon-blue);
-            transition: all 0.3s ease; cursor: pointer; overflow: visible;
-        }
+        .prod-card { position: relative; background: #111827; border-radius: 24px; padding: 14px 10px 12px; display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid rgba(0,162,255,0.12); box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 3px 5px rgba(255,255,255,0.04), inset 0 -8px 15px rgba(0,0,0,0.3), var(--neon-blue); transition: all 0.3s ease; cursor: pointer; overflow: visible; }
         .prod-card:hover { transform: translateY(-6px); border-color: rgba(0,162,255,0.4); box-shadow: 0 25px 40px rgba(0,0,0,0.5), 0 0 25px rgba(0,162,255,0.2); }
         .prod-card:active { transform: scale(0.96); }
 
-        .product-image-3d-box {
-            position: relative; width: 95px; height: 95px; background: #1a2540; border-radius: 24px; padding: 5px;
-            display: flex; justify-content: center; align-items: center; margin: 4px 0 8px;
-            border: 2px solid rgba(0,162,255,0.2);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.4), inset 0 5px 8px rgba(255,255,255,0.15), inset 0 -6px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,162,255,0.15);
-        }
+        .product-image-3d-box { position: relative; width: 95px; height: 95px; background: #1a2540; border-radius: 24px; padding: 5px; display: flex; justify-content: center; align-items: center; margin: 4px 0 8px; border: 2px solid rgba(0,162,255,0.2); box-shadow: 0 8px 18px rgba(0,0,0,0.4), inset 0 5px 8px rgba(255,255,255,0.15), inset 0 -6px 10px rgba(0,0,0,0.4), 0 0 15px rgba(0,162,255,0.15); }
         .product-image-3d-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 19px; }
 
         .game-name { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; font-weight: 600; }
@@ -73,7 +61,6 @@
         .buy-btn-3d:hover { background: var(--blue); color: #ffffff; border-bottom: 3px solid #0077cc; box-shadow: 0 0 15px rgba(0,162,255,0.4); }
         .buy-btn-3d:active { transform: translateY(2px); border-bottom: 1px solid #0077cc; }
 
-        /* ✅ المحفظة */
         .card-white { background: #111827; border: 1px solid rgba(0,162,255,0.15); border-radius: 20px; padding: 18px; box-shadow: var(--neon-blue); margin-bottom: 14px; }
         .big-number { font-size: 34px; font-weight: 900; color: var(--blue); text-align: center; text-shadow: 0 0 15px rgba(0,162,255,0.5); }
         .bank-row { background: #0a0f1a; border: 1px solid rgba(0,162,255,0.12); border-radius: 14px; padding: 14px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
@@ -89,23 +76,37 @@
         .notify-input:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(0,162,255,0.2); }
         .notify-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; font-weight: 900; border: none; border-radius: 13px; font-size: 14px; cursor: pointer; margin-top: 8px; border-bottom: 3px solid #d4941a; box-shadow: var(--neon-gold); transition: all 0.15s; }
         .notify-btn:active { transform: translateY(2px); }
-
-        .payment-methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-        .payment-method-btn { background: rgba(0,162,255,0.08); border: 1px solid rgba(0,162,255,0.2); border-radius: 12px; padding: 10px 6px; text-align: center; cursor: pointer; transition: all 0.3s; font-size: 10px; font-weight: 700; color: var(--white); }
-        .payment-method-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 15px rgba(0,162,255,0.5); }
-        .payment-method-btn .icon { font-size: 18px; display: block; margin-bottom: 3px; }
+        .notify-btn.auto { background: linear-gradient(135deg, #10b981, #34d399); border-bottom: 3px solid #059669; box-shadow: var(--neon-green); }
         .note-box { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); border-radius: 10px; padding: 8px 12px; margin: 8px 0; font-size: 10px; color: var(--gold); text-align: center; }
+        .note-box.info { background: rgba(0,162,255,0.08); border: 1px solid rgba(0,162,255,0.2); color: var(--blue); }
+        .section-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 9px; font-weight: 700; margin-bottom: 8px; }
+        .section-badge.auto { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+        .section-badge.manual { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
 
-        /* ✅ العداد المتحرك */
+        .payment-methods-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
+        .payment-method-btn { background: rgba(0,162,255,0.06); border: 1px solid rgba(0,162,255,0.15); border-radius: 12px; padding: 10px 4px; text-align: center; cursor: pointer; transition: all 0.3s; font-size: 9px; font-weight: 700; color: var(--white); }
+        .payment-method-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 15px rgba(0,162,255,0.5); }
+        .payment-method-btn .icon { font-size: 16px; display: block; margin-bottom: 2px; }
+
+        /* ✅ نظام الخطوتين */
+        .modal-step { transition: all 0.3s; }
         .quantity-section { background: #0a0f1a; padding: 14px; border-radius: 12px; margin: 8px 0; border: 1px solid rgba(0,162,255,0.15); }
         .quantity-section label { font-weight: 700; display: block; margin-bottom: 8px; color: var(--blue); font-size: 12px; }
         .quantity-controls { display: flex; align-items: center; gap: 10px; }
         .quantity-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 8px; background: rgba(0,162,255,0.15); border-radius: 4px; outline: none; }
         .quantity-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--blue); cursor: pointer; box-shadow: 0 0 12px rgba(0,162,255,0.5); }
-        .quantity-input { width: 75px; padding: 8px; background: #111827; border: 1px solid rgba(0,162,255,0.3); border-radius: 10px; color: #fff; font-size: 14px; text-align: center; font-family: 'Cairo', sans-serif; }
+        .quantity-input { width: 70px; padding: 8px; background: #111827; border: 1px solid rgba(0,162,255,0.3); border-radius: 10px; color: #fff; font-size: 14px; text-align: center; font-family: 'Cairo', sans-serif; }
         .quantity-input:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 10px rgba(0,162,255,0.2); }
-        .price-update { text-align: center; font-size: 11px; color: var(--muted); margin-top: 6px; }
-        .price-update span { color: var(--blue); font-weight: 700; font-size: 14px; text-shadow: 0 0 8px rgba(0,162,255,0.4); }
+        .price-display { font-size: 18px; font-weight: 900; margin: 12px 0; text-align: center; color: var(--white); }
+        .price-display span { color: var(--blue); font-size: 22px; text-shadow: 0 0 8px rgba(0,162,255,0.4); }
+        .next-btn { width: 100%; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; border: none; padding: 14px; font-size: 16px; font-weight: 900; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; box-shadow: var(--neon-gold); border-bottom: 3px solid #d4941a; transition: all 0.15s; }
+        .next-btn:active { transform: translateY(2px); }
+        .step-divider { border-top: 2px dashed rgba(0,162,255,0.2); padding-top: 14px; margin-top: 14px; }
+        .order-summary { background: #0a0f1a; border: 1px solid rgba(0,162,255,0.2); border-radius: 12px; padding: 10px; margin-bottom: 10px; text-align: center; }
+        .order-summary .summary-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 11px; }
+        .order-summary .summary-label { color: var(--muted); }
+        .order-summary .summary-value { color: var(--white); font-weight: 700; }
+        .order-summary .summary-value.price { color: var(--blue); font-size: 13px; }
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 12px; }
         .modal { background: #111827; border: 1px solid rgba(0,162,255,0.3); border-radius: 22px; padding: 18px; max-width: 420px; width: 100%; max-height: 90vh; overflow-y: auto; color: #fff; position: relative; box-shadow: 0 0 30px rgba(0,162,255,0.2); }
@@ -115,12 +116,9 @@
         .modal .price-big { font-size: 20px; font-weight: 900; color: var(--blue); text-align: center; margin-bottom: 8px; text-shadow: 0 0 12px rgba(0,162,255,0.4); }
         .modal .old-price-big { font-size: 14px; color: #999; text-decoration: line-through; text-align: center; }
         .modal .discount-badge-big { background: var(--red); color: #fff; font-size: 12px; font-weight: 900; padding: 4px 10px; border-radius: 10px; display: inline-block; margin-bottom: 6px; box-shadow: 0 0 10px rgba(239,68,68,0.4); }
-        .modal .desc-box { background: rgba(0,162,255,0.08); border: 1px solid rgba(0,162,255,0.2); border-radius: 12px; padding: 10px 14px; margin: 8px 0; text-align: center; }
-        .modal .desc-box .desc-label { font-size: 10px; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
-        .modal .desc-box .desc-text { font-size: 12px; color: #fff; font-weight: 600; }
         .modal .box { background: #0a0f1a; border-radius: 12px; padding: 10px; margin: 8px 0; text-align: right; border: 1px solid rgba(255,255,255,0.06); }
         .modal .box h5 { font-size: 12px; margin-bottom: 6px; }
-        .modal .box.red h5 { color: #f87171; } .modal .box.green h5 { color: #4ade80; }
+        .modal .box.red h5 { color: #f87171; }
         .modal .box li { font-size: 10px; color: #ccc; margin: 4px 0; padding-right: 12px; }
         .modal .buy-btn, .modal .confirm-btn { width: 100%; padding: 13px; font-weight: 900; border: none; border-radius: 13px; font-size: 14px; cursor: pointer; margin-top: 10px; border-bottom: 3px solid rgba(0,0,0,0.2); transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .buy-btn { background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; box-shadow: var(--neon-gold); }
@@ -139,7 +137,7 @@
         .loading { text-align: center; padding: 35px; color: var(--muted); font-size: 13px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner { animation: spin 1s linear infinite; display: inline-block; }
-        @media (max-width: 400px) { .prods-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .payment-methods-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 400px) { .prods-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .payment-methods-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -157,73 +155,31 @@
             <div class="search-box"><input type="text" id="searchInput" placeholder="بحث عن بطاقة..."><button onclick="searchProducts()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button></div>
         </div>
         <div class="container">
-            <div id="categoriesView">
-                <div class="section-title">📂 الأقسام المتاحة</div>
-                <div class="cats-grid" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام...</div></div>
-            </div>
-            <div id="productsView" class="hidden">
-                <button class="back-btn" onclick="showCategories()">⬅ رجوع للأقسام</button>
-                <div class="section-title" id="productsTitle"></div>
-                <div class="prods-grid" id="prodsGrid"></div>
-            </div>
+            <div id="categoriesView"><div class="section-title">📂 الأقسام المتاحة</div><div class="cats-grid" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام...</div></div></div>
+            <div id="productsView" class="hidden"><button class="back-btn" onclick="showCategories()">⬅ رجوع للأقسام</button><div class="section-title" id="productsTitle"></div><div class="prods-grid" id="prodsGrid"></div></div>
         </div>
     </div>
 
-    <!-- ✅ المحفظة المعدلة -->
     <div id="walletPage" class="page">
         <div class="container" style="margin-top:10px;">
             <div class="section-title">💰 المحفظة وشحن الرصيد</div>
             <div class="card-white" style="text-align:center;"><div style="font-size:12px;color:var(--muted);">رصيدك الحالي</div><div class="big-number"><span id="walletBalance">0.000</span> د.ل</div></div>
-            
-            <div class="card-white">
-                <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;">💳 اختر طريقة الدفع</h3>
+            <div class="card-white"><h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;">💳 اختر طريقة الدفع</h3>
                 <div class="payment-methods-grid">
-                    <div class="payment-method-btn active" onclick="switchPaymentMethod('libyana', this)"><span class="icon">📞</span>ليبيانا ومدار</div>
-                    <div class="payment-method-btn" onclick="switchPaymentMethod('binance', this)"><span class="icon">₿</span>بايننس</div>
-                    <div class="payment-method-btn" onclick="switchPaymentMethod('cards', this)"><span class="icon">💳</span>كروت تعبئة</div>
+                    <div class="payment-method-btn active" onclick="switchPaymentMethod('libyana', this)"><span class="icon">📞</span>ليبيانا</div>
+                    <div class="payment-method-btn" onclick="switchPaymentMethod('madar', this)"><span class="icon">📱</span>مدار</div>
+                    <div class="payment-method-btn" onclick="switchPaymentMethod('cards', this)"><span class="icon">💳</span>كروت</div>
+                    <div class="payment-method-btn" onclick="switchPaymentMethod('bank', this)"><span class="icon">🏦</span>مصرف</div>
                 </div>
             </div>
-            
-            <!-- قسم ليبيانا ومدار -->
-            <div id="paymentLibyana" class="card-white">
-                <h3 style="color:var(--blue);margin-bottom:8px;">📞 تحويل ليبيانا ومدار</h3>
-                <div class="bank-row"><div><span style="color:var(--muted);">مدار</span></div><div class="num">0912377291</div></div><button class="copy-btn" onclick="copyText('0912377291')" style="width:100%;margin-bottom:4px;">📋 نسخ</button>
-                <div class="bank-row"><div><span style="color:var(--muted);">ليبيانا</span></div><div class="num">0920414760</div></div><button class="copy-btn" onclick="copyText('0920414760')" style="width:100%;margin-bottom:10px;">📋 نسخ</button>
-                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل أدخل رقم هاتفك والمبلغ</p>
-                <input type="text" id="phone_libyana" class="notify-input" placeholder="رقم الهاتف المحول منه" dir="ltr">
-                <input type="number" id="amount_libyana" class="notify-input" placeholder="المبلغ (د.ل)" dir="ltr">
-                <button class="notify-btn" onclick="submitTransfer('Libyana/Madar')">✅ تأكيد التحويل</button>
-            </div>
-            
-            <!-- قسم بايننس -->
-            <div id="paymentBinance" class="card-white hidden">
-                <h3 style="color:var(--blue);margin-bottom:8px;">₿ بايننس</h3>
-                <div class="bank-row"><div><span style="color:var(--muted);">بايننس</span></div><div class="num">1046437963</div></div><button class="copy-btn" onclick="copyText('1046437963')" style="width:100%;margin-bottom:10px;">📋 نسخ</button>
-                <div class="note-box">💡 1 دولار = 12 دينار</div>
-                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">أدخل المعرف والمبلغ بالدولار</p>
-                <input type="text" id="binance_id" class="notify-input" placeholder="المعرف المحول منه (ID)" dir="ltr">
-                <input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ ($)" dir="ltr">
-                <button class="notify-btn" onclick="submitBinanceTransfer()">✅ تأكيد التحويل</button>
-            </div>
-            
-            <!-- قسم كروت التعبئة -->
-            <div id="paymentCards" class="card-white hidden">
-                <h3 style="color:var(--blue);margin-bottom:8px;">💳 كروت التعبئة</h3>
-                <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr">
-                <input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت (د.ل)" dir="ltr">
-                <button class="notify-btn" onclick="submitDeposit()">✅ إرسال</button>
-            </div>
+            <div id="paymentLibyana" class="card-white"><span class="section-badge auto">⚡ تلقائي</span><h3 style="color:var(--green);margin-bottom:4px;">📞 شحن ليبيانا (تلقائي)</h3><div class="bank-row"><div><span style="color:var(--muted);">رقم التحويل</span></div><div class="num">0920414760</div></div><button class="copy-btn" onclick="copyText('0920414760')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button><div class="note-box info">⚡ بعد التحويل مباشرة، سيتم تحديث رصيدك تلقائياً</div><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">أدخل رقم هاتفك والمبلغ المحول</p><input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr"><input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn auto" onclick="submitTransfer('Libyana', 'auto')">⚡ شحن الآن (تلقائي)</button></div>
+            <div id="paymentMadar" class="card-white hidden"><span class="section-badge manual">🔧 يدوي</span><h3 style="color:var(--gold);margin-bottom:4px;">📱 شحن مدار (يدوي)</h3><p style="font-size:10px;color:var(--muted);margin-bottom:6px;">العملية تتم عبر الفريق يدوياً</p><div class="bank-row"><div><span style="color:var(--muted);">رقم المدار</span></div><div class="num">0912377291</div></div><button class="copy-btn" onclick="copyText('0912377291')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك وسيتم مراجعة الطلب</p><input type="text" id="phone_madar" class="notify-input" placeholder="الرقم المحول منه" dir="ltr"><input type="number" id="amount_madar" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn" onclick="submitTransfer('Madar', 'manual')">📩 إرسال تبليغ</button></div>
+            <div id="paymentCards" class="card-white hidden"><span class="section-badge auto">⚡ تلقائي</span><h3 style="color:var(--green);margin-bottom:8px;">💳 كروت التعبئة</h3><input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr"><input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت (د.ل)" dir="ltr"><button class="notify-btn auto" onclick="submitDeposit()">✅ إرسال</button></div>
+            <div id="paymentBank" class="card-white hidden"><span class="section-badge manual">🔧 يدوي</span><h3 style="color:var(--gold);margin-bottom:4px;">🏦 تحويل مصرفي (الجمهورية)</h3><p style="font-size:10px;color:var(--muted);margin-bottom:6px;">العملية تتم عبر الفريق يدوياً</p><div class="bank-row"><div><span style="color:var(--muted);">رقم الحساب</span></div><div class="num">011201000244993</div></div><button class="copy-btn" onclick="copyText('011201000244993')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك وسيتم مراجعة الطلب</p><input type="text" id="bank_account_from" class="notify-input" placeholder="رقم الحساب المحول منه" dir="ltr"><input type="number" id="bank_amount" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn" onclick="submitBankTransfer()">📩 إرسال تبليغ</button></div>
         </div>
     </div>
 
-    <div id="accountPage" class="page">
-        <div class="container" style="margin-top:10px;">
-            <div class="section-title">👤 حسابي</div>
-            <div class="card-white" style="text-align:center;"><div style="width:50px;height:50px;background:rgba(0,162,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:24px;border:1px solid rgba(0,162,255,0.3);">👤</div><div style="font-size:16px;font-weight:700;color:var(--white);" id="accName">---</div><div style="font-size:11px;color:var(--muted);" id="accEmail">---</div></div>
-            <div class="card-white"><div class="info-row"><span>الاسم</span><span id="accName2" style="font-weight:700;">---</span></div><div class="info-row"><span>الإيميل</span><span id="accEmail2" style="font-weight:700;font-size:11px;">---</span></div><div class="info-row"><span>الهاتف</span><span id="accPhone" style="font-weight:700;">---</span></div><div class="info-row"><span>الرصيد</span><span id="accBalance" style="font-weight:700;color:var(--blue);">0.000 د.ل</span></div></div>
-            <button class="btn-red" onclick="logout()">🚪 تسجيل الخروج</button>
-        </div>
-    </div>
+    <div id="accountPage" class="page"><div class="container" style="margin-top:10px;"><div class="section-title">👤 حسابي</div><div class="card-white" style="text-align:center;"><div style="width:50px;height:50px;background:rgba(0,162,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:24px;border:1px solid rgba(0,162,255,0.3);">👤</div><div style="font-size:16px;font-weight:700;color:var(--white);" id="accName">---</div><div style="font-size:11px;color:var(--muted);" id="accEmail">---</div></div><div class="card-white"><div class="info-row"><span>الاسم</span><span id="accName2" style="font-weight:700;">---</span></div><div class="info-row"><span>الإيميل</span><span id="accEmail2" style="font-weight:700;font-size:11px;">---</span></div><div class="info-row"><span>الهاتف</span><span id="accPhone" style="font-weight:700;">---</span></div><div class="info-row"><span>الرصيد</span><span id="accBalance" style="font-weight:700;color:var(--blue);">0.000 د.ل</span></div></div><button class="btn-red" onclick="logout()">🚪 تسجيل الخروج</button></div></div>
 
     <div class="bottom-nav">
         <div class="nav-item active" data-tab="home" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>الرئيسية</div>
@@ -231,35 +187,45 @@
         <div class="nav-item" data-tab="account" onclick="switchTab('account')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>حسابي</div>
     </div>
 
-    <!-- مودال الشراء مع العداد -->
+    <!-- ✅ مودال الخطوتين -->
     <div id="detailModal" class="modal-overlay hidden" onclick="closeDetailModal()">
         <div class="modal" onclick="event.stopPropagation()">
             <button class="close" onclick="closeDetailModal()">✕</button>
             <img id="dImg" src="" alt=""><h3 id="dName"></h3>
             <div id="dDiscountBadge" class="hidden" style="text-align:center;"></div>
             <div class="old-price-big hidden" id="dOldPrice"></div>
-            <div class="price-big" id="dPrice"></div>
-            <div id="dDescriptionBox" class="desc-box hidden"><div class="desc-label">📝 وصف المنتج</div><div class="desc-text" id="dDescription"></div></div>
-            <div class="box red"><h5>⚠️ الشروط والأحكام</h5><ul><li>المنتج <b style="color:#f87171">غير قابل للاسترداد</b></li><li>تأكد من <b style="color:#fff">صحة البيانات</b></li><li>التعويض خلال <b style="color:#fff">24 ساعة</b></li></ul></div>
+            <p class="modal-desc" id="dDesc" style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:8px;"></p>
             
-            <!-- ✅ العداد المتحرك -->
-            <div id="quantitySection" class="quantity-section hidden">
-                <label>🔢 الكمية المطلوبة</label>
-                <div class="quantity-controls">
-                    <input type="range" id="quantitySlider" class="quantity-slider" min="30" max="100" value="30" step="1" oninput="updateQuantity(this.value)">
-                    <input type="number" id="quantityNumber" class="quantity-input" value="30" min="30" max="100" oninput="updateSlider(this.value)">
+            <!-- ✅ الخطوة 1: العداد والسعر -->
+            <div id="stepQuantity" class="modal-step">
+                <div id="quantitySection" class="quantity-section hidden">
+                    <label>🔢 الكمية المطلوبة</label>
+                    <div class="quantity-controls">
+                        <input type="range" id="quantitySlider" class="quantity-slider" min="30" max="100" value="30" step="1" oninput="updateQuantity(this.value)">
+                        <input type="number" id="quantityNumber" class="quantity-input" value="30" min="30" max="100" oninput="updateSlider(this.value)">
+                    </div>
                 </div>
-                <div class="price-update">💰 السعر الإجمالي: <span id="dynamicTotalPrice">0.000</span> د.ل</div>
+                <div id="fixedPriceSection" class="price-display hidden">السعر: <span id="fixedPriceDisplay">0.000</span> د.ل</div>
+                <div id="dynamicPriceSection" class="price-display hidden">السعر الإجمالي: <span id="totalPriceNew">0.000</span> د.ل</div>
+                <div class="box red"><h5>⚠️ الشروط والأحكام</h5><ul><li>المنتج <b style="color:#f87171">غير قابل للاسترداد</b></li><li>تأكد من <b style="color:#fff">صحة البيانات</b></li><li>التعويض خلال <b style="color:#fff">24 ساعة</b></li></ul></div>
+                <button class="next-btn" id="nextBtn" onclick="goToStep2()">✅ متابعة</button>
             </div>
             
-            <!-- ✅ حقول البيانات -->
-            <div id="fieldId"><input type="text" id="targetInput" placeholder="🎮 معرف اللاعب (ID)" dir="ltr"></div>
-            <div id="fieldPhone"><input type="text" id="phoneInput" placeholder="📞 رقم الهاتف" dir="ltr"></div>
-            <div id="fieldAccount"><input type="text" id="accountLinkInput" placeholder="🔗 رابط الحساب" dir="ltr"></div>
-            <input type="text" id="contactPhone" placeholder="📞 رقم التواصل (للاتصال بك)" dir="ltr">
-            
-            <button class="confirm-btn" onclick="confirmPurchase()">✅ تأكيد الشراء</button>
-            <p id="pError" style="color:#f87171;font-size:11px;text-align:center;margin-top:6px;" class="hidden"></p>
+            <!-- ✅ الخطوة 2: ملخص + حقول البيانات + رقم التواصل -->
+            <div id="stepData" class="modal-step hidden">
+                <div class="step-divider"></div>
+                <div id="orderSummary" class="order-summary hidden">
+                    <div class="summary-row"><span class="summary-label">🎮 المنتج:</span><span class="summary-value" id="summaryName">---</span></div>
+                    <div class="summary-row"><span class="summary-label">🔢 الكمية:</span><span class="summary-value" id="summaryQty">30</span></div>
+                    <div class="summary-row"><span class="summary-label">💰 السعر:</span><span class="summary-value price" id="summaryPrice">0.000 د.ل</span></div>
+                </div>
+                <h4 style="margin-bottom:10px;color:var(--blue);font-size:13px;">📋 بيانات الطلب</h4>
+                <div id="fieldId"><input type="text" id="targetInput" placeholder="🎮 معرف اللاعب (ID)" dir="ltr"></div>
+                <div id="fieldPhone"><input type="text" id="phoneInput" placeholder="📞 رقم الهاتف" dir="ltr"></div>
+                <div id="fieldAccount"><input type="text" id="accountLinkInput" placeholder="🔗 رابط الحساب" dir="ltr"></div>
+                <input type="text" id="contactPhone" placeholder="📞 رقم التواصل (للاتصال بك)" dir="ltr">
+                <button class="confirm-btn" onclick="confirmPurchase()">✅ تأكيد الطلب النهائي</button>
+            </div>
         </div>
     </div>
 
@@ -278,16 +244,9 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // ✅ Webhook POST
         const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
         async function sendWebhookNotification(data) {
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-            } catch (e) { console.log('Webhook error:', e.message); }
+            try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch (e) {}
         }
 
         let allCategories = [], userBalance = 0, userData = null, currentProduct = null;
@@ -303,15 +262,16 @@
 
         function switchPaymentMethod(type, btn) {
             document.getElementById('paymentLibyana').classList.add('hidden');
-            document.getElementById('paymentBinance').classList.add('hidden');
+            document.getElementById('paymentMadar').classList.add('hidden');
             document.getElementById('paymentCards').classList.add('hidden');
-            const map = { libyana: 'paymentLibyana', binance: 'paymentBinance', cards: 'paymentCards' };
+            document.getElementById('paymentBank').classList.add('hidden');
+            const map = { libyana: 'paymentLibyana', madar: 'paymentMadar', cards: 'paymentCards', bank: 'paymentBank' };
             if (map[type]) document.getElementById(map[type]).classList.remove('hidden');
             document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
         }
 
-        // ✅ دوال العداد
+        // ✅ دوال العداد بالترتيب
         function updateQuantity(val) {
             val = parseInt(val);
             document.getElementById('quantityNumber').value = val;
@@ -327,8 +287,31 @@
         }
         function updateDynamicPrice(quantity) {
             const total = unitPrice * quantity;
-            document.getElementById('dynamicTotalPrice').innerText = total.toFixed(3);
-            document.getElementById('dPrice').innerText = total.toFixed(3) + ' د.ل';
+            document.getElementById('totalPriceNew').innerText = total.toFixed(3);
+        }
+
+        // ✅ الانتقال للخطوة الثانية
+        function goToStep2() {
+            if (!currentProduct) return;
+            if (isQuantityMode) {
+                const qty = parseInt(document.getElementById('quantityNumber').value);
+                if (isNaN(qty) || qty < currentQtyMin) return alert(`⚠️ الحد الأدنى ${currentQtyMin} قطعة`);
+            }
+            // إخفاء الخطوة 1 وإظهار الخطوة 2
+            document.getElementById('stepQuantity').classList.add('hidden');
+            document.getElementById('stepData').classList.remove('hidden');
+            
+            if (isQuantityMode) {
+                const qty = parseInt(document.getElementById('quantityNumber').value);
+                const total = unitPrice * qty;
+                document.getElementById('orderSummary').classList.remove('hidden');
+                document.getElementById('summaryName').innerText = currentProduct.name;
+                document.getElementById('summaryQty').innerText = qty;
+                document.getElementById('summaryPrice').innerText = total.toFixed(3) + ' د.ل';
+            } else {
+                document.getElementById('orderSummary').classList.add('hidden');
+            }
+            document.getElementById('stepData').scrollIntoView({ behavior: 'smooth' });
         }
 
         auth.onAuthStateChanged(user => {
@@ -354,74 +337,41 @@
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)); }
 
-        // ✅ دوال الإيداع
-        async function submitTransfer(provider) {
-            const phone = document.getElementById('phone_libyana').value.trim();
-            const amount = document.getElementById('amount_libyana').value.trim();
-            if (!phone) return alert('⚠️ أدخل رقم الهاتف المحول منه');
-            if (!amount) return alert('⚠️ أدخل المبلغ');
+        async function submitTransfer(provider, mode) {
+            let phone, amount;
+            if (provider === 'Libyana') { phone = document.getElementById('phone_libyana').value.trim(); amount = document.getElementById('amount_libyana').value.trim(); }
+            else { phone = document.getElementById('phone_madar').value.trim(); amount = document.getElementById('amount_madar').value.trim(); }
+            if (!phone) return alert('⚠️ أدخل الرقم المحول منه');
+            if (!amount) return alert('⚠️ أدخل القيمة');
+            const status = mode === 'auto' ? 'approved' : 'pending';
             try {
-                await db.collection("deposits").add({
-                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '',
-                    phone: phone, amount: parseFloat(amount), provider: provider, status: 'pending',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                await sendWebhookNotification({
-                    user_name: userData?.username || userData?.name || '---',
-                    user_email: userData?.email || '---',
-                    user_phone: phone,
-                    action_type: 'إيداع جديد 💰',
-                    details: `📱 ${provider}\n📞 ${phone}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}`
-                });
-                alert('✅ تم إرسال التبليغ!');
-                document.getElementById('phone_libyana').value = ''; document.getElementById('amount_libyana').value = '';
-            } catch (e) { alert('❌ خطأ: ' + e.message); }
-        }
-
-        async function submitBinanceTransfer() {
-            const binanceId = document.getElementById('binance_id').value.trim();
-            const amount = document.getElementById('binance_amount').value.trim();
-            if (!binanceId) return alert('⚠️ أدخل المعرف المحول منه');
-            if (!amount) return alert('⚠️ أدخل المبلغ بالدولار');
-            const amountLYD = parseFloat(amount) * 12;
-            try {
-                await db.collection("deposits").add({
-                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '',
-                    card_code: binanceId, amount: amountLYD, crypto_amount: parseFloat(amount), provider: 'Binance', status: 'pending',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                await sendWebhookNotification({
-                    user_name: userData?.username || userData?.name || '---',
-                    user_email: userData?.email || '---',
-                    user_phone: userData?.phone || '---',
-                    action_type: 'إيداع بايننس ₿',
-                    details: `₿ Binance\n🆔 ${binanceId}\n💵 $${parseFloat(amount).toFixed(2)} = ${amountLYD.toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}`
-                });
-                alert('✅ تم إرسال التبليغ!');
-                document.getElementById('binance_id').value = ''; document.getElementById('binance_amount').value = '';
+                await db.collection("deposits").add({ userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '', phone: phone, amount: parseFloat(amount), provider: provider, status: status, mode: mode, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+                if (mode === 'auto') { await db.collection("users").doc(auth.currentUser.uid).update({ balance: (userData?.balance || 0) + parseFloat(amount) }); }
+                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: phone, action_type: `إيداع ${provider} ${mode==='auto'?'⚡':'📩'}`, details: `📱 ${provider}\n📞 ${phone}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
+                alert(mode === 'auto' ? '✅ تم الشحن تلقائياً!' : '✅ تم إرسال التبليغ!');
+                if (provider === 'Libyana') { document.getElementById('phone_libyana').value = ''; document.getElementById('amount_libyana').value = ''; }
+                else { document.getElementById('phone_madar').value = ''; document.getElementById('amount_madar').value = ''; }
             } catch (e) { alert('❌ خطأ: ' + e.message); }
         }
 
         async function submitDeposit() {
-            const cardCode = document.getElementById('depositCardCode').value.trim();
-            const amount = document.getElementById('depositAmount').value.trim();
-            if (!cardCode) return alert('⚠️ أدخل رقم الكرت');
-            if (!amount) return alert('⚠️ أدخل قيمة الكرت');
+            const cardCode = document.getElementById('depositCardCode').value.trim(); const amount = document.getElementById('depositAmount').value.trim();
+            if (!cardCode) return alert('⚠️ أدخل رقم الكرت'); if (!amount) return alert('⚠️ أدخل قيمة الكرت');
             try {
-                await db.collection("deposits").add({
-                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '',
-                    card_code: cardCode, amount: parseFloat(amount), provider: 'كروت تعبئة', status: 'pending',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                await sendWebhookNotification({
-                    user_name: userData?.username || userData?.name || '---',
-                    user_email: userData?.email || '---',
-                    user_phone: userData?.phone || '---',
-                    action_type: 'إيداع كروت 💳',
-                    details: `💳 كروت تعبئة\n🎫 ${cardCode}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}`
-                });
-                alert('✅ تم إرسال الكرت!');
-                document.getElementById('depositCardCode').value = ''; document.getElementById('depositAmount').value = '';
+                await db.collection("deposits").add({ userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '', card_code: cardCode, amount: parseFloat(amount), provider: 'كروت تعبئة', status: 'approved', mode: 'auto', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+                await db.collection("users").doc(auth.currentUser.uid).update({ balance: (userData?.balance || 0) + parseFloat(amount) });
+                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: userData?.phone || '---', action_type: 'إيداع كروت ⚡', details: `💳 كروت\n🎫 ${cardCode}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
+                alert('✅ تم الشحن تلقائياً!'); document.getElementById('depositCardCode').value = ''; document.getElementById('depositAmount').value = '';
+            } catch (e) { alert('❌ خطأ: ' + e.message); }
+        }
+
+        async function submitBankTransfer() {
+            const accountFrom = document.getElementById('bank_account_from').value.trim(); const amount = document.getElementById('bank_amount').value.trim();
+            if (!accountFrom) return alert('⚠️ أدخل رقم الحساب'); if (!amount) return alert('⚠️ أدخل القيمة');
+            try {
+                await db.collection("deposits").add({ userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '', card_code: accountFrom, amount: parseFloat(amount), provider: 'مصرف الجمهورية', status: 'pending', mode: 'manual', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: userData?.phone || '---', action_type: 'إيداع مصرفي 📩', details: `🏦 مصرف الجمهورية\n💳 ${accountFrom}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
+                alert('✅ تم إرسال التبليغ!'); document.getElementById('bank_account_from').value = ''; document.getElementById('bank_amount').value = '';
             } catch (e) { alert('❌ خطأ: ' + e.message); }
         }
 
@@ -446,13 +396,14 @@
                 grid.innerHTML = products.map(p => {
                     const img = p.image||p.img||''; const name = p.name||'منتج'; const priceLYD = p.priceLYD||p.price||0;
                     const discount = p.discount||0; const finalPrice = discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
-                    return `<div class="prod-card" onclick="openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${p.enableQuantity||false},${p.qtyMin||30},${p.qtyMax||100})">
+                    const eq = p.enableQuantity||false; const qmin = p.qtyMin||30; const qmax = p.qtyMax||100;
+                    return `<div class="prod-card" onclick="openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${eq},${qmin},${qmax})">
                         ${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}
                         <div class="product-image-3d-box"><img src="${img}" loading="lazy" onerror="this.style.display='none'"></div>
                         <p class="game-name">${catName}</p><h4 class="product-title">${name}</h4>
                         ${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}
                         <div class="product-price">${finalPrice.toFixed(3)} د.ل</div>
-                        <button class="buy-btn-3d" onclick="event.stopPropagation();openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${p.enableQuantity||false},${p.qtyMin||30},${p.qtyMax||100})">شراء الآن</button>
+                        <button class="buy-btn-3d" onclick="event.stopPropagation();openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${eq},${qmin},${qmax})">شراء الآن</button>
                     </div>`;
                 }).join('');
             });
@@ -463,40 +414,50 @@
         function openDetail(img, name, priceLYD, type, description, discount, enableQuantity, qtyMin, qtyMax) {
             discount = discount||0; enableQuantity = enableQuantity||false; qtyMin = qtyMin||30; qtyMax = qtyMax||100;
             currentServiceType = type||'id'; isQuantityMode = enableQuantity;
+            currentQtyMin = qtyMin; currentQtyMax = qtyMax;
             const finalPrice = discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
             currentProduct = { img, name, priceLYD: finalPrice, type: currentServiceType, description, discount, originalPrice: priceLYD, enableQuantity, qtyMin, qtyMax };
             
+            // إعادة ضبط المودال
+            document.getElementById('stepData').classList.add('hidden');
+            document.getElementById('stepQuantity').classList.remove('hidden');
+            document.getElementById('orderSummary').classList.add('hidden');
+            
             document.getElementById('dImg').src = img; document.getElementById('dName').innerText = name;
             const badge = document.getElementById('dDiscountBadge'), oldPrice = document.getElementById('dOldPrice');
-            if (discount>0&&!enableQuantity) { badge.classList.remove('hidden'); badge.innerHTML=`<span class="discount-badge-big">🔥 خصم ${discount}%</span>`; oldPrice.classList.remove('hidden'); oldPrice.innerText=`${priceLYD.toFixed(3)} د.ل`; }
-            else { badge.classList.add('hidden'); oldPrice.classList.add('hidden'); }
             
-            // إخفاء/إظهار الحقول
+            // إخفاء الكل أولاً
             document.getElementById('fieldId').classList.add('hidden');
             document.getElementById('fieldPhone').classList.add('hidden');
             document.getElementById('fieldAccount').classList.add('hidden');
             document.getElementById('quantitySection').classList.add('hidden');
+            document.getElementById('fixedPriceSection').classList.add('hidden');
+            document.getElementById('dynamicPriceSection').classList.add('hidden');
             document.getElementById('targetInput').value=''; document.getElementById('phoneInput').value='';
             document.getElementById('accountLinkInput').value=''; document.getElementById('contactPhone').value='';
             
+            if (discount>0&&!enableQuantity) { badge.classList.remove('hidden'); badge.innerHTML=`<span class="discount-badge-big">🔥 خصم ${discount}%</span>`; oldPrice.classList.remove('hidden'); oldPrice.innerText=`${priceLYD.toFixed(3)} د.ل`; }
+            else { badge.classList.add('hidden'); oldPrice.classList.add('hidden'); }
+            
             if (enableQuantity) {
-                currentQtyMin = qtyMin; currentQtyMax = qtyMax; unitPrice = (priceLYD||0) / qtyMin;
+                unitPrice = (priceLYD||0) / qtyMin;
                 document.getElementById('quantitySlider').min = qtyMin; document.getElementById('quantitySlider').max = qtyMax;
                 document.getElementById('quantitySlider').value = qtyMin;
                 document.getElementById('quantityNumber').min = qtyMin; document.getElementById('quantityNumber').max = qtyMax;
                 document.getElementById('quantityNumber').value = qtyMin;
                 document.getElementById('quantitySection').classList.remove('hidden');
+                document.getElementById('dynamicPriceSection').classList.remove('hidden');
                 updateDynamicPrice(qtyMin);
-                document.getElementById('dPrice').innerText = (unitPrice * qtyMin).toFixed(3) + ' د.ل';
+                document.getElementById('dDesc').innerText = `عداد متحرك (${qtyMin}-${qtyMax}) - الوحدة: ${unitPrice.toFixed(4)} د.ل`;
             } else {
-                document.getElementById('dPrice').innerText = finalPrice.toFixed(3) + ' د.ل';
-                if (currentServiceType==='id') document.getElementById('fieldId').classList.remove('hidden');
-                else if (currentServiceType==='phone') document.getElementById('fieldPhone').classList.remove('hidden');
-                else if (currentServiceType==='account') document.getElementById('fieldAccount').classList.remove('hidden');
+                document.getElementById('fixedPriceSection').classList.remove('hidden');
+                document.getElementById('fixedPriceDisplay').innerText = finalPrice.toFixed(3);
+                if (currentServiceType==='id') { document.getElementById('fieldId').classList.remove('hidden'); document.getElementById('dDesc').innerText = 'النوع: ID لاعب'; }
+                else if (currentServiceType==='phone') { document.getElementById('fieldPhone').classList.remove('hidden'); document.getElementById('dDesc').innerText = 'النوع: رقم هاتف'; }
+                else if (currentServiceType==='account') { document.getElementById('fieldAccount').classList.remove('hidden'); document.getElementById('dDesc').innerText = 'النوع: رابط حساب'; }
+                else { document.getElementById('dDesc').innerText = 'النوع: مباشر'; }
             }
             
-            const descBox = document.getElementById('dDescriptionBox'), descText = document.getElementById('dDescription');
-            if (description&&description.trim()) { descBox.classList.remove('hidden'); descText.innerText = description; } else { descBox.classList.add('hidden'); }
             document.getElementById('detailModal').classList.remove('hidden');
         }
         
@@ -504,8 +465,7 @@
 
         async function confirmPurchase() {
             if (!currentProduct) return;
-            const user = auth.currentUser;
-            if (!user) return alert('⚠️ سجل دخول أولاً');
+            const user = auth.currentUser; if (!user) return alert('⚠️ سجل دخول أولاً');
             const contactPhone = document.getElementById('contactPhone').value.trim();
             if (!contactPhone) return alert('⚠️ أدخل رقم التواصل');
             
@@ -514,8 +474,7 @@
             if (isQuantityMode) {
                 quantity = parseInt(document.getElementById('quantityNumber').value);
                 if (isNaN(quantity) || quantity < currentQtyMin) return alert(`⚠️ الحد الأدنى ${currentQtyMin} قطعة`);
-                finalPrice = unitPrice * quantity;
-                orderData = `${quantity} قطعة`;
+                finalPrice = unitPrice * quantity; orderData = `${quantity} قطعة`;
             } else {
                 const discount = currentProduct.discount || 0;
                 finalPrice = discount > 0 ? (currentProduct.originalPrice||currentProduct.priceLYD) - ((currentProduct.originalPrice||currentProduct.priceLYD)*discount/100) : currentProduct.priceLYD;
@@ -530,22 +489,8 @@
             
             try {
                 await db.collection("users").doc(user.uid).update({ balance: newBalance });
-                await db.collection("orders").add({
-                    userId: user.uid, userName: userData?.username || userData?.name || '',
-                    serviceName: currentProduct.name, cardName: currentProduct.name,
-                    amount: finalPrice, price: finalPrice,
-                    playerID: orderData, contactPhone: contactPhone,
-                    quantity: quantity, serviceType: currentServiceType,
-                    status: 'completed', createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                // ✅ إرسال Webhook POST
-                await sendWebhookNotification({
-                    user_name: userData?.username || userData?.name || '---',
-                    user_email: userData?.email || '---',
-                    user_phone: contactPhone,
-                    action_type: 'طلب جديد 📦',
-                    details: `🎮 ${currentProduct.name}\n📝 ${orderData}\n📞 ${contactPhone}\n🔢 الكمية: ${quantity}\n💰 ${finalPrice.toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}`
-                });
+                await db.collection("orders").add({ userId: user.uid, userName: userData?.username || userData?.name || '', serviceName: currentProduct.name, cardName: currentProduct.name, amount: finalPrice, price: finalPrice, playerID: orderData, contactPhone: contactPhone, quantity: quantity, serviceType: currentServiceType, status: 'completed', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: contactPhone, action_type: 'طلب جديد 📦', details: `🎮 ${currentProduct.name}\n📝 ${orderData}\n📞 ${contactPhone}\n🔢 الكمية: ${quantity}\n💰 ${finalPrice.toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
                 closeDetailModal();
                 alert(`🎉 تم الشراء بنجاح!\n${currentProduct.name}\n${finalPrice.toFixed(3)} د.ل`);
             } catch (e) { alert('❌ خطأ: ' + e.message); }
@@ -561,7 +506,8 @@
                     const p = doc.data(); if (!(p.name||'').toLowerCase().includes(term)) return;
                     const img = p.image||p.img||''; const name = p.name||'منتج'; const priceLYD = p.priceLYD||p.price||0;
                     const discount = p.discount||0; const finalPrice = discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
-                    html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${p.enableQuantity||false},${p.qtyMin||30},${p.qtyMax||100})">${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}<div class="product-image-3d-box"><img src="${img}" loading="lazy" onerror="this.style.display='none'"></div><p class="game-name">منتج</p><h4 class="product-title">${name}</h4>${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}<div class="product-price">${finalPrice.toFixed(3)} د.ل</div><button class="buy-btn-3d" onclick="event.stopPropagation();openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${p.enableQuantity||false},${p.qtyMin||30},${p.qtyMax||100})">شراء الآن</button></div>`;
+                    const eq = p.enableQuantity||false; const qmin = p.qtyMin||30; const qmax = p.qtyMax||100;
+                    html += `<div class="prod-card" onclick="openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${eq},${qmin},${qmax})">${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}<div class="product-image-3d-box"><img src="${img}" loading="lazy" onerror="this.style.display='none'"></div><p class="game-name">منتج</p><h4 class="product-title">${name}</h4>${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}<div class="product-price">${finalPrice.toFixed(3)} د.ل</div><button class="buy-btn-3d" onclick="event.stopPropagation();openDetail('${img.replace(/'/g,"\\'")}','${name.replace(/'/g,"\\'")}',${priceLYD},'${p.type||'id'}','${(p.description||'').replace(/'/g,"\\'").replace(/\n/g,' ')}',${discount},${eq},${qmin},${qmax})">شراء الآن</button></div>`;
                 });
                 grid.innerHTML = html || '<div class="loading">لا توجد نتائج</div>';
             });
@@ -569,4 +515,4 @@
         document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key==='Enter') searchProducts(); });
     </script>
 </body>
-        </html>
+</html>
