@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <!-- ✅ المحفظة - نظام يدوي بالكامل -->
+    <!-- ✅ المحفظة - 4 أقسام -->
     <div id="walletPage" class="page">
         <div class="container" style="margin-top:10px;">
             <div class="section-title">💰 المحفظة وشحن الرصيد</div>
@@ -165,57 +165,67 @@
             <div class="card-white">
                 <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;">💳 اختر طريقة الدفع</h3>
                 <div class="payment-methods-grid">
-                    <div class="payment-method-btn active" onclick="switchPaymentMethod('libyana', this)"><span class="icon">📞</span>ليبيانا</div>
-                    <div class="payment-method-btn" onclick="switchPaymentMethod('madar', this)"><span class="icon">📱</span>مدار</div>
+                    <div class="payment-method-btn active" onclick="switchPaymentMethod('libyana', this)"><span class="icon">📞</span>ليبيانا ومدار</div>
+                    <div class="payment-method-btn" onclick="switchPaymentMethod('binance', this)"><span class="icon">₿</span>بايننس</div>
                     <div class="payment-method-btn" onclick="switchPaymentMethod('cards', this)"><span class="icon">💳</span>كروت</div>
                     <div class="payment-method-btn" onclick="switchPaymentMethod('bank', this)"><span class="icon">🏦</span>مصرف</div>
                 </div>
             </div>
             
-            <!-- ✅ ليبيانا - يدوي -->
+            <!-- ✅ 1. ليبيانا ومدار - يدوي (قسم واحد) -->
             <div id="paymentLibyana" class="card-white">
                 <span class="section-badge manual">🔧 مراجعة يدوية</span>
-                <h3 style="color:var(--gold);margin-bottom:4px;">📞 شحن ليبيانا</h3>
-                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
-                <div class="bank-row"><div><span style="color:var(--muted);">رقم التحويل</span></div><div class="num">0920414760</div></div>
-                <button class="copy-btn" onclick="copyText('0920414760')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button>
+                <h3 style="color:var(--gold);margin-bottom:8px;">📞 شحن ليبيانا ومدار</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:10px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                
+                <div class="bank-row"><div><span style="color:var(--muted);">ليبيانا</span></div><div class="num">0920414760</div></div>
+                <button class="copy-btn" onclick="copyText('0920414760')" style="width:100%;margin-bottom:4px;">📋 نسخ</button>
+                
+                <div class="bank-row"><div><span style="color:var(--muted);">مدار</span></div><div class="num">0912377291</div></div>
+                <button class="copy-btn" onclick="copyText('0912377291')" style="width:100%;margin-bottom:10px;">📋 نسخ</button>
+                
                 <div class="note-box">🔧 جميع التحويلات تخضع للمراجعة اليدوية من الإدارة</div>
-                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">أدخل رقم هاتفك والمبلغ المحول</p>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل رقم هاتفك والمبلغ</p>
                 <input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
                 <input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
-                <button class="notify-btn" onclick="submitDepositRequest('Libyana', 'phone_libyana', 'amount_libyana')">📩 إرسال طلب شحن</button>
+                <button class="notify-btn" onclick="submitDepositRequest('ليبيانا ومدار', 'phone_libyana', 'amount_libyana')">📩 إرسال طلب شحن</button>
             </div>
             
-            <!-- ✅ مدار - يدوي -->
-            <div id="paymentMadar" class="card-white hidden">
+            <!-- ✅ 2. بايننس - يدوي -->
+            <div id="paymentBinance" class="card-white hidden">
                 <span class="section-badge manual">🔧 مراجعة يدوية</span>
-                <h3 style="color:var(--gold);margin-bottom:4px;">📱 شحن مدار</h3>
-                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
-                <div class="bank-row"><div><span style="color:var(--muted);">رقم المدار</span></div><div class="num">0912377291</div></div>
-                <button class="copy-btn" onclick="copyText('0912377291')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button>
-                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك</p>
-                <input type="text" id="phone_madar" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
-                <input type="number" id="amount_madar" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
-                <button class="notify-btn" onclick="submitDepositRequest('Madar', 'phone_madar', 'amount_madar')">📩 إرسال طلب شحن</button>
+                <h3 style="color:var(--gold);margin-bottom:8px;">₿ شحن بايننس</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:10px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                
+                <div class="bank-row"><div><span style="color:var(--muted);">معرف بايننس</span></div><div class="num">1046437963</div></div>
+                <button class="copy-btn" onclick="copyText('1046437963')" style="width:100%;margin-bottom:10px;">📋 نسخ</button>
+                
+                <div class="note-box">💡 1 دولار = 12 دينار</div>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل المعرف المحول منه والمبلغ بالدولار</p>
+                <input type="text" id="binance_id" class="notify-input" placeholder="المعرف المحول منه (ID)" dir="ltr">
+                <input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ ($)" dir="ltr">
+                <button class="notify-btn" onclick="submitBinanceRequest()">📩 إرسال طلب شحن</button>
             </div>
             
-            <!-- ✅ كروت - يدوي -->
+            <!-- ✅ 3. كروت - يدوي -->
             <div id="paymentCards" class="card-white hidden">
                 <span class="section-badge manual">🔧 مراجعة يدوية</span>
                 <h3 style="color:var(--gold);margin-bottom:8px;">💳 كروت التعبئة</h3>
-                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:10px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
                 <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr">
                 <input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت (د.ل)" dir="ltr">
                 <button class="notify-btn" onclick="submitCardDeposit()">📩 إرسال طلب شحن</button>
             </div>
             
-            <!-- ✅ مصرف - يدوي -->
+            <!-- ✅ 4. مصرف - يدوي -->
             <div id="paymentBank" class="card-white hidden">
                 <span class="section-badge manual">🔧 مراجعة يدوية</span>
-                <h3 style="color:var(--gold);margin-bottom:4px;">🏦 تحويل مصرفي (الجمهورية)</h3>
-                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                <h3 style="color:var(--gold);margin-bottom:8px;">🏦 تحويل مصرفي (الجمهورية)</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:10px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                
                 <div class="bank-row"><div><span style="color:var(--muted);">رقم الحساب</span></div><div class="num">011201000244993</div></div>
-                <button class="copy-btn" onclick="copyText('011201000244993')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button>
+                <button class="copy-btn" onclick="copyText('011201000244993')" style="width:100%;margin-bottom:10px;">📋 نسخ</button>
+                
                 <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك</p>
                 <input type="text" id="bank_account_from" class="notify-input" placeholder="رقم الحساب المحول منه" dir="ltr">
                 <input type="number" id="bank_amount" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
@@ -287,7 +297,6 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // ✅ Webhook للإشعارات فقط - لا يحدث رصيد
         const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
         async function sendWebhookNotification(data) {
             try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch (e) {}
@@ -306,10 +315,10 @@
 
         function switchPaymentMethod(type, btn) {
             document.getElementById('paymentLibyana').classList.add('hidden');
-            document.getElementById('paymentMadar').classList.add('hidden');
+            document.getElementById('paymentBinance').classList.add('hidden');
             document.getElementById('paymentCards').classList.add('hidden');
             document.getElementById('paymentBank').classList.add('hidden');
-            const map = { libyana: 'paymentLibyana', madar: 'paymentMadar', cards: 'paymentCards', bank: 'paymentBank' };
+            const map = { libyana: 'paymentLibyana', binance: 'paymentBinance', cards: 'paymentCards', bank: 'paymentBank' };
             if (map[type]) document.getElementById(map[type]).classList.remove('hidden');
             document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
@@ -357,7 +366,7 @@
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)); }
 
-        // ✅ دوال الإيداع اليدوي - ترسل طلب فقط ولا تحدث الرصيد
+        // ✅ دوال الإيداع - كلها يدوية
         async function submitDepositRequest(provider, phoneFieldId, amountFieldId) {
             const phone = document.getElementById(phoneFieldId).value.trim();
             const amount = document.getElementById(amountFieldId).value.trim();
@@ -378,6 +387,31 @@
                 });
                 alert('✅ تم إرسال طلب الشحن! سيتم مراجعة طلبك من قبل الإدارة');
                 document.getElementById(phoneFieldId).value = ''; document.getElementById(amountFieldId).value = '';
+            } catch (e) { alert('❌ خطأ: ' + e.message); }
+        }
+
+        async function submitBinanceRequest() {
+            const binanceId = document.getElementById('binance_id').value.trim();
+            const amount = document.getElementById('binance_amount').value.trim();
+            if (!binanceId) return alert('⚠️ أدخل المعرف المحول منه');
+            if (!amount) return alert('⚠️ أدخل المبلغ بالدولار');
+            const amountLYD = parseFloat(amount) * 12;
+            try {
+                await db.collection("deposits").add({
+                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '',
+                    userEmail: userData?.email || '', card_code: binanceId,
+                    amount: amountLYD, crypto_amount: parseFloat(amount),
+                    provider: 'بايننس', status: 'pending', mode: 'manual',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                await sendWebhookNotification({
+                    user_name: userData?.username || userData?.name || '---',
+                    user_email: userData?.email || '---', user_phone: userData?.phone || '---',
+                    action_type: 'طلب شحن بايننس 📩',
+                    details: `₿ بايننس\n🆔 ${binanceId}\n💵 $${parseFloat(amount).toFixed(2)} = ${amountLYD.toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}\n🔧 بحاجة لمراجعة يدوية`
+                });
+                alert('✅ تم إرسال طلب الشحن! سيتم مراجعة طلبك من قبل الإدارة');
+                document.getElementById('binance_id').value = ''; document.getElementById('binance_amount').value = '';
             } catch (e) { alert('❌ خطأ: ' + e.message); }
         }
 
