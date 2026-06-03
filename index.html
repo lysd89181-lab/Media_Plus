@@ -76,11 +76,8 @@
         .notify-input:focus { border-color: var(--blue); box-shadow: 0 0 10px rgba(0,162,255,0.2); }
         .notify-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; font-weight: 900; border: none; border-radius: 13px; font-size: 14px; cursor: pointer; margin-top: 8px; border-bottom: 3px solid #d4941a; box-shadow: var(--neon-gold); transition: all 0.15s; }
         .notify-btn:active { transform: translateY(2px); }
-        .notify-btn.auto { background: linear-gradient(135deg, #10b981, #34d399); border-bottom: 3px solid #059669; box-shadow: var(--neon-green); }
         .note-box { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); border-radius: 10px; padding: 8px 12px; margin: 8px 0; font-size: 10px; color: var(--gold); text-align: center; }
-        .note-box.info { background: rgba(0,162,255,0.08); border: 1px solid rgba(0,162,255,0.2); color: var(--blue); }
         .section-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 9px; font-weight: 700; margin-bottom: 8px; }
-        .section-badge.auto { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
         .section-badge.manual { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
 
         .payment-methods-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
@@ -88,7 +85,6 @@
         .payment-method-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 0 15px rgba(0,162,255,0.5); }
         .payment-method-btn .icon { font-size: 16px; display: block; margin-bottom: 2px; }
 
-        /* ✅ نظام الخطوتين */
         .modal-step { transition: all 0.3s; }
         .quantity-section { background: #0a0f1a; padding: 14px; border-radius: 12px; margin: 8px 0; border: 1px solid rgba(0,162,255,0.15); }
         .quantity-section label { font-weight: 700; display: block; margin-bottom: 8px; color: var(--blue); font-size: 12px; }
@@ -160,11 +156,14 @@
         </div>
     </div>
 
+    <!-- ✅ المحفظة - نظام يدوي بالكامل -->
     <div id="walletPage" class="page">
         <div class="container" style="margin-top:10px;">
             <div class="section-title">💰 المحفظة وشحن الرصيد</div>
             <div class="card-white" style="text-align:center;"><div style="font-size:12px;color:var(--muted);">رصيدك الحالي</div><div class="big-number"><span id="walletBalance">0.000</span> د.ل</div></div>
-            <div class="card-white"><h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;">💳 اختر طريقة الدفع</h3>
+            
+            <div class="card-white">
+                <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;">💳 اختر طريقة الدفع</h3>
                 <div class="payment-methods-grid">
                     <div class="payment-method-btn active" onclick="switchPaymentMethod('libyana', this)"><span class="icon">📞</span>ليبيانا</div>
                     <div class="payment-method-btn" onclick="switchPaymentMethod('madar', this)"><span class="icon">📱</span>مدار</div>
@@ -172,10 +171,56 @@
                     <div class="payment-method-btn" onclick="switchPaymentMethod('bank', this)"><span class="icon">🏦</span>مصرف</div>
                 </div>
             </div>
-            <div id="paymentLibyana" class="card-white"><span class="section-badge auto">⚡ تلقائي</span><h3 style="color:var(--green);margin-bottom:4px;">📞 شحن ليبيانا (تلقائي)</h3><div class="bank-row"><div><span style="color:var(--muted);">رقم التحويل</span></div><div class="num">0920414760</div></div><button class="copy-btn" onclick="copyText('0920414760')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button><div class="note-box info">⚡ بعد التحويل مباشرة، سيتم تحديث رصيدك تلقائياً</div><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">أدخل رقم هاتفك والمبلغ المحول</p><input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr"><input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn auto" onclick="submitTransfer('Libyana', 'auto')">⚡ شحن الآن (تلقائي)</button></div>
-            <div id="paymentMadar" class="card-white hidden"><span class="section-badge manual">🔧 يدوي</span><h3 style="color:var(--gold);margin-bottom:4px;">📱 شحن مدار (يدوي)</h3><p style="font-size:10px;color:var(--muted);margin-bottom:6px;">العملية تتم عبر الفريق يدوياً</p><div class="bank-row"><div><span style="color:var(--muted);">رقم المدار</span></div><div class="num">0912377291</div></div><button class="copy-btn" onclick="copyText('0912377291')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك وسيتم مراجعة الطلب</p><input type="text" id="phone_madar" class="notify-input" placeholder="الرقم المحول منه" dir="ltr"><input type="number" id="amount_madar" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn" onclick="submitTransfer('Madar', 'manual')">📩 إرسال تبليغ</button></div>
-            <div id="paymentCards" class="card-white hidden"><span class="section-badge auto">⚡ تلقائي</span><h3 style="color:var(--green);margin-bottom:8px;">💳 كروت التعبئة</h3><input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr"><input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت (د.ل)" dir="ltr"><button class="notify-btn auto" onclick="submitDeposit()">✅ إرسال</button></div>
-            <div id="paymentBank" class="card-white hidden"><span class="section-badge manual">🔧 يدوي</span><h3 style="color:var(--gold);margin-bottom:4px;">🏦 تحويل مصرفي (الجمهورية)</h3><p style="font-size:10px;color:var(--muted);margin-bottom:6px;">العملية تتم عبر الفريق يدوياً</p><div class="bank-row"><div><span style="color:var(--muted);">رقم الحساب</span></div><div class="num">011201000244993</div></div><button class="copy-btn" onclick="copyText('011201000244993')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك وسيتم مراجعة الطلب</p><input type="text" id="bank_account_from" class="notify-input" placeholder="رقم الحساب المحول منه" dir="ltr"><input type="number" id="bank_amount" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn" onclick="submitBankTransfer()">📩 إرسال تبليغ</button></div>
+            
+            <!-- ✅ ليبيانا - يدوي -->
+            <div id="paymentLibyana" class="card-white">
+                <span class="section-badge manual">🔧 مراجعة يدوية</span>
+                <h3 style="color:var(--gold);margin-bottom:4px;">📞 شحن ليبيانا</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                <div class="bank-row"><div><span style="color:var(--muted);">رقم التحويل</span></div><div class="num">0920414760</div></div>
+                <button class="copy-btn" onclick="copyText('0920414760')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button>
+                <div class="note-box">🔧 جميع التحويلات تخضع للمراجعة اليدوية من الإدارة</div>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">أدخل رقم هاتفك والمبلغ المحول</p>
+                <input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
+                <input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
+                <button class="notify-btn" onclick="submitDepositRequest('Libyana', 'phone_libyana', 'amount_libyana')">📩 إرسال طلب شحن</button>
+            </div>
+            
+            <!-- ✅ مدار - يدوي -->
+            <div id="paymentMadar" class="card-white hidden">
+                <span class="section-badge manual">🔧 مراجعة يدوية</span>
+                <h3 style="color:var(--gold);margin-bottom:4px;">📱 شحن مدار</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                <div class="bank-row"><div><span style="color:var(--muted);">رقم المدار</span></div><div class="num">0912377291</div></div>
+                <button class="copy-btn" onclick="copyText('0912377291')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك</p>
+                <input type="text" id="phone_madar" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
+                <input type="number" id="amount_madar" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
+                <button class="notify-btn" onclick="submitDepositRequest('Madar', 'phone_madar', 'amount_madar')">📩 إرسال طلب شحن</button>
+            </div>
+            
+            <!-- ✅ كروت - يدوي -->
+            <div id="paymentCards" class="card-white hidden">
+                <span class="section-badge manual">🔧 مراجعة يدوية</span>
+                <h3 style="color:var(--gold);margin-bottom:8px;">💳 كروت التعبئة</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr">
+                <input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت (د.ل)" dir="ltr">
+                <button class="notify-btn" onclick="submitCardDeposit()">📩 إرسال طلب شحن</button>
+            </div>
+            
+            <!-- ✅ مصرف - يدوي -->
+            <div id="paymentBank" class="card-white hidden">
+                <span class="section-badge manual">🔧 مراجعة يدوية</span>
+                <h3 style="color:var(--gold);margin-bottom:4px;">🏦 تحويل مصرفي (الجمهورية)</h3>
+                <p style="font-size:10px;color:var(--muted);margin-bottom:6px;">سيتم مراجعة طلبك من قبل الإدارة وتحديث رصيدك يدوياً</p>
+                <div class="bank-row"><div><span style="color:var(--muted);">رقم الحساب</span></div><div class="num">011201000244993</div></div>
+                <button class="copy-btn" onclick="copyText('011201000244993')" style="width:100%;margin-bottom:8px;">📋 نسخ الرقم</button>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل بياناتك</p>
+                <input type="text" id="bank_account_from" class="notify-input" placeholder="رقم الحساب المحول منه" dir="ltr">
+                <input type="number" id="bank_amount" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
+                <button class="notify-btn" onclick="submitBankDeposit()">📩 إرسال طلب شحن</button>
+            </div>
         </div>
     </div>
 
@@ -187,7 +232,7 @@
         <div class="nav-item" data-tab="account" onclick="switchTab('account')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>حسابي</div>
     </div>
 
-    <!-- ✅ مودال الخطوتين -->
+    <!-- مودال الشراء -->
     <div id="detailModal" class="modal-overlay hidden" onclick="closeDetailModal()">
         <div class="modal" onclick="event.stopPropagation()">
             <button class="close" onclick="closeDetailModal()">✕</button>
@@ -196,7 +241,6 @@
             <div class="old-price-big hidden" id="dOldPrice"></div>
             <p class="modal-desc" id="dDesc" style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:8px;"></p>
             
-            <!-- ✅ الخطوة 1: العداد والسعر -->
             <div id="stepQuantity" class="modal-step">
                 <div id="quantitySection" class="quantity-section hidden">
                     <label>🔢 الكمية المطلوبة</label>
@@ -211,7 +255,6 @@
                 <button class="next-btn" id="nextBtn" onclick="goToStep2()">✅ متابعة</button>
             </div>
             
-            <!-- ✅ الخطوة 2: ملخص + حقول البيانات + رقم التواصل -->
             <div id="stepData" class="modal-step hidden">
                 <div class="step-divider"></div>
                 <div id="orderSummary" class="order-summary hidden">
@@ -244,6 +287,7 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
+        // ✅ Webhook للإشعارات فقط - لا يحدث رصيد
         const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
         async function sendWebhookNotification(data) {
             try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch (e) {}
@@ -271,46 +315,22 @@
             if (btn) btn.classList.add('active');
         }
 
-        // ✅ دوال العداد بالترتيب
-        function updateQuantity(val) {
-            val = parseInt(val);
-            document.getElementById('quantityNumber').value = val;
-            updateDynamicPrice(val);
-        }
-        function updateSlider(val) {
-            val = parseInt(val);
-            if (isNaN(val) || val < currentQtyMin) val = currentQtyMin;
-            if (val > currentQtyMax) val = currentQtyMax;
-            document.getElementById('quantitySlider').value = val;
-            document.getElementById('quantityNumber').value = val;
-            updateDynamicPrice(val);
-        }
-        function updateDynamicPrice(quantity) {
-            const total = unitPrice * quantity;
-            document.getElementById('totalPriceNew').innerText = total.toFixed(3);
-        }
+        function updateQuantity(val) { val = parseInt(val); document.getElementById('quantityNumber').value = val; updateDynamicPrice(val); }
+        function updateSlider(val) { val = parseInt(val); if (isNaN(val) || val < currentQtyMin) val = currentQtyMin; if (val > currentQtyMax) val = currentQtyMax; document.getElementById('quantitySlider').value = val; document.getElementById('quantityNumber').value = val; updateDynamicPrice(val); }
+        function updateDynamicPrice(quantity) { document.getElementById('totalPriceNew').innerText = (unitPrice * quantity).toFixed(3); }
 
-        // ✅ الانتقال للخطوة الثانية
         function goToStep2() {
             if (!currentProduct) return;
-            if (isQuantityMode) {
-                const qty = parseInt(document.getElementById('quantityNumber').value);
-                if (isNaN(qty) || qty < currentQtyMin) return alert(`⚠️ الحد الأدنى ${currentQtyMin} قطعة`);
-            }
-            // إخفاء الخطوة 1 وإظهار الخطوة 2
+            if (isQuantityMode) { const qty = parseInt(document.getElementById('quantityNumber').value); if (isNaN(qty) || qty < currentQtyMin) return alert(`⚠️ الحد الأدنى ${currentQtyMin} قطعة`); }
             document.getElementById('stepQuantity').classList.add('hidden');
             document.getElementById('stepData').classList.remove('hidden');
-            
             if (isQuantityMode) {
                 const qty = parseInt(document.getElementById('quantityNumber').value);
-                const total = unitPrice * qty;
                 document.getElementById('orderSummary').classList.remove('hidden');
                 document.getElementById('summaryName').innerText = currentProduct.name;
                 document.getElementById('summaryQty').innerText = qty;
-                document.getElementById('summaryPrice').innerText = total.toFixed(3) + ' د.ل';
-            } else {
-                document.getElementById('orderSummary').classList.add('hidden');
-            }
+                document.getElementById('summaryPrice').innerText = (unitPrice * qty).toFixed(3) + ' د.ل';
+            } else { document.getElementById('orderSummary').classList.add('hidden'); }
             document.getElementById('stepData').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -337,41 +357,73 @@
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
         function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)); }
 
-        async function submitTransfer(provider, mode) {
-            let phone, amount;
-            if (provider === 'Libyana') { phone = document.getElementById('phone_libyana').value.trim(); amount = document.getElementById('amount_libyana').value.trim(); }
-            else { phone = document.getElementById('phone_madar').value.trim(); amount = document.getElementById('amount_madar').value.trim(); }
+        // ✅ دوال الإيداع اليدوي - ترسل طلب فقط ولا تحدث الرصيد
+        async function submitDepositRequest(provider, phoneFieldId, amountFieldId) {
+            const phone = document.getElementById(phoneFieldId).value.trim();
+            const amount = document.getElementById(amountFieldId).value.trim();
             if (!phone) return alert('⚠️ أدخل الرقم المحول منه');
             if (!amount) return alert('⚠️ أدخل القيمة');
-            const status = mode === 'auto' ? 'approved' : 'pending';
             try {
-                await db.collection("deposits").add({ userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '', phone: phone, amount: parseFloat(amount), provider: provider, status: status, mode: mode, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-                if (mode === 'auto') { await db.collection("users").doc(auth.currentUser.uid).update({ balance: (userData?.balance || 0) + parseFloat(amount) }); }
-                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: phone, action_type: `إيداع ${provider} ${mode==='auto'?'⚡':'📩'}`, details: `📱 ${provider}\n📞 ${phone}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
-                alert(mode === 'auto' ? '✅ تم الشحن تلقائياً!' : '✅ تم إرسال التبليغ!');
-                if (provider === 'Libyana') { document.getElementById('phone_libyana').value = ''; document.getElementById('amount_libyana').value = ''; }
-                else { document.getElementById('phone_madar').value = ''; document.getElementById('amount_madar').value = ''; }
+                await db.collection("deposits").add({
+                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '',
+                    userEmail: userData?.email || '', phone: phone, amount: parseFloat(amount),
+                    provider: provider, status: 'pending', mode: 'manual',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                await sendWebhookNotification({
+                    user_name: userData?.username || userData?.name || '---',
+                    user_email: userData?.email || '---', user_phone: phone,
+                    action_type: 'طلب شحن 📩',
+                    details: `📱 ${provider}\n📞 ${phone}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}\n🔧 بحاجة لمراجعة يدوية`
+                });
+                alert('✅ تم إرسال طلب الشحن! سيتم مراجعة طلبك من قبل الإدارة');
+                document.getElementById(phoneFieldId).value = ''; document.getElementById(amountFieldId).value = '';
             } catch (e) { alert('❌ خطأ: ' + e.message); }
         }
 
-        async function submitDeposit() {
-            const cardCode = document.getElementById('depositCardCode').value.trim(); const amount = document.getElementById('depositAmount').value.trim();
-            if (!cardCode) return alert('⚠️ أدخل رقم الكرت'); if (!amount) return alert('⚠️ أدخل قيمة الكرت');
+        async function submitCardDeposit() {
+            const cardCode = document.getElementById('depositCardCode').value.trim();
+            const amount = document.getElementById('depositAmount').value.trim();
+            if (!cardCode) return alert('⚠️ أدخل رقم الكرت');
+            if (!amount) return alert('⚠️ أدخل قيمة الكرت');
             try {
-                await db.collection("deposits").add({ userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '', card_code: cardCode, amount: parseFloat(amount), provider: 'كروت تعبئة', status: 'approved', mode: 'auto', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-                await db.collection("users").doc(auth.currentUser.uid).update({ balance: (userData?.balance || 0) + parseFloat(amount) });
-                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: userData?.phone || '---', action_type: 'إيداع كروت ⚡', details: `💳 كروت\n🎫 ${cardCode}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
-                alert('✅ تم الشحن تلقائياً!'); document.getElementById('depositCardCode').value = ''; document.getElementById('depositAmount').value = '';
+                await db.collection("deposits").add({
+                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '',
+                    userEmail: userData?.email || '', card_code: cardCode, amount: parseFloat(amount),
+                    provider: 'كروت تعبئة', status: 'pending', mode: 'manual',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                await sendWebhookNotification({
+                    user_name: userData?.username || userData?.name || '---',
+                    user_email: userData?.email || '---', user_phone: userData?.phone || '---',
+                    action_type: 'طلب شحن كروت 📩',
+                    details: `💳 كروت تعبئة\n🎫 ${cardCode}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}\n🔧 بحاجة لمراجعة يدوية`
+                });
+                alert('✅ تم إرسال طلب الشحن! سيتم مراجعة طلبك من قبل الإدارة');
+                document.getElementById('depositCardCode').value = ''; document.getElementById('depositAmount').value = '';
             } catch (e) { alert('❌ خطأ: ' + e.message); }
         }
 
-        async function submitBankTransfer() {
-            const accountFrom = document.getElementById('bank_account_from').value.trim(); const amount = document.getElementById('bank_amount').value.trim();
-            if (!accountFrom) return alert('⚠️ أدخل رقم الحساب'); if (!amount) return alert('⚠️ أدخل القيمة');
+        async function submitBankDeposit() {
+            const accountFrom = document.getElementById('bank_account_from').value.trim();
+            const amount = document.getElementById('bank_amount').value.trim();
+            if (!accountFrom) return alert('⚠️ أدخل رقم الحساب المحول منه');
+            if (!amount) return alert('⚠️ أدخل القيمة');
             try {
-                await db.collection("deposits").add({ userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '', userEmail: userData?.email || '', card_code: accountFrom, amount: parseFloat(amount), provider: 'مصرف الجمهورية', status: 'pending', mode: 'manual', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-                await sendWebhookNotification({ user_name: userData?.username || userData?.name || '---', user_email: userData?.email || '---', user_phone: userData?.phone || '---', action_type: 'إيداع مصرفي 📩', details: `🏦 مصرف الجمهورية\n💳 ${accountFrom}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}` });
-                alert('✅ تم إرسال التبليغ!'); document.getElementById('bank_account_from').value = ''; document.getElementById('bank_amount').value = '';
+                await db.collection("deposits").add({
+                    userId: auth.currentUser.uid, userName: userData?.username || userData?.name || '',
+                    userEmail: userData?.email || '', card_code: accountFrom, amount: parseFloat(amount),
+                    provider: 'مصرف الجمهورية', status: 'pending', mode: 'manual',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                await sendWebhookNotification({
+                    user_name: userData?.username || userData?.name || '---',
+                    user_email: userData?.email || '---', user_phone: userData?.phone || '---',
+                    action_type: 'طلب شحن مصرفي 📩',
+                    details: `🏦 مصرف الجمهورية\n💳 ${accountFrom}\n💵 ${parseFloat(amount).toFixed(2)} د.ل\n📅 ${new Date().toLocaleString('ar-LY')}\n🔧 بحاجة لمراجعة يدوية`
+                });
+                alert('✅ تم إرسال طلب الشحن! سيتم مراجعة طلبك من قبل الإدارة');
+                document.getElementById('bank_account_from').value = ''; document.getElementById('bank_amount').value = '';
             } catch (e) { alert('❌ خطأ: ' + e.message); }
         }
 
@@ -417,16 +469,11 @@
             currentQtyMin = qtyMin; currentQtyMax = qtyMax;
             const finalPrice = discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
             currentProduct = { img, name, priceLYD: finalPrice, type: currentServiceType, description, discount, originalPrice: priceLYD, enableQuantity, qtyMin, qtyMax };
-            
-            // إعادة ضبط المودال
             document.getElementById('stepData').classList.add('hidden');
             document.getElementById('stepQuantity').classList.remove('hidden');
             document.getElementById('orderSummary').classList.add('hidden');
-            
             document.getElementById('dImg').src = img; document.getElementById('dName').innerText = name;
             const badge = document.getElementById('dDiscountBadge'), oldPrice = document.getElementById('dOldPrice');
-            
-            // إخفاء الكل أولاً
             document.getElementById('fieldId').classList.add('hidden');
             document.getElementById('fieldPhone').classList.add('hidden');
             document.getElementById('fieldAccount').classList.add('hidden');
@@ -435,10 +482,8 @@
             document.getElementById('dynamicPriceSection').classList.add('hidden');
             document.getElementById('targetInput').value=''; document.getElementById('phoneInput').value='';
             document.getElementById('accountLinkInput').value=''; document.getElementById('contactPhone').value='';
-            
             if (discount>0&&!enableQuantity) { badge.classList.remove('hidden'); badge.innerHTML=`<span class="discount-badge-big">🔥 خصم ${discount}%</span>`; oldPrice.classList.remove('hidden'); oldPrice.innerText=`${priceLYD.toFixed(3)} د.ل`; }
             else { badge.classList.add('hidden'); oldPrice.classList.add('hidden'); }
-            
             if (enableQuantity) {
                 unitPrice = (priceLYD||0) / qtyMin;
                 document.getElementById('quantitySlider').min = qtyMin; document.getElementById('quantitySlider').max = qtyMax;
@@ -457,10 +502,9 @@
                 else if (currentServiceType==='account') { document.getElementById('fieldAccount').classList.remove('hidden'); document.getElementById('dDesc').innerText = 'النوع: رابط حساب'; }
                 else { document.getElementById('dDesc').innerText = 'النوع: مباشر'; }
             }
-            
             document.getElementById('detailModal').classList.remove('hidden');
         }
-        
+
         function closeDetailModal() { document.getElementById('detailModal').classList.add('hidden'); }
 
         async function confirmPurchase() {
@@ -468,9 +512,7 @@
             const user = auth.currentUser; if (!user) return alert('⚠️ سجل دخول أولاً');
             const contactPhone = document.getElementById('contactPhone').value.trim();
             if (!contactPhone) return alert('⚠️ أدخل رقم التواصل');
-            
             let finalPrice, quantity = 1, orderData = '';
-            
             if (isQuantityMode) {
                 quantity = parseInt(document.getElementById('quantityNumber').value);
                 if (isNaN(quantity) || quantity < currentQtyMin) return alert(`⚠️ الحد الأدنى ${currentQtyMin} قطعة`);
@@ -483,10 +525,8 @@
                 else if (currentServiceType === 'account') { orderData = document.getElementById('accountLinkInput').value.trim(); if (!orderData) return alert('🔗 أدخل رابط الحساب'); }
                 else { orderData = 'مباشر'; }
             }
-            
             if (userBalance < finalPrice) return alert('⚠️ رصيد غير كافٍ');
             const newBalance = userBalance - finalPrice;
-            
             try {
                 await db.collection("users").doc(user.uid).update({ balance: newBalance });
                 await db.collection("orders").add({ userId: user.uid, userName: userData?.username || userData?.name || '', serviceName: currentProduct.name, cardName: currentProduct.name, amount: finalPrice, price: finalPrice, playerID: orderData, contactPhone: contactPhone, quantity: quantity, serviceType: currentServiceType, status: 'completed', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
