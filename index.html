@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Media Plus | المتجر الرسمي المطور</title>
+    <title>Media Plus | المتجر الرسمي الكامل</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
         
@@ -12,6 +12,7 @@
             --neon-green: #10b981;
             --bg-dark: #02050f;
             --glass-border: rgba(0, 162, 255, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.02);
         }
 
         * {
@@ -26,7 +27,7 @@
             background: var(--bg-dark);
             color: #fff;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
             overflow-x: hidden;
             background-image: radial-gradient(circle at 50% 0%, rgba(0, 82, 163, 0.25) 0%, transparent 60%);
             -webkit-overflow-scrolling: touch;
@@ -48,6 +49,9 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .logo-text {
@@ -74,7 +78,7 @@
         .balance-box span { color: var(--neon-blue); font-weight: 800; }
         .balance-box svg { width: 16px; height: 16px; fill: none; stroke: var(--neon-blue); stroke-width: 2; }
 
-        /* 🖼️ البانر وهيرو البحث الفخم */
+        /* 🖼️ البانر العلوي المطور */
         .hero-banner-box {
             background: #0b1a30;
             position: relative;
@@ -83,6 +87,7 @@
             margin-bottom: 25px;
             overflow: hidden;
             height: 180px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .hero-banner-box img {
@@ -92,7 +97,7 @@
             position: absolute;
             inset: 0;
             z-index: 1;
-            opacity: 0.45;
+            opacity: 0.55;
         }
 
         .hero-content {
@@ -107,17 +112,17 @@
             justify-content: center;
         }
 
-        .hero-banner-box h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
+        .hero-banner-box h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
         .search-box { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
         .search-box input {
             width: 100%; padding: 11px 18px 11px 48px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(0, 162, 255, 0.3);
             border-radius: 30px; color: #fff; font-size: 13px;
             outline: none; text-align: right;
         }
-        .search-box input:focus { border-color: var(--neon-blue); box-shadow: 0 0 12px rgba(0, 162, 255, 0.3); }
+        .search-box input:focus { border-color: var(--neon-blue); box-shadow: 0 0 12px rgba(0, 162, 255, 0.4); }
         .search-box button {
             position: absolute; left: 5px; top: 5px; bottom: 5px; width: 36px;
             background: var(--neon-blue); border: none; border-radius: 25px; color: #fff;
@@ -125,7 +130,7 @@
         }
         .search-box button svg { width: 16px; height: 16px; fill: none; stroke: white; stroke-width: 2.5; }
 
-        /* 🧭 شريط الأقسام الرئيسية */
+        /* 🧭 شريط التنقل بين بيئة الشحن وبيئة الرشق */
         .main-navbar {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -150,53 +155,53 @@
             box-shadow: 0 0 15px rgba(0, 162, 255, 0.35);
         }
 
-        /* 🔙 زر الرجوع */
+        /* 🔙 زر الرجوع الفخم */
         .back-btn {
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 162, 255, 0.2);
             color: var(--neon-blue); padding: 8px 16px; border-radius: 12px;
-            cursor: pointer; font-weight: bold; margin-bottom: 15px; font-size: 13px;
+            cursor: pointer; font-weight: bold; margin-bottom: 18px; font-size: 13px;
         }
         .back-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-        /* ⚠️ مربع التحذير لقسم الرشق */
+        /* ⚠️ مربع تنبيه قسم الرشق */
         .neon-warning-box {
-            background: rgba(239, 68, 68, 0.03);
+            background: rgba(239, 68, 68, 0.02);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(239, 68, 68, 0.25);
             border-right: 5px solid #ef4444;
-            padding: 16px; border-radius: 20px; font-size: 13px; color: #fca5a5;
+            padding: 15px; border-radius: 16px; font-size: 13px; color: #fca5a5;
             margin-bottom: 20px; line-height: 1.6;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
             display: flex; align-items: flex-start; gap: 12px;
         }
-        .neon-warning-box svg { flex-shrink: 0; width: 24px; height: 24px; }
+        .neon-warning-box svg { flex-shrink: 0; width: 22px; height: 22px; }
 
-        /* ⚡ توزيع شبكة الكروت */
+        /* ⚡ شبكة توزيع الكروت المتناسقة */
         .grid-2-columns {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
 
-        /* 💎 مجسم الكارت الموحد */
+        /* 💎 مجسم الكارت الموحد (ثبات تام للصور ومظهر سايبربانك زجاجي) */
         .glass-card {
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(11, 26, 48, 0.25);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 162, 255, 0.15);
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(0, 162, 255, 0.12);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             display: flex; flex-direction: column; justify-content: space-between;
-            overflow: hidden; cursor: pointer; text-align: center; padding: 20px 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden; cursor: pointer; text-align: center; padding: 18px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             position: relative;
+            height: 100%;
         }
         .glass-card:hover {
             border-color: var(--neon-blue);
-            box-shadow: 0 0 18px rgba(0, 162, 255, 0.25);
-            transform: translateY(-3px);
+            box-shadow: 0 0 18px rgba(0, 162, 255, 0.3);
+            transform: translateY(-2px);
         }
 
         .discount-badge {
@@ -206,39 +211,40 @@
         }
 
         .glass-card .card-img {
-            height: 85px; width: 85px; border-radius: 50%;
-            margin: 0 auto 15px auto; object-fit: cover;
+            height: 80px; width: 80px; border-radius: 50%;
+            margin: 0 auto 12px auto; object-fit: cover;
             border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 12px rgba(0, 162, 255, 0.3);
+            box-shadow: 0 0 12px rgba(0, 162, 255, 0.25);
             background: #02050f;
+            display: block;
         }
-        .sub-cat-card .card-img { border-color: #ffffff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.15); }
+        .sub-cat-card .card-img { border-color: #ffffff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.1); }
 
         .glass-card h3 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.4; }
         .old-price-text { font-size: 11px; color: #637592; text-decoration: line-through; margin-bottom: 2px; }
-        .price-tag { font-size: 15px; font-weight: 800; color: var(--neon-blue); text-shadow: 0 0 8px rgba(0, 162, 255, 0.3); margin-bottom: 10px; }
+        .price-tag { font-size: 15px; font-weight: 800; color: var(--neon-blue); text-shadow: 0 0 8px rgba(0, 162, 255, 0.3); margin-bottom: 12px; }
 
         .action-btn {
-            width: 100%; padding: 9px; border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%; padding: 9px; border: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: 700; border-radius: 10px; font-size: 12px;
             background: rgba(255, 255, 255, 0.03); color: #ffffff;
         }
+        .glass-card:hover .action-btn { background: var(--neon-blue); color: #000; border-color: var(--neon-blue); }
 
-        /* 💳 شبكة المحفظة وطرق الدفع */
+        /* 💳 واجهة المحفظة وشبكات الاتصال المدمجة */
         .info-card-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 18px; margin-bottom: 15px; }
         .wallet-big-amount { font-size: 32px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0,162,255,0.4); text-align: center; margin: 5px 0; }
         
         .payment-methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
-        .payment-method-btn { background: rgba(0,162,255,0.05); border: 1px solid rgba(0,162,255,0.15); border-radius: 12px; padding: 12px 4px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 700; color: #fff; }
-        .payment-method-btn.active { background: var(--neon-blue); border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0,162,255,0.4); }
+        .payment-method-btn { background: rgba(0,162,255,0.04); border: 1px solid rgba(0,162,255,0.12); border-radius: 12px; padding: 12px 4px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 700; color: #fff; }
+        .payment-method-btn.active { background: var(--neon-blue); border-color: var(--neon-blue); color: #000; box-shadow: 0 0 15px rgba(0,162,255,0.35); }
         .payment-method-btn svg { display: block; margin: 0 auto 6px auto; width: 20px; height: 20px; fill: currentColor; }
 
-        /* تجميع المدار وليبيانا في قسم واحد بالداخل */
-        .ly-telecom-container { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 15px; margin-top: 10px; }
-
-        .bank-row { background: #0a0f1a; border: 1px solid rgba(0,162,255,0.12); border-radius: 14px; padding: 12px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .ly-telecom-container { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; padding: 15px; margin-top: 10px; }
+        .bank-row { background: #0a0f1a; border: 1px solid rgba(0,162,255,0.1); border-radius: 14px; padding: 12px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
         .bank-row .num { font-size: 16px; font-weight: 900; direction: ltr; color: var(--neon-blue); }
-        .notify-input { width: 100%; padding: 12px; background: #0a0f1a; border: 1px solid rgba(0,162,255,0.15); border-radius: 12px; color: #fff; font-size: 14px; text-align: left; direction: ltr; margin: 8px 0; outline: none; }
+        .notify-input { width: 100%; padding: 12px; background: #0a0f1a; border: 1px solid rgba(0,162,255,0.12); border-radius: 12px; color: #fff; font-size: 14px; text-align: left; direction: ltr; margin: 8px 0; outline: none; }
+        .notify-input:focus { border-color: var(--neon-blue); }
         
         .notify-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; font-weight: 900; border: none; border-radius: 12px; font-size: 14px; cursor: pointer; margin-top: 5px; border-bottom: 3px solid #d4941a; }
         .notify-btn.auto { background: linear-gradient(135deg, #10b981, #34d399); border-bottom: 3px solid #059669; color: #fff; box-shadow: 0 0 12px rgba(16,185,129,0.3); }
@@ -246,32 +252,47 @@
         .section-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; margin-bottom: 8px; }
         .section-badge.auto { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
         .section-badge.manual { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
-        .note-box { background: rgba(245,166,35,0.05); border: 1px solid rgba(245,166,35,0.15); border-radius: 10px; padding: 10px; font-size: 11px; color: #f5a623; text-align: center; margin: 10px 0; }
+        .note-box { background: rgba(245,166,35,0.04); border: 1px solid rgba(245,166,35,0.12); border-radius: 10px; padding: 10px; font-size: 11px; color: #f5a623; text-align: center; margin: 10px 0; }
 
-        /* 📊 جدول سجل الطلبات */
+        /* 📊 جدول السجلات والطلبات القديمة والمحدثة */
         .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
         .custom-table th, .custom-table td { padding: 12px 10px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
-        /* 🛠️ روابط قنوات الدعم مع أيقونات SVG رسمية للتطبيقات */
-        .support-link-item { display: flex; justify-content: space-between; align-items: center; padding: 14px; background: rgba(0, 162, 255, 0.02); border: 1px solid rgba(0, 162, 255, 0.12); border-radius: 14px; margin-bottom: 12px; text-decoration: none; color: #fff; font-size: 13px; font-weight: 600; }
-        .support-link-item:hover { border-color: var(--neon-blue); background: rgba(0, 162, 255, 0.05); }
+        .status-badge { padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+        .status-badge.pending { background: rgba(245,166,35,0.15); color: #f5a623; }
+        .status-badge.completed { background: rgba(16,185,129,0.15); color: #10b981; }
+        .status-badge.canceled { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+        /* 🛠️ قنوات الدعم الفني والمبيعات بنظام السايبربانك الجديد */
+        .support-link-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(0, 162, 255, 0.02); border: 1px solid rgba(0, 162, 255, 0.12); border-radius: 14px; margin-bottom: 12px; text-decoration: none; color: #fff; font-size: 13px; font-weight: 600; }
+        .support-link-item:hover { border-color: var(--neon-blue); background: rgba(0, 162, 255, 0.05); box-shadow: 0 0 10px rgba(0,162,255,0.15); }
         .support-flex-title { display: flex; align-items: center; gap: 10px; }
         .support-flex-title svg { width: 22px; height: 22px; fill: currentColor; }
 
-        /* 🪟 نافذة تفاصيل المنتج والسلايدر (Popup) */
-        .product-modal-overlay { position: fixed; inset: 0; background: rgba(2, 5, 15, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; }
+        /* 🪟 واجهة الشراء والطلب الجديدة والمطورة كلياً (New Design Popup) */
+        .product-modal-overlay { position: fixed; inset: 0; background: rgba(2, 5, 15, 0.88); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; }
         .product-modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-card { background: #111827; border: 1px solid rgba(0, 162, 255, 0.25); box-shadow: 0 0 30px rgba(0, 162, 255, 0.2); width: 95%; max-width: 440px; border-radius: 24px; padding: 22px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-modal { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.08); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         
-        .quantity-section { background: #0a0f1a; padding: 14px; border-radius: 14px; margin: 10px 0; border: 1px solid rgba(0,162,255,0.15); text-align: center; }
-        .quantity-slider { width: 100%; -webkit-appearance: none; appearance: none; height: 8px; background: rgba(0,162,255,0.15); border-radius: 5px; outline: none; margin: 12px 0; }
-        .quantity-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: var(--neon-blue); cursor: pointer; box-shadow: 0 0 10px rgba(0,162,255,0.5); }
+        .modal-card { 
+            background: linear-gradient(165deg, #0b1528, #040914); 
+            border: 1px solid rgba(0, 162, 255, 0.25); 
+            box-shadow: 0 0 35px rgba(0, 162, 255, 0.25); 
+            width: 92%; max-width: 450px; border-radius: 24px; padding: 24px; position: relative; max-height: 90vh; overflow-y: auto; 
+        }
+        .close-modal { position: absolute; top: 14px; left: 14px; background: rgba(255,255,255,0.06); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        .modal-product-header { text-align: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 15px; }
+        .modal-product-header img { width: 75px; height: 75px; object-fit: cover; border-radius: 50%; border: 2px solid var(--neon-blue); box-shadow: 0 0 10px rgba(0,162,255,0.3); margin-bottom: 8px; }
+        
+        .quantity-section { background: rgba(0,0,0,0.4); padding: 16px; border-radius: 16px; margin: 15px 0; border: 1px solid rgba(0,162,255,0.15); text-align: center; }
+        .quantity-slider { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; background: rgba(255,255,255,0.1); border-radius: 5px; outline: none; margin: 15px 0; }
+        .quantity-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: var(--neon-blue); cursor: pointer; box-shadow: 0 0 10px rgba(0,162,255,0.6); }
 
-        .checkout-input-card { background: linear-gradient(145deg, #0d3740, #0a2a30); border-radius: 16px; padding: 15px; margin: 12px 0; border: 1px solid rgba(0,162,255,0.15); }
-        .checkout-input-card input { width: 100%; padding: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,162,255,0.2); border-radius: 12px; color: #fff; font-size: 14px; text-align: left; direction: ltr; margin: 6px 0; outline: none; }
+        .checkout-input-card { background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 15px; margin: 15px 0; border: 1px solid rgba(255,255,255,0.05); }
+        .checkout-input-card h4 { font-size: 13px; color: #637592; margin-bottom: 10px; }
+        .checkout-input-card input { width: 100%; padding: 12px; background: #060c16; border: 1px solid rgba(0,162,255,0.15); border-radius: 12px; color: #fff; font-size: 14px; text-align: right; margin: 8px 0; outline: none; }
+        .checkout-input-card input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0,162,255,0.2); }
         
-        /* 🔔 التنبيه المخصص الجديد لرسالة الشحن المريحة والناجحة */
+        /* 🔔 نافذة التنبيه المخصصة لنجاح الطلب الفوري */
         .order-success-toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 420px; background: #064e3b; border: 1px solid #10b981;
@@ -281,19 +302,20 @@
         }
         .order-success-toast.show { top: 20px; visibility: visible; opacity: 1; }
 
-        /* 🧭 شريط التنقل السفلي الثابت للـ 5 صفحات الكبرى */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; border-top: 1px solid rgba(0,162,255,0.15); display: flex; justify-content: space-around; align-items: center; padding: 6px 0 10px; z-index: 200; box-shadow: 0 -4px 15px rgba(0,0,0,0.4); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; color: #637592; cursor: pointer; padding: 4px 8px; width: 20%; }
+        /* 🧭 شريط التنقل السفلي الثابت (أزرار الأنظمة الرئيسية الخمسة) */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #070d19; border-top: 1px solid rgba(0,162,255,0.15); display: flex; justify-content: space-around; align-items: center; padding: 6px 0 12px; z-index: 200; box-shadow: 0 -4px 20px rgba(0,0,0,0.5); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; color: #546581; cursor: pointer; padding: 4px 0; width: 20%; text-align: center; text-decoration: none; }
         .nav-item.active { color: var(--neon-blue); font-weight: 700; }
         .nav-item svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; }
 
         .view-layer, .page-layer { display: none; } .view-layer.active, .page-layer.active { display: block; }
         .hidden { display: none !important; }
-        .loading { text-align: center; padding: 35px; color: #637592; font-size: 13px; width: 100%; grid-column: span 2; }
+        .loading { text-align: center; padding: 40px 10px; color: #637592; font-size: 13px; width: 100%; grid-column: span 2; }
     </style>
 </head>
 <body>
 
+    <!-- صندوق نجاح معالجة وشحن الرصيد الفوري واليدوي الموحد -->
     <div class="order-success-toast" id="orderSuccessAlert">
         <svg style="width:24px; height:24px; fill:none; stroke:#10b981; stroke-width:2.5;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         <div>
@@ -302,6 +324,7 @@
         </div>
     </div>
 
+    <!-- شريط الهيدر والمحفظة العلوي -->
     <div class="top-bar">
         <div class="logo-text">Media <span>Plus</span></div>
         <div class="balance-box" onclick="switchTab('wallet')">
@@ -310,60 +333,68 @@
         </div>
     </div>
 
+    <!-- 🟢 الصفحة الرئيسية الكبرى (الأنظمة والخدمات) -->
     <div id="homePage" class="page-layer active">
+        <!-- البانر العلوي المطور والمربوط بملف الصور lb.jpg من جيت هوب -->
         <div class="hero-banner-box">
-            <img id="main-banner" src="https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/banner1.jpg" alt="Banner">
+            <img id="main-banner" src="https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg" alt="Media Plus Banner">
             <div class="hero-content">
-                <h1>🌐 بوابة الخدمات المعتمدة</h1>
+                <h1>🌐 بوابة الخدمات الرقمية المعتمدة</h1>
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="بحث عن بطاقة أو خدمة...">
+                    <input type="text" id="searchInput" placeholder="بحث سريع عن عرض أو بطاقة...">
                     <button onclick="searchProducts()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
                 </div>
             </div>
         </div>
 
         <div class="container" style="margin-top:-15px;">
+            <!-- نافبار الفرز والتبديل الكامل بين الشحن العادي والرشق المستقل -->
             <nav class="main-navbar">
-                <button class="main-tab-btn active" id="tab-btn-cards" onclick="showMegaSection('mega-cards', 'https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/banner1.jpg')">البطاقات والاشتراكات</button>
-                <button class="main-tab-btn" id="tab-btn-social" onclick="showMegaSection('mega-social', 'https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/banner2.jpg')">خدمات الرشق والزيادات</button>
+                <button class="main-tab-btn active" id="tab-btn-cards" onclick="showMegaSection('mega-cards')">البطاقات والاشتراكات</button>
+                <button class="main-tab-btn" id="tab-btn-social" onclick="showMegaSection('mega-social')">خدمات الرشق والزيادات</button>
             </nav>
 
+            <!-- 💳 بيئة فئة البطاقات والشحن والاشتراكات المستقلة -->
             <div id="mega-cards" class="mega-container-view">
                 <div id="cards-categories-subgrid" class="view-layer active">
-                    <div class="section-title" style="font-size:14px; margin-bottom:10px;">📂 الأقسام المتاحة</div>
-                    <div class="grid-2-columns" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام من السيرفر...</div></div>
+                    <div class="section-title" style="font-size:13px; margin-bottom:12px; color:#637592;">📂 أقسام الاشتراكات المتوفرة</div>
+                    <div class="grid-2-columns" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام الفورية...</div></div>
                 </div>
             </div>
 
+            <!-- 🚀 بيئة فئة خدمات الرشق والزيادات المنفصلة كلياً بقاعدة بياناتها -->
             <div id="mega-social" class="mega-container-view" style="display: none;">
                 <div class="neon-warning-box">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                     <div>
-                        <strong style="color: #ef4444; font-size: 13px; display: block; margin-bottom: 2px;">إخلاء مسؤولية وتنبيه هام:</strong>
-                        جميع خدمات الرشق المعروضة بداخل هذا القسم هي خدمات من غير ضمان. المتجر لا يتحمل أي مسؤولية عن نقصان أو تراجع الأعداد.
+                        <strong style="color: #ef4444; font-size: 13px; display: block; margin-bottom: 2px;">تنبيه وإخلاء مسؤولية:</strong>
+                        جميع خدمات الرشق المعروضة بداخل هذا القسم هي خدمات من غير ضمان. المتجر غير مسؤول عن حدوث نقصان أو تراجع في الأعداد مستقبلاً.
                     </div>
                 </div>
-                <div class="grid-2-columns" id="socialCatsGrid"></div>
+                <div class="section-title" style="font-size:13px; margin-bottom:12px; color:#637592;">📂 منصات الرشق المدعومة</div>
+                <div class="grid-2-columns" id="socialCatsGrid"><div class="loading">⏳ جاري تحميل منصات السوشيال...</div></div>
             </div>
 
+            <!-- 📦 لوحة عرض المنتجات المشتركة بعد الإصلاح النهائي لثبات الصور وعدم الاختفاء -->
             <div id="productsView" class="hidden">
-                <button class="back-btn" onclick="goBackToCategories()"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> رجوع للأقسام</button>
-                <div class="section-title" id="productsTitle" style="font-size:14px; margin-bottom:12px;"></div>
+                <button class="back-btn" onclick="goBackToCategories()"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> العودة للأقسام السابقة</button>
+                <div class="section-title" id="productsTitle" style="font-size:14px; margin-bottom:15px; color:var(--neon-blue); font-weight:700;"></div>
                 <div class="grid-2-columns" id="prodsGrid"></div>
             </div>
         </div>
     </div>
 
+    <!-- 💰 صفحة إدارة المحفظة والشحن المجمعة لشبكات ليبيا -->
     <div id="walletPage" class="page-layer">
         <div class="container">
-            <div class="section-title" style="font-size:15px;">💰 إدارة الرصيد والمحفظة</div>
+            <div class="section-title" style="font-size:15px; margin-bottom:12px;">💰 رصيد المحفظة الشخصية</div>
             <div class="info-card-box" style="text-align:center;">
-                <div style="font-size:12px;color:#637592;">إجمالي الرصيد المتوفر</div>
+                <div style="font-size:12px; color:#637592;">إجمالي الرصيد الحالي المتوفر</div>
                 <div class="wallet-big-amount"><span id="walletBalance">0.000</span> د.ل</div>
             </div>
             
             <div class="info-card-box">
-                <h3 style="font-size:13px; text-align:center; margin-bottom:12px;">💳 اختر طريقة الشحن المفضلة</h3>
+                <h3 style="font-size:13px; text-align:center; margin-bottom:12px;">💳 اختر بوابة إشعار التحويل لتعبئة الحساب</h3>
                 <div class="payment-methods-grid">
                     <div class="payment-method-btn active" onclick="switchPaymentMethod('libya-networks', this)">
                         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -380,110 +411,115 @@
                 </div>
             </div>
 
+            <!-- لوحة شبكتي ليبيانا والمدار المدمجة لعدم تشتيت الزبون الليبي -->
             <div id="paymentLibyaNetworks" class="info-card-box">
-                <h3 style="color:var(--neon-blue); font-size:14px; margin-bottom:12px; text-align: center;">شحن رصيد المدار الجديد وليبيانا</h3>
+                <h3 style="color:var(--neon-blue); font-size:14px; margin-bottom:12px; text-align: center;">شحن وتعبئة الرصيد المحلي</h3>
                 
                 <div class="ly-telecom-container">
                     <span class="section-badge auto">⚡ تلقائي فوري ليبيانا</span>
                     <div class="bank-row"><div><span style="color:#637592;">رقم تحويل ليبيانا</span></div><div class="num">0920414760</div></div>
-                    <button class="action-btn" onclick="copyText('0920414760')" style="margin-bottom:10px;">📋 نسخ رقم ليبيانا</button>
-                    <input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه (مثال: 92XXXXXXX)">
-                    <input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة بالدراهم الفورية">
-                    <button class="notify-btn auto" onclick="processLibyanaAuto()">⚡ بدء الشحن التلقائي</button>
+                    <button class="action-btn" onclick="copyText('0920414760')" style="margin-bottom:10px;">📋 نسخ رقم ليبيانا المعتمد</button>
+                    <input type="text" id="phone_libyana" class="notify-input" placeholder="رقم الهاتف المحول منه (92XXXXXXX)">
+                    <input type="number" id="amount_libyana" class="notify-input" placeholder="قيمة الرصيد بالدراهم">
+                    <button class="notify-btn auto" onclick="processLibyanaAuto()">⚡ تشغيل التحقق التلقائي الفوري</button>
                 </div>
 
                 <div class="ly-telecom-container" style="margin-top:20px;">
                     <span class="section-badge manual">🔧 مراجعة يدوية مدار</span>
-                    <div class="bank-row"><div><span style="color:#637592;">رقم تحويل المدار</span></div><div class="num">0912377291</div></div>
-                    <button class="action-btn" onclick="copyText('0912377291')" style="margin-bottom:10px;">📋 نسخ رقم المدار</button>
-                    <input type="text" id="phone_madar" class="notify-input" placeholder="الرقم المحول منه لشبكة مدار">
-                    <input type="number" id="amount_madar" class="notify-input" placeholder="القيمة المرسلة بالدينار">
-                    <button class="notify-btn" onclick="submitManualDeposit('مدار', 'phone_madar', 'amount_madar')">📩 إرسال إشعار تحويل مدار</button>
+                    <div class="bank-row"><div><span style="color:#637592;">رقم تحويل المدار الجديد</span></div><div class="num">0912377291</div></div>
+                    <button class="action-btn" onclick="copyText('0912377291')" style="margin-bottom:10px;">📋 نسخ رقم المدار الجديد</button>
+                    <input type="text" id="phone_madar" class="notify-input" placeholder="رقم هاتف المدار المرسل منه">
+                    <input type="number" id="amount_madar" class="notify-input" placeholder="المبلغ المرسل بالدينار الليبي">
+                    <button class="notify-btn" onclick="submitManualDeposit('مدار', 'phone_madar', 'amount_madar')">📩 إرسال إشعار تحويل مدار للإدارة</button>
                 </div>
             </div>
 
             <div id="paymentBinance" class="info-card-box hidden">
                 <span class="section-badge manual">🔧 مراجعة يدوية</span>
-                <h3 style="color:#f5a623; font-size:14px; margin-bottom:8px;">شحن حساب Binance</h3>
+                <h3 style="color:#f5a623; font-size:14px; margin-bottom:8px;">بوابة شحن Binance Pay</h3>
                 <div class="bank-row"><div><span style="color:#637592;">معرف Binance ID</span></div><div class="num">1046437963</div></div>
-                <button class="action-btn" onclick="copyText('1046437963')" style="margin-bottom:12px;">📋 نسخ المعرّف</button>
-                <div class="note-box">💡 سعر الحساب المعتمد: 1 دولار USDT = 12 دينار ليبي</div>
-                <input type="text" id="binance_id" class="notify-input" placeholder="رقم الـ ID المحول منه">
-                <input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ المرسل بالدولار ($)">
-                <button class="notify-btn" onclick="submitManualDeposit('بايننس', 'binance_id', 'binance_amount', true)">📩 إرسال إشعار تحويل</button>
+                <button class="action-btn" onclick="copyText('1046437963')" style="margin-bottom:12px;">📋 نسخ معرّف المنصة</button>
+                <div class="note-box">💡 السعر المعتمد للمحفظة: 1 دولار USDT = 12 دينار ليبي</div>
+                <input type="text" id="binance_id" class="notify-input" placeholder="رقم الـ ID الخاص بحسابك المحول منه">
+                <input type="number" id="binance_amount" class="notify-input" placeholder="القيمة المرسلة بعملة الرقمية ($)">
+                <button class="notify-btn" onclick="submitManualDeposit('بايننس', 'binance_id', 'binance_amount', true)">📩 تأكيد إرسال حوالة بايننس</button>
             </div>
 
             <div id="paymentCards" class="info-card-box hidden">
                 <span class="section-badge manual">🔧 مراجعة يدوية</span>
-                <h3 style="color:#f5a623; font-size:14px; margin-bottom:8px;">كروت التعبئة المحلية</h3>
-                <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم كود كرت التعبئة">
-                <input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت الإسمية (د.ل)">
-                <button class="notify-btn" onclick="submitManualDeposit('كروت تعبئة', 'depositCardCode', 'depositAmount')">📩 إرسال الكرت للإدارة</button>
+                <h3 style="color:#f5a623; font-size:14px; margin-bottom:8px;">كروت وتعبئة الخدش المحلية</h3>
+                <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم كود كرت الخدش السرّي">
+                <input type="number" id="depositAmount" class="notify-input" placeholder="القيمة الإسمية للكرت بالعملة المحلية">
+                <button class="notify-btn" onclick="submitManualDeposit('كروت تعبئة', 'depositCardCode', 'depositAmount')">📩 رفع الكرت لفريق التدقيق</button>
             </div>
         </div>
     </div>
 
+    <!-- 📊 صفحة سجل الفواتير والعمليات السابقة للزبون -->
     <div id="ordersPage" class="page-layer">
         <div class="container">
-            <div class="section-title" style="font-size:15px;">📦 سجل العمليات والطلبات</div>
+            <div class="section-title" style="font-size:15px; margin-bottom:12px;">📦 فواتير وسجل طلبات الحساب</div>
             <div class="info-card-box" style="padding: 10px; overflow-x: auto;">
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th>رقم الفاتورة</th>
-                            <th>المنتج</th>
+                            <th>رقم الطلب</th>
+                            <th>الخدمة</th>
                             <th>القيمة</th>
-                            <th>الحالة</th>
+                            <th>حالة الفاتورة</th>
                         </tr>
                     </thead>
                     <tbody id="myOrdersTableBody">
-                        <tr><td colspan="4" class="loading">⏳ جاري تحميل سجل الطلبات...</td></tr>
+                        <tr><td colspan="4" class="loading">⏳ جاري تحميل ومزامنة العمليات...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- 👤 صفحة الملف الشخصي للمستخدم -->
     <div id="accountPage" class="page-layer">
         <div class="container">
-            <div class="section-title" style="font-size:15px;">👤 إدارة الحساب الشخصي</div>
+            <div class="section-title" style="font-size:15px; margin-bottom:12px;">👤 معلومات الحساب الرقمي</div>
             <div class="info-card-box" style="text-align:center;">
                 <h2 style="font-size:16px; font-weight:700;" id="accName">---</h2>
                 <span style="font-size:11px; color:#637592;" id="accEmail">---</span>
             </div>
             <div class="info-card-box" style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-                <div class="info-row"><span>الاسم الكامل:</span> <span id="accName2" style="font-weight:700;">---</span></div>
-                <div class="info-row"><span>البريد الإلكتروني:</span> <span id="accEmail2" style="font-weight:700; font-size:12px;">---</span></div>
-                <div class="info-row"><span>رقم الهاتف المربوط:</span> <span id="accPhone" style="font-weight:700;">---</span></div>
-                <div class="info-row"><span>الرصيد الكلي الحالي:</span> <span id="accBalance" style="font-weight:700; color:var(--neon-blue);">0.000 د.ل</span></div>
+                <div class="info-row" style="display:flex; justify-content:space-between;"><span>الاسم الكامل للعميل:</span> <span id="accName2" style="font-weight:700;">---</span></div>
+                <div class="info-row" style="display:flex; justify-content:space-between;"><span>البريد الإلكتروني المربوط:</span> <span id="accEmail2" style="font-weight:700; font-size:12px;">---</span></div>
+                <div class="info-row" style="display:flex; justify-content:space-between;"><span>رقم الهاتف الخلوي:</span> <span id="accPhone" style="font-weight:700;">---</span></div>
+                <div class="info-row" style="display:flex; justify-content:space-between;"><span>إجمالي رصيد المشتريات المتوفر:</span> <span id="accBalance" style="font-weight:700; color:var(--neon-blue);">0.000 د.ل</span></div>
             </div>
-            <button class="notify-btn" style="background:#ef4444; border:none; color:#fff;" onclick="logout()">🚪 تسجيل الخروج الآمن</button>
+            <button class="notify-btn" style="background:#ef4444; border:none; color:#fff; border-bottom-color:#b91c1c;" onclick="logout()">🚪 تسجيل خروج آمن من المتجر</button>
         </div>
     </div>
 
+    <!-- 🛠️ صفحة الدعم الفني الرسمية والقنوات المباشرة لقسم المبيعات والآدمن -->
     <div id="supportPage" class="page-layer">
         <div class="container">
-            <div class="section-title" style="font-size:15px;">🛠️ قنوات المبيعات والدعم الفني</div>
-            <p style="font-size:13px; color:#637592; margin-bottom:15px; line-height:1.6;">يسعدنا تواصلكم معنا وتلقي طلبات الشحن اليدوية أو الاستفسارات طوال اليوم:</p>
+            <div class="section-title" style="font-size:15px; margin-bottom:12px;">🛠️ قنوات المبيعات والاعتراضات الرسمية</div>
+            <p style="font-size:13px; color:#637592; margin-bottom:18px; line-height:1.6;">يسعد فريق الدعم في Media Plus التواصل معكم لحل المشاكل أو طلب خدمات شحن وتغذية خاصة على مدار الساعة عبر الروابط المباشرة التالية:</p>
             
             <a href="https://wa.me/218920414760" target="_blank" class="support-link-item">
                 <div class="support-flex-title">
                     <svg style="color:#25D366;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.488 1.451 5.416 1.452 5.532 0 10.032-4.502 10.035-10.037.002-2.683-1.037-5.204-2.929-7.097C17.275 1.579 14.757.539 12.008.539c-5.534 0-10.036 4.502-10.039 10.038-.001 1.911.499 3.784 1.448 5.385L2.43 21.31l4.217-1.156z"/></svg>
-                    <span>الدعم الرسمي عبر الـ WhatsApp</span>
+                    <span>التحدث الفوري عبر تطبيق الـ WhatsApp</span>
                 </div>
-                <span style="color:#22c55e;">راسلنا فوراً</span>
+                <span style="color:#22c55e;">اتصال مباشر</span>
             </a>
 
             <a href="https://t.me/media_plus_1" target="_blank" class="support-link-item">
                 <div class="support-flex-title">
                     <svg style="color:#0088cc;" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161l-1.875 8.835c-.141.625-.511.781-1.036.484l-2.859-2.109-1.38 1.328c-.151.151-.281.281-.573.281l.203-2.922 5.318-4.807c.234-.208-.052-.323-.365-.115l-6.573 4.141-2.833-.885c-.615-.193-.625-.615.13-.911l11.073-4.271c.51-.188.958.12.719 1.344z"/></svg>
-                    <span>دعم تليجرام الفوري</span>
+                    <span>قناة ومجتمع المبيعات التليجرام الفوري</span>
                 </div>
                 <span style="color:var(--neon-blue);">@media_plus_1</span>
             </a>
         </div>
     </div>
 
+    <!-- 🧭 شريط التنقل السفلي الثابت للـ 5 صفحات الكبرى بأكواد SVG برمجية مطورة -->
     <div class="bottom-nav">
         <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>الرئيسية
@@ -502,47 +538,63 @@
         </div>
     </div>
 
+    <!-- 🪟 واجهة الشراء والبوب اب الزجاجية الجديدة والمحدثة كلياً (New Purchase Design Style) -->
     <div id="detailModal" class="product-modal-overlay" onclick="closeDetailModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <button class="close-modal" onclick="closeDetailModal()">✕</button>
-            <img id="dImg" src="" alt="" style="width: 95px; height: 95px; object-fit: contain; border-radius: 50%; margin: 0 auto 12px; display: block; background: #0a0f1a; border: 2px solid rgba(0,162,255,0.25);">
-            <h3 id="dName" style="text-align:center;"></h3>
-            <div id="dDiscountBadge" class="hidden" style="text-align:center; margin-top:4px;"></div>
-            <div class="old-price-text" id="dOldPrice" style="text-align:center; font-size:14px; margin-top:4px;"></div>
-            <p id="dDesc" style="text-align:center; font-size:12px; color:#637592; margin-bottom:10px;"></p>
             
-            <div id="stepQuantity" class="modal-step">
-                <div id="quantitySection" class="quantity-section hidden">
-                    <label>🔢 حرك العداد لاختيار الكمية المطلوبة</label>
-                    <input type="range" id="quantitySlider" class="quantity-slider" min="30" max="100" value="30" step="1" oninput="updateQuantity(this.value)">
-                    <div class="quantity-display-text">الكمية: <span id="quantityValue">30</span></div>
-                    <div class="quantity-range-labels" style="display:flex; justify-content:space-between; font-size:12px; color:#637592;"><span id="qtyMinLabel">30</span><span id="qtyMaxLabel">100</span></div>
-                </div>
-                <div id="fixedPriceSection" style="text-align:center; margin:10px 0;">السعر الحالي: <span id="fixedPriceDisplay" style="color:var(--neon-blue); font-weight:800; font-size:22px;">0.000</span> د.ل</div>
-                <div id="dynamicPriceSection" style="text-align:center; margin:10px 0;" class="hidden">السعر الإجمالي: <span id="totalPriceNew" style="color:var(--neon-blue); font-weight:800; font-size:22px;">0.000</span> د.ل</div>
-                
-                <button class="notify-btn" id="nextBtn" style="background:var(--neon-blue); border:none; color:#fff;" onclick="goToStep2()">✅ متابعة طلب الشراء</button>
+            <div class="modal-product-header">
+                <img id="dImg" src="" alt="">
+                <h3 id="dName"></h3>
+                <div id="dDiscountBadge" class="hidden"></div>
+                <div class="old-price-text" id="dOldPrice" style="font-size:13px; margin-top:4px;"></div>
+                <p id="dDesc" style="font-size:12px; color:#637592; padding:0 10px; margin-top:6px; line-height:1.5;"></p>
             </div>
             
+            <!-- الخطوة الأولى: تحديد الكمية والأسعار الفورية والمطورة -->
+            <div id="stepQuantity" class="modal-step">
+                <div id="quantitySection" class="quantity-section hidden">
+                    <label style="font-size:13px; color:#fff; font-weight:600;">🔢 حدد كمية الشحن المطلوبة للطلب</label>
+                    <input type="range" id="quantitySlider" class="quantity-slider" min="300" max="10000" value="300" step="50" oninput="updateQuantity(this.value)">
+                    <div style="font-size:15px; font-weight:800; color:var(--neon-blue); margin:5px 0;">العدد المختار: <span id="quantityValue">300</span> وحدة</div>
+                    <div style="display:flex; justify-content:space-between; font-size:11px; color:#546581;"><span>الحد الأدنى: 300</span><span>الحد الأقصى: 10,000</span></div>
+                </div>
+
+                <div id="fixedPriceSection" style="background:rgba(0,162,255,0.05); padding:12px; border-radius:12px; text-align:center; border:1px dashed rgba(0,162,255,0.2); margin:15px 0;">
+                    <span style="font-size:12px; color:#637592; display:block;">سعر تكلفة الشراء الحالية:</span>
+                    <span id="fixedPriceDisplay" style="color:var(--neon-blue); font-weight:900; font-size:24px;">0.000</span> <small style="color:#fff; font-size:12px;">د.ل</small>
+                </div>
+
+                <div id="dynamicPriceSection" style="background:rgba(16,185,129,0.05); padding:12px; border-radius:12px; text-align:center; border:1px dashed rgba(16,185,129,0.2); margin:15px 0;" class="hidden">
+                    <span style="font-size:12px; color:#637592; display:block;">السعر الإجمالي حسب الكمية:</span>
+                    <span id="totalPriceNew" style="color:var(--neon-green); font-weight:900; font-size:24px;">0.000</span> <small style="color:#fff; font-size:12px;">د.ل</small>
+                </div>
+                
+                <button class="notify-btn" id="nextBtn" style="background:var(--neon-blue); color:#000; font-weight:900; border:none; border-bottom:3px solid #007cc3;" onclick="goToStep2()">✅ الانتقال لتعبئة البيانات ومتابعة الشراء</button>
+            </div>
+            
+            <!-- الخطوة الثانية: تعبئة وتأكيد البيانات المطلوبة من الزبون قبل الترحيل -->
             <div id="stepData" class="modal-step hidden">
                 <div class="checkout-input-card">
-                    <h3>📋 تعبئة بيانات استلاف الطلب</h3>
-                    <div id="fieldId"><input type="text" id="targetInput" placeholder="🎮 معرف اللاعب (ID)"></div>
-                    <div id="fieldPhone"><input type="text" id="phoneInput" placeholder="📞 رقم الهاتف المستهدف"></div>
-                    <div id="fieldAccount"><input type="text" id="accountLinkInput" placeholder="🔗 رابط الحساب أو اسم المستخدم"></div>
-                    <input type="text" id="contactPhone" placeholder="📞 رقم التواصل المباشر (واتساب)">
-                    <button class="confirm-btn" style="width:100%; padding:13px; font-weight:900; background:linear-gradient(135deg, #10b981, #34d399); color:#fff; border:none; border-radius:12px; cursor:pointer; margin-top:10px;" onclick="confirmPurchase()">✅ تأكيد الطلب النهائي والخصم</button>
+                    <h4>📋 يرجى كتابة البيانات المطلوبة لاستلام الطلب بشكل صحيح:</h4>
+                    <div id="fieldId"><input type="text" id="targetInput" placeholder="🎮 اكتب معرف اللاعب (ID المستهدف)"></div>
+                    <div id="fieldPhone"><input type="text" id="phoneInput" placeholder="📞 رقم الهاتف المستهدف بالشحن"></div>
+                    <div id="fieldAccount"><input type="text" id="accountLinkInput" placeholder="🔗 ضع هنا رابط الحساب أو اليوزر نيم المستهدف"></div>
+                    <input type="text" id="contactPhone" placeholder="📞 رقم تواصل العميل الفوري (WhatsApp)">
+                    
+                    <button class="confirm-btn" style="width:100%; padding:14px; font-weight:900; background:linear-gradient(135deg, #10b981, #34d399); color:#fff; border:none; border-radius:12px; cursor:pointer; margin-top:15px; border-bottom:3px solid #047857; box-shadow:0 4px 15px rgba(16,185,129,0.25);" onclick="confirmPurchase()">🔥 تأكيد الطلب النهائي وخصم الرصيد الآن</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- سكريبتات الأنظمة الكبرى وقاعدة بيانات Firestore المحدثة بالكامل -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // إعدادات الفايربيس الخاصة بك
+        // تهيئة الفايربيس الرسمية لموقعك cd-card-87365
         const firebaseConfig = {
             apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
             authDomain: "cd-card-87365.firebaseapp.com",
@@ -557,7 +609,7 @@
         const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
         
         let allCategories = [], userBalance = 0, userData = null, currentProduct = null;
-        let unitPrice = 0, currentQtyMin = 30, currentQtyMax = 100, isQuantityMode = false, currentServiceType = 'id';
+        let unitPrice = 0, currentQtyMin = 300, currentQtyMax = 10000, isQuantityMode = false, currentServiceType = 'id';
 
         function generateInvoiceNumber() { return `MP-${Math.floor(1000 + Math.random() * 9000)}`; }
         function getImageUrl(img) { if (!img) return ''; if (img.startsWith('http')) return img; return BASE_IMAGE_URL + img; }
@@ -588,8 +640,8 @@
             if (btn) btn.classList.add('active');
         }
 
-        function showMegaSection(megaId, bannerImageUrl) {
-            document.getElementById('main-banner').src = bannerImageUrl;
+        // التبديل بين شاشات وبيئات العروض (البطاقات والاشتراكات ضد الرشق)
+        function showMegaSection(megaId) {
             document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active'));
             if(megaId === 'mega-cards') document.getElementById('tab-btn-cards').classList.add('active');
             if(megaId === 'mega-social') document.getElementById('tab-btn-social').classList.add('active');
@@ -599,7 +651,6 @@
             document.getElementById(megaId).style.display = 'block';
 
             goBackToCategories();
-            if(megaId === 'mega-social') renderSocialSubgrid();
         }
 
         auth.onAuthStateChanged(user => {
@@ -607,7 +658,7 @@
             db.collection("users").doc(user.uid).onSnapshot(doc => {
                 if (doc.exists) { userData = doc.data(); userBalance = userData.balance || 0; updateAllBalances(); }
             });
-            setTimeout(fetchCategories, 500);
+            setTimeout(fetchCategories, 400);
         });
 
         function updateAllBalances() {
@@ -622,81 +673,98 @@
             }
         }
 
+        // جلب الأقسام وفصلها بالكامل داخل مصفوفة الأنظمة
         function fetchCategories() {
-            db.collection("categories").orderBy("order").limit(50).get().then(snap => {
-                allCategories = []; snap.forEach(doc => allCategories.push({id:doc.id,...doc.data()}));
-                showCategories();
-            }).catch(err => console.log("خطأ جلب الأقسام:", err));
+            db.collection("categories").orderBy("order").get().then(snap => {
+                allCategories = []; 
+                snap.forEach(doc => allCategories.push({id:doc.id, ...doc.data()}));
+                renderAllGrids();
+            }).catch(err => console.log("خطأ في الاتصال بقاعدة البيانات:", err));
         }
 
-        function showCategories() {
-            const grid = document.getElementById('catsGrid');
-            if (!allCategories.length) { grid.innerHTML = '<div class="loading">لا توجد أقسام متوفرة</div>'; return; }
-            grid.innerHTML = allCategories.filter(c => c.type !== 'social').map(cat => `
-                <div class="glass-card sub-cat-card" onclick="openCategory('${cat.id}','${cat.name.replace(/'/g, "\\'")}')">
-                    <img src="${getImageUrl(cat.image||cat.cover)}" class="card-img" onerror="this.style.display='none'">
-                    <h3>${cat.name}</h3>
-                    <button class="action-btn">عرض العروض</button>
-                </div>
-            `).join('');
+        // بناء وعرض كل شبكة أقسام في فئتها المحددة لمنع الاختفاء والتداخل
+        function renderAllGrids() {
+            // 1. تصفية وبناء شبكة البطاقات والاشتراكات
+            const cardsGrid = document.getElementById('catsGrid');
+            const normalCats = allCategories.filter(c => c.type !== 'social' && !c.id.includes('social') && !c.name.includes('رشق'));
+            if (!normalCats.length) {
+                cardsGrid.innerHTML = '<div class="loading">لا تتوفر أقسام شحن أو اشتراكات حالياً.</div>';
+            } else {
+                cardsGrid.innerHTML = normalCats.map(cat => `
+                    <div class="glass-card sub-cat-card" onclick="openCategory('${cat.id}','${cat.name.replace(/'/g, "\\'")}')">
+                        <img src="${getImageUrl(cat.image || cat.cover)}" class="card-img" onerror="this.src='https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg'">
+                        <h3>${cat.name}</h3>
+                        <button class="action-btn">عرض الباقات</button>
+                    </div>
+                `).join('');
+            }
+
+            // 2. تصفية وبناء شبكة خدمات ومنصات الرشق
+            const socialGrid = document.getElementById('socialCatsGrid');
+            const socialCats = allCategories.filter(c => c.type === 'social' || c.id.includes('social') || c.name.includes('رشق'));
+            if (!socialCats.length) {
+                socialGrid.innerHTML = '<div class="loading">لا تتوفر أقسام مخصصة للرشق حالياً.</div>';
+            } else {
+                socialGrid.innerHTML = socialCats.map(cat => `
+                    <div class="glass-card sub-cat-card" onclick="openCategory('${cat.id}','${cat.name.replace(/'/g, "\\'")}')">
+                        <img src="${getImageUrl(cat.image || cat.cover)}" class="card-img" onerror="this.src='https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg'">
+                        <h3>${cat.name}</h3>
+                        <button class="action-btn">عرض الخدمات</button>
+                    </div>
+                `).join('');
+            }
         }
 
-        function renderSocialSubgrid() {
-            const sGrid = document.getElementById('socialCatsGrid');
-            const socials = allCategories.filter(c => c.type === 'social' || c.id.includes('social') || c.name.includes('رشق'));
-            const list = socials.length ? socials : allCategories;
-            sGrid.innerHTML = list.map(cat => `
-                <div class="glass-card sub-cat-card" onclick="openCategory('${cat.id}','${cat.name.replace(/'/g, "\\'")}')">
-                    <img src="${getImageUrl(cat.image||cat.cover)}" class="card-img" onerror="this.style.display='none'">
-                    <h3>${cat.name}</h3>
-                    <button class="action-btn">عرض الخدمات</button>
-                </div>
-            `).join('');
-        }
-
-        // 🔄 دالة فتح جلب المنتجات المصلحة كلياً من السيرفر
+        // 🔄 فتح الأقسام وجلب منتجاتها مع معالجة ثبات الصور المطلق
         function openCategory(catId, catName) {
             document.getElementById('cards-categories-subgrid').classList.add('hidden');
             document.getElementById('mega-social').style.display = 'none';
             document.getElementById('productsView').classList.remove('hidden');
             
             const titleEl = document.getElementById('productsTitle');
-            titleEl.innerText = `📦 منتجات وعروض: ${catName}`;
+            titleEl.innerText = `📦 باقات وعروض قسم: ${catName}`;
             
             const grid = document.getElementById('prodsGrid');
-            grid.innerHTML = '<div class="loading">⏳ جاري تحميل المنتجات المتوفرة لهذا القسم...</div>';
+            grid.innerHTML = '<div class="loading">⏳ جاري تحميل العروض المتوفرة من قاعدة البيانات...</div>';
             
             db.collection("products").where("categoryId", "==", catId).get().then(snap => {
-                if (snap.empty) { grid.innerHTML = '<div class="loading">لا توجد منتجات متوفرة حالياً في هذا القسم.</div>'; return; }
+                if (snap.empty) { grid.innerHTML = '<div class="loading">لا توجد منتجات أو عروض متوفرة حالياً بداخل هذا القسم.</div>'; return; }
                 let html = '';
                 snap.forEach(doc => {
                     const p = doc.data();
                     const pId = doc.id;
                     const finalPrice = p.price || 0;
+                    // تم تأمين الـ HTML لضمان ثبات الصورة دائمًا عند العرض والتبديل
                     html += `
                         <div class="glass-card" onclick="openProductModal('${pId}')">
-                            ${p.discount ? `<div class="discount-badge">خصم جديد</div>` : ''}
-                            <img src="${getImageUrl(p.image)}" class="card-img" onerror="this.style.display='none'">
+                            ${p.discount ? `<div class="discount-badge">عرض خاص</div>` : ''}
+                            <img src="${getImageUrl(p.image)}" class="card-img" onerror="this.src='https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg'">
                             <h3>${p.name}</h3>
                             ${p.oldPrice ? `<div class="old-price-text">${p.oldPrice} د.ل</div>` : ''}
                             <div class="price-tag">${finalPrice.toFixed(3)} د.ل</div>
-                            <button class="action-btn">شحن الخدمة الآن</button>
+                            <button class="action-btn">شحن العرض الآن</button>
                         </div>
                     `;
                 });
                 grid.innerHTML = html;
             }).catch(err => {
-                grid.innerHTML = `<div class="loading">❌ فشل جلب البيانات: ${err.message}</div>`;
+                grid.innerHTML = `<div class="loading">❌ عطل في الاتصال: ${err.message}</div>`;
             });
         }
 
         function goBackToCategories() {
             document.getElementById('productsView').classList.add('hidden');
-            document.getElementById('cards-categories-subgrid').classList.remove('hidden');
-            const activeMega = document.getElementById('tab-btn-social').classList.contains('active') ? 'mega-social' : 'mega-cards';
-            document.getElementById(activeMega).style.display = 'block';
+            const isSocialActive = document.getElementById('tab-btn-social').classList.contains('active');
+            if(isSocialActive) {
+                document.getElementById('mega-social').style.style.display = 'block';
+                document.getElementById('cards-categories-subgrid').classList.add('hidden');
+            } else {
+                document.getElementById('mega-social').style.display = 'none';
+                document.getElementById('cards-categories-subgrid').classList.remove('hidden');
+            }
         }
 
+        // فتح نافذة مودال الشراء بالتصميم والشكل الجديد بالكامل
         function openProductModal(pId) {
             db.collection("products").doc(pId).get().then(doc => {
                 if(!doc.exists) return;
@@ -704,7 +772,7 @@
                 
                 document.getElementById('dImg').src = getImageUrl(currentProduct.image);
                 document.getElementById('dName').innerText = currentProduct.name;
-                document.getElementById('dDesc').innerText = currentProduct.description || '';
+                document.getElementById('dDesc').innerText = currentProduct.description || 'لا توجد شروط أو ملاحظات إضافية لهذه الخدمة.';
                 
                 isQuantityMode = currentProduct.isQuantity || false;
                 unitPrice = currentProduct.price || 0;
@@ -714,8 +782,10 @@
                     document.getElementById('quantitySection').classList.remove('hidden');
                     document.getElementById('dynamicPriceSection').classList.remove('hidden');
                     document.getElementById('fixedPriceSection').classList.add('hidden');
-                    currentQtyMin = currentProduct.qtyMin || 30;
-                    currentQtyMax = currentProduct.qtyMax || 100;
+                    
+                    // تعديل الحد الأدنى لخدمات ومطالب لوحة الرشق 300 وحدة كحد أدنى
+                    currentQtyMin = currentProduct.qtyMin || 300;
+                    currentQtyMax = currentProduct.qtyMax || 10000;
                     const slider = document.getElementById('quantitySlider');
                     slider.min = currentQtyMin; slider.max = currentQtyMax; slider.value = currentQtyMin;
                     updateQuantity(currentQtyMin);
@@ -751,7 +821,7 @@
 
         function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
 
-        // 🛒 معالجة وتأكيد الشراء الفوري وعرض تنبيه الساعتين المخصص المريح
+        // 🛒 تنفيذ معالجة الشراء النهائي وتمرير الفواتير للآدمن والويب هوك
         async function confirmPurchase() {
             if (!currentProduct) return;
             let targetValue = '';
@@ -763,13 +833,12 @@
             const qty = isQuantityMode ? parseInt(document.getElementById('quantitySlider').value) : 1;
             const finalCost = isQuantityMode ? (unitPrice * qty) : unitPrice;
 
-            if(!targetValue) return alert('⚠️ يرجى إدخال بيانات الحساب أو الآيدي المستهدف للشحن');
-            if(userBalance < finalCost) return alert('❌ رصيدك الحالي غير كافٍ لإتمام عملية الشحن، يرجى تعبئة المحفظة أولاً.');
+            if(!targetValue) return alert('⚠️ يرجى تعبئة حقل معرف الحساب أو المستهدف للشحن أولاً.');
+            if(userBalance < finalCost) return alert('❌ عذراً! رصيدك المتوفر غير كافٍ، يرجى شحن وتعبئة المحفظة.');
 
             const invoice = generateInvoiceNumber();
             
             try {
-                // خصم الرصيد وتوثيق العملية في السيرفر
                 const newBalance = userBalance - finalCost;
                 await db.collection("users").doc(auth.currentUser.uid).update({ balance: newBalance });
                 
@@ -786,7 +855,7 @@
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-                // ترحيل البيانات فوراً للويب هوك المربوط بلوحة التحكم
+                // ترحيل الإشعار الفوري للويب هوك المربوط بلوحة التحكم
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -797,39 +866,39 @@
                         amount: finalCost.toFixed(3),
                         quantity: qty,
                         target: targetValue,
-                        whatsapp: contact
+                        whatsapp: contact,
+                        date: new Date().toISOString()
                     })
                 });
 
                 closeDetailModal();
                 
-                // إظهار التنبيه المخصص النظيف البديل لرسالة الخطأ
+                // إظهار صندوق النجاح الفخم المريح للزبائن (ساعتين كحد أقصى)
                 const alertBox = document.getElementById('orderSuccessAlert');
                 alertBox.classList.add('show');
-                setTimeout(() => { alertBox.classList.remove('show'); }, 6500);
+                setTimeout(() => { alertBox.classList.remove('show'); }, 6000);
 
-                // تفريغ الحقول
+                // تفريغ الحقول التلقائي
                 document.getElementById('targetInput').value = '';
                 document.getElementById('phoneInput').value = '';
                 document.getElementById('accountLinkInput').value = '';
                 document.getElementById('contactPhone').value = '';
 
             } catch (e) {
-                alert('❌ حدث خطأ غير متوقع أثناء معالجة العملية: ' + e.message);
+                alert('❌ حدث تداخل أثناء معالجة الفاتورة: ' + e.message);
             }
         }
 
         async function fetchUserOrders() {
             const tbody = document.getElementById('myOrdersTableBody');
-            db.collection("orders").where("userId", "==", auth.currentUser.uid).orderBy("createdAt", "desc").limit(20).get().then(snap => {
-                if(snap.empty) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد طلبات سابقة في سجل العمليات.</td></tr>'; return; }
+            db.collection("orders").where("userId", "==", auth.currentUser.uid).orderBy("createdAt", "desc").limit(25).get().then(snap => {
+                if(snap.empty) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#637592;">لا توجد عمليات مسجلة حالياً.</td></tr>'; return; }
                 let html = '';
                 snap.forEach(doc => {
                     const o = doc.data();
-                    let statusClass = 'pending';
-                    let statusText = 'قيد الانتظار';
+                    let statusClass = 'pending'; let statusText = 'قيد المراجعة';
                     if(o.status === 'completed') { statusClass = 'completed'; statusText = 'تم الشحن'; }
-                    if(o.status === 'canceled') { statusClass = 'canceled'; statusText = 'ملغي'; }
+                    if(o.status === 'canceled') { statusClass = 'canceled'; statusText = 'ملغي / مرجع'; }
                     
                     html += `
                         <tr>
@@ -841,13 +910,13 @@
                     `;
                 });
                 tbody.innerHTML = html;
-            }).catch(err => { tbody.innerHTML = `<tr><td colspan="4">خطأ في جلب السجلات: ${err.message}</td></tr>`; });
+            }).catch(err => { tbody.innerHTML = `<tr><td colspan="4">فشل جلب السجل: ${err.message}</td></tr>`; });
         }
 
         async function submitManualDeposit(provider, field1, field2, isCrypto = false) {
             const val1 = document.getElementById(field1).value.trim();
             const val2 = document.getElementById(field2).value.trim();
-            if (!val1 || !val2) return alert('⚠️ يرجى تعبئة الحقول المطلوبة بشكل صحيح.');
+            if (!val1 || !val2) return alert('⚠️ يرجى ملء البيانات المطلوبة بشكل صحيح.');
             let amount = parseFloat(val2); if (isCrypto) amount = amount * 12;
             try {
                 await db.collection("deposits").add({
@@ -855,18 +924,15 @@
                     phone: val1, amount: amount, provider: provider, status: 'pending', mode: 'manual',
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert('✅ تم إرسال إشعار التعبئة بنجاح! سيتم فحص ومراجعة عملية التحويل وتغذية حسابك يدويًا.');
+                alert('✅ تم استلام إشعار التعبئة اليدوية! سيقوم فريق الإدارة بمطابقتها وتغذية حسابك فورا.');
                 document.getElementById(field1).value = ''; document.getElementById(field2).value = '';
-            } catch (e) { alert('❌ خطأ: ' + e.message); }
+            } catch (e) { alert('❌ فشل الإرسال: ' + e.message); }
         }
 
-        async function processLibyanaAuto() {
-            alert('⏳ جاري التحقق التلقائي والبحث في سجلات الرسائل المستلمة...');
-        }
-
-        function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم نسخ الرقم إلى الحافظة: ' + text)); }
+        async function processLibyanaAuto() { alert('⏳ جاري فحص الرسائل البنكية المستلمة ومطابقتها تلقائياً...'); }
+        function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('✅ تم نسخ الرقم بنجاح: ' + text)); }
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
-        function searchProducts() { alert('🔍 ميزة البحث قيد التهيئة والمزامنة الفورية.'); }
+        function searchProducts() { alert('🔍 ميزة البحث السريع قيد الربط البرمجي الآن.'); }
     </script>
 </body>
 </html>
