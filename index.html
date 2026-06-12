@@ -39,7 +39,6 @@
             margin: 0 auto;
         }
 
-        /* 🔝 الهيدر العلوي وشريط الرصيد */
         .top-bar {
             padding: 15px 4%;
             display: flex;
@@ -78,7 +77,6 @@
         .balance-box span { color: var(--neon-blue); font-weight: 800; }
         .balance-box svg { width: 16px; height: 16px; fill: none; stroke: var(--neon-blue); stroke-width: 2; }
 
-        /* 🖼️ البانر العلوي المطور */
         .hero-banner-box {
             background: #0b1a30;
             position: relative;
@@ -86,7 +84,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             margin-bottom: 25px;
             overflow: hidden;
-            height: auto;
             border: 1px solid rgba(255,255,255,0.05);
             display: flex;
             flex-direction: column;
@@ -94,7 +91,7 @@
 
         .hero-banner-box img {
             width: 100%;
-            height: 180px;
+            height: auto;
             object-fit: cover;
             display: block;
             opacity: 1;
@@ -103,13 +100,11 @@
         .hero-content {
             position: relative;
             z-index: 2;
-            padding: 0 20px 25px;
+            padding: 20px;
             text-align: center;
-            background: linear-gradient(to top, var(--bg-dark), transparent);
-            margin-top: -40px;
         }
 
-        .hero-banner-box h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .hero-banner-box h1 { font-size: 18px; font-weight: 800; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
         .search-box { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
         .search-box input {
@@ -127,7 +122,6 @@
         }
         .search-box button svg { width: 16px; height: 16px; fill: none; stroke: white; stroke-width: 2.5; }
 
-        /* 🧭 شريط التنقل بين بيئة الشحن وبيئة الرشق */
         .main-navbar {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -152,7 +146,6 @@
             box-shadow: 0 0 15px rgba(0, 162, 255, 0.35);
         }
 
-        /* 🔙 زر الرجوع الفخم */
         .back-btn {
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 162, 255, 0.2);
@@ -161,7 +154,6 @@
         }
         .back-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-        /* ⚠️ مربع تنبيه قسم الرشق */
         .neon-warning-box {
             background: rgba(239, 68, 68, 0.02);
             backdrop-filter: blur(10px);
@@ -174,14 +166,12 @@
         }
         .neon-warning-box svg { flex-shrink: 0; width: 22px; height: 22px; }
 
-        /* ⚡ شبكة توزيع الكروت المتناسقة */
         .grid-2-columns {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
 
-        /* 💎 مجسم الكارت الموحد */
         .glass-card {
             background: rgba(11, 26, 48, 0.25);
             backdrop-filter: blur(20px);
@@ -228,7 +218,6 @@
         }
         .glass-card:hover .action-btn { background: var(--neon-blue); color: #000; border-color: var(--neon-blue); }
 
-        /* 💳 واجهة المحفظة وشبكات الاتصال المدمجة */
         .info-card-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 18px; margin-bottom: 15px; }
         .wallet-big-amount { font-size: 32px; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 15px rgba(0,162,255,0.4); text-align: center; margin: 5px 0; }
         
@@ -251,21 +240,18 @@
         .section-badge.manual { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
         .note-box { background: rgba(245,166,35,0.04); border: 1px solid rgba(245,166,35,0.12); border-radius: 10px; padding: 10px; font-size: 11px; color: #f5a623; text-align: center; margin: 10px 0; }
 
-        /* 📊 جدول السجلات والطلبات القديمة والمحدثة */
         .custom-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
         .custom-table th, .custom-table td { padding: 12px 10px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .status-badge { padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
         .status-badge.pending { background: rgba(245,166,35,0.15); color: #f5a623; }
         .status-badge.completed { background: rgba(16,185,129,0.15); color: #10b981; }
-        .status-badge.canceled { background: rgba(239,68,68,0.15); color: #ef4444; }
+        .status-badge.canceled, .status-badge.refunded { background: rgba(239,68,68,0.15); color: #ef4444; }
 
-        /* 🛠️ قنوات الدعم الفني والمبيعات */
         .support-link-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(0, 162, 255, 0.02); border: 1px solid rgba(0, 162, 255, 0.12); border-radius: 14px; margin-bottom: 12px; text-decoration: none; color: #fff; font-size: 13px; font-weight: 600; }
         .support-link-item:hover { border-color: var(--neon-blue); background: rgba(0, 162, 255, 0.05); box-shadow: 0 0 10px rgba(0,162,255,0.15); }
         .support-flex-title { display: flex; align-items: center; gap: 10px; }
         .support-flex-title svg { width: 22px; height: 22px; fill: currentColor; }
 
-        /* 🪟 واجهة الشراء والطلب الجديدة */
         .product-modal-overlay { position: fixed; inset: 0; background: rgba(2, 5, 15, 0.88); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; }
         .product-modal-overlay.active { opacity: 1; pointer-events: auto; }
         
@@ -289,7 +275,6 @@
         .checkout-input-card input { width: 100%; padding: 12px; background: #060c16; border: 1px solid rgba(0,162,255,0.15); border-radius: 12px; color: #fff; font-size: 14px; text-align: right; margin: 8px 0; outline: none; }
         .checkout-input-card input:focus { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0,162,255,0.2); }
         
-        /* 🔔 نافذة التنبيه المخصصة لنجاح الطلب الفوري */
         .order-success-toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 420px; background: #064e3b; border: 1px solid #10b981;
@@ -299,7 +284,6 @@
         }
         .order-success-toast.show { top: 20px; visibility: visible; opacity: 1; }
 
-        /* 🧭 شريط التنقل السفلي الثابت */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #070d19; border-top: 1px solid rgba(0,162,255,0.15); display: flex; justify-content: space-around; align-items: center; padding: 6px 0 12px; z-index: 200; box-shadow: 0 -4px 20px rgba(0,0,0,0.5); }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; color: #546581; cursor: pointer; padding: 4px 0; width: 20%; text-align: center; text-decoration: none; }
         .nav-item.active { color: var(--neon-blue); font-weight: 700; }
@@ -312,7 +296,6 @@
 </head>
 <body>
 
-    <!-- صندوق نجاح معالجة وشحن الرصيد الفوري واليدوي الموحد -->
     <div class="order-success-toast" id="orderSuccessAlert">
         <svg style="width:24px; height:24px; fill:none; stroke:#10b981; stroke-width:2.5;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         <div>
@@ -321,7 +304,6 @@
         </div>
     </div>
 
-    <!-- شريط الهيدر والمحفظة العلوي -->
     <div class="top-bar">
         <div class="logo-text">Media <span>Plus</span></div>
         <div class="balance-box" onclick="switchTab('wallet')">
@@ -330,11 +312,11 @@
         </div>
     </div>
 
-    <!-- 🟢 الصفحة الرئيسية الكبرى (الأنظمة والخدمات) -->
     <div id="homePage" class="page-layer active">
-        <!-- البانر العلوي المطور والمربوط بملف الصور lb.jpg من جيت هوب -->
         <div class="hero-banner-box">
             <img id="main-banner" src="https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg" alt="Media Plus Banner">
+        </div>
+        <div class="container">
             <div class="hero-content">
                 <h1>🌐 بوابة الخدمات الرقمية المعتمدة</h1>
                 <div class="search-box">
@@ -342,16 +324,12 @@
                     <button onclick="searchProducts()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
                 </div>
             </div>
-        </div>
 
-        <div class="container" style="margin-top:-15px;">
-            <!-- نافبار الفرز والتبديل الكامل بين الشحن العادي والرشق المستقل -->
             <nav class="main-navbar">
                 <button class="main-tab-btn active" id="tab-btn-cards" onclick="showMegaSection('mega-cards')">البطاقات والاشتراكات</button>
                 <button class="main-tab-btn" id="tab-btn-social" onclick="showMegaSection('mega-social')">خدمات الرشق والزيادات</button>
             </nav>
 
-            <!-- 💳 بيئة فئة البطاقات والشحن والاشتراكات المستقلة -->
             <div id="mega-cards" class="mega-container-view">
                 <div id="cards-categories-subgrid" class="view-layer active">
                     <div class="section-title" style="font-size:13px; margin-bottom:12px; color:#637592;">📂 أقسام الاشتراكات المتوفرة</div>
@@ -359,7 +337,6 @@
                 </div>
             </div>
 
-            <!-- 🚀 بيئة فئة خدمات الرشق والزيادات المنفصلة كلياً بقاعدة بياناتها -->
             <div id="mega-social" class="mega-container-view" style="display: none;">
                 <div class="neon-warning-box">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -372,7 +349,6 @@
                 <div class="grid-2-columns" id="socialCatsGrid"><div class="loading">⏳ جاري تحميل منصات السوشيال...</div></div>
             </div>
 
-            <!-- 📦 لوحة عرض المنتجات المشتركة بعد الإصلاح النهائي لثبات الصور وعدم الاختفاء -->
             <div id="productsView" class="hidden">
                 <button class="back-btn" onclick="goBackToCategories()"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg> العودة للأقسام السابقة</button>
                 <div class="section-title" id="productsTitle" style="font-size:14px; margin-bottom:15px; color:var(--neon-blue); font-weight:700;"></div>
@@ -381,7 +357,6 @@
         </div>
     </div>
 
-    <!-- 💰 صفحة إدارة المحفظة والشحن المجمعة لشبكات ليبيا -->
     <div id="walletPage" class="page-layer">
         <div class="container">
             <div class="section-title" style="font-size:15px; margin-bottom:12px;">💰 رصيد المحفظة الشخصية</div>
@@ -408,7 +383,6 @@
                 </div>
             </div>
 
-            <!-- لوحة شبكتي ليبيانا والمدار المدمجة لعدم تشتيت الزبون الليبي -->
             <div id="paymentLibyaNetworks" class="info-card-box">
                 <h3 style="color:var(--neon-blue); font-size:14px; margin-bottom:12px; text-align: center;">شحن وتعبئة الرصيد المحلي</h3>
                 
@@ -452,7 +426,6 @@
         </div>
     </div>
 
-    <!-- 📊 صفحة سجل الفواتير والعمليات السابقة للزبون -->
     <div id="ordersPage" class="page-layer">
         <div class="container">
             <div class="section-title" style="font-size:15px; margin-bottom:12px;">📦 فواتير وسجل طلبات الحساب</div>
@@ -462,19 +435,19 @@
                         <tr>
                             <th>رقم الطلب</th>
                             <th>الخدمة</th>
+                            <th>الكمية</th>
                             <th>القيمة</th>
                             <th>حالة الفاتورة</th>
                         </tr>
                     </thead>
                     <tbody id="myOrdersTableBody">
-                        <tr><td colspan="4" class="loading">⏳ جاري تحميل ومزامنة العمليات...</td></tr>
+                        <tr><td colspan="5" class="loading">⏳ جاري تحميل ومزامنة العمليات...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- 👤 صفحة الملف الشخصي للمستخدم -->
     <div id="accountPage" class="page-layer">
         <div class="container">
             <div class="section-title" style="font-size:15px; margin-bottom:12px;">👤 معلومات الحساب الرقمي</div>
@@ -492,7 +465,6 @@
         </div>
     </div>
 
-    <!-- 🛠️ صفحة الدعم الفني الرسمية والقنوات المباشرة لقسم المبيعات والآدمن -->
     <div id="supportPage" class="page-layer">
         <div class="container">
             <div class="section-title" style="font-size:15px; margin-bottom:12px;">🛠️ قنوات المبيعات والاعتراضات الرسمية</div>
@@ -540,7 +512,6 @@
         </div>
     </div>
 
-    <!-- 🧭 شريط التنقل السفلي الثابت للـ 5 صفحات الكبرى بأكواد SVG برمجية مطورة -->
     <div class="bottom-nav">
         <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>الرئيسية
@@ -559,7 +530,6 @@
         </div>
     </div>
 
-    <!-- 🪟 واجهة الشراء والبوب اب الزجاجية الجديدة والمحدثة كلياً (New Purchase Design Style) -->
     <div id="detailModal" class="product-modal-overlay" onclick="closeDetailModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <button class="close-modal" onclick="closeDetailModal()">✕</button>
@@ -572,7 +542,6 @@
                 <p id="dDesc" style="font-size:12px; color:#637592; padding:0 10px; margin-top:6px; line-height:1.5;"></p>
             </div>
             
-            <!-- الخطوة الأولى: تحديد الكمية والأسعار الفورية والمطورة -->
             <div id="stepQuantity" class="modal-step">
                 <div id="quantitySection" class="quantity-section hidden">
                     <label style="font-size:13px; color:#fff; font-weight:600;">🔢 حدد كمية الشحن المطلوبة للطلب</label>
@@ -594,7 +563,6 @@
                 <button class="notify-btn" id="nextBtn" style="background:var(--neon-blue); color:#000; font-weight:900; border:none; border-bottom:3px solid #007cc3;" onclick="goToStep2()">✅ الانتقال لتعبئة البيانات ومتابعة الشراء</button>
             </div>
             
-            <!-- الخطوة الثانية: تعبئة وتأكيد البيانات المطلوبة من الزبون قبل الترحيل -->
             <div id="stepData" class="modal-step hidden">
                 <div class="checkout-input-card">
                     <h4>📋 يرجى كتابة البيانات المطلوبة لاستلام الطلب بشكل صحيح:</h4>
@@ -609,13 +577,11 @@
         </div>
     </div>
 
-    <!-- سكريبتات الأنظمة الكبرى وقاعدة بيانات Firestore المحدثة بالكامل -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // تهيئة الفايربيس الرسمية لموقعك cd-card-87365
         const firebaseConfig = {
             apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
             authDomain: "cd-card-87365.firebaseapp.com",
@@ -661,7 +627,6 @@
             if (btn) btn.classList.add('active');
         }
 
-        // التبديل بين شاشات وبيئات العروض (البطاقات والاشتراكات ضد الرشق)
         function showMegaSection(megaId) {
             document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active'));
             if(megaId === 'mega-cards') document.getElementById('tab-btn-cards').classList.add('active');
@@ -694,7 +659,6 @@
             }
         }
 
-        // جلب الأقسام وفصلها بالكامل داخل مصفوفة الأنظمة
         function fetchCategories() {
             db.collection("categories").orderBy("order").get().then(snap => {
                 allCategories = []; 
@@ -703,9 +667,7 @@
             }).catch(err => console.log("خطأ في الاتصال بقاعدة البيانات:", err));
         }
 
-        // بناء وعرض كل شبكة أقسام في فئتها المحددة لمنع الاختفاء والتداخل
         function renderAllGrids() {
-            // 1. تصفية وبناء شبكة البطاقات والاشتراكات
             const cardsGrid = document.getElementById('catsGrid');
             const normalCats = allCategories.filter(c => c.type !== 'social' && !c.id.includes('social') && !c.name.includes('رشق'));
             if (!normalCats.length) {
@@ -720,7 +682,6 @@
                 `).join('');
             }
 
-            // 2. تصفية وبناء شبكة خدمات ومنصات الرشق
             const socialGrid = document.getElementById('socialCatsGrid');
             const socialCats = allCategories.filter(c => c.type === 'social' || c.id.includes('social') || c.name.includes('رشق'));
             if (!socialCats.length) {
@@ -736,7 +697,6 @@
             }
         }
 
-        // 🔄 فتح الأقسام وجلب منتجاتها مع معالجة ثبات الصور المطلق
         function openCategory(catId, catName) {
             document.getElementById('cards-categories-subgrid').classList.add('hidden');
             document.getElementById('mega-social').style.display = 'none';
@@ -755,7 +715,6 @@
                     const p = doc.data();
                     const pId = doc.id;
                     const finalPrice = p.price || 0;
-                    // تم تأمين الـ HTML لضمان ثبات الصورة دائمًا عند العرض والتبديل
                     html += `
                         <div class="glass-card" onclick="openProductModal('${pId}')">
                             ${p.discount ? `<div class="discount-badge">عرض خاص</div>` : ''}
@@ -785,7 +744,6 @@
             }
         }
 
-        // فتح نافذة مودال الشراء بالتصميم والشكل الجديد بالكامل
         function openProductModal(pId) {
             db.collection("products").doc(pId).get().then(doc => {
                 if(!doc.exists) return;
@@ -803,8 +761,6 @@
                     document.getElementById('quantitySection').classList.remove('hidden');
                     document.getElementById('dynamicPriceSection').classList.remove('hidden');
                     document.getElementById('fixedPriceSection').classList.add('hidden');
-                    
-                    // تعديل الحد الأدنى لخدمات ومطالب لوحة الرشق 300 وحدة كحد أدنى
                     currentQtyMin = currentProduct.qtyMin || 300;
                     currentQtyMax = currentProduct.qtyMax || 10000;
                     const slider = document.getElementById('quantitySlider');
@@ -842,7 +798,6 @@
 
         function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
 
-        // 🛒 تنفيذ معالجة الشراء النهائي وتمرير الفواتير للآدمن والويب هوك
         async function confirmPurchase() {
             if (!currentProduct) return;
             let targetValue = '';
@@ -858,25 +813,27 @@
             if(userBalance < finalCost) return alert('❌ عذراً! رصيدك المتوفر غير كافٍ، يرجى شحن وتعبئة المحفظة.');
 
             const invoice = generateInvoiceNumber();
+            const user = auth.currentUser;
             
             try {
                 const newBalance = userBalance - finalCost;
-                await db.collection("users").doc(auth.currentUser.uid).update({ balance: newBalance });
+                await db.collection("users").doc(user.uid).update({ balance: newBalance });
                 
+                // إنشاء وثيقة الطلب كاملة حسب البنية المطلوبة
                 await db.collection("orders").add({
-                    invoiceNumber: invoice,
-                    userId: auth.currentUser.uid,
+                    userId: user.uid,
                     userName: userData?.username || userData?.name || '---',
-                    productName: currentProduct.name,
-                    cost: finalCost,
-                    quantity: qty,
-                    target: targetValue,
+                    userEmail: userData?.email || '---',
+                    serviceName: currentProduct.name,
+                    amount: finalCost,
+                    playerID: targetValue,
                     contactPhone: contact,
-                    status: 'pending',
+                    quantity: qty,
+                    invoiceNumber: invoice,
+                    status: 'pending', // الحالة الافتراضية "قيد الانتظار"
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-                // ترحيل الإشعار الفوري للويب هوك المربوط بلوحة التحكم
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -894,12 +851,10 @@
 
                 closeDetailModal();
                 
-                // إظهار صندوق النجاح الفخم المريح للزبائن (ساعتين كحد أقصى)
                 const alertBox = document.getElementById('orderSuccessAlert');
                 alertBox.classList.add('show');
                 setTimeout(() => { alertBox.classList.remove('show'); }, 6000);
 
-                // تفريغ الحقول التلقائي
                 document.getElementById('targetInput').value = '';
                 document.getElementById('phoneInput').value = '';
                 document.getElementById('accountLinkInput').value = '';
@@ -913,11 +868,11 @@
         async function fetchUserOrders() {
             const tbody = document.getElementById('myOrdersTableBody');
             if (!auth.currentUser) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#637592;">يجب تسجيل الدخول أولاً.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#637592;">يجب تسجيل الدخول أولاً.</td></tr>';
                 return;
             }
             
-            tbody.innerHTML = '<tr><td colspan="4" class="loading">⏳ جاري تحميل ومزامنة العمليات...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="loading">⏳ جاري تحميل ومزامنة العمليات...</td></tr>';
             
             db.collection("orders")
                 .where("userId", "==", auth.currentUser.uid)
@@ -926,21 +881,24 @@
                 .get()
                 .then(snap => {
                     if(snap.empty) { 
-                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#637592; padding: 20px;">📭 لا توجد عمليات مسجلة حالياً في سجل طلباتك.</td></tr>'; 
+                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#637592; padding: 20px;">📭 لا توجد عمليات مسجلة حالياً في سجل طلباتك.</td></tr>'; 
                         return; 
                     }
                     let html = '';
                     snap.forEach(doc => {
                         const o = doc.data();
-                        let statusClass = 'pending'; let statusText = 'قيد المراجعة';
+                        let statusClass = 'pending'; 
+                        let statusText = 'قيد المراجعة';
                         if(o.status === 'completed') { statusClass = 'completed'; statusText = 'تم الشحن'; }
-                        if(o.status === 'canceled') { statusClass = 'canceled'; statusText = 'ملغي / مرجع'; }
+                        if(o.status === 'canceled') { statusClass = 'canceled'; statusText = 'ملغي'; }
+                        if(o.status === 'refunded') { statusClass = 'refunded'; statusText = 'مسترجع'; }
                         
                         html += `
                             <tr>
                                 <td style="font-weight:700; color:var(--neon-blue);">${o.invoiceNumber || 'MP-0000'}</td>
-                                <td>${o.productName}</td>
-                                <td>${parseFloat(o.cost).toFixed(2)} د.ل</td>
+                                <td>${o.serviceName || o.productName}</td>
+                                <td>${o.quantity || 1}</td>
+                                <td>${parseFloat(o.amount).toFixed(2)} د.ل</td>
                                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                             </tr>
                         `;
@@ -948,7 +906,7 @@
                     tbody.innerHTML = html;
                 }).catch(err => { 
                     console.error("فشل جلب السجل:", err);
-                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#ef4444;">❌ فشل جلب السجل: ${err.message}</td></tr>`; 
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ef4444;">❌ فشل جلب السجل: ${err.message}</td></tr>`; 
                 });
         }
 
