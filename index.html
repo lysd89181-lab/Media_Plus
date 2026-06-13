@@ -80,7 +80,7 @@
         .balance-box span { color: var(--neon-blue); font-weight: 800; }
         .balance-box svg { width: 16px; height: 16px; fill: none; stroke: var(--neon-blue); stroke-width: 2; }
 
-        /* 🖼️ البانر العلوي - الصورة واضحة بالكامل */
+        /* 🖼️ البانر العلوي */
         .hero-banner-box {
             background: #0b1a30;
             position: relative;
@@ -90,7 +90,6 @@
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.05);
         }
-
         .hero-banner-box img {
             width: 100%;
             height: 180px;
@@ -99,7 +98,6 @@
             opacity: 1;
         }
 
-        /* شريط البحث منفصل تحت الصورة */
         .search-container {
             padding: 15px 4%;
             margin-bottom: 15px;
@@ -150,7 +148,7 @@
             stroke-width: 2.5;
         }
 
-        /* 🧭 شريط التنقل بين الشحن والرشق */
+        /* 🧭 شريط التنقل */
         .main-navbar {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -174,7 +172,6 @@
             cursor: pointer;
             font-size: 14px;
         }
-
         .main-tab-btn.active {
             background: linear-gradient(135deg, var(--neon-blue), #ffffff);
             color: #02050f;
@@ -199,7 +196,7 @@
         }
         .back-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-        /* ⚠️ مربع تنبيه الرشق */
+        /* ⚠️ تنبيه الرشق */
         .neon-warning-box {
             background: rgba(239, 68, 68, 0.02);
             backdrop-filter: blur(10px);
@@ -225,7 +222,7 @@
             gap: 15px;
         }
 
-        /* 💎 الكارت الزجاجي الموحد */
+        /* 💎 الكارت الزجاجي */
         .glass-card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
@@ -326,7 +323,7 @@
         
         .payment-methods-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
             margin-bottom: 15px;
         }
@@ -696,6 +693,23 @@
             margin-bottom: 12px;
             color: #637592;
         }
+
+        .sub-tab {
+            padding: 8px 16px;
+            background: rgba(0,162,255,0.05);
+            border: 1px solid rgba(0,162,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #637592;
+            margin: 0 4px;
+        }
+        .sub-tab.active {
+            background: var(--neon-blue);
+            color: #000;
+            border-color: var(--neon-blue);
+        }
     </style>
 </head>
 <body>
@@ -723,12 +737,10 @@
 
     <!-- 🟢 الصفحة الرئيسية -->
     <div id="homePage" class="page-layer active">
-        <!-- البانر بدون شريط بحث داخله -->
         <div class="hero-banner-box">
-            <img id="main-banner" src="https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg" alt="Media Plus Banner">
+            <img src="https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg" alt="Media Plus Banner">
         </div>
         
-        <!-- شريط البحث منفصل تحت الصورة -->
         <div class="search-container">
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="🔍 بحث سريع عن عرض أو بطاقة...">
@@ -739,13 +751,11 @@
         </div>
 
         <div class="container">
-            <!-- نافبار التبديل -->
             <nav class="main-navbar">
                 <button class="main-tab-btn active" id="tab-btn-cards" onclick="showMegaSection('mega-cards')">البطاقات والاشتراكات</button>
                 <button class="main-tab-btn" id="tab-btn-social" onclick="showMegaSection('mega-social')">خدمات الرشق والزيادات</button>
             </nav>
 
-            <!-- بيئة البطاقات -->
             <div id="mega-cards" class="mega-container-view">
                 <div id="cards-categories-subgrid" class="view-layer active">
                     <div class="section-title">📂 أقسام الاشتراكات المتوفرة</div>
@@ -753,7 +763,6 @@
                 </div>
             </div>
 
-            <!-- بيئة الرشق -->
             <div id="mega-social" class="mega-container-view" style="display: none;">
                 <div class="neon-warning-box">
                     <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-red)" stroke-width="2.5">
@@ -770,7 +779,6 @@
                 <div class="grid-2-columns" id="socialCatsGrid"><div class="loading">⏳ جاري تحميل المنصات...</div></div>
             </div>
 
-            <!-- لوحة المنتجات -->
             <div id="productsView" class="hidden">
                 <button class="back-btn" onclick="goBackToCategories()">
                     <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -794,13 +802,9 @@
             <div class="info-card-box">
                 <h3 style="font-size:13px; text-align:center; margin-bottom:15px;">💳 اختر طريقة التعبئة المناسبة</h3>
                 <div class="payment-methods-grid">
-                    <div class="payment-method-btn active" onclick="switchPaymentMethod('libyana', this)">
+                    <div class="payment-method-btn active" onclick="switchPaymentMethod('libya-networks', this)">
                         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg>
-                        ليبيانا
-                    </div>
-                    <div class="payment-method-btn" onclick="switchPaymentMethod('madar', this)">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="3"/><circle cx="12" cy="12" r="3"/><line x1="2" y1="9" x2="22" y2="9"/></svg>
-                        المدار
+                        شبكات ليبيا
                     </div>
                     <div class="payment-method-btn" onclick="switchPaymentMethod('cards', this)">
                         <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -813,24 +817,32 @@
                 </div>
             </div>
 
-            <!-- قسم ليبيانا -->
-            <div id="paymentLibyana" class="ly-telecom-container">
-                <span class="section-badge auto">⚡ تلقائي فوري - ليبيانا</span>
-                <div class="bank-row"><div><span style="color:#637592;">رقم التحويل</span></div><div class="num">0920414760</div></div>
-                <button class="action-btn" onclick="copyText('0920414760')" style="margin-bottom:10px;">📋 نسخ الرقم</button>
-                <input type="text" id="phone_libyana" class="notify-input" placeholder="رقم هاتفك المحول منه">
-                <input type="number" id="amount_libyana" class="notify-input" placeholder="قيمة الرصيد بالدراهم">
-                <button class="notify-btn auto" onclick="processLibyanaAuto()">⚡ تحقق تلقائي فوري</button>
-            </div>
+            <!-- قسم شبكات ليبيا الموحد (ليبيانا + مدار) -->
+            <div id="paymentLibyaNetworks" class="ly-telecom-container">
+                <div style="display:flex; justify-content:center; gap:10px; margin-bottom:15px;">
+                    <button class="sub-tab active" onclick="switchSubTab('libyana')">⚡ ليبيانا</button>
+                    <button class="sub-tab" onclick="switchSubTab('madar')">📡 المدار</button>
+                </div>
 
-            <!-- قسم المدار -->
-            <div id="paymentMadar" class="ly-telecom-container hidden">
-                <span class="section-badge manual">🔧 مراجعة يدوية - المدار</span>
-                <div class="bank-row"><div><span style="color:#637592;">رقم التحويل</span></div><div class="num">0912377291</div></div>
-                <button class="action-btn" onclick="copyText('0912377291')" style="margin-bottom:10px;">📋 نسخ الرقم</button>
-                <input type="text" id="phone_madar" class="notify-input" placeholder="رقم هاتفك المحول منه">
-                <input type="number" id="amount_madar" class="notify-input" placeholder="المبلغ المرسل بالدينار">
-                <button class="notify-btn" onclick="submitManualDeposit('مدار', 'phone_madar', 'amount_madar')">📩 إرسال إشعار تحويل</button>
+                <!-- ليبيانا -->
+                <div id="subLibyana">
+                    <span class="section-badge auto">⚡ تلقائي فوري - ليبيانا</span>
+                    <div class="bank-row"><div><span style="color:#637592;">رقم التحويل</span></div><div class="num">0920414760</div></div>
+                    <button class="action-btn" onclick="copyText('0920414760')" style="margin-bottom:10px;">📋 نسخ الرقم</button>
+                    <input type="text" id="phone_libyana" class="notify-input" placeholder="رقم هاتفك المحول منه">
+                    <input type="number" id="amount_libyana" class="notify-input" placeholder="قيمة الرصيد بالدراهم">
+                    <button class="notify-btn auto" onclick="processLibyanaAuto()">⚡ تحقق تلقائي فوري</button>
+                </div>
+
+                <!-- المدار -->
+                <div id="subMadar" class="hidden">
+                    <span class="section-badge manual">🔧 مراجعة يدوية - المدار</span>
+                    <div class="bank-row"><div><span style="color:#637592;">رقم التحويل</span></div><div class="num">0912377291</div></div>
+                    <button class="action-btn" onclick="copyText('0912377291')" style="margin-bottom:10px;">📋 نسخ الرقم</button>
+                    <input type="text" id="phone_madar" class="notify-input" placeholder="رقم هاتفك المحول منه">
+                    <input type="number" id="amount_madar" class="notify-input" placeholder="المبلغ المرسل بالدينار">
+                    <button class="notify-btn" onclick="submitManualDeposit('مدار', 'phone_madar', 'amount_madar')">📩 إرسال إشعار تحويل</button>
+                </div>
             </div>
 
             <!-- قسم كروت التعبئة -->
@@ -851,6 +863,28 @@
                 <input type="number" id="binance_amount" class="notify-input" placeholder="القيمة بالدولار ($)">
                 <button class="notify-btn" onclick="submitManualDeposit('بايننس', 'binance_id', 'binance_amount', true)">📩 تأكيد التحويل</button>
             </div>
+
+            <!-- 📊 قسم سجل الإيداعات -->
+            <div class="info-card-box" style="margin-top:20px;">
+                <h3 style="font-size:13px; margin-bottom:10px; text-align:center;">📊 سجل عمليات الإيداع</h3>
+                <button class="action-btn" onclick="fetchDeposits()" style="margin-bottom:10px; background:rgba(0,162,255,0.1); color:var(--neon-blue); padding:10px;">
+                    <svg style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; vertical-align:middle; margin-left:5px;" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    تحديث سجل الإيداعات
+                </button>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>المزود</th>
+                            <th>القيمة</th>
+                            <th>الحالة</th>
+                            <th>التاريخ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="depositsTableBody">
+                        <tr><td colspan="4" style="text-align:center; color:#637592;">اضغط تحديث لعرض الإيداعات</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -858,6 +892,10 @@
     <div id="ordersPage" class="page-layer">
         <div class="container">
             <div class="section-title" style="font-size:15px; margin-bottom:12px;">📦 سجل طلباتي وتتبع الحالة</div>
+            <button class="action-btn" onclick="fetchUserOrders()" style="margin-bottom:15px; background:rgba(0,162,255,0.1); color:var(--neon-blue); padding:12px;">
+                <svg style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; vertical-align:middle; margin-left:5px;" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                عرض سجل طلباتي
+            </button>
             <div class="info-card-box" style="padding: 10px; overflow-x: auto;">
                 <table class="custom-table">
                     <thead>
@@ -870,14 +908,10 @@
                         </tr>
                     </thead>
                     <tbody id="myOrdersTableBody">
-                        <tr><td colspan="5" class="loading">⏳ جاري تحميل سجل الطلبات...</td></tr>
+                        <tr><td colspan="5" style="text-align:center; color:#637592;">اضغط "عرض سجل طلباتي" للمشاهدة</td></tr>
                     </tbody>
                 </table>
             </div>
-            <button class="action-btn" onclick="fetchUserOrders()" style="margin-top:10px; background:rgba(0,162,255,0.1); color:var(--neon-blue); padding:12px;">
-                <svg style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; vertical-align:middle; margin-left:5px;" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                تحديث سجل الطلبات
-            </button>
         </div>
     </div>
 
@@ -950,7 +984,7 @@
         </div>
     </div>
 
-    <!-- شريط التنقل السفلي - SVG أيقونات -->
+    <!-- شريط التنقل السفلي -->
     <div class="bottom-nav">
         <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>الرئيسية
@@ -975,35 +1009,32 @@
             <button class="close-modal" onclick="closeDetailModal()">✕</button>
             
             <div class="modal-product-header">
-                <img id="dImg" src="" alt="صورة المنتج">
+                <img id="dImg" src="" alt="صورة المنتج" onerror="this.src='https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/lb.jpg'">
                 <h3 id="dName"></h3>
                 <div class="old-price-text" id="dOldPrice"></div>
                 <p id="dDesc" style="font-size:12px; color:#637592; padding:0 10px; margin-top:6px; line-height:1.5;"></p>
             </div>
             
-            <!-- الخطوة الأولى: الكمية والسعر -->
             <div id="stepQuantity" class="modal-step">
                 <div id="quantitySection" class="quantity-section hidden">
                     <label style="font-size:13px; color:#fff; font-weight:600;">🔢 حدد كمية الشحن المطلوبة</label>
                     <input type="range" id="quantitySlider" class="quantity-slider" min="300" max="10000" value="300" step="50" oninput="updateQuantity(this.value)">
                     <div style="font-size:15px; font-weight:800; color:var(--neon-blue); margin:5px 0;">العدد: <span id="quantityValue">300</span> وحدة</div>
-                    <div style="display:flex; justify-content:space-between; font-size:11px; color:#546581;"><span>الحد الأدنى: 300</span><span>الأقصى: 10,000</span></div>
                 </div>
 
                 <div id="fixedPriceSection" style="background:rgba(0,162,255,0.05); padding:12px; border-radius:12px; text-align:center; border:1px dashed rgba(0,162,255,0.2); margin:15px 0;">
-                    <span style="font-size:12px; color:#637592; display:block;">سعر الخدمة:</span>
+                    <span style="font-size:12px; color:#637592;">سعر الخدمة:</span>
                     <span id="fixedPriceDisplay" style="color:var(--neon-blue); font-weight:900; font-size:24px;">0.000</span> <small>د.ل</small>
                 </div>
 
-                <div id="dynamicPriceSection" style="background:rgba(16,185,129,0.05); padding:12px; border-radius:12px; text-align:center; border:1px dashed rgba(16,185,129,0.2); margin:15px 0;" class="hidden">
-                    <span style="font-size:12px; color:#637592; display:block;">السعر الإجمالي:</span>
+                <div id="dynamicPriceSection" class="hidden" style="background:rgba(16,185,129,0.05); padding:12px; border-radius:12px; text-align:center; border:1px dashed rgba(16,185,129,0.2); margin:15px 0;">
+                    <span style="font-size:12px; color:#637592;">السعر الإجمالي:</span>
                     <span id="totalPriceNew" style="color:var(--neon-green); font-weight:900; font-size:24px;">0.000</span> <small>د.ل</small>
                 </div>
                 
-                <button class="notify-btn" style="background:var(--neon-blue); color:#000; font-weight:900; border:none; border-bottom:3px solid #007cc3;" onclick="goToStep2()">✅ متابعة لإدخال البيانات</button>
+                <button class="notify-btn" style="background:var(--neon-blue); color:#000; border-bottom:3px solid #007cc3;" onclick="goToStep2()">✅ متابعة لإدخال البيانات</button>
             </div>
             
-            <!-- الخطوة الثانية: البيانات -->
             <div id="stepData" class="modal-step hidden">
                 <div class="checkout-input-card">
                     <h4>📋 بيانات استلام الخدمة:</h4>
@@ -1012,13 +1043,13 @@
                     <div id="fieldAccount"><input type="text" id="accountLinkInput" placeholder="🔗 رابط الحساب أو اليوزر نيم"></div>
                     <input type="text" id="contactPhone" placeholder="📞 رقم تواصلك على الواتساب">
                     
-                    <button class="confirm-btn" style="width:100%; padding:14px; font-weight:900; background:linear-gradient(135deg, var(--neon-green), #34d399); color:#fff; border:none; border-radius:12px; cursor:pointer; margin-top:15px; border-bottom:3px solid #047857; box-shadow:0 4px 15px rgba(16,185,129,0.25);" onclick="confirmPurchase()">🔥 تأكيد الطلب وخصم الرصيد</button>
+                    <button style="width:100%; padding:14px; font-weight:900; background:linear-gradient(135deg, var(--neon-green), #34d399); color:#fff; border:none; border-radius:12px; cursor:pointer; margin-top:15px; border-bottom:3px solid #047857;" onclick="confirmPurchase()">🔥 تأكيد الطلب وخصم الرصيد</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase + السكريبتات -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -1036,13 +1067,30 @@
         const auth = firebase.auth();
 
         const BASE_IMAGE_URL = "https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/";
-        const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
+        const TELEGRAM_BOT_TOKEN = "8505632393:AAEQwA5RzNI50HVv3ZHz-rKHEzFMMmDlLJE";
+        const TELEGRAM_CHAT_ID = "7737867483";
         
         let allCategories = [], userBalance = 0, userData = null, currentProduct = null;
         let unitPrice = 0, currentQtyMin = 300, currentQtyMax = 10000, isQuantityMode = false, currentServiceType = 'id';
 
         function generateInvoiceNumber() { return `MP-${Math.floor(100000 + Math.random() * 900000)}`; }
         function getImageUrl(img) { if (!img) return ''; if (img.startsWith('http')) return img; return BASE_IMAGE_URL + img; }
+
+        // إرسال إشعار تيليجرام
+        async function sendTelegramNotification(message) {
+            try {
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (e) { console.log('Telegram error:', e); }
+        }
 
         // تبديل الصفحات
         function switchTab(tab) {
@@ -1053,19 +1101,16 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             const targetNav = document.querySelector(`[data-tab="${tab}"]`);
             if(targetNav) targetNav.classList.add('active');
-            if(tab === 'orders') fetchUserOrders();
             if(tab === 'account') updateAllBalances();
         }
 
-        // تبديل طرق الدفع في المحفظة
+        // تبديل طرق الدفع
         function switchPaymentMethod(type, btn) {
-            document.getElementById('paymentLibyana').classList.add('hidden');
-            document.getElementById('paymentMadar').classList.add('hidden');
+            document.getElementById('paymentLibyaNetworks').classList.add('hidden');
             document.getElementById('paymentCards').classList.add('hidden');
             document.getElementById('paymentBinance').classList.add('hidden');
             
-            if(type === 'libyana') document.getElementById('paymentLibyana').classList.remove('hidden');
-            else if(type === 'madar') document.getElementById('paymentMadar').classList.remove('hidden');
+            if(type === 'libya-networks') document.getElementById('paymentLibyaNetworks').classList.remove('hidden');
             else if(type === 'cards') document.getElementById('paymentCards').classList.remove('hidden');
             else if(type === 'binance') document.getElementById('paymentBinance').classList.remove('hidden');
             
@@ -1073,19 +1118,27 @@
             if(btn) btn.classList.add('active');
         }
 
-        // تبديل بين الشحن والرشق
+        // تبديل بين ليبيانا والمدار
+        function switchSubTab(type) {
+            document.getElementById('subLibyana').classList.add('hidden');
+            document.getElementById('subMadar').classList.add('hidden');
+            if(type === 'libyana') document.getElementById('subLibyana').classList.remove('hidden');
+            else document.getElementById('subMadar').classList.remove('hidden');
+            
+            document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
         function showMegaSection(megaId) {
             document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active'));
             if(megaId === 'mega-cards') document.getElementById('tab-btn-cards').classList.add('active');
             if(megaId === 'mega-social') document.getElementById('tab-btn-social').classList.add('active');
-
             document.getElementById('mega-cards').style.display = 'none';
             document.getElementById('mega-social').style.display = 'none';
             document.getElementById(megaId).style.display = 'block';
             goBackToCategories();
         }
 
-        // مراقبة تسجيل الدخول
         auth.onAuthStateChanged(user => {
             if (!user) { window.location.href = 'long.html'; return; }
             db.collection("users").doc(user.uid).onSnapshot(doc => {
@@ -1097,20 +1150,18 @@
         function updateAllBalances() {
             const bal = userBalance.toFixed(3);
             document.getElementById('topBalance').innerText = bal;
-            document.getElementById('walletBalance').innerText = bal;
-            const accBal = document.getElementById('accBalance');
-            if(accBal) accBal.innerText = bal + ' د.ل';
+            const wb = document.getElementById('walletBalance'); if(wb) wb.innerText = bal;
+            const ab = document.getElementById('accBalance'); if(ab) ab.innerText = bal + ' د.ل';
             if (userData) {
                 const name = userData.username || userData.name || '---';
-                document.getElementById('accName').innerText = name;
-                document.getElementById('accName2').innerText = name;
-                document.getElementById('accEmail').innerText = userData.email || '---';
-                document.getElementById('accEmail2').innerText = userData.email || '---';
-                document.getElementById('accPhone').innerText = userData.phone || '---';
+                const n1 = document.getElementById('accName'); if(n1) n1.innerText = name;
+                const n2 = document.getElementById('accName2'); if(n2) n2.innerText = name;
+                const e1 = document.getElementById('accEmail'); if(e1) e1.innerText = userData.email || '---';
+                const e2 = document.getElementById('accEmail2'); if(e2) e2.innerText = userData.email || '---';
+                const p = document.getElementById('accPhone'); if(p) p.innerText = userData.phone || '---';
             }
         }
 
-        // جلب الأقسام
         function fetchCategories() {
             db.collection("categories").orderBy("order").get().then(snap => {
                 allCategories = [];
@@ -1146,10 +1197,8 @@
             document.getElementById('mega-social').style.display = 'none';
             document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerText = `📦 ${catName}`;
-            
             const grid = document.getElementById('prodsGrid');
             grid.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
-            
             db.collection("products").where("categoryId", "==", catId).get().then(snap => {
                 if (snap.empty) { grid.innerHTML = '<div class="loading">لا توجد منتجات حالياً.</div>'; return; }
                 let html = '';
@@ -1184,9 +1233,13 @@
                 if(!doc.exists) return;
                 currentProduct = { id: doc.id, ...doc.data() };
                 
-                document.getElementById('dImg').src = getImageUrl(currentProduct.image);
+                const imgEl = document.getElementById('dImg');
+                imgEl.src = getImageUrl(currentProduct.image);
+                imgEl.onerror = function() { this.src = BASE_IMAGE_URL + 'lb.jpg'; };
+                
                 document.getElementById('dName').innerText = currentProduct.name;
                 document.getElementById('dDesc').innerText = currentProduct.description || '';
+                document.getElementById('dOldPrice').innerText = currentProduct.oldPrice ? currentProduct.oldPrice + ' د.ل' : '';
                 
                 isQuantityMode = currentProduct.isQuantity || false;
                 unitPrice = currentProduct.price || 0;
@@ -1233,7 +1286,6 @@
 
         function closeDetailModal() { document.getElementById('detailModal').classList.remove('active'); }
 
-        // ✅ تأكيد الشراء وحفظ الطلب تلقائياً
         async function confirmPurchase() {
             if (!currentProduct || !auth.currentUser) return;
             
@@ -1248,7 +1300,7 @@
 
             if(!targetValue) return alert('⚠️ يرجى إدخال بيانات المستهدف أولاً.');
             if(!contact) return alert('⚠️ يرجى إدخال رقم الواتساب للتواصل.');
-            if(userBalance < finalCost) return alert('❌ رصيدك غير كافٍ. يرجى شحن المحفظة أولاً.');
+            if(userBalance < finalCost) return alert('❌ رصيدك غير كافٍ.');
 
             const invoice = generateInvoiceNumber();
             const orderData = {
@@ -1269,52 +1321,52 @@
             };
             
             try {
-                // خصم الرصيد
                 const newBalance = userBalance - finalCost;
                 await db.collection("users").doc(auth.currentUser.uid).update({ balance: newBalance });
+                userBalance = newBalance;
+                updateAllBalances();
                 
-                // حفظ الطلب في سجل الطلبات
+                // حفظ الطلب في Firestore
                 await db.collection("orders").add(orderData);
 
-                // إرسال للويب هوك
-                try {
-                    await fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({...orderData, date: new Date().toISOString()})
-                    });
-                } catch(e) { console.log('Webhook info:', e); }
+                // إرسال إشعار تيليجرام
+                const telegramMsg = `
+🔔 <b>طلب جديد - Media Plus</b>
+━━━━━━━━━━━━━━━━
+📋 <b>رقم الفاتورة:</b> ${invoice}
+👤 <b>العميل:</b> ${orderData.userName}
+📱 <b>الواتساب:</b> ${contact}
+📦 <b>الخدمة:</b> ${currentProduct.name}
+💰 <b>القيمة:</b> ${finalCost.toFixed(2)} د.ل
+📊 <b>الكمية:</b> ${qty}
+🎯 <b>المستهدف:</b> ${targetValue}
+📅 <b>التاريخ:</b> ${new Date().toLocaleString('ar-LY')}
+━━━━━━━━━━━━━━━━
+                `;
+                sendTelegramNotification(telegramMsg);
 
                 closeDetailModal();
                 
-                // إظهار نجاح الطلب
                 const alertBox = document.getElementById('orderSuccessAlert');
                 alertBox.classList.add('show');
-                setTimeout(() => alertBox.classList.remove('show'), 6000);
+                setTimeout(() => alertBox.classList.remove('show'), 5000);
 
-                // تفريغ الحقول
                 ['targetInput','phoneInput','accountLinkInput','contactPhone'].forEach(id => {
                     const el = document.getElementById(id); if(el) el.value = '';
                 });
 
-                // تحديث سجل الطلبات تلقائياً
-                setTimeout(fetchUserOrders, 1500);
-
             } catch (e) {
                 alert('❌ حدث خطأ: ' + e.message);
-                // استرجاع الرصيد في حالة الفشل
                 try { await db.collection("users").doc(auth.currentUser.uid).update({ balance: userBalance }); } catch(err) {}
             }
         }
 
-        // ✅ جلب سجل الطلبات مع تتبع الحالة
         async function fetchUserOrders() {
             const tbody = document.getElementById('myOrdersTableBody');
             if (!auth.currentUser) {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#637592;">يجب تسجيل الدخول.</td></tr>';
                 return;
             }
-            
             tbody.innerHTML = '<tr><td colspan="5" class="loading">⏳ جاري تحميل سجل الطلبات...</td></tr>';
             
             try {
@@ -1332,20 +1384,12 @@
                 let html = '';
                 snap.forEach(doc => {
                     const o = doc.data();
-                    let statusClass = 'pending', statusText = 'قيد المراجعة';
-                    if(o.status === 'completed') { statusClass = 'completed'; statusText = '✅ مكتمل'; }
-                    else if(o.status === 'canceled') { statusClass = 'canceled'; statusText = '❌ ملغي'; }
-                    else if(o.status === 'processing') { statusClass = 'processing'; statusText = '⏳ جارٍ'; }
+                    let sc = 'pending', st = 'قيد المراجعة';
+                    if(o.status === 'completed') { sc = 'completed'; st = '✅ مكتمل'; }
+                    else if(o.status === 'canceled') { sc = 'canceled'; st = '❌ ملغي'; }
+                    else if(o.status === 'processing') { sc = 'processing'; st = '⏳ جارٍ'; }
                     
-                    html += `
-                        <tr>
-                            <td style="font-weight:700; color:var(--neon-blue);">${o.invoiceNumber || '---'}</td>
-                            <td>${o.productName || '---'}</td>
-                            <td>${parseFloat(o.cost || 0).toFixed(2)} د.ل</td>
-                            <td>${o.quantity || 1}</td>
-                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        </tr>
-                    `;
+                    html += `<tr><td>${o.invoiceNumber||'---'}</td><td>${o.productName||'---'}</td><td>${parseFloat(o.cost||0).toFixed(2)} د.ل</td><td>${o.quantity||1}</td><td><span class="status-badge ${sc}">${st}</span></td></tr>`;
                 });
                 tbody.innerHTML = html;
             } catch(err) { 
@@ -1353,7 +1397,38 @@
             }
         }
 
-        // إرسال إشعار تعبئة يدوي
+        async function fetchDeposits() {
+            const tbody = document.getElementById('depositsTableBody');
+            if (!auth.currentUser) return;
+            tbody.innerHTML = '<tr><td colspan="4" class="loading">⏳ جاري تحميل الإيداعات...</td></tr>';
+            
+            try {
+                const snap = await db.collection("deposits")
+                    .where("userId", "==", auth.currentUser.uid)
+                    .orderBy("createdAt", "desc")
+                    .limit(20)
+                    .get();
+                    
+                if(snap.empty) { 
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">📭 لا توجد إيداعات مسجلة.</td></tr>'; 
+                    return; 
+                }
+                
+                let html = '';
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    let sc = 'pending', st = 'قيد المراجعة';
+                    if(d.status === 'completed') { sc = 'completed'; st = '✅ تم'; }
+                    
+                    const date = d.createdAt ? new Date(d.createdAt.toDate()).toLocaleDateString('ar-LY') : '---';
+                    html += `<tr><td>${d.provider||'---'}</td><td>${parseFloat(d.amount||0).toFixed(2)} د.ل</td><td><span class="status-badge ${sc}">${st}</span></td><td>${date}</td></tr>`;
+                });
+                tbody.innerHTML = html;
+            } catch(err) { 
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--neon-red);">❌ خطأ</td></tr>`; 
+            }
+        }
+
         async function submitManualDeposit(provider, field1, field2, isCrypto = false) {
             const val1 = document.getElementById(field1).value.trim();
             const val2 = document.getElementById(field2).value.trim();
@@ -1372,6 +1447,11 @@
                     mode: 'manual',
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
+
+                // إشعار تيليجرام
+                const msg = `💰 <b>إيداع جديد</b>\n━━━━━━━━━━\n👤 ${userData?.username||'---'}\n📡 ${provider}\n💵 ${amount.toFixed(2)} د.ل\n📞 ${val1}`;
+                sendTelegramNotification(msg);
+
                 alert('✅ تم استلام إشعار التعبئة. سيراجع الفريق ويغذي حسابك قريباً.');
                 document.getElementById(field1).value = '';
                 document.getElementById(field2).value = '';
@@ -1382,25 +1462,16 @@
             const phone = document.getElementById('phone_libyana').value.trim();
             const amount = document.getElementById('amount_libyana').value.trim();
             if(!phone || !amount) return alert('⚠️ يرجى إدخال رقم الهاتف والمبلغ.');
-            alert('⏳ جاري التحقق التلقائي من التحويل...');
-            // هنا يتم ربط API التحقق التلقائي
+            alert('⏳ جاري التحقق التلقائي...');
+            // ربط API ليبيانا هنا
         }
         
         function copyText(text) { 
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ تم نسخ الرقم: ' + text);
-            }).catch(() => alert('تم النسخ: ' + text));
+            navigator.clipboard.writeText(text).then(() => alert('✅ تم النسخ: ' + text)).catch(() => alert(text));
         }
         
         function logout() { auth.signOut().then(() => { window.location.href = 'long.html'; }); }
-        function searchProducts() { alert('🔍 ميزة البحث قيد التطوير.'); }
-
-        // تهيئة أولية
-        window.addEventListener('load', () => {
-            if(!auth.currentUser) {
-                setTimeout(() => { if(!auth.currentUser) window.location.href = 'long.html'; }, 2000);
-            }
-        });
+        function searchProducts() { alert('🔍 البحث قيد التطوير.'); }
     </script>
 </body>
-                                                     </html>
+                        </html>
