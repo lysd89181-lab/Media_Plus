@@ -65,7 +65,7 @@
         <div>
             <div class="p-5 border-b border-gray-700 flex items-center justify-between">
                 <div class="flex items-center gap-2"><span class="gold-bg text-black px-2 py-0.5 rounded text-sm font-black">MP</span><span class="text-md font-bold text-white">الإدارة</span></div>
-                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v15.0</span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v15.1</span>
             </div>
             <nav class="p-3 space-y-1">
                 <button onclick="switchTab('dashboardTab',this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
@@ -114,28 +114,34 @@
         <section id="productsTab" class="admin-tab hidden space-y-6">
             <div class="flex justify-between items-center"><h1 class="text-xl font-black text-white">🎮 المنتجات</h1><button onclick="openProductModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة منتج</button></div>
             <div id="adminCategoriesView"><h3 class="text-sm font-bold text-white mb-3">📂 اختر قسم لعرض منتجاته</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="adminCatsGrid"><div class="text-center p-6 text-gray-500">⏳ جاري جلب الأقسام...</div></div></div>
+            
             <div id="adminProductsView" class="hidden">
                 <button onclick="backToAdminCategories()" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-xl text-xs font-bold mb-3">⬅ رجوع للأقسام</button>
                 <div class="flex justify-between items-center mb-3"><h3 class="text-sm font-bold text-white" id="adminProductsTitle"></h3><div class="flex gap-2"><button onclick="deleteSelectedProducts()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-3 py-1.5 rounded-xl text-[10px] font-bold"><i class="fa-solid fa-trash-can"></i> حذف</button><button onclick="openBatchReorderModal()" class="bg-amber-600/20 text-amber-400 border border-amber-500/30 hover:bg-amber-600 hover:text-white px-3 py-1.5 rounded-xl text-[10px] font-bold"><i class="fa-solid fa-sort"></i> ترتيب</button><button onclick="openBatchMoveModal()" class="bg-purple-600/20 text-purple-400 border border-purple-500/30 hover:bg-purple-600 hover:text-white px-3 py-1.5 rounded-xl text-[10px] font-bold"><i class="fa-solid fa-folder-tree"></i> نقل</button></div></div>
+                
                 <div id="batchReorderModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-lg mx-auto space-y-4 mb-4"><div class="flex justify-between"><h3 class="text-sm font-bold text-white">تغيير الترتيب الجماعي</h3><button onclick="closeBatchReorderModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3 text-xs"><div><label class="text-gray-400 block mb-1">رقم الترتيب الجديد</label><input type="number" id="newOrderValue" value="1" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div class="bg-[#0a0f1a] p-3 rounded-xl border border-gray-700"><p class="text-gray-400 text-[10px] mb-2">📋 المحدد: <span id="selectedCount" class="text-amber-400 font-bold">0</span></p></div><button onclick="applyBatchOrder()" class="w-full gold-bg hover:bg-yellow-600 text-black font-bold py-3 rounded-xl text-xs">✅ تطبيق</button></div></div>
                 <div id="batchMoveModal" class="hidden card-bg p-5 rounded-2xl border border-purple-500/30 max-w-lg mx-auto space-y-4 mb-4"><div class="flex justify-between"><h3 class="text-sm font-bold text-white">📦 نقل المنتجات لقسم آخر</h3><button onclick="closeBatchMoveModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3 text-xs"><div><label class="text-gray-400 block mb-1">اختر القسم الجديد</label><select id="targetCategorySelect" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="">اختر القسم...</option></select></div><div class="bg-[#0a0f1a] p-3 rounded-xl border border-gray-700"><p class="text-gray-400 text-[10px] mb-2">📋 المحدد للنقل: <span id="moveSelectedCount" class="text-purple-400 font-bold">0</span></p></div><button onclick="applyBatchMove()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-xs">📦 نقل المنتجات المحددة</button></div></div>
-                <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">سعر</th><th class="p-4">خصم</th><th class="p-4">نوع الحقل</th><th class="p-4">عداد</th><th class="p-4">حالة</th><th class="p-4">تحكم</th></tr></thead><tbody id="productsTableBody"><tr><td colspan="9" class="text-center p-6 text-gray-500">اختر قسم أولاً</td></tr></tbody></table></div></div>
+                
+                <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">صورة</th><th class="p-4">اسم المنتج</th><th class="p-4">السعر الأساسي</th><th class="p-4">الخصم</th><th class="p-4">نوع الحقل</th><th class="p-4">حالة العداد</th><th class="p-4">الحالة العامة</th><th class="p-4">تحكم</th></tr></thead><tbody id="productsTableBody"><tr><td colspan="9" class="text-center p-6 text-gray-500">اختر قسم أولاً</td></tr></tbody></table></div></div>
             </div>
+
             <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4"><div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold text-white">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><input type="hidden" id="prodId"><div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></select></div><div><label class="text-gray-400">الخصم %</label><input type="number" id="prodDiscount" value="0" min="0" max="99" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div>
+            
             <div class="md:col-span-2 border border-amber-500/20 rounded-xl p-3 space-y-3">
-                <p class="text-amber-400 text-[10px] font-bold">📝 إعدادات حقل البيانات</p>
+                <p class="text-amber-400 text-[10px] font-bold">📝 إعدادات حقل البيانات للزبون</p>
                 <div class="grid grid-cols-2 gap-3"><div><label class="text-gray-400">نوع الحقل</label><select id="fieldType" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="id">🎮 ID لاعب</option><option value="phone">📞 رقم هاتف</option><option value="account">🔗 رابط الحساب</option><option value="custom">✏️ حقل مخصص</option></select></div><div><label class="text-gray-400">تفعيل الحقل</label><select id="fieldEnabled" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="true">✅ مفعل</option><option value="false">❌ معطل</option></select></div></div>
                 <div id="customLabelContainer" class="hidden"><label class="text-gray-400">نص الحقل المخصص</label><input type="text" id="fieldCustomLabel" placeholder="مثال: أدخل يوزر الانستقرام" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div>
             </div>
+
             <div class="md:col-span-2 border border-amber-500/20 rounded-xl p-3 space-y-2">
-                <div class="flex items-center justify-between"><span class="text-amber-400 text-[10px] font-bold">🔢 تفعيل العداد المتحرك</span><label class="toggle-switch"><input type="checkbox" id="enableQuantity" onchange="toggleQuantitySettings()"><span class="toggle-slider"></span></label></div>
-                <p class="text-[9px] text-gray-500">عند التفعيل يظهر للزبون عداد كميات مع مربع إدخال</p>
-                <div id="quantitySettings" class="hidden space-y-3 mt-2"><div class="grid grid-cols-2 gap-3"><div><label class="text-gray-400">الحد الأدنى</label><input type="number" id="qtyMin" value="30" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">الحد الأقصى</label><input type="number" id="qtyMax" value="100" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div></div><p class="text-[9px] text-gray-500">السعر = سعر {{الحد الأدنى}} قطعة</p></div>
+                <div class="flex items-center justify-between"><span class="text-amber-400 text-[10px] font-bold">🔢 تفعيل العداد والكميات المرنة (حساب بالقطعة)</span><label class="toggle-switch"><input type="checkbox" id="enableQuantity" onchange="toggleQuantitySettings()"><span class="toggle-slider"></span></label></div>
+                <p class="text-[9px] text-gray-400">عند تفعيل هذا الخيار: سيتمكن الزبون من كتابة أي كمية يريدها بين الحد الأدنى والأقصى، وسيتم قفل حقل القطعة الواحدة ليحسب السعر الإجمالي تلقائياً بناءً على (الكمية × السعر الأساسي).</p>
+                <div id="quantitySettings" class="hidden space-y-3 mt-2"><div class="grid grid-cols-2 gap-3"><div><label class="text-gray-400">الحد الأدنى للقطع</label><input type="number" id="qtyMin" value="30" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">الحد الأقصى للقطع</label><input type="number" id="qtyMax" value="100" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div></div><p class="text-[9px] text-amber-500/80">⚠️ ملاحظة: السعر المدخل بالأعلى يعتبر سعر القطعة الواحدة عند تشغيل العداد.</p></div>
             </div>
-            <div class="md:col-span-2"><label class="text-gray-400">رابط الصورة</label><input type="text" id="prodImage" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white font-mono text-[11px]" placeholder="اسم_الصورة.png أو رابط"></div><div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></textarea></div><div class="md:col-span-2"><label class="text-gray-400">الحالة</label><select id="prodActive" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="true">✅ نشط</option><option value="false">❌ مخفي</option></select></div><div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></div></form></div>
+
+            <div class="md:col-span-2"><label class="text-gray-400">رابط الصورة (أو اسم الملف مباشرة)</label><input type="text" id="prodImage" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white font-mono text-[11px]" placeholder="مثال: pubg.png أو رابط كامل"></div><div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></textarea></div><div class="md:col-span-2"><label class="text-gray-400">الحالة العامة للمنتج في المتجر</label><select id="prodActive" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="true">✅ نشط ويظهر للجميع</option><option value="false">❌ مخفي مؤقتاً</option></select></div><div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ التغييرات</button></div></form></div>
         </section>
 
-        <!-- ✅ شريط الصور -->
         <section id="heroSlidesTab" class="admin-tab hidden space-y-6">
             <div class="flex justify-between"><h1 class="text-xl font-black text-white">🖼️ شريط الصور المتحركة</h1><button onclick="addSlide()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة صورة</button></div>
             <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden p-4">
@@ -146,7 +152,7 @@
 
         <section id="usersTab" class="admin-tab hidden space-y-4">
             <h1 class="text-xl font-black text-white">👥 المستخدمين</h1>
-            <input type="text" oninput="searchUsers(this.value)" placeholder="🔍 بحث..." class="w-full max-w-xs bg-[#0a0f1a] border border-gray-600 rounded-xl py-2.5 px-4 text-white text-xs">
+            <input type="text" oninput="searchUsers(this.value)" placeholder="🔍 بحث عن مستخدم..." class="w-full max-w-xs bg-[#0a0f1a] border border-gray-600 rounded-xl py-2.5 px-4 text-white text-xs">
             <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">اسم</th><th class="p-4">هاتف</th><th class="p-4">إيميل</th><th class="p-4">رصيد</th><th class="p-4">رتبة</th><th class="p-4">شحن/خصم</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="6" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div>
         </section>
     </main>
@@ -239,18 +245,24 @@
 
         function openCategoryProducts(catId, catName) {
             currentEditingCategoryId = catId; document.getElementById("adminCategoriesView").classList.add("hidden"); document.getElementById("adminProductsView").classList.remove("hidden");
-            document.getElementById("adminProductsTitle").innerText = `🎮 ${catName}`; const tbody = document.getElementById("productsTableBody"); tbody.innerHTML = '<tr><td colspan="9" class="text-center p-6 text-gray-500">⏳ جاري الجلب...</td></tr>';
+            if (catName) document.getElementById("adminProductsTitle").innerText = `🎮 ${catName}`;
+            const tbody = document.getElementById("productsTableBody"); tbody.innerHTML = '<tr><td colspan="9" class="text-center p-6 text-gray-500">⏳ جاري الجلب...</td></tr>';
+            
             db.collection("products").where("categoryId", "==", catId).get().then(snap => {
-                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="9" class="text-center p-6 text-gray-500">لا توجد منتجات</td></tr>'; return; }
+                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="9" class="text-center p-6 text-gray-500">لا توجد منتجات في هذا القسم</td></tr>'; return; }
                 let products = []; snap.forEach(doc => { const p = doc.data(); p._id = doc.id; products.push(p); });
                 products.sort((a, b) => (a.priceLYD || a.price || 0) - (b.priceLYD || b.price || 0));
+                
                 tbody.innerHTML = products.map(p => {
                     const imgSrc = p.image || p.img || ''; const discount = p.discount || 0;
                     const fieldType = p.fieldType || p.type || 'id';
                     const typeIcon = fieldType === 'id' ? '🎮' : fieldType === 'phone' ? '📞' : fieldType === 'account' ? '🔗' : fieldType === 'custom' ? '✏️' : '📦';
-                    const fieldStatus = p.fieldEnabled !== false ? '✅' : '❌';
-                    const hasSlider = p.enableQuantity ? '✅' : '❌';
-                    return `<tr class="border-b border-gray-700/40"><td class="p-4"><input type="checkbox" value="${p._id}" class="productCheckbox accent-[#f5a623]" onchange="updateAllSelectedCounts()"></td><td class="p-4"><img src="${imgSrc}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'" loading="lazy"></td><td class="p-4 text-white font-bold text-[11px]">${p.name||'---'}</td><td class="p-4 gold-text text-[11px]">${(p.priceLYD||p.price||0).toFixed(3)}</td><td class="p-4 text-[11px]">${discount>0?`<span class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[9px]">-${discount}%</span>`:'--'}</td><td class="p-4 text-[11px]">${typeIcon} ${fieldStatus}</td><td class="p-4 text-[11px]">${hasSlider}</td><td class="p-4 text-[11px]">${p.active!==false?'✅':'❌'}</td><td class="p-4"><button onclick="editProduct('${p._id}')" class="text-blue-400 text-[10px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteProduct('${p._id}')" class="text-red-400 text-[10px] mr-1"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+                    const fieldStatus = p.fieldEnabled !== false ? 'مفعل' : 'معطل';
+                    
+                    // تحسين عرض حالة العداد بوضوح داخل الجدول الأسفل
+                    const qtyStatusText = p.enableQuantity ? `<span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-1.5 py-0.5 rounded text-[10px]">🔢 مرن (${p.qtyMin} - ${p.qtyMax})</span>` : `<span class="bg-gray-700/40 text-gray-400 px-1.5 py-0.5 rounded text-[10px]">🔒 قطعة واحدة</span>`;
+                    
+                    return `<tr class="border-b border-gray-700/40"><td class="p-4"><input type="checkbox" value="${p._id}" class="productCheckbox accent-[#f5a623]" onchange="updateAllSelectedCounts()"></td><td class="p-4"><img src="${imgSrc}" class="w-10 h-10 rounded-lg object-cover" onerror="this.style.display='none'" loading="lazy"></td><td class="p-4 text-white font-bold text-[11px]">${p.name||'---'}</td><td class="p-4 gold-text text-[11px]">${(p.priceLYD||p.price||0).toFixed(3)} د.ل</td><td class="p-4 text-[11px]">${discount>0?`<span class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[9px]">-${discount}%</span>`:'--'}</td><td class="p-4 text-[11px]">${typeIcon} ${fieldStatus}</td><td class="p-4 text-[11px]">${qtyStatusText}</td><td class="p-4 text-[11px]">${p.active!==false?'✅ نشط':'❌ مخفي'}</td><td class="p-4"><button onclick="editProduct('${p._id}')" class="text-blue-400 text-[10px]"><i class="fa-solid fa-pen"></i></button> <button onclick="deleteProduct('${p._id}')" class="text-red-400 text-[10px] mr-1"><i class="fa-solid fa-trash"></i></button></td></tr>`;
                 }).join('');
             });
         }
@@ -287,16 +299,52 @@
             let imgInput = document.getElementById("prodImage").value.trim();
             const BASE_IMAGE_URL = "https://raw.githubusercontent.com/mediaplusly/assets/main/";
             if (imgInput && !imgInput.startsWith("http")) { imgInput = BASE_IMAGE_URL + imgInput; }
-            const d={name:document.getElementById("prodName").value,priceLYD:parseFloat(document.getElementById("prodPriceLYD").value)||0,price:parseFloat(document.getElementById("prodPriceLYD").value)||0,priceUSD:parseFloat(document.getElementById("prodPriceUSD").value)||0,image:imgInput,img:imgInput,description:document.getElementById("prodDescription").value,active:document.getElementById("prodActive").value==="true",type:document.getElementById("fieldType").value,fieldType:document.getElementById("fieldType").value,fieldEnabled:document.getElementById("fieldEnabled").value==="true",fieldCustomLabel:document.getElementById("fieldCustomLabel").value,categoryId:document.getElementById("prodCategory").value,discount:parseInt(document.getElementById("prodDiscount").value)||0,enableQuantity:document.getElementById("enableQuantity").checked,order:Date.now()};
-            if(d.enableQuantity){d.qtyMin=parseInt(document.getElementById("qtyMin").value)||30;d.qtyMax=parseInt(document.getElementById("qtyMax").value)||100;}
-            if(id)db.collection("products").doc(id).update(d);else db.collection("products").add({...d,sales:0});
-            closeProductModal();loadStats();if(currentEditingCategoryId)openCategoryProducts(currentEditingCategoryId,'');
+            
+            const isQtyEnabled = document.getElementById("enableQuantity").checked;
+            
+            const d={
+                name:document.getElementById("prodName").value,
+                priceLYD:parseFloat(document.getElementById("prodPriceLYD").value)||0,
+                price:parseFloat(document.getElementById("prodPriceLYD").value)||0,
+                priceUSD:parseFloat(document.getElementById("prodPriceUSD").value)||0,
+                image:imgInput,
+                img:imgInput,
+                description:document.getElementById("prodDescription").value,
+                active:document.getElementById("prodActive").value==="true",
+                type:document.getElementById("fieldType").value,
+                fieldType:document.getElementById("fieldType").value,
+                fieldEnabled:document.getElementById("fieldEnabled").value==="true",
+                fieldCustomLabel:document.getElementById("fieldCustomLabel").value,
+                categoryId:document.getElementById("prodCategory").value,
+                discount:parseInt(document.getElementById("prodDiscount").value)||0,
+                enableQuantity:isQtyEnabled,
+                order:Date.now()
+            };
+            
+            if(isQtyEnabled){
+                d.qtyMin=parseInt(document.getElementById("qtyMin").value)||30;
+                d.qtyMax=parseInt(document.getElementById("qtyMax").value)||100;
+            } else {
+                d.qtyMin=1;
+                d.qtyMax=1;
+            }
+            
+            if(id) {
+                db.collection("products").doc(id).update(d).then(() => {
+                    showNotification('✅ تم تحديث المنتج بنجاح', 'success');
+                    closeProductModal(); loadStats(); if(currentEditingCategoryId) openCategoryProducts(currentEditingCategoryId,'');
+                });
+            } else {
+                db.collection("products").add({...d,sales:0}).then(() => {
+                    showNotification('✅ تم إضافة المنتج الجديد', 'success');
+                    closeProductModal(); loadStats(); if(currentEditingCategoryId) openCategoryProducts(currentEditingCategoryId,'');
+                });
+            }
         }
 
         function deleteProduct(id) { if(confirm("حذف؟")){db.collection("products").doc(id).delete().then(()=>{if(currentEditingCategoryId)openCategoryProducts(currentEditingCategoryId,'');});} }
         function deleteSelectedProducts() { const cbs=document.querySelectorAll('.productCheckbox:checked');if(!cbs.length)return alert("حدد منتجاً");if(!confirm(`حذف ${cbs.length}؟`))return;const batch=db.batch();cbs.forEach(cb=>batch.delete(db.collection("products").doc(cb.value)));batch.commit().then(()=>{document.getElementById("selectAllProducts").checked=false;loadStats();if(currentEditingCategoryId)openCategoryProducts(currentEditingCategoryId,'');}); }
 
-        // ✅ شريط الصور
         function loadSlides() {
             const container = document.getElementById('slidesList');
             container.innerHTML = '<div class="loading text-gray-500">⏳ جاري الجلب...</div>';
