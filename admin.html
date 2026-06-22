@@ -65,7 +65,7 @@
         <div>
             <div class="p-5 border-b border-gray-700 flex items-center justify-between">
                 <div class="flex items-center gap-2"><span class="gold-bg text-black px-2 py-0.5 rounded text-sm font-black">MP</span><span class="text-md font-bold text-white">الإدارة</span></div>
-                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v14.0</span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded">v15.0</span>
             </div>
             <nav class="p-3 space-y-1">
                 <button onclick="switchTab('dashboardTab',this)" class="tab-btn w-full text-right gold-bg text-black font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
@@ -73,6 +73,7 @@
                 <button onclick="switchTab('depositsTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#111827] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-money-bill-wave"></i> الإيداعات</button>
                 <button onclick="switchTab('categoriesTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#111827] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-tags"></i> الأقسام</button>
                 <button onclick="switchTab('productsTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#111827] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-cubes"></i> المنتجات</button>
+                <button onclick="switchTab('heroSlidesTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#111827] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-images"></i> شريط الصور</button>
                 <button onclick="switchTab('usersTab',this)" class="tab-btn w-full text-right text-gray-400 hover:text-white hover:bg-[#111827] px-4 py-3 rounded-xl text-xs flex items-center gap-3"><i class="fa-solid fa-users"></i> المستخدمين</button>
             </nav>
         </div>
@@ -94,26 +95,22 @@
             </div>
         </section>
 
-        <!-- الطلبات -->
         <section id="ordersTab" class="admin-tab hidden space-y-4">
             <div class="flex justify-between"><h1 class="text-xl font-black text-white">📦 إدارة الطلبات</h1><button onclick="deleteSelectedOrders()" class="bg-red-600/20 text-red-400 border border-red-500/30 hover:bg-red-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash-can"></i> حذف المحدد</button></div>
-            <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllOrders" onclick="toggleSelectAll('orderCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">العميل</th><th class="p-4">المنتج</th><th class="p-4">البيانات</th><th class="p-4">📞 التواصل</th><th class="p-4">الكمية</th><th class="p-4">المبلغ</th><th class="p-4">التاريخ</th><th class="p-4">الحالة</th><th class="p-4">إجراء</th></tr></thead><tbody id="ordersTableBody"><tr><td colspan="10" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div></div>
+            <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllOrders" onclick="toggleSelectAll('orderCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">العميل</th><th class="p-4">المنتج</th><th class="p-4">البيانات</th><th class="p-4">📞 التواصل</th><th class="p-4">الكمية</th><th class="p-4">المبلغ</th><th class="p-4">رقم الفاتورة</th><th class="p-4">التاريخ</th><th class="p-4">الحالة</th><th class="p-4">إجراء</th></tr></thead><tbody id="ordersTableBody"><tr><td colspan="11" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div></div>
         </section>
 
-        <!-- الإيداعات -->
         <section id="depositsTab" class="admin-tab hidden space-y-4">
             <h1 class="text-xl font-black text-white">💰 إدارة الإيداعات</h1>
-            <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">المستخدم</th><th class="p-4">المزود</th><th class="p-4">رقم/كود</th><th class="p-4">المبلغ</th><th class="p-4">التاريخ</th><th class="p-4">الحالة</th><th class="p-4">إجراء</th></tr></thead><tbody id="depositsTableBody"><tr><td colspan="7" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div></div>
+            <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">المستخدم</th><th class="p-4">المزود</th><th class="p-4">رقم/كود</th><th class="p-4">المبلغ</th><th class="p-4">رقم الفاتورة</th><th class="p-4">التاريخ</th><th class="p-4">الحالة</th><th class="p-4">إجراء</th></tr></thead><tbody id="depositsTableBody"><tr><td colspan="8" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div></div>
         </section>
 
-        <!-- الأقسام -->
         <section id="categoriesTab" class="admin-tab hidden space-y-6">
             <div class="flex justify-between"><h1 class="text-xl font-black text-white">🏷️ الأقسام</h1><button onclick="openCategoryModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة قسم</button></div>
             <div id="categoryModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-lg mx-auto space-y-4"><div class="flex justify-between"><h3 id="catModalTitle" class="text-sm font-bold text-white">قسم جديد</h3><button onclick="closeCategoryModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveCategory(event)" class="space-y-3 text-xs"><input type="hidden" id="catId"><div><label class="text-gray-400">اسم القسم *</label><input type="text" id="catName" required class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">رابط الصورة</label><input type="text" id="catImage" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white font-mono text-[11px]"></div><div><label class="text-gray-400">الترتيب</label><input type="number" id="catOrder" value="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></form></div>
             <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">ترتيب</th><th class="p-4">تحكم</th></tr></thead><tbody id="categoriesTableBody"><tr><td colspan="4" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div>
         </section>
 
-        <!-- المنتجات مع الحقول الديناميكية -->
         <section id="productsTab" class="admin-tab hidden space-y-6">
             <div class="flex justify-between items-center"><h1 class="text-xl font-black text-white">🎮 المنتجات</h1><button onclick="openProductModal()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة منتج</button></div>
             <div id="adminCategoriesView"><h3 class="text-sm font-bold text-white mb-3">📂 اختر قسم لعرض منتجاته</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="adminCatsGrid"><div class="text-center p-6 text-gray-500">⏳ جاري جلب الأقسام...</div></div></div>
@@ -124,69 +121,53 @@
                 <div id="batchMoveModal" class="hidden card-bg p-5 rounded-2xl border border-purple-500/30 max-w-lg mx-auto space-y-4 mb-4"><div class="flex justify-between"><h3 class="text-sm font-bold text-white">📦 نقل المنتجات لقسم آخر</h3><button onclick="closeBatchMoveModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><div class="space-y-3 text-xs"><div><label class="text-gray-400 block mb-1">اختر القسم الجديد</label><select id="targetCategorySelect" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="">اختر القسم...</option></select></div><div class="bg-[#0a0f1a] p-3 rounded-xl border border-gray-700"><p class="text-gray-400 text-[10px] mb-2">📋 المحدد للنقل: <span id="moveSelectedCount" class="text-purple-400 font-bold">0</span></p></div><button onclick="applyBatchMove()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-xs">📦 نقل المنتجات المحددة</button></div></div>
                 <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><div class="overflow-x-auto custom-scrollbar"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4"><input type="checkbox" id="selectAllProducts" onclick="toggleSelectAll('productCheckbox',this)" class="accent-[#f5a623]"></th><th class="p-4">صورة</th><th class="p-4">اسم</th><th class="p-4">سعر</th><th class="p-4">خصم</th><th class="p-4">نوع الحقل</th><th class="p-4">عداد</th><th class="p-4">حالة</th><th class="p-4">تحكم</th></tr></thead><tbody id="productsTableBody"><tr><td colspan="9" class="text-center p-6 text-gray-500">اختر قسم أولاً</td></tr></tbody></table></div></div>
             </div>
-            <!-- مودال المنتج مع الحقول الديناميكية -->
             <div id="productModal" class="hidden card-bg p-5 rounded-2xl border border-amber-500/30 max-w-2xl mx-auto space-y-4"><div class="flex justify-between"><h3 id="prodModalTitle" class="text-sm font-bold text-white">منتج جديد</h3><button onclick="closeProductModal()" class="text-gray-500"><i class="fa-solid fa-xmark"></i></button></div><form onsubmit="saveProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs"><input type="hidden" id="prodId"><div class="md:col-span-2"><label class="text-gray-400">اسم المنتج *</label><input type="text" id="prodName" required class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر (د.ل) *</label><input type="number" step="0.001" id="prodPriceLYD" required class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">السعر ($)</label><input type="number" step="0.01" id="prodPriceUSD" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">القسم</label><select id="prodCategory" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></select></div><div><label class="text-gray-400">الخصم %</label><input type="number" id="prodDiscount" value="0" min="0" max="99" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div>
-            
-            <!-- ✅ إعدادات الحقل الديناميكي -->
             <div class="md:col-span-2 border border-amber-500/20 rounded-xl p-3 space-y-3">
                 <p class="text-amber-400 text-[10px] font-bold">📝 إعدادات حقل البيانات</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <div><label class="text-gray-400">نوع الحقل</label><select id="fieldType" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="id">🎮 ID لاعب</option><option value="phone">📞 رقم هاتف</option><option value="account">🔗 رابط الحساب</option><option value="custom">✏️ حقل مخصص</option></select></div>
-                    <div><label class="text-gray-400">تفعيل الحقل</label><select id="fieldEnabled" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="true">✅ مفعل</option><option value="false">❌ معطل</option></select></div>
-                </div>
+                <div class="grid grid-cols-2 gap-3"><div><label class="text-gray-400">نوع الحقل</label><select id="fieldType" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="id">🎮 ID لاعب</option><option value="phone">📞 رقم هاتف</option><option value="account">🔗 رابط الحساب</option><option value="custom">✏️ حقل مخصص</option></select></div><div><label class="text-gray-400">تفعيل الحقل</label><select id="fieldEnabled" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="true">✅ مفعل</option><option value="false">❌ معطل</option></select></div></div>
                 <div id="customLabelContainer" class="hidden"><label class="text-gray-400">نص الحقل المخصص</label><input type="text" id="fieldCustomLabel" placeholder="مثال: أدخل يوزر الانستقرام" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div>
             </div>
-            
-            <!-- ✅ إعدادات العداد -->
             <div class="md:col-span-2 border border-amber-500/20 rounded-xl p-3 space-y-2">
                 <div class="flex items-center justify-between"><span class="text-amber-400 text-[10px] font-bold">🔢 تفعيل العداد المتحرك</span><label class="toggle-switch"><input type="checkbox" id="enableQuantity" onchange="toggleQuantitySettings()"><span class="toggle-slider"></span></label></div>
                 <p class="text-[9px] text-gray-500">عند التفعيل يظهر للزبون عداد كميات مع مربع إدخال</p>
-                <div id="quantitySettings" class="hidden space-y-3 mt-2">
-                    <div class="grid grid-cols-2 gap-3"><div><label class="text-gray-400">الحد الأدنى</label><input type="number" id="qtyMin" value="30" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">الحد الأقصى</label><input type="number" id="qtyMax" value="100" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div></div>
-                    <p class="text-[9px] text-gray-500">السعر = سعر {{الحد الأدنى}} قطعة. يتم احتساب سعر القطعة تلقائياً.</p>
-                </div>
+                <div id="quantitySettings" class="hidden space-y-3 mt-2"><div class="grid grid-cols-2 gap-3"><div><label class="text-gray-400">الحد الأدنى</label><input type="number" id="qtyMin" value="30" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div><div><label class="text-gray-400">الحد الأقصى</label><input type="number" id="qtyMax" value="100" min="1" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></div></div><p class="text-[9px] text-gray-500">السعر = سعر {{الحد الأدنى}} قطعة</p></div>
             </div>
-            
             <div class="md:col-span-2"><label class="text-gray-400">رابط الصورة</label><input type="text" id="prodImage" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white font-mono text-[11px]" placeholder="اسم_الصورة.png أو رابط"></div><div class="md:col-span-2"><label class="text-gray-400">الوصف</label><textarea id="prodDescription" rows="2" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"></textarea></div><div class="md:col-span-2"><label class="text-gray-400">الحالة</label><select id="prodActive" class="w-full bg-[#0a0f1a] border border-gray-600 rounded-xl p-3 text-white"><option value="true">✅ نشط</option><option value="false">❌ مخفي</option></select></div><div class="md:col-span-2"><button type="submit" class="gold-bg text-black font-bold py-3 rounded-xl w-full">حفظ</button></div></form></div>
         </section>
 
-        <!-- المستخدمين -->
+        <!-- ✅ شريط الصور -->
+        <section id="heroSlidesTab" class="admin-tab hidden space-y-6">
+            <div class="flex justify-between"><h1 class="text-xl font-black text-white">🖼️ شريط الصور المتحركة</h1><button onclick="addSlide()" class="gold-bg text-black text-xs font-bold px-4 py-2.5 rounded-xl"><i class="fa-solid fa-plus"></i> إضافة صورة</button></div>
+            <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden p-4">
+                <div id="slidesList" class="space-y-3"><div class="loading text-gray-500">⏳ جاري جلب الصور...</div></div>
+                <button onclick="saveSlides()" class="gold-bg text-black font-bold py-3 rounded-xl w-full mt-4 text-xs"><i class="fa-solid fa-floppy-disk"></i> حفظ التغييرات</button>
+            </div>
+        </section>
+
         <section id="usersTab" class="admin-tab hidden space-y-4">
             <h1 class="text-xl font-black text-white">👥 المستخدمين</h1>
             <input type="text" oninput="searchUsers(this.value)" placeholder="🔍 بحث..." class="w-full max-w-xs bg-[#0a0f1a] border border-gray-600 rounded-xl py-2.5 px-4 text-white text-xs">
             <div class="card-bg rounded-2xl border border-gray-700 overflow-hidden"><table class="w-full text-right text-xs"><thead class="bg-[#0a0f1a] text-gray-400 text-[10px] uppercase"><tr><th class="p-4">اسم</th><th class="p-4">هاتف</th><th class="p-4">إيميل</th><th class="p-4">رصيد</th><th class="p-4">رتبة</th><th class="p-4">شحن/خصم</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="6" class="text-center p-8 text-gray-500">جاري التحميل...</td></tr></tbody></table></div>
         </section>
-
     </main>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y",
-            authDomain: "cd-card-87365.firebaseapp.com",
-            projectId: "cd-card-87365",
-            storageBucket: "cd-card-87365.firebasestorage.app"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y", authDomain: "cd-card-87365.firebaseapp.com", projectId: "cd-card-87365", storageBucket: "cd-card-87365.firebasestorage.app" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const ACCESS_CODE = "mansor";
         let allUsers = [], allCategoriesList = [], currentEditingCategoryId = null;
+        let slidesList = [];
 
-        // ✅ حدث تغيير نوع الحقل
         document.addEventListener('DOMContentLoaded', function() {
             const fieldTypeSelect = document.getElementById('fieldType');
-            if (fieldTypeSelect) {
-                fieldTypeSelect.addEventListener('change', function() {
-                    const container = document.getElementById('customLabelContainer');
-                    if (this.value === 'custom') { container.classList.remove('hidden'); }
-                    else { container.classList.add('hidden'); }
-                });
-            }
+            if (fieldTypeSelect) { fieldTypeSelect.addEventListener('change', function() { document.getElementById('customLabelContainer').classList.toggle('hidden', this.value !== 'custom'); }); }
         });
 
         function checkAccessCode() { if (document.getElementById("accessCode").value.trim() === ACCESS_CODE) { document.getElementById("adminGuardScreen").classList.add("hidden"); initDashboard(); } else { document.getElementById("accessError").classList.remove("hidden"); document.getElementById("guardCard").classList.add("shake"); setTimeout(() => document.getElementById("guardCard").classList.remove("shake"), 500); } }
         function logout() { if (confirm("هل أنت متأكد؟")) { document.getElementById("adminGuardScreen").classList.remove("hidden"); document.getElementById("accessCode").value = ""; } }
-        function initDashboard() { loadStats(); loadOrders(); loadDeposits(); loadCategories(); loadAdminCategories(); loadUsers(); }
-        function switchTab(tabId, btn) { document.querySelectorAll('.admin-tab').forEach(t => t.classList.add('hidden')); document.getElementById(tabId).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('gold-bg', 'text-black'); b.classList.add('text-gray-400'); }); btn.classList.add('gold-bg', 'text-black'); btn.classList.remove('text-gray-400'); }
+        function initDashboard() { loadStats(); loadOrders(); loadDeposits(); loadCategories(); loadAdminCategories(); loadUsers(); loadSlides(); }
+        function switchTab(tabId, btn) { document.querySelectorAll('.admin-tab').forEach(t => t.classList.add('hidden')); document.getElementById(tabId).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('gold-bg', 'text-black'); b.classList.add('text-gray-400'); }); btn.classList.add('gold-bg', 'text-black'); btn.classList.remove('text-gray-400'); if(tabId==='heroSlidesTab') loadSlides(); }
         function toggleSelectAll(className, master) { document.querySelectorAll(`.${className}`).forEach(cb => cb.checked = master.checked); }
         function toggleQuantitySettings() { document.getElementById('quantitySettings').classList.toggle('hidden', !document.getElementById('enableQuantity').checked); }
 
@@ -199,29 +180,29 @@
         function loadOrders() {
             db.collection("orders").orderBy("createdAt", "desc").limit(100).onSnapshot(snap => {
                 const tbody = document.getElementById("ordersTableBody"); tbody.innerHTML = "";
-                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="10" class="text-center p-6 text-gray-500">لا توجد طلبات</td></tr>'; return; }
+                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="11" class="text-center p-6 text-gray-500">لا توجد طلبات</td></tr>'; return; }
                 snap.forEach(doc => {
                     const o = doc.data(); const date = o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleString('ar-LY') : '---';
-                    const statusText = o.status === 'completed' ? '✅ مكتمل' : o.status === 'rejected' ? '❌ مرفوض' : '🕒 معلق';
-                    const actionBtns = o.status === 'pending' ? `<button onclick="approveOrder('${doc.id}')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">✅ قبول</button> <button onclick="rejectOrder('${doc.id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">❌ رفض</button>` : '<span class="text-gray-500">تم</span>';
-                    tbody.innerHTML += `<tr class="border-b border-gray-700/40"><td class="p-4"><input type="checkbox" value="${doc.id}" class="orderCheckbox accent-[#f5a623]"></td><td class="p-4 text-white">${o.userName||'---'}</td><td class="p-4 gold-text">${o.serviceName||o.cardName||'---'}</td><td class="p-4 font-mono">${o.playerID||'---'}</td><td class="p-4 gold-text" style="direction:ltr;text-align:center;">📞 ${o.contactPhone||'---'}</td><td class="p-4">${o.quantity||1}</td><td class="p-4">${(o.amount||o.price||0).toFixed(2)} د.ل</td><td class="p-4 text-[10px]">${date}</td><td class="p-4">${statusText}</td><td class="p-4">${actionBtns}</td></tr>`;
+                    const statusText = o.status === 'completed' ? '✅ مكتمل' : o.status === 'canceled' ? '❌ ملغي' : '🕒 معلق';
+                    const actionBtns = o.status === 'pending' ? `<button onclick="approveOrder('${doc.id}')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">✅ قبول</button> <button onclick="cancelOrder('${doc.id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">❌ إلغاء</button>` : o.status === 'completed' ? `<button onclick="cancelOrder('${doc.id}')" class="bg-amber-600 text-white px-2 py-1 rounded text-[10px]">↩ إلغاء</button>` : '<span class="text-gray-500">تم</span>';
+                    tbody.innerHTML += `<tr class="border-b border-gray-700/40"><td class="p-4"><input type="checkbox" value="${doc.id}" class="orderCheckbox accent-[#f5a623]"></td><td class="p-4 text-white">${o.userName||'---'}</td><td class="p-4 gold-text">${o.serviceName||o.cardName||'---'}</td><td class="p-4 font-mono">${o.playerID||'---'}</td><td class="p-4 gold-text" style="direction:ltr;text-align:center;">📞 ${o.contactPhone||'---'}</td><td class="p-4">${o.quantity||1}</td><td class="p-4">${(o.amount||o.price||0).toFixed(2)} د.ل</td><td class="p-4 font-mono">${o.invoiceNumber||'---'}</td><td class="p-4 text-[10px]">${date}</td><td class="p-4">${statusText}</td><td class="p-4">${actionBtns}</td></tr>`;
                 });
             });
         }
 
         async function approveOrder(id) { if (!confirm("تأكيد قبول الطلب؟")) return; try { await db.collection("orders").doc(id).update({ status: "completed" }); showNotification('✅ تم قبول الطلب', 'success'); loadStats(); } catch (e) { alert("❌ خطأ: " + e.message); } }
-        async function rejectOrder(id) { if (!confirm("تأكيد رفض الطلب وإرجاع المبلغ؟")) return; try { const orderDoc = await db.collection("orders").doc(id).get(); const o = orderDoc.data(); if (o && o.userId) { const userDoc = await db.collection("users").doc(o.userId).get(); const cb = userDoc.exists ? (userDoc.data().balance || 0) : 0; await db.collection("users").doc(o.userId).update({ balance: cb + (o.amount || o.price || 0) }); } await db.collection("orders").doc(id).update({ status: "rejected" }); showNotification('❌ تم رفض الطلب وإرجاع المبلغ', 'error'); loadStats(); } catch (e) { alert("❌ خطأ: " + e.message); } }
+        async function cancelOrder(id) { if (!confirm("تأكيد إلغاء الطلب وإرجاع المبلغ؟")) return; try { const orderDoc = await db.collection("orders").doc(id).get(); const o = orderDoc.data(); if (o && o.userId) { const userDoc = await db.collection("users").doc(o.userId).get(); const cb = userDoc.exists ? (userDoc.data().balance || 0) : 0; await db.collection("users").doc(o.userId).update({ balance: cb + (o.amount || o.price || 0) }); } await db.collection("orders").doc(id).update({ status: "canceled" }); showNotification('❌ تم إلغاء الطلب وإرجاع المبلغ', 'error'); loadStats(); } catch (e) { alert("❌ خطأ: " + e.message); } }
         function deleteSelectedOrders() { const cbs = document.querySelectorAll('.orderCheckbox:checked'); if (!cbs.length) return alert("حدد طلباً"); if (!confirm(`حذف ${cbs.length} طلب؟`)) return; const batch = db.batch(); cbs.forEach(cb => batch.delete(db.collection("orders").doc(cb.value))); batch.commit().then(() => { document.getElementById("selectAllOrders").checked = false; loadStats(); }); }
 
         function loadDeposits() {
             db.collection("deposits").orderBy("createdAt", "desc").limit(100).onSnapshot(snap => {
                 const tbody = document.getElementById("depositsTableBody"); tbody.innerHTML = "";
-                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="7" class="text-center p-6 text-gray-500">لا توجد إيداعات</td></tr>'; return; }
+                if (snap.empty) { tbody.innerHTML = '<tr><td colspan="8" class="text-center p-6 text-gray-500">لا توجد إيداعات</td></tr>'; return; }
                 snap.forEach(doc => {
                     const d = doc.data(); const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString('ar-LY') : '---';
                     const statusText = d.status === 'approved' ? '✅ مقبول' : d.status === 'rejected' ? '❌ مرفوض' : '🕒 معلق';
                     const actionBtns = d.status === 'pending' ? `<button onclick="approveDeposit('${doc.id}','${d.userId}','${d.amount||0}')" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px]">✅ قبول</button> <button onclick="rejectDeposit('${doc.id}')" class="bg-red-600 text-white px-2 py-1 rounded text-[10px]">❌ رفض</button>` : '<span class="text-gray-500">تم</span>';
-                    tbody.innerHTML += `<tr class="border-b border-gray-700/40"><td class="p-4">${d.userName||d.userId||'---'}</td><td class="p-4">${d.provider||'تحويل'}</td><td class="p-4 font-mono">${d.phone||d.card_code||'---'}</td><td class="p-4 gold-text">${(d.amount||0).toFixed(2)} د.ل</td><td class="p-4 text-[10px]">${date}</td><td class="p-4">${statusText}</td><td class="p-4">${actionBtns}</td></tr>`;
+                    tbody.innerHTML += `<tr class="border-b border-gray-700/40"><td class="p-4">${d.userName||d.userId||'---'}</td><td class="p-4">${d.provider||'تحويل'}</td><td class="p-4 font-mono">${d.phone||d.card_code||'---'}</td><td class="p-4 gold-text">${(d.amount||0).toFixed(2)} د.ل</td><td class="p-4 font-mono">${d.invoiceNumber||'---'}</td><td class="p-4 text-[10px]">${date}</td><td class="p-4">${statusText}</td><td class="p-4">${actionBtns}</td></tr>`;
                 });
             });
         }
@@ -262,7 +243,6 @@
             db.collection("products").where("categoryId", "==", catId).get().then(snap => {
                 if (snap.empty) { tbody.innerHTML = '<tr><td colspan="9" class="text-center p-6 text-gray-500">لا توجد منتجات</td></tr>'; return; }
                 let products = []; snap.forEach(doc => { const p = doc.data(); p._id = doc.id; products.push(p); });
-                // ✅ ترتيب حسب السعر
                 products.sort((a, b) => (a.priceLYD || a.price || 0) - (b.priceLYD || b.price || 0));
                 tbody.innerHTML = products.map(p => {
                     const imgSrc = p.image || p.img || ''; const discount = p.discount || 0;
@@ -277,11 +257,9 @@
 
         function backToAdminCategories() { document.getElementById("adminProductsView").classList.add("hidden"); document.getElementById("adminCategoriesView").classList.remove("hidden"); currentEditingCategoryId = null; loadAdminCategories(); }
         function updateAllSelectedCounts() { const count = document.querySelectorAll('.productCheckbox:checked').length; const el1 = document.getElementById("selectedCount"); const el2 = document.getElementById("moveSelectedCount"); if (el1) el1.innerText = count; if (el2) el2.innerText = count; }
-
         function openBatchReorderModal() { updateAllSelectedCounts(); document.getElementById("batchReorderModal").classList.remove("hidden"); }
         function closeBatchReorderModal() { document.getElementById("batchReorderModal").classList.add("hidden"); }
         async function applyBatchOrder() { const cbs = document.querySelectorAll('.productCheckbox:checked'); if (!cbs.length) return alert("⚠️ حدد منتج"); const newOrder = parseInt(document.getElementById("newOrderValue").value) || 1; if (!confirm(`تغيير ترتيب ${cbs.length} منتج إلى ${newOrder}؟`)) return; const batch = db.batch(); cbs.forEach(cb => batch.update(db.collection("products").doc(cb.value), { order: newOrder })); try { await batch.commit(); document.getElementById("selectAllProducts").checked = false; alert(`✅ تم التحديث`); closeBatchReorderModal(); if (currentEditingCategoryId) openCategoryProducts(currentEditingCategoryId, ''); } catch (e) { alert("❌ " + e.message); } }
-
         function openBatchMoveModal() { updateAllSelectedCounts(); updateAllSelects(); document.getElementById("batchMoveModal").classList.remove("hidden"); }
         function closeBatchMoveModal() { document.getElementById("batchMoveModal").classList.add("hidden"); }
         async function applyBatchMove() { const cbs = document.querySelectorAll('.productCheckbox:checked'); if (!cbs.length) return alert("⚠️ حدد منتج"); const targetId = document.getElementById("targetCategorySelect").value; if (!targetId) return alert("⚠️ اختر القسم"); const targetCat = allCategoriesList.find(c => c.id === targetId); if (!targetCat) return alert("⚠️ القسم غير موجود"); if (!confirm(`نقل ${cbs.length} منتج إلى "${targetCat.name}"؟`)) return; const batch = db.batch(); cbs.forEach(cb => batch.update(db.collection("products").doc(cb.value), { categoryId: targetId })); try { await batch.commit(); document.getElementById("selectAllProducts").checked = false; alert(`✅ تم النقل`); closeBatchMoveModal(); if (currentEditingCategoryId) openCategoryProducts(currentEditingCategoryId, ''); } catch (e) { alert("❌ " + e.message); } }
@@ -296,8 +274,8 @@
             db.collection("products").doc(id).get().then(doc => {
                 if (!doc.exists) return; const p = doc.data();
                 document.getElementById("prodId").value=id; document.getElementById("prodName").value=p.name||""; document.getElementById("prodPriceLYD").value=p.priceLYD||p.price||0; document.getElementById("prodPriceUSD").value=p.priceUSD||0; document.getElementById("prodImage").value=p.image||p.img||""; document.getElementById("prodDescription").value=p.description||""; document.getElementById("prodActive").value=String(p.active!==false); document.getElementById("prodDiscount").value=p.discount||0; document.getElementById("fieldType").value=p.fieldType||p.type||"id"; document.getElementById("fieldEnabled").value=String(p.fieldEnabled!==false); document.getElementById("fieldCustomLabel").value=p.fieldCustomLabel||""; document.getElementById("prodCategory").value=p.categoryId||""; document.getElementById("enableQuantity").checked=p.enableQuantity||false; document.getElementById("qtyMin").value=p.qtyMin||30; document.getElementById("qtyMax").value=p.qtyMax||100;
-                if(p.fieldType==='custom'){document.getElementById("customLabelContainer").classList.remove("hidden");}else{document.getElementById("customLabelContainer").classList.add("hidden");}
-                if(p.enableQuantity)document.getElementById("quantitySettings").classList.remove("hidden");else document.getElementById("quantitySettings").classList.add("hidden");
+                if(p.fieldType==='custom') document.getElementById("customLabelContainer").classList.remove("hidden"); else document.getElementById("customLabelContainer").classList.add("hidden");
+                if(p.enableQuantity) document.getElementById("quantitySettings").classList.remove("hidden"); else document.getElementById("quantitySettings").classList.add("hidden");
                 document.getElementById("prodModalTitle").innerText="تعديل منتج"; document.getElementById("productModal").classList.remove("hidden");
             });
         }
@@ -309,23 +287,7 @@
             let imgInput = document.getElementById("prodImage").value.trim();
             const BASE_IMAGE_URL = "https://raw.githubusercontent.com/mediaplusly/assets/main/";
             if (imgInput && !imgInput.startsWith("http")) { imgInput = BASE_IMAGE_URL + imgInput; }
-            const d={
-                name:document.getElementById("prodName").value,
-                priceLYD:parseFloat(document.getElementById("prodPriceLYD").value)||0,
-                price:parseFloat(document.getElementById("prodPriceLYD").value)||0,
-                priceUSD:parseFloat(document.getElementById("prodPriceUSD").value)||0,
-                image:imgInput, img:imgInput,
-                description:document.getElementById("prodDescription").value,
-                active:document.getElementById("prodActive").value==="true",
-                type:document.getElementById("fieldType").value,
-                fieldType:document.getElementById("fieldType").value,
-                fieldEnabled:document.getElementById("fieldEnabled").value==="true",
-                fieldCustomLabel:document.getElementById("fieldCustomLabel").value,
-                categoryId:document.getElementById("prodCategory").value,
-                discount:parseInt(document.getElementById("prodDiscount").value)||0,
-                enableQuantity:document.getElementById("enableQuantity").checked,
-                order:Date.now()
-            };
+            const d={name:document.getElementById("prodName").value,priceLYD:parseFloat(document.getElementById("prodPriceLYD").value)||0,price:parseFloat(document.getElementById("prodPriceLYD").value)||0,priceUSD:parseFloat(document.getElementById("prodPriceUSD").value)||0,image:imgInput,img:imgInput,description:document.getElementById("prodDescription").value,active:document.getElementById("prodActive").value==="true",type:document.getElementById("fieldType").value,fieldType:document.getElementById("fieldType").value,fieldEnabled:document.getElementById("fieldEnabled").value==="true",fieldCustomLabel:document.getElementById("fieldCustomLabel").value,categoryId:document.getElementById("prodCategory").value,discount:parseInt(document.getElementById("prodDiscount").value)||0,enableQuantity:document.getElementById("enableQuantity").checked,order:Date.now()};
             if(d.enableQuantity){d.qtyMin=parseInt(document.getElementById("qtyMin").value)||30;d.qtyMax=parseInt(document.getElementById("qtyMax").value)||100;}
             if(id)db.collection("products").doc(id).update(d);else db.collection("products").add({...d,sales:0});
             closeProductModal();loadStats();if(currentEditingCategoryId)openCategoryProducts(currentEditingCategoryId,'');
@@ -333,6 +295,42 @@
 
         function deleteProduct(id) { if(confirm("حذف؟")){db.collection("products").doc(id).delete().then(()=>{if(currentEditingCategoryId)openCategoryProducts(currentEditingCategoryId,'');});} }
         function deleteSelectedProducts() { const cbs=document.querySelectorAll('.productCheckbox:checked');if(!cbs.length)return alert("حدد منتجاً");if(!confirm(`حذف ${cbs.length}؟`))return;const batch=db.batch();cbs.forEach(cb=>batch.delete(db.collection("products").doc(cb.value)));batch.commit().then(()=>{document.getElementById("selectAllProducts").checked=false;loadStats();if(currentEditingCategoryId)openCategoryProducts(currentEditingCategoryId,'');}); }
+
+        // ✅ شريط الصور
+        function loadSlides() {
+            const container = document.getElementById('slidesList');
+            container.innerHTML = '<div class="loading text-gray-500">⏳ جاري الجلب...</div>';
+            db.collection("settings").doc("hero_slides").get().then(doc => {
+                if (doc.exists && doc.data().slides) { slidesList = doc.data().slides; }
+                else { slidesList = [{image:'',link:'',active:true}]; }
+                renderSlides();
+            }).catch(() => { slidesList = [{image:'',link:'',active:true}]; renderSlides(); });
+        }
+
+        function renderSlides() {
+            const container = document.getElementById('slidesList');
+            container.innerHTML = slidesList.map((s, i) => `
+                <div class="flex items-center gap-3 bg-[#0a0f1a] p-3 rounded-xl border border-gray-700">
+                    <span class="text-gray-400 text-xs w-6">${i+1}</span>
+                    <input type="text" value="${s.image||''}" placeholder="رابط الصورة" oninput="slidesList[${i}].image=this.value" class="flex-1 bg-[#0a0f1a] border border-gray-600 rounded-lg p-2 text-white text-xs">
+                    <input type="text" value="${s.link||''}" placeholder="رابط (اختياري)" oninput="slidesList[${i}].link=this.value" class="flex-1 bg-[#0a0f1a] border border-gray-600 rounded-lg p-2 text-white text-xs">
+                    <select onchange="slidesList[${i}].active=this.value==='true'" class="bg-[#0a0f1a] border border-gray-600 rounded-lg p-2 text-white text-xs">
+                        <option value="true" ${s.active!==false?'selected':''}>✅</option>
+                        <option value="false" ${s.active===false?'selected':''}>❌</option>
+                    </select>
+                    <button onclick="slidesList.splice(${i},1);renderSlides();" class="text-red-400 text-sm">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function addSlide() { slidesList.push({image:'',link:'',active:true}); renderSlides(); }
+
+        async function saveSlides() {
+            try {
+                await db.collection("settings").doc("hero_slides").set({ slides: slidesList, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+                showNotification('✅ تم حفظ شريط الصور', 'success');
+            } catch (e) { alert('❌ خطأ: ' + e.message); }
+        }
 
         function loadUsers() { db.collection("users").limit(100).onSnapshot(snap=>{allUsers=[];snap.forEach(doc=>{const u=doc.data();u.uid=doc.id;allUsers.push(u);});renderUsersTable(allUsers);}); }
         function renderUsersTable(arr) { const t=document.getElementById("usersTableBody");t.innerHTML="";if(!arr.length){t.innerHTML='<tr><td colspan="6" class="text-center p-6 text-gray-500">لا يوجد</td></tr>';return;} arr.forEach(u=>{t.innerHTML+=`<tr class="border-b border-gray-700/40"><td class="p-4 text-white">${u.username||u.name||'---'}</td><td class="p-4 font-mono">${u.phone||'---'}</td><td class="p-4 text-[11px]">${u.email||'---'}</td><td class="p-4 gold-text">${(u.balance||0).toFixed(4)}</td><td class="p-4">${u.role==='admin'?'👑':'👤'}</td><td class="p-4"><input type="number" step="0.01" id="wallet_${u.uid}" class="w-16 bg-[#0a0f1a] border border-gray-600 rounded p-1 text-center text-white text-xs" placeholder="مبلغ"><button onclick="updateWallet('${u.uid}','add')" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px]">+</button> <button onclick="updateWallet('${u.uid}','sub')" class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px]">-</button></td></tr>`;}); }
