@@ -133,14 +133,17 @@
             border-radius: 20px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 14px; 
         }
         .big-number { font-size: 34px; font-weight: 900; color: var(--cyan); text-align: center; text-shadow: 0 0 15px rgba(0,242,254,0.4); }
-        .bank-row { 
+        
+        /* ✅ دمج المحافظ في نفس السطر ومحاذاتها لتوفير المساحة */
+        .bank-container-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; }
+        .bank-row-compact { 
             background: rgba(10,15,26,0.6); backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,242,254,0.1); border-radius: 14px; padding: 10px 14px; margin: 8px 0; 
-            display: flex; justify-content: space-between; align-items: center; 
+            border: 1px solid rgba(0,242,254,0.1); border-radius: 14px; padding: 8px 10px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
         }
-        .bank-row .num { font-size: 15px; font-weight: 900; direction: ltr; text-align: left; color: var(--cyan); }
-        .copy-btn { background: var(--cyan); color: #000; border: none; padding: 6px 12px; border-radius: 10px; font-size: 10px; font-weight: 700; cursor: pointer; border-bottom: 2px solid #00c4d4; box-shadow: 0 0 10px rgba(0,242,254,0.3); transition: all 0.15s; }
-        .copy-btn:active { transform: translateY(2px); }
+        .bank-row-compact .num { font-size: 13px; font-weight: 900; color: var(--cyan); font-family: monospace; }
+        .bank-row-compact .label { font-size: 10px; color: var(--muted); }
+
         .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 12px; color: var(--muted); }
         .info-row span:last-child { color: var(--white); }
         .btn-red { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 13px; border-bottom: 3px solid #dc2626; transition: all 0.15s; }
@@ -164,7 +167,7 @@
             font-size: 10px; color: var(--muted); line-height: 2; 
         }
         .shipping-info .highlight { color: var(--cyan); font-weight: 600; }
-        .shipping-info a { color: #25d366; text-decoration: none; font-weight: 700; }
+        .shipping-info a { color: #10b981; text-decoration: none; font-weight: 700; }
 
         /* ✅ قائمة منسدلة */
         .dropdown-container { position: relative; margin-bottom: 14px; }
@@ -249,7 +252,7 @@
         .social-link.instagram { background: rgba(225,48,108,0.1); color: #e1306c; }
         .social-link:hover { transform: translateY(-2px); }
 
-        /* ✅ شريط التنقل الجانبي للجوال */
+        /* ✅ شريط التنقل الجانبي للجوال بالـ SVG النيون الموحد */
         .sidebar-menu { background: var(--glass-bg); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 10px; margin-bottom: 14px; }
         .sidebar-link-btn { background: transparent; border: none; color: #cbd5e1; padding: 12px 15px; text-align: right; font-size: 14px; font-weight: 600; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%; font-family: 'Cairo', sans-serif; transition: all 0.2s; }
         .sidebar-link-btn:hover, .sidebar-link-btn.active { background: rgba(0,242,254,0.08); color: #00f2fe; }
@@ -296,7 +299,6 @@
         </div>
     </div>
 
-    <!-- ✅ صفحة القائمة الجانبية (للجوال) -->
     <div id="menuPage" class="page">
         <div class="container" style="margin-top:10px;">
             <div class="sidebar-menu">
@@ -313,10 +315,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> بيانات حسابي
                 </button>
                 <a href="https://wa.me/218920414760" target="_blank" class="sidebar-link-btn" style="text-decoration:none;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> الدعم الفني
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> قسم الدعم الفني
                 </a>
                 <a href="https://whatsapp.com/channel/0029Vb7xpppGpLHGt77Uxt0Q" target="_blank" class="sidebar-link-btn" style="text-decoration:none;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> قنواتنا
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> قسم قنواتنا
                 </a>
             </div>
         </div>
@@ -336,13 +338,33 @@
                     </div>
                 </div>
             </div>
-            <div id="paymentLibyana" class="card-white hidden"><h3 style="color:var(--gold);margin-bottom:8px;">📞 شحن ليبيانا ومدار</h3><div class="bank-row"><div><span style="color:var(--muted);">ليبيانا</span></div><div class="num">0920414760</div><button class="copy-btn" onclick="copyText('0920414760')">📋 نسخ</button></div><div class="bank-row"><div><span style="color:var(--muted);">مدار</span></div><div class="num">0912377291</div><button class="copy-btn" onclick="copyText('0912377291')">📋 نسخ</button></div><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل رقم هاتفك والمبلغ</p><input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr"><input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr"><button class="notify-btn" onclick="submitRecharge('ليبيانا ومدار', 'phone_libyana', 'amount_libyana')">📩 إرسال طلب شحن</button></div>
-            <div id="paymentBinance" class="card-white hidden"><h3 style="color:var(--gold);margin-bottom:8px;">₿ شحن بايننس</h3><div class="bank-row"><div><span style="color:var(--muted);">معرف بايننس</span></div><div class="num">1046437963</div><button class="copy-btn" onclick="copyText('1046437963')">📋 نسخ</button></div><div class="note-box" style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:8px 12px;margin:8px 0;font-size:10px;color:var(--gold);text-align:center;">💡 1 دولار = 12 دينار</div><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل المعرف والمبلغ بالدولار</p><input type="text" id="binance_id" class="notify-input" placeholder="المعرف المحول منه (ID)" dir="ltr"><input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ ($)" dir="ltr"><button class="notify-btn" onclick="submitRecharge('بايننس', 'binance_id', 'binance_amount', true)">📩 إرسال طلب شحن</button></div>
+            
+            <div id="paymentLibyana" class="card-white hidden">
+                <h3 style="color:var(--gold);margin-bottom:8px;font-size:13px;text-align:center;">📞 شحن ليبيانا ومدار</h3>
+                <div class="bank-container-row">
+                    <div class="bank-row-compact">
+                        <span class="label">ليبيانا</span>
+                        <span class="num">0920414760</span>
+                        <button class="copy-btn" onclick="copyText('0920414760')">📋 نسخ</button>
+                    </div>
+                    <div class="bank-row-compact">
+                        <span class="label">مدار</span>
+                        <span class="num">0912377291</span>
+                        <button class="copy-btn" onclick="copyText('0912377291')">📋 نسخ</button>
+                    </div>
+                </div>
+                <p style="font-size:11px;color:var(--muted);margin-bottom:8px;text-align:center;">بعد التحويل، أدخل رقم هاتفك والمبلغ</p>
+                <input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
+                <input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة (د.ل)" dir="ltr">
+                <button class="notify-btn" onclick="submitRecharge('ليبيانا ومدار', 'phone_libyana', 'amount_libyana')">📩 إرسال طلب شحن</button>
+            </div>
+
+            <div id="paymentBinance" class="card-white hidden"><h3 style="color:var(--gold);margin-bottom:8px;">₿ شحن بايننس</h3><div class="bank-row-compact" style="flex-direction:row;justify-content:space-around;padding:12px;"><span style="color:var(--muted);font-size:11px;">معرف بايننس</span><span class="num">1046437963</span><button class="copy-btn" onclick="copyText('1046437963')">📋 نسخ</button></div><div class="note-box" style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:8px 12px;margin:8px 0;font-size:10px;color:var(--gold);text-align:center;">💡 1 دولار = 12 دينار</div><p style="font-size:11px;color:var(--muted);margin-bottom:8px;">بعد التحويل، أدخل المعرف والمبلغ بالدولار</p><input type="text" id="binance_id" class="notify-input" placeholder="المعرف المحول منه (ID)" dir="ltr"><input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ ($)" dir="ltr"><button class="notify-btn" onclick="submitRecharge('بايننس', 'binance_id', 'binance_amount', true)">📩 إرسال طلب شحن</button></div>
             <div id="paymentCards" class="card-white hidden"><h3 style="color:var(--gold);margin-bottom:8px;">💳 كروت التعبئة</h3><input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr"><input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت (د.ل)" dir="ltr"><button class="notify-btn" onclick="submitRecharge('كروت تعبئة', 'depositCardCode', 'depositAmount')">📩 إرسال طلب شحن</button></div>
             <div class="shipping-info" id="shippingInfo">
                 ⏱️ <span class="highlight">وقت المعالجة:</span> من دقيقة إلى 3 ساعات<br>
                 📞 في حال تأخر الوقت، يرجى التواصل مع<br>
-                <a href="https://wa.me/218920414760" target="_blank">💬 دعم الواتساب</a>
+                <a href="https://wa.me/218920414760" target="_blank">💬 دعم الواتساب الرسمي</a>
             </div>
         </div>
     </div>
@@ -358,7 +380,6 @@
         <div class="nav-item" data-tab="wallet" onclick="switchTab('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>المحفظة</div>
     </div>
 
-    <!-- ✅ مودال زجاجي -->
     <div id="detailModal" class="modal-overlay hidden" onclick="closeDetailModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeDetailModal()">✕</button>
@@ -367,7 +388,17 @@
             <div class="old-price-big hidden" id="dOldPrice" style="text-align:center;font-size:14px;color:#999;text-decoration:line-through;"></div>
             <p class="modal-desc" id="dDesc" style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:8px;"></p>
             <div id="stepQuantity" class="modal-step">
-                <div id="quantitySection" class="quantity-section hidden"><label>🔢 الكمية المطلوبة</label><div class="quantity-display-box"><input type="number" id="quantityInput" value="30" min="1" oninput="syncSliderFromInput(this.value)"></div><input type="range" id="quantitySlider" class="quantity-slider" min="30" max="100" value="30" step="1" oninput="syncInputFromSlider(this.value)"><div class="quantity-range-labels"><span id="qtyMinLabel">الحد الأدنى: 30</span><span id="qtyMaxLabel">الحد الأقصى: 100</span></div></div>
+                <div id="quantitySection" class="quantity-section hidden">
+                    <label>🔢 الكمية المطلوبة</label>
+                    <div class="quantity-display-box">
+                        <input type="number" id="quantityInput" value="30" min="1" oninput="syncSliderFromInput(this.value)">
+                    </div>
+                    <input type="range" id="quantitySlider" class="quantity-slider" min="30" max="100" value="30" step="1" oninput="syncInputFromSlider(this.value)">
+                    <div class="quantity-range-labels">
+                        <span id="qtyMinLabel">الحد الأدنى: 30</span>
+                        <span id="qtyMaxLabel">الحد الأقصى: 100</span>
+                    </div>
+                </div>
                 <div id="fixedPriceSection" class="price-display hidden">السعر: <span id="fixedPriceDisplay">0.000</span> د.ل</div>
                 <div id="dynamicPriceSection" class="price-display hidden">السعر الإجمالي: <span id="totalPriceNew">0.000</span> د.ل</div>
                 <div class="checkout-card"><div class="box" style="background:rgba(0,0,0,0.3);border-radius:12px;padding:10px;margin:8px 0;text-align:right;border:1px solid rgba(255,255,255,0.06);"><h5 style="font-size:12px;margin-bottom:6px;color:#f87171;">⚠️ الشروط والأحكام</h5><ul style="list-style:none;padding:0;"><li style="font-size:10px;color:#ccc;margin:4px 0;padding-right:12px;">المنتج <b style="color:#f87171">غير قابل للاسترداد</b></li><li style="font-size:10px;color:#ccc;margin:4px 0;padding-right:12px;">تأكد من <b style="color:#fff">صحة البيانات</b></li><li style="font-size:10px;color:#ccc;margin:4px 0;padding-right:12px;">التعويض خلال <b style="color:#fff">24 ساعة</b></li></ul></div></div>
@@ -394,7 +425,6 @@
         function getImageUrl(img) { if (!img) return ''; if (img.startsWith('http')) return img; return BASE_IMAGE_URL + img; }
         function generateInvoiceNumber() { return `MP-${Math.floor(1000 + Math.random() * 9000)}`; }
 
-        // ✅ مصفوفة المنتجات العامة (لحل مشكلة الـ onclick)
         let allCategories = [], allProducts = [], userBalance = 0, userData = null, currentProduct = null;
         let unitPrice = 0, currentQtyMin = 30, currentQtyMax = 100, isQuantityMode = false;
         let currentFieldType='id', currentFieldEnabled=true, currentFieldCustomLabel='';
@@ -459,7 +489,6 @@
 
         function fetchCategories(){document.getElementById('catsGrid').innerHTML='<div class="loading">⏳ جاري الجلب...</div>';db.collection("categories").orderBy("order").limit(50).get().then(snap=>{allCategories=[];snap.forEach(doc=>allCategories.push({id:doc.id,...doc.data()}));const grid=document.getElementById('catsGrid');if(!allCategories.length){grid.innerHTML='<div class="loading">لا توجد أقسام</div>';return;}grid.innerHTML=allCategories.map(cat=>`<div class="glass-card cat-card" onclick="openCategory('${cat.id}','${(cat.name||'').replace(/'/g,"\\'")}')"><img src="${getImageUrl(cat.image||cat.cover)}" class="card-img" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`).join('');});}
         
-        // ✅ فتح القسم - المنتجات مرتبة حسب السعر
         function openCategory(catId,catName){
             document.getElementById('categoriesView').classList.add('hidden');document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML=`🎮 ${catName}`;
@@ -471,27 +500,33 @@
                 grid.innerHTML=allProducts.map((p,i)=>{
                     const img=getImageUrl(p.image||p.img);const name=p.name||'منتج';const priceLYD=p.priceLYD||p.price||0;
                     const discount=p.discount||0;const finalPrice=discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
-                    const eq=p.enableQuantity||false;const desc=p.description||'';
-                    // ✅ تمرير الـ index بدل النص الكامل
+                    const desc=p.description||'';
                     return`<div class="glass-card product-card" onclick="openDetailByIndex(${i})">${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}<img src="${img}" class="card-img" loading="lazy" onerror="this.style.display='none'"><p class="game-name">${catName}</p><h4 class="product-title">${name}</h4>${desc?`<div class="product-desc-box">📝 ${desc}</div>`:''}${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}<div class="product-price">${finalPrice.toFixed(3)} د.ل</div><button class="buy-btn-3d" onclick="event.stopPropagation();openDetailByIndex(${i})">شراء</button></div>`;
                 }).join('');
             });
         }
         function showCategories(){document.getElementById('productsView').classList.add('hidden');document.getElementById('categoriesView').classList.remove('hidden');}
 
-        // ✅ دالة جديدة تستخدم الـ index
         function openDetailByIndex(index){
             const p=allProducts[index];if(!p)return;
             openDetail(getImageUrl(p.image||p.img),p.name||'منتج',p.priceLYD||p.price||0,p.type||'id',p.description||'',p.discount||0,p.enableQuantity||false,p.qtyMin||30,p.qtyMax||100,p.fieldType||p.type||'id',p.fieldEnabled!==false,p.fieldCustomLabel||'');
         }
 
         function openDetail(img,name,priceLYD,type,description,discount,enableQuantity,qtyMin,qtyMax,fieldType,fieldEnabled,fieldCustomLabel){
-            discount=discount||0;enableQuantity=enableQuantity||false;qtyMin=qtyMin||30;qtyMax=qtyMax||100;
-            // ✅ تصحيح المقارنة المنطقية
+            discount=discount||0;enableQuantity=enableQuantity||false;qtyMin=qtyMin||1;qtyMax=qtyMax||1;
             currentFieldType=fieldType||'id';
             currentFieldEnabled=fieldEnabled===true||fieldEnabled==='true';
             currentFieldCustomLabel=fieldCustomLabel||'';
-            isQuantityMode=enableQuantity;currentQtyMin=qtyMin;currentQtyMax=qtyMax;
+            
+            // ✅ قفل مدخلات الكمية لمنع العبث بها عندما تكون وحدة الشراء موحدة
+            isQuantityMode=enableQuantity;
+            if(!isQuantityMode) {
+                qtyMin = 1;
+                qtyMax = 1;
+            }
+            currentQtyMin=qtyMin;
+            currentQtyMax=qtyMax;
+            
             const finalPrice=discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
             currentProduct={img,name,priceLYD:finalPrice,type:currentFieldType,description,discount,originalPrice:priceLYD,enableQuantity,qtyMin,qtyMax};
             document.getElementById('stepData').classList.add('hidden');document.getElementById('stepQuantity').classList.remove('hidden');
@@ -501,12 +536,35 @@
             document.getElementById('quantitySection').classList.add('hidden');document.getElementById('fixedPriceSection').classList.add('hidden');document.getElementById('dynamicPriceSection').classList.add('hidden');
             document.getElementById('targetInput').value='';document.getElementById('contactPhone').value='';
             if(discount>0&&!enableQuantity){badge.classList.remove('hidden');badge.innerHTML=`<span class="discount-badge-big" style="background:var(--red);color:#fff;font-size:12px;font-weight:900;padding:4px 10px;border-radius:10px;display:inline-block;margin-bottom:6px;box-shadow:0 0 10px rgba(239,68,68,0.4);">🔥 خصم ${discount}%</span>`;oldPrice.classList.remove('hidden');oldPrice.innerText=`${priceLYD.toFixed(3)} د.ل`;}else{badge.classList.add('hidden');oldPrice.classList.add('hidden');}
-            if(enableQuantity){unitPrice=(priceLYD||0)/qtyMin;document.getElementById('quantitySlider').min=qtyMin;document.getElementById('quantitySlider').max=qtyMax;document.getElementById('quantitySlider').value=qtyMin;document.getElementById('quantityInput').value=qtyMin;document.getElementById('qtyMinLabel').innerText=`الحد الأدنى: ${qtyMin}`;document.getElementById('qtyMaxLabel').innerText=`الحد الأقصى: ${qtyMax}`;document.getElementById('quantitySection').classList.remove('hidden');document.getElementById('dynamicPriceSection').classList.remove('hidden');updateDynamicPrice(qtyMin);document.getElementById('dDesc').innerText=`عداد متحرك (${qtyMin}-${qtyMax})`;}else{document.getElementById('fixedPriceSection').classList.remove('hidden');document.getElementById('fixedPriceDisplay').innerText=finalPrice.toFixed(3);document.getElementById('dDesc').innerText=currentFieldCustomLabel||'النوع: '+(currentFieldType==='id'?'ID لاعب':currentFieldType==='phone'?'رقم هاتف':currentFieldType==='account'?'رابط حساب':'مباشر');}
+            
+            if(enableQuantity){
+                unitPrice=(priceLYD||0)/qtyMin;
+                document.getElementById('quantityInput').disabled = false;
+                document.getElementById('quantitySlider').classList.remove('hidden');
+                document.getElementById('quantitySlider').min=qtyMin;
+                document.getElementById('quantitySlider').max=qtyMax;
+                document.getElementById('quantitySlider').value=qtyMin;
+                document.getElementById('quantityInput').value=qtyMin;
+                document.getElementById('qtyMinLabel').innerText=`الحد الأدنى: ${qtyMin}`;
+                document.getElementById('qtyMaxLabel').innerText=`الحد الأقصى: ${qtyMax}`;
+                document.getElementById('quantitySection').classList.remove('hidden');
+                document.getElementById('dynamicPriceSection').classList.remove('hidden');
+                updateDynamicPrice(qtyMin);
+                document.getElementById('dDesc').innerText=`عداد متحرك (${qtyMin}-${qtyMax})`;
+            }else{
+                // ✅ جعل حقل الكمية مقفل وغير قابل للتغيير عندما يكون التسعير ثابتاً
+                document.getElementById('quantityInput').value=1;
+                document.getElementById('quantityInput').disabled = true;
+                document.getElementById('quantitySlider').classList.add('hidden');
+                document.getElementById('fixedPriceSection').classList.remove('hidden');
+                document.getElementById('fixedPriceDisplay').innerText=finalPrice.toFixed(3);
+                document.getElementById('dDesc').innerText=currentFieldCustomLabel||'النوع: '+(currentFieldType==='id'?'ID لاعب':currentFieldType==='phone'?'رقم هاتف':currentFieldType==='account'?'رابط حساب':'مباشر');
+            }
             setupDataField();document.getElementById('detailModal').classList.remove('hidden');
         }
         function closeDetailModal(){document.getElementById('detailModal').classList.add('hidden');}
 
-        // ✅ تأكيد الشراء - حفظ الطلب + حالة pending
+        // ✅ تعديل وظيفة تأكيد الشراء لحفظ الطلب في Firestore بحالة معلقة (pending) لتقوم بتغييرها من الـ Admin Panel لاحقاً
         async function confirmPurchase(){
             if(!currentProduct)return;const user=auth.currentUser;if(!user)return alert('⚠️ سجل دخول أولاً');
             const contactPhone=document.getElementById('contactPhone').value.trim();if(!contactPhone)return alert('⚠️ أدخل رقم التواصل');
@@ -517,15 +575,50 @@
             const newBalance=userBalance-finalPrice;const invoiceNumber=generateInvoiceNumber();
             try{
                 await db.collection("users").doc(user.uid).update({balance:newBalance});
-                // ✅ حفظ الطلب مع حالة pending
-                await db.collection("orders").add({userId:user.uid,userName:userData?.username||userData?.name||'',userEmail:userData?.email||'',serviceName:currentProduct.name,cardName:currentProduct.name,amount:finalPrice,price:finalPrice,playerID:orderData,contactPhone:contactPhone,quantity:quantity,serviceType:currentFieldType,invoiceNumber:invoiceNumber,status:'pending',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+                
+                // ✅ يتم هنا تخزين الطلب كاملاً في قاعدة البيانات مع إعطائه حالة "pending" 
+                await db.collection("orders").add({
+                    userId:user.uid,
+                    userName:userData?.username||userData?.name||'',
+                    userEmail:userData?.email||'',
+                    serviceName:currentProduct.name,
+                    cardName:currentProduct.name,
+                    amount:finalPrice,
+                    price:finalPrice,
+                    playerID:orderData,
+                    contactPhone:contactPhone,
+                    quantity:quantity,
+                    serviceType:currentFieldType,
+                    invoiceNumber:invoiceNumber,
+                    status:'pending', // الحالات المعتمدة: pending , completed , canceled
+                    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
                 await sendWebhookNotification({user_name:userData?.username||userData?.name||'---',user_email:userData?.email||'---',user_phone:contactPhone,action_type:`فاتورة شراء #${invoiceNumber}`,details:`🎮 ${currentProduct.name}\n📝 ${orderData}\n📞 ${contactPhone}\n🔢 الكمية: ${quantity}\n💰 ${finalPrice.toFixed(2)} د.ل\n🧾 ${invoiceNumber}\n📅 ${new Date().toLocaleString('ar-LY')}`});
                 closeDetailModal();alert(`🎉 تم تقديم الطلب بنجاح!\n${currentProduct.name}\n${finalPrice.toFixed(3)} د.ل\n\nرقم الفاتورة: ${invoiceNumber}\nالحالة: قيد الانتظار`);
             }catch(e){alert('❌ خطأ: '+e.message);}
         }
 
-        // ✅ سجل طلباتي
-        function loadMyOrders(){const user=auth.currentUser;if(!user)return;const container=document.getElementById('myOrdersList');container.innerHTML='<div class="loading">⏳ جاري الجلب...</div>';db.collection("orders").where("userId","==",user.uid).orderBy("createdAt","desc").limit(50).get().then(snap=>{if(snap.empty){container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>لا توجد طلبات حتى الآن</p></div>';return;}let html='';snap.forEach(doc=>{const o=doc.data();const statusClass=o.status==='completed'?'completed':o.status==='canceled'?'canceled':'pending';const statusText=o.status==='completed'?'✅ مكتمل':o.status==='canceled'?'❌ ملغي':'🕒 قيد الانتظار';const date=o.createdAt?new Date(o.createdAt.seconds*1000).toLocaleString('ar-LY'):'---';html+=`<div class="order-item"><div class="order-header"><span class="order-id">🧾 ${o.invoiceNumber||'---'}</span><span class="order-status ${statusClass}">${statusText}</span></div><div class="order-details">🎮 <b>${o.serviceName||'---'}</b><br><span>الكمية:</span> ${o.quantity||1} | <span>السعر:</span> ${(o.amount||0).toFixed(2)} د.ل<br><span>البيانات:</span> ${o.playerID||'---'}<br><span>📞 التواصل:</span> ${o.contactPhone||'---'}<br><span>📅 ${date}</span></div></div>`;});container.innerHTML=html;});}
+        // ✅ جلب الطلبات حياً (Real-time Stream) لتعكس التحديثات التي تقوم بها فوراً من لوحة التحكم الخاصة بك
+        function loadMyOrders(){
+            const user=auth.currentUser;if(!user)return;
+            const container=document.getElementById('myOrdersList');
+            container.innerHTML='<div class="loading">⏳ جاري الجلب...</div>';
+            
+            // تم تحويلها إلى onSnapshot لتحديث الحالات تلقائياً عند تغييرها من طرفك
+            db.collection("orders").where("userId","==",user.uid).orderBy("createdAt","desc").limit(50).onSnapshot(snap=>{
+                if(snap.empty){container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>لا توجد طلبات حتى الآن</p></div>';return;}
+                let html='';
+                snap.forEach(doc=>{
+                    const o=doc.data();
+                    const statusClass=o.status==='completed'?'completed':o.status==='canceled'?'canceled':'pending';
+                    const statusText=o.status==='completed'?'✅ مكتمل':o.status==='canceled'?'❌ ملغي':'🕒 قيد الانتظار';
+                    const date=o.createdAt?new Date(o.createdAt.seconds*1000).toLocaleString('ar-LY'):'---';
+                    html+=`<div class="order-item"><div class="order-header"><span class="order-id">🧾 ${o.invoiceNumber||'---'}</span><span class="order-status ${statusClass}">${statusText}</span></div><div class="order-details">🎮 <b>${o.serviceName||'---'}</b><br><span>الكمية:</span> ${o.quantity||1} | <span>السعر:</span> ${(o.amount||0).toFixed(2)} د.ل<br><span>البيانات:</span> ${o.playerID||'---'}<br><span>📞 التواصل:</span> ${o.contactPhone||'---'}<br><span>📅 ${date}</span></div></div>`;
+                });
+                container.innerHTML=html;
+            });
+        }
 
         function searchProducts(){const term=document.getElementById('searchInput').value.toLowerCase().trim();if(!term)return;document.getElementById('categoriesView').classList.add('hidden');document.getElementById('productsView').classList.remove('hidden');document.getElementById('productsTitle').innerHTML=`🔍 بحث: ${term}`;const grid=document.getElementById('prodsGrid');grid.innerHTML='<div class="loading">⏳ جاري البحث...</div>';db.collection("products").where("active","==",true).get().then(snap=>{allProducts=[];let html='';snap.forEach(doc=>{const p=doc.data();if(!(p.name||'').toLowerCase().includes(term))return;p._id=doc.id;allProducts.push(p);});allProducts.forEach((p,i)=>{const img=getImageUrl(p.image||p.img);const name=p.name||'منتج';const priceLYD=p.priceLYD||p.price||0;const discount=p.discount||0;const finalPrice=discount>0?priceLYD-(priceLYD*discount/100):priceLYD;const desc=p.description||'';html+=`<div class="glass-card product-card" onclick="openDetailByIndex(${i})">${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}<img src="${img}" class="card-img" loading="lazy" onerror="this.style.display='none'"><p class="game-name">منتج</p><h4 class="product-title">${name}</h4>${desc?`<div class="product-desc-box">📝 ${desc}</div>`:''}${discount>0?`<div class="old-price">${priceLYD.toFixed(3)} د.ل</div>`:''}<div class="product-price">${finalPrice.toFixed(3)} د.ل</div><button class="buy-btn-3d" onclick="event.stopPropagation();openDetailByIndex(${i})">شراء</button></div>`;});grid.innerHTML=html||'<div class="loading">لا توجد نتائج</div>';});}
         document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchProducts();});
