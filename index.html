@@ -710,7 +710,7 @@
                 wallet_title: "💰 المحفظة وشحن الرصيد", current_balance: "رصيدك الحالي", choose_payment: "💳 اختر طريقة الدفع", choose_payment_btn: "📞 اختر طريقة الدفع من هنا",
                 process_time: "وقت المعالجة:", delay_notice: "في حال تأخر الوقت، يرجى تقديم شكوى عبر قسم الدعم الفني.", orders_record: "📋 سجل طلباتي الإلكترونية",
                 my_account: "👤 بيانات حسابي الشخصي", acc_full_name: "الاسم الكامل", acc_email: "البريد الإلكتروني", acc_phone: "رقم الهاتف المختص", acc_balance_now: "الرصيد المتاح للعمل",
-                logout_btn: "🚪 تسجيل خروج آمن", support_channels: "📞 قنوات الدعم الفني والتواصل", support_desc: "إذا واجهتك أي مشكلة في عمليات الشحن أو استلاف البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:",
+                logout_btn: "🚪 تسجيل خروج آمن", support_channels: "📞 قنوات الدعم الفني والتواصل", support_desc: "إذا واجهتك أي مشكلة في عمليات الشحن أو استلام البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:",
                 quantity_required: "🔢 الكمية المطلوبة", price_lbl: "السعر الثابت:", total_price_lbl: "السعر الإجمالي:", terms_title: "⚠️ الشروط والأحكام المهمة",
                 term_1: "• هذا المنتج الرقمي غير قابل للإلغاء أو الاسترداد نهائياً بعد إتمام شحنه.", term_2: "• تقع المسؤولية الكاملة على العميل في صحة كتابة بيانات معرف اللاعب.",
                 continue_btn: "✅ متابعة العملية", summary_product: "🎮 المنتج:", summary_qty: "🔢 الكمية:", summary_price: "💰 السعر:", order_data_title: "📋 بيانات شحن الطلب", confirm_order_btn: "✅ تأكيد الطلب النهائي للشحن",
@@ -732,7 +732,7 @@
                 nav_home: "Ana Mağaza", nav_wallet: "Cüzdanım", nav_orders: "Siparişlerim", nav_account: "Hesabım", nav_support: "Teknik Destek",
                 hero_title: "🌐 Uluslararası ve Yerel Kartlar", sections_available: "📂 Mevcut Kategoriler", back_to_cats: "Kategorilere Geri Dön",
                 wallet_title: "💰 Cüzdan ve Bakiye Yükleme", current_balance: "Mevcut Bakiye", choose_payment: "💳 Ödeme Yöntemi Seç", choose_payment_btn: "📞 Ödeme Yöntemi Seçiniz",
-                process_time: "İشlem Süresi:", delay_notice: "Gecikme durumunda lütfen destek sayfasından talep oluşturun.", orders_record: "📋 Elektronik Sipariş Geçmişi",
+                process_time: "İşlem Süresi:", delay_notice: "Gecikme durumunda lütfen destek sayfasından talep oluşturun.", orders_record: "📋 Elektronik Sipariş Geçmişi",
                 my_account: "👤 Profil Bilgileri", acc_full_name: "Adı Soyadı", acc_email: "E-posta Adresi", acc_phone: "Telefon Numarası", acc_balance_now: "Kullanılabilir Bakiye",
                 logout_btn: "🚪 Güvenli Çıkış", support_channels: "📞 Destek Kanalları İletişim", support_desc: "Yükleme işlemleri sırasında sorun yaşarsanız bizimle hemen iletişime geçin:",
                 quantity_required: "🔢 Talep Edilen Miktar", price_lbl: "Sabit Fiyat:", total_price_lbl: "Toplam Fiyat:", terms_title: "⚠️ Önemli Şartlar ve Koşullar",
@@ -760,7 +760,7 @@
                 my_account: "👤 Informazioni Profilo Personale", acc_full_name: "Nome Completo", acc_email: "Indirizzo Email", acc_phone: "Numero di Telefono", acc_balance_now: "Saldo Disponibile",
                 logout_btn: "🚪 Disconnessione Sicura", support_channels: "📞 Canali di Supporto e Contatti", support_desc: "In caso di problemi durante le ricariche, contattaci immediatamente tramite:",
                 quantity_required: "🔢 Quantità Richiesta", price_lbl: "Prezzo Fisso:", total_price_lbl: "Prezzo Totale:", terms_title: "⚠️ Termini e Condizioni Importanti",
-                term_1: "• Questo articolo digitale non è rimborsabile una volta elaborato.", term_2: "• Il cliente è pienamente responsabile della correttezza dei dati del giocatore.",
+                term_1: "• Questo articolo digitale non è rimborsabile una volta elaborato.", term_2: "• Il cliente è pienamente responsabile della correetezza dei dati del giocatore.",
                 continue_btn: "✅ Continua Processo", summary_product: "🎮 Prodotto:", summary_qty: "🔢 Qta:", summary_price: "💰 Prezzo:", order_data_title: "📋 Dati di Input dell'Ordine", confirm_order_btn: "✅ Conferma l'Ordine Finale",
                 setting_currency: "Cambia Valuta Account", setting_lang: "Cambia Lingua dell'App"
             }
@@ -1061,7 +1061,7 @@
             }
         }
 
-        function closeDetailModal()){document.getElementById('detailModal').classList.add('hidden');}
+        function closeDetailModal(){document.getElementById('detailModal').classList.add('hidden');}
 
         async function confirmPurchase(){
             if(!currentProduct)return;const user=auth.currentUser;if(!user)return alert('⚠️ سجل دخول أولاً');
