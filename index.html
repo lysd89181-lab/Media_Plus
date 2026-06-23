@@ -45,6 +45,7 @@
             border: 1px solid rgba(0,242,254,0.2); box-shadow: 0 0 10px rgba(0,242,254,0.15); transition: all 0.3s; 
         }
         .top-bar .balance span { color: var(--cyan); font-size: 14px; }
+        .top-bar .balance svg { width: 16px; height: 16px; color: var(--cyan); }
 
         .menu-toggle-btn {
             background: transparent; border: none; color: var(--white); cursor: pointer;
@@ -54,7 +55,7 @@
         .menu-toggle-btn:hover { color: var(--cyan); }
         .menu-toggle-btn svg { width: 26px; height: 26px; }
 
-        /* القائمة الجانبية الذكية الاحترافية */
+        /* القائمة الجانبية */
         .sidebar-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 990;
             opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(4px);
@@ -75,8 +76,8 @@
         .sidebar-close { position: absolute; top: 16px; left: 16px; background: transparent; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; transition: color 0.2s; }
         html[dir="rtl"] .sidebar-close { left: auto; right: 16px; }
         .sidebar-close:hover { color: var(--red); }
+        .sidebar-close svg { width: 22 height: 22px; }
 
-        /* تصميم قسم الملف الشخصي الفاخر بالسايدبار */
         .sidebar-profile-section {
             text-align: center; margin-top: 20px; margin-bottom: 18px; padding-bottom: 16px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -97,7 +98,6 @@
         .sidebar-username { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
         .sidebar-useremail { font-size: 11px; color: var(--muted); word-break: break-all; }
 
-        /* مستطيل تسجيل الخروج الأنيق */
         .sidebar-logout-rect {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
             border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px;
@@ -116,7 +116,7 @@
         }
         html[dir="ltr"] .sidebar-item-btn { text-align: left; }
         .sidebar-item-btn:hover, .sidebar-item-btn.active { background: rgba(0,242,254,0.08); color: #00f2fe; }
-        .sidebar-item-btn svg { width: 19px; height: 19px; color: inherit; }
+        .sidebar-item-btn svg { width: 19px; height: 19px; color: inherit; fill: none; }
 
         .sidebar-settings-block {
             margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
@@ -130,7 +130,7 @@
         .lang-select-full { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px; color: var(--white); font-size: 12px; font-weight: 700; outline: none; cursor: pointer; }
         .lang-select-full option { background: #0b1529; color: #fff; }
 
-        /* شريط الصور للملف التعريفي */
+        /* شريط الصور السلايدر */
         .hero-slider { background: #0b1a30; padding: 0; text-align: center; position: relative; overflow: hidden; }
         .hero-slider img { width: 100%; height: 180px; object-fit: cover; display: block; }
         .hero-slider .slide-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: #0b1a30; }
@@ -138,9 +138,10 @@
         .hero-slider .dot.active { background: var(--cyan); box-shadow: 0 0 8px rgba(0,242,254,0.5); width: 24px; border-radius: 10px; }
 
         .hero { padding: 15px 20px; text-align: center; }
-        .hero h1 { color: var(--white); font-size: 19px; margin: 8px 0; text-shadow: 0 0 15px rgba(0,242,254,0.3); }
+        .hero h1 { color: var(--white); font-size: 19px; margin: 8px 0; text-shadow: 0 0 15px rgba(0,242,254,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .hero h1 svg { width: 22px; height: 22px; color: var(--cyan); }
 
-        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
+        .search-box { max-width: 500px; margin: 0 auto 15px auto; position: relative; }
         .search-box input { 
             width: 100%; padding: 11px 18px 11px 48px; 
             background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);
@@ -155,23 +156,21 @@
             display: flex; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,242,254,0.4); 
         }
         html[dir="rtl"] .search-box button { left: 4px; right: auto; }
+        .search-box button svg { width: 16px; height: 16px; color: #000; }
 
-        .container { max-width: 1100px; margin: 0 auto 20px; padding: 0 14px; position: relative; z-index: 10; }
-        .page { display: none; } .page.active { display: block; }
-        .section-title { font-size: 16px; font-weight: 700; margin: 18px 0 12px; display: flex; align-items: center; gap: 8px; color: var(--white); }
-
-        /* مفاتيح التبديل بين الأقسام الرئيسية الثلاثة */
-        .main-tabs-nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0; }
+        /* مفاتيح التبديل بين القسمين الرئيسيين الجدد */
+        .main-tabs-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; }
         .tab-nav-btn {
             background: rgba(255,255,255,0.03); border: 1px solid rgba(0,242,254,0.15);
-            padding: 10px 4px; border-radius: 12px; color: #fff; font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: all 0.2s; text-align: center; display: flex; align-items: center; justify-content: center; gap: 4px;
+            padding: 12px 6px; border-radius: 14px; color: #fff; font-size: 13px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .tab-nav-btn.active {
             background: rgba(0,242,254,0.12); border-color: var(--cyan); color: var(--cyan); box-shadow: inset 0 0 8px rgba(0,242,254,0.2);
         }
+        .tab-nav-btn svg { width: 18px; height: 18px; }
 
-        /* البطاقة الزجاجية الموحدة */
+        /* البطاقة الزجاجية */
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.25);
@@ -195,6 +194,11 @@
             color: #cbd5e1; margin-top: 5px; padding: 0 4px;
         }
 
+        .container { max-width: 1100px; margin: 0 auto 20px; padding: 0 14px; position: relative; z-index: 10; }
+        .page { display: none; } .page.active { display: block; }
+        .section-title { font-size: 16px; font-weight: 700; margin: 18px 0 12px; display: flex; align-items: center; gap: 8px; color: var(--white); }
+        .section-title svg { width: 18px; height: 18px; color: var(--cyan); }
+
         .cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
         .cat-card { padding: 18px 10px; }
         .cat-card h3 { font-size: 13px; font-weight: 700; color: var(--white); }
@@ -207,6 +211,7 @@
             box-shadow: 0 0 10px rgba(0,242,254,0.1); transition: all 0.3s; 
         }
         .back-btn:hover { border-color: var(--cyan); background: var(--glass-hover); }
+        .back-btn svg { width: 14px; height: 14px; }
 
         .prods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 18px; }
         .product-card { position: relative; }
@@ -226,13 +231,13 @@
         .buy-btn-3d:hover { background: var(--cyan); color: #000; border-bottom: 3px solid #00c4d4; box-shadow: 0 0 15px rgba(0,242,254,0.4); }
         .buy-btn-3d:active { transform: translateY(2px); }
 
-        /* محفظة وشحن رصيد */
+        /* المحفظة */
         .card-white { 
             background: var(--glass-bg); backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.25);
             border-radius: 20px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-bottom: 14px; 
         }
-        .big-number { font-size: 34px; font-weight: 900; color: var(--cyan); text-align: center; text-shadow: 0 0 15px rgba(0,242,254,0.4); }
+        .big-number { font-size: 34px; font-weight: 900; color: var(--cyan); text-align: center; text-shadow: 0 0 15px rgba(0,242,254,0.4); display: flex; align-items: center; justify-content: center; gap: 8px; }
         
         .payment-instructions-box {
             background: rgba(0,242,254,0.05); border: 1px solid rgba(0,242,254,0.2);
@@ -254,16 +259,14 @@
         
         .copy-btn {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(0,242,254,0.2);
-            color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 6px; cursor: pointer;
-            transition: all 0.2s; font-family: inherit;
+            color: #fff; font-size: 10px; padding: 4px 10px; border-radius: 6px; cursor: pointer;
+            transition: all 0.2s; font-family: inherit; display: inline-flex; align-items: center; gap: 4px;
         }
         .copy-btn:hover { background: var(--cyan); color: #000; }
+        .copy-btn svg { width: 11px; height: 11px; }
 
         .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: var(--muted); }
         .info-row span:last-child { color: var(--white); }
-        
-        .btn-red { width: 100%; padding: 12px; background: #ef4444; color: #fff; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 13px; border-bottom: 3px solid #dc2626; transition: all 0.15s; }
-        .btn-red:active { transform: translateY(2px); }
 
         .notify-input { 
             width: 100%; padding: 12px; background: rgba(10,15,26,0.6); backdrop-filter: blur(10px);
@@ -272,12 +275,15 @@
         }
         html[dir="rtl"] .notify-input { text-align: right; }
         .notify-input:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0,242,254,0.2); }
+        
         .notify-btn { 
             width: 100%; padding: 13px; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; 
             font-weight: 900; border: none; border-radius: 13px; font-size: 14px; cursor: pointer; margin-top: 8px; 
             border-bottom: 3px solid #d4941a; box-shadow: var(--neon-gold); transition: all 0.15s; 
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
         .notify-btn:active { transform: translateY(2px); }
+        .notify-btn svg { width: 16px; height: 16px; color: #000; }
         
         .shipping-info { 
             background: rgba(0,242,254,0.04); backdrop-filter: blur(10px);
@@ -294,6 +300,7 @@
             align-items: center; box-shadow: 0 0 10px rgba(0,242,254,0.1); transition: all 0.3s; 
         }
         .dropdown-btn:hover { border-color: var(--cyan); }
+        .dropdown-btn svg { width: 16px; height: 16px; color: var(--white); transition: transform 0.3s; }
         .dropdown-menu { 
             display: none; position: absolute; top: 100%; left: 0; right: 0; 
             background: rgba(26,26,46,0.98); backdrop-filter: blur(20px);
@@ -307,6 +314,7 @@
             display: flex; align-items: center; gap: 8px; 
         }
         .dropdown-item:hover { background: var(--glass-hover); color: var(--cyan); }
+        .dropdown-item svg { width: 16px; height: 16px; }
 
         .social-support-box { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .social-link { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.05); }
@@ -314,8 +322,9 @@
         .social-link.telegram { background: rgba(0,136,204,0.1); color: #0088cc; border-color: rgba(0,136,204,0.2); }
         .social-link.instagram { background: rgba(225,48,108,0.1); color: #e1306c; border-color: rgba(225,48,108,0.2); }
         .social-link:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .social-link svg { width: 18px; height: 18px; }
 
-        /* مودال شاشة الدفع والتحذيرات زجاجي */
+        /* المودال */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 12px; }
         .modal-card {
             background: rgba(11, 20, 38, 0.96); backdrop-filter: blur(25px);
@@ -323,8 +332,10 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.6); width: 90%; max-width: 450px; 
             border-radius: 24px; padding: 22px; color: #fff; position: relative; max-height: 90vh; overflow-y: auto;
         }
-        .modal-card .close-btn { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .modal-card .close-btn { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         html[dir="rtl"] .modal-card .close-btn { left: auto; right: 12px; }
+        .modal-card .close-btn:hover { background: rgba(255,255,255,0.2); }
+        .modal-card .close-btn svg { width: 14px; height: 14px; color: #fff; }
         .modal-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block; border: 2px solid var(--cyan); box-shadow: 0 0 15px rgba(0,242,254,0.3); background: #02050f; }
         .modal-card h3 { font-size: 16px; font-weight: 900; text-align: center; margin-bottom: 4px; }
 
@@ -341,8 +352,9 @@
         .price-display { font-size: 18px; font-weight: 900; margin: 12px 0; text-align: center; color: var(--white); }
         .price-display span { color: var(--cyan); font-size: 22px; text-shadow: 0 0 8px rgba(0,242,254,0.4); }
         
-        .next-btn { width: 100%; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; border: none; padding: 14px; font-size: 16px; font-weight: 900; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; box-shadow: var(--neon-gold); border-bottom: 3px solid #d4941a; transition: all 0.15s; }
+        .next-btn { width: 100%; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; border: none; padding: 14px; font-size: 16px; font-weight: 900; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; box-shadow: var(--neon-gold); border-bottom: 3px solid #d4941a; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .next-btn:active { transform: translateY(2px); }
+        .next-btn svg { width: 16px; height: 16px; color: #000; }
         .step-divider { border-top: 2px dashed rgba(0,242,254,0.15); padding-top: 14px; margin-top: 14px; }
         
         .order-summary { background: rgba(10,15,26,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0,242,254,0.15); border-radius: 12px; padding: 10px; margin-bottom: 10px; text-align: center; }
@@ -361,15 +373,16 @@
         
         .confirm-btn { width: 100%; padding: 13px; font-weight: 900; border: none; border-radius: 13px; font-size: 14px; cursor: pointer; margin-top: 10px; border-bottom: 3px solid rgba(0,0,0,0.2); transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #10b981, #34d399); color: #fff; box-shadow: var(--neon-green); }
         .confirm-btn:active { transform: translateY(2px); }
+        .confirm-btn svg { width: 16px; height: 16px; color: #fff; }
 
-        /* سجل طلباتي المطور والمتناسق ديناميكياً */
+        /* سجل طلباتي المطور */
         .order-item { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; margin-bottom: 12px; transition: all 0.3s; }
         .order-item:hover { border-color: rgba(0,242,254,0.3); }
         .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
         .order-id { font-size: 12px; color: var(--white); font-weight: 700; font-family: monospace; }
         
-        /* تلوين الحالات ديناميكياً بحسب التحديث البرمجي */
-        .order-status { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; }
+        .order-status { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; }
+        .order-status svg { width: 12px; height: 12px; }
         .order-status.pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
         .order-status.completed { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
         .order-status.canceled, .order-status.refunded { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
@@ -377,12 +390,12 @@
         .order-details { font-size: 13px; color: var(--white); line-height: 1.8; text-align: right; }
         html[dir="ltr"] .order-details { text-align: left; }
         .order-details span { color: var(--muted); font-size: 11px; }
-        .empty-state { text-align: center; padding: 40px; color: var(--muted); }
-        .empty-state .icon { font-size: 50px; margin-bottom: 10px; }
+        .empty-state { text-align: center; padding: 40px; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+        .empty-state svg { width: 48px; height: 48px; color: var(--muted); }
 
-        /* نافذة التحذير الخاصة بقسم الرشق */
-        .warning-modal-body { text-align: center; padding: 10px 5px; }
-        .warning-icon-geo { font-size: 45px; color: var(--amber); margin-bottom: 10px; display: block; animation: pulse 1.5s infinite; }
+        /* نافذة التحذير */
+        .warning-modal-body { text-align: center; padding: 10px 5px; display: flex; flex-direction: column; align-items: center; }
+        .warning-icon-geo { width: 48px; height: 48px; color: var(--amber); margin-bottom: 10px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
         .warning-title { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 10px; }
         .warning-text { font-size: 13px; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px; }
@@ -390,9 +403,9 @@
         .warning-agree-btn:hover { background: #00c4d4; box-shadow: 0 0 15px rgba(0,242,254,0.4); }
 
         .hidden { display: none !important; }
-        .loading { text-align: center; padding: 35px; color: var(--muted); font-size: 13px; }
+        .loading { text-align: center; padding: 35px; color: var(--muted); font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .spinner { animation: spin 1s linear infinite; display: inline-block; }
+        .spinner { animation: spin 1s linear infinite; width: 18px; height: 18px; color: var(--cyan); }
         @media (max-width: 400px) { .prods-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
@@ -401,13 +414,13 @@
     <div class="top-bar">
         <div class="right-side">
             <button class="menu-toggle-btn" onclick="toggleSidebar(true)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
             <div class="brand-title">Media <span style="color:var(--cyan);">Plus</span></div>
         </div>
         <div class="left-side">
             <div class="balance" onclick="switchTab('wallet')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="topBalance">0.000</span> <span class="currency-label">د.ل</span>
             </div>
         </div>
@@ -416,7 +429,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
     <div class="app-sidebar" id="appSidebar">
         <button class="sidebar-close" onclick="toggleSidebar(false)">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
 
         <div class="sidebar-profile-section">
@@ -431,25 +444,22 @@
         </div>
 
         <div class="sidebar-logout-rect" onclick="logout()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             <span>تسجيل خروج آمن</span>
         </div>
 
         <div class="sidebar-menu-list">
             <button class="sidebar-item-btn active" id="menuBtnHome" onclick="switchTab('home'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg> <span data-i18n="nav_home">المتجر الرئيسي</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> <span data-i18n="nav_home">المتجر الرئيسي</span>
             </button>
             <button class="sidebar-item-btn" id="menuBtnWallet" onclick="switchTab('wallet'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg> <span data-i18n="nav_wallet">محفظتي المالية</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg> <span data-i18n="nav_wallet">محفظتي المالية</span>
             </button>
             <button class="sidebar-item-btn" id="menuBtnOrders" onclick="switchTab('orders'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="14" y2="13"/></svg> <span data-i18n="nav_orders">سجل طلباتي</span>
-            </button>
-            <button class="sidebar-item-btn" id="menuBtnAccount" onclick="switchTab('account'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <span data-i18n="nav_account">بيانات حسابي</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="14" y2="13"/></svg> <span data-i18n="nav_orders">سجل طلباتي</span>
             </button>
             <button class="sidebar-item-btn" id="menuBtnSupport" onclick="switchTab('support'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> <span data-i18n="nav_support">قسم الدعم وقنواتنا</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> <span data-i18n="nav_support">قسم الدعم وقنواتنا</span>
             </button>
         </div>
 
@@ -473,28 +483,48 @@
     <div id="homePage" class="page active">
         <div class="hero-slider" id="heroSlider"><img id="heroSlide" src="" alt="Media Plus"><div class="slide-dots" id="slideDots"></div></div>
         <div class="hero">
-            <h1 data-i18n="hero_title">🌐 بطاقات الدولية والمحلية</h1>
+            <h1>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span data-i18n="hero_title">🌐 بطاقات الدولية والمحلية</span>
+            </h1>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="بحث عن بطاقة...">
                 <button onclick="searchProducts()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </button>
             </div>
 
             <div class="main-tabs-nav">
-                <div class="tab-nav-btn active" id="tabBtnCards" onclick="switchSectionType('cards')">📂 قسم كروت الشحن</div>
-                <div class="tab-nav-btn" id="tabBtnGames" onclick="switchSectionType('games')">🎮 شحن الألعاب</div>
-                <div class="tab-nav-btn" id="tabBtnSmm" onclick="switchSectionType('smm')">🚀 قسم الرشق والخدمات</div>
+                <div class="tab-nav-btn active" id="tabBtnCards" onclick="switchSectionType('cards')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>اشتراكات وألعاب</span>
+                </div>
+                <div class="tab-nav-btn" id="tabBtnSmm" onclick="switchSectionType('smm')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 22"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    <span>رشق وخدمات السوشيال</span>
+                </div>
             </div>
         </div>
 
         <div class="container">
             <div id="categoriesView">
-                <div class="section-title"><span data-i18n="sections_available">📂 الأقسام المتاحة</span></div>
-                <div class="cats-grid" id="catsGrid"><div class="loading">⏳ جاري جلب الأقسام...</div></div>
+                <div class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    <span data-i18n="sections_available">📂 الأقسام المتاحة</span>
+                </div>
+                <div class="cats-grid" id="catsGrid">
+                    <div class="loading">
+                        <svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg>
+                        <span>⏳ جاري جلب الأقسام بنظام الحفظ الذكي...</span>
+                    </div>
+                </div>
             </div>
+            
             <div id="productsView" class="hidden">
-                <button class="back-btn" onclick="showCategories()">⬅ <span data-i18n="back_to_cats">رجوع للأقسام</span></button>
+                <button class="back-btn" onclick="showCategories()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    <span data-i18n="back_to_cats">رجوع للأقسام</span>
+                </button>
                 <div class="section-title" id="productsTitle"></div>
                 <div class="prods-grid" id="prodsGrid"></div>
             </div>
@@ -503,20 +533,37 @@
 
     <div id="walletPage" class="page">
         <div class="container" style="margin-top:10px;">
-            <div class="section-title" data-i18n="wallet_title">💰 المحفظة وشحن الرصيد</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <span data-i18n="wallet_title">💰 المحفظة وشحن الرصيد</span>
+            </div>
             <div class="card-white" style="text-align:center;">
                 <div style="font-size:13px;color:var(--muted);" data-i18n="current_balance">رصيدك الحالي</div>
-                <div class="big-number"><span id="walletBalance">0.000</span> <span class="currency-label">د.ل</span></div>
+                <div class="big-number">
+                    <span id="walletBalance">0.000</span> <span class="currency-label">د.ل</span>
+                </div>
             </div>
             
             <div class="card-white" style="position:relative; z-index:300;">
                 <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;" data-i18n="choose_payment">💳 اختر طريقة الدفع</h3>
                 <div class="dropdown-container">
-                    <div class="dropdown-btn" id="dropdownBtn" onclick="toggleDropdown()"><span id="dropdownLabel" data-i18n="choose_payment_btn">📞 اختر طريقة الدفع</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                    <div class="dropdown-btn" id="dropdownBtn" onclick="toggleDropdown()">
+                        <span id="dropdownLabel" data-i18n="choose_payment_btn">📞 اختر طريقة الدفع</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <div class="dropdown-item" onclick="selectPayment('libyana', '📞 ليبيانا ومدار')">📞 ليبيانا ومدار</div>
-                        <div class="dropdown-item" onclick="selectPayment('binance', '₿ بايننس')">₿ بايننس</div>
-                        <div class="dropdown-item" onclick="selectPayment('cards', '💳 كروت تعبئة')">💳 كروت تعبئة</div>
+                        <div class="dropdown-item" onclick="selectPayment('libyana', '📞 ليبيانا ومدار')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>ليبيانا ومدار</span>
+                        </div>
+                        <div class="dropdown-item" onclick="selectPayment('binance', '₿ بايننس')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span>بايننس Pay</span>
+                        </div>
+                        <div class="dropdown-item" onclick="selectPayment('cards', '💳 كروت تعبئة')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                            <span>كروت تعبئة محلية</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -530,17 +577,26 @@
                     <div class="bank-row-compact">
                         <span class="label">ليبيانا</span>
                         <span class="num">0920414760</span>
-                        <button class="copy-btn" onclick="copyText('0920414760')">📋 نسخ</button>
+                        <button class="copy-btn" onclick="copyText('0920414760')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span>نسخ</span>
+                        </button>
                     </div>
                     <div class="bank-row-compact">
                         <span class="label">مدار</span>
                         <span class="num">0912377291</span>
-                        <button class="copy-btn" onclick="copyText('0912377291')">📋 نسخ</button>
+                        <button class="copy-btn" onclick="copyText('0912377291')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span>نسخ</span>
+                        </button>
                     </div>
                 </div>
                 <input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
                 <input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة" dir="ltr">
-                <button class="notify-btn" onclick="submitRecharge('ليبيانا ومدار', 'phone_libyana', 'amount_libyana')">📩 إرسال طلب شحن</button>
+                <button class="notify-btn" onclick="submitRecharge('ليبيانا ومدار', 'phone_libyana', 'amount_libyana')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>إرسال طلب شحن</span>
+                </button>
             </div>
 
             <div id="paymentBinance" class="card-white hidden">
@@ -551,11 +607,17 @@
                 <div class="bank-row-compact" style="flex-direction:row;justify-content:space-around;padding:12px;">
                     <span style="color:var(--muted);font-size:12px;">معرف بايننس</span>
                     <span class="num">1046437963</span>
-                    <button class="copy-btn" onclick="copyText('1046437963')">📋 نسخ</button>
+                    <button class="copy-btn" onclick="copyText('1046437963')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>نسخ</span>
+                    </button>
                 </div>
                 <input type="text" id="binance_id" class="notify-input" placeholder="المعرف المحول منه (ID)" dir="ltr">
                 <input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ بالدولار ($)" dir="ltr">
-                <button class="notify-btn" onclick="submitRecharge('بايننس', 'binance_id', 'binance_amount', true)">📩 إرسال طلب شحن</button>
+                <button class="notify-btn" onclick="submitRecharge('بايننس', 'binance_id', 'binance_amount', true)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>إرسال طلب شحن</span>
+                </button>
             </div>
 
             <div id="paymentCards" class="card-white hidden">
@@ -564,7 +626,10 @@
                 </div>
                 <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr">
                 <input type="number" id="depositAmount" class="notify-input" placeholder="قيمة الكرت" dir="ltr">
-                <button class="notify-btn" onclick="submitRecharge('كروت تعبئة', 'depositCardCode', 'depositAmount')">📩 إرسال طلب شحن</button>
+                <button class="notify-btn" onclick="submitRecharge('كروت تعبئة', 'depositCardCode', 'depositAmount')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>إرسال طلب شحن</span>
+                </button>
             </div>
             
             <div class="shipping-info" id="shippingInfo">
@@ -576,40 +641,48 @@
 
     <div id="ordersPage" class="page">
         <div class="container" style="margin-top:10px;">
-            <div class="section-title" data-i18n="orders_record">📋 سجل طلباتي الإلكترونية</div>
-            <div id="myOrdersList"><div class="loading">⏳ جاري مزامنة وجلب الطلبات حياً...</div></div>
-        </div>
-    </div>
-
-    <div id="accountPage" class="page">
-        <div class="container" style="margin-top:10px;">
-            <div class="section-title" data-i18n="my_account">👤 بيانات حسابي الشخصي</div>
-            <div class="card-white" style="text-align:center;">
-                <div style="width:55px;height:55px;background:rgba(0,242,254,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:26px;border:1px solid rgba(0,242,254,0.2);">👤</div>
-                <div style="font-size:17px;font-weight:700;color:var(--white);" id="accName">---</div>
-                <div style="font-size:12px;color:var(--muted);" id="accEmail">---</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <span data-i18n="orders_record">📋 سجل طلباتي الإلكترونية</span>
             </div>
-            <div class="card-white">
-                <div class="info-row"><span data-i18n="acc_full_name">الاسم الكامل</span><span id="accName2" style="font-weight:700;">---</span></div>
-                <div class="info-row"><span data-i18n="acc_email">البريد الإلكتروني</span><span id="accEmail2" style="font-weight:700;font-size:12px;">---</span></div>
-                <div class="info-row"><span data-i18n="acc_phone">رقم الهاتف المختص</span><span id="accPhone" style="font-weight:700;">---</span></div>
-                <div class="info-row"><span data-i18n="acc_balance_now">الرصيد المتاح للعمل</span><span id="accBalance" style="font-weight:700;color:var(--cyan);">0.000 د.ل</span></div>
+            <div id="myOrdersList">
+                <div class="loading">
+                    <svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg>
+                    <span>⏳ جاري مزامنة وجلب الطلبات حياً...</span>
+                </div>
             </div>
-            <button class="btn-red" onclick="logout()" data-i18n="logout_btn">🚪 تسجيل خروج آمن</button>
         </div>
     </div>
 
     <div id="supportPage" class="page">
         <div class="container" style="margin-top:10px;">
-            <div class="section-title" data-i18n="support_channels">📞 قنوات الدعم الفني والتواصل</div>
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span data-i18n="support_channels">📞 قنوات الدعم الفني والتواصل</span>
+            </div>
             <div class="card-white" style="text-align:center;">
-                <p style="font-size:13px; color:var(--muted); margin-bottom:14px;" data-i18n="support_desc">إذا واجهتك أي مشكلة في عمليات الشحن أو استلام البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:</p>
+                <p style="font-size:13px; color:var(--muted); margin-bottom:14px;" data-i18n="support_desc">إذا واجهتك أي مشكلة في عمليات الشحن أو استلاف البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:</p>
                 <div class="social-support-box">
-                    <a href="https://wa.me/218920414760" target="_blank" class="social-link whatsapp">💬 مركز دعم الواتساب المباشر</a>
-                    <a href="https://t.me/media_plus_1" target="_blank" class="social-link telegram">✈️ مراسلة دعم تيليجرام الفوري</a>
-                    <a href="https://whatsapp.com/channel/0029Vb7xpppGpLHGt77Uxt0Q" target="_blank" class="social-link whatsapp">📢 متابعة أخبارنا على قناة واتساب</a>
-                    <a href="https://t.me/CD_Card1" target="_blank" class="social-link telegram">📢 متابعة أخبارنا على قناة تيليجرام</a>
-                    <a href="https://www.instagram.com/1media1plus1?igsh=NGEwMmdsNDg2ODhk" target="_blank" class="social-link instagram">📷 الحساب الرسمي على انستغرام</a>
+                    <a href="https://wa.me/218920414760" target="_blank" class="social-link whatsapp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        <span>مركز دعم الواتساب المباشر</span>
+                    </a>
+                    <a href="https://t.me/media_plus_1" target="_blank" class="social-link telegram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        <span>مراسلة دعم تيليجرام الفوري</span>
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029Vb7xpppGpLHGt77Uxt0Q" target="_blank" class="social-link whatsapp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12A10 10 0 1 1 12 2a10 10 0 0 1 10 10z"/></svg>
+                        <span>متابعة أخبارنا على قناة واتساب</span>
+                    </a>
+                    <a href="https://t.me/CD_Card1" target="_blank" class="social-link telegram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+                        <span>متابعة أخبارنا على قناة تيليجرام</span>
+                    </a>
+                    <a href="https://www.instagram.com/1media1plus1?igsh=NGEwMmdsNDg2ODhk" target="_blank" class="social-link instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span>الحساب الرسمي على انستغرام</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -617,7 +690,9 @@
 
     <div id="detailModal" class="modal-overlay hidden" onclick="closeDetailModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="closeDetailModal()">✕</button>
+            <button class="close-btn" onclick="closeDetailModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
             <img id="dImg" src="" alt=""><h3 id="dName"></h3>
             <div id="dDiscountBadge" class="hidden" style="text-align:center;"></div>
             <div class="old-price-big hidden" id="dOldPrice" style="text-align:center;font-size:14px;color:#999;text-decoration:line-through;"></div>
@@ -646,7 +721,10 @@
                         </ul>
                     </div>
                 </div>
-                <button class="next-btn" id="nextBtn" onclick="goToStep2()" data-i18n="continue_btn">✅ متابعة العملية</button>
+                <button class="next-btn" id="nextBtn" onclick="goToStep2()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span data-i18n="continue_btn">متابعة العملية</span>
+                </button>
             </div>
             
             <div id="stepData" class="modal-step hidden">
@@ -663,7 +741,10 @@
                         <p class="field-hint" id="fieldHint"></p>
                     </div>
                     <input type="text" id="contactPhone" placeholder="📞 رقم التواصل الخاص بك (واتساب/تيليجرام)" dir="ltr">
-                    <button class="confirm-btn" onclick="confirmPurchase()" data-i18n="confirm_order_btn">✅ تأكيد الطلب النهائي للشحن</button>
+                    <button class="confirm-btn" onclick="confirmPurchase()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span data-i18n="confirm_order_btn">✅ تأكيد الطلب النهائي للشحن</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -672,7 +753,7 @@
     <div id="smmWarningModal" class="modal-overlay hidden">
         <div class="modal-card">
             <div class="warning-modal-body">
-                <span class="warning-icon-geo">⚠️</span>
+                <svg class="warning-icon-geo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 <div class="warning-title">تنبيه وإخلاء مسؤولية مهم جداً</div>
                 <div class="warning-text">
                     أنت الآن بصدد الدخول إلى قسم <b>رشق الخدمات والمتابعين</b>. يرجى العلم بأن المتجر <b>غير مسؤول نهائياً</b> عن أي نقص قد يحدث في الحسابات المرشوقة نتيجة التحديثات الدورية لمنصات التواصل الاجتماعي، ولا توجد تعويضات مالية بعد تنفيذ الطلبات. تأكد من قراءة وصف الخدمة جيداً قبل الشراء.
@@ -687,29 +768,30 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <script>
-        // تكوين نظام الـ Firebase المعتمد مسبقاً للمتجر ولوحة التحكم
+        // تكوين Firebase
         const firebaseConfig = { apiKey: "AIzaSyARNJOPAycWU3YJdZSBN1d9uoLrvso3i4Y", authDomain: "cd-card-87365.firebaseapp.com", projectId: "cd-card-87365", storageBucket: "cd-card-87365.firebasestorage.app" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // رابط غيت هوب الأساسي لجلب صور الأقسام والمنتجات مباشرة عند كتابة اسم الملف فقط
         const BASE_IMAGE_URL = "https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/";
         const WEBHOOK_URL = "https://eogwntzweojdgz3.m.pipedream.net";
 
         let currentCurrency = 'LYD'; 
         const USD_RATE = 11; 
         let currentLang = 'ar';
-        let currentActiveSectionType = 'cards'; // الفلترة الأساسية للأقسام (cards, games, smm)
+        let currentActiveSectionType = 'cards'; // التصفية الجديدة لـ (cards = اشتراكات وألعاب | smm = رشق وخدمات)
 
-        // قاموس اللغات الخمس المتكامل لترجمة واجهة المتجر ديناميكياً
+        // مستوعبات الحفظ والتخزين الذكي للبيانات لمنع التكرار (Caching Arrays)
+        let cachedCategories = [];
+        let cachedProducts = {};
+
         const i18n = {
             ar: {
-                nav_home: "المتجر الرئيسي", nav_wallet: "محفظتي المالية", nav_orders: "سجل طلباتي", nav_account: "بيانات حسابي", nav_support: "قسم الدعم وقنواتنا",
+                nav_home: "المتجر الرئيسي", nav_wallet: "محفظتي المالية", nav_orders: "سجل طلباتي", nav_support: "قسم الدعم وقنواتنا",
                 hero_title: "🌐 بطاقات الدولية والمحلية", sections_available: "📂 الأقسام المتاحة", back_to_cats: "رجوع للأقسام",
                 wallet_title: "💰 المحفظة وشحن الرصيد", current_balance: "رصيدك الحالي", choose_payment: "💳 اختر طريقة الدفع", choose_payment_btn: "📞 اختر طريقة الدفع من هنا",
                 process_time: "وقت المعالجة:", delay_notice: "في حال تأخر الوقت، يرجى تقديم شكوى عبر قسم الدعم الفني.", orders_record: "📋 سجل طلباتي الإلكترونية",
-                my_account: "👤 بيانات حسابي الشخصي", acc_full_name: "الاسم الكامل", acc_email: "البريد الإلكتروني", acc_phone: "رقم الهاتف المختص", acc_balance_now: "الرصيد المتاح للعمل",
                 logout_btn: "🚪 تسجيل خروج آمن", support_channels: "📞 قنوات الدعم الفني والتواصل", support_desc: "إذا واجهتك أي مشكلة في عمليات الشحن أو استلام البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:",
                 quantity_required: "🔢 الكمية المطلوبة", price_lbl: "السعر الثابت:", total_price_lbl: "السعر الإجمالي:", terms_title: "⚠️ الشروط والأحكام المهمة",
                 term_1: "• هذا المنتج الرقمي غير قابل للإلغاء أو الاسترداد نهائياً بعد إتمام شحنه.", term_2: "• تقع المسؤولية الكاملة على العميل في صحة كتابة بيانات معرف اللاعب.",
@@ -717,11 +799,10 @@
                 setting_currency: "تغيير عملة الحساب", setting_lang: "تغيير لغة التطبيق (5 لغات)"
             },
             en: {
-                nav_home: "Main Store", nav_wallet: "My Wallet", nav_orders: "My Orders", nav_account: "My Profile", nav_support: "Technical Support",
+                nav_home: "Main Store", nav_wallet: "My Wallet", nav_orders: "My Orders", nav_support: "Technical Support",
                 hero_title: "🌐 International & Local Cards", sections_available: "📂 Available Categories", back_to_cats: "Back to Categories",
                 wallet_title: "💰 Wallet & Recharge", current_balance: "Current Balance", choose_payment: "💳 Choose Payment Method", choose_payment_btn: "📞 Select Payment Method",
                 process_time: "Processing Time:", delay_notice: "If delayed, please submit a complaint via support page.", orders_record: "📋 My Electronic Orders",
-                my_account: "👤 Personal Profile Info", acc_full_name: "Full Name", acc_email: "Email Address", acc_phone: "Phone Number", acc_balance_now: "Available Balance",
                 logout_btn: "🚪 Secure Logout", support_channels: "📞 Support Channels & Contact", support_desc: "If you face any issues during top-ups or deliveries, contact us immediately via:",
                 quantity_required: "🔢 Required Quantity", price_lbl: "Fixed Price:", total_price_lbl: "Total Price:", terms_title: "⚠️ Important Terms & Conditions",
                 term_1: "• This digital item is completely non-refundable after processing.", term_2: "• The client is fully responsible for providing accurate player details.",
@@ -729,23 +810,21 @@
                 setting_currency: "Change Account Currency", setting_lang: "Change App Language"
             },
             tr: {
-                nav_home: "Ana Mağaza", nav_wallet: "Cüzdanım", nav_orders: "Siparişlerim", nav_account: "Hesabım", nav_support: "Teknik Destek",
+                nav_home: "Ana Mağaza", nav_wallet: "Cüzdanım", nav_orders: "Siparişlerim", nav_support: "Teknik Destek",
                 hero_title: "🌐 Uluslararası ve Yerel Kartlar", sections_available: "📂 Mevcut Kategoriler", back_to_cats: "Kategorilere Geri Dön",
                 wallet_title: "💰 Cüzdan ve Bakiye Yükleme", current_balance: "Mevcut Bakiye", choose_payment: "💳 Ödeme Yöntemi Seç", choose_payment_btn: "📞 Ödeme Yöntemi Seçiniz",
                 process_time: "İşlem Süresi:", delay_notice: "Gecikme durumunda lütfen destek sayfasından talep oluşturun.", orders_record: "📋 Elektronik Sipariş Geçmişi",
-                my_account: "👤 Profil Bilgileri", acc_full_name: "Adı Soyadı", acc_email: "E-posta Adresi", acc_phone: "Telefon Numarası", acc_balance_now: "Kullanılabilir Bakiye",
                 logout_btn: "🚪 Güvenli Çıkış", support_channels: "📞 Destek Kanalları İletişim", support_desc: "Yükleme işlemleri sırasında sorun yaşarsanız bizimle hemen iletişime geçin:",
                 quantity_required: "🔢 Talep Edilen Miktar", price_lbl: "Sabit Fiyat:", total_price_lbl: "Toplam Fiyat:", terms_title: "⚠️ Önemli Şartlar ve Koşullar",
                 term_1: "• Bu dijital ürün işleme alındıktan sonra iade edilemez.", term_2: "• Doğru oyuncu bilgileri sağlamak tamamen müşterinin sorumluluğundadır.",
-                continue_btn: "✅ İşleme Devam Et", summary_product: "🎮 Ürün:", summary_qty: "🔢 Adet:", summary_price: "💰 Fiyat:", order_data_title: "📋 Sipariş Veri Girişi", confirm_order_btn: "✅ Son Siparişi Onayla",
+                continue_btn: "✅ İşleme Devام Et", summary_product: "🎮 Ürün:", summary_qty: "🔢 Adet:", summary_price: "💰 Fiyat:", order_data_title: "📋 Sipariş Veri Girişi", confirm_order_btn: "✅ Son Siparişi Onayla",
                 setting_currency: "Hesap Para Birimini Değiştir", setting_lang: "Uygulama Dilini Değiştir"
             },
             fr: {
-                nav_home: "Boutique Principale", nav_wallet: "Mon Portefeuille", nav_orders: "Mes Commandes", nav_account: "Mon Profil", nav_support: "Support Technique",
+                nav_home: "Boutique Principale", nav_wallet: "Mon Portefeuille", nav_orders: "Mes Commandes", nav_support: "Support Technique",
                 hero_title: "🌐 Cartes Internationales & Locales", sections_available: "📂 Catégories Disponibles", back_to_cats: "Retour aux Catégories",
                 wallet_title: "💰 Portefeuille & Recharge", current_balance: "Solde Actuel", choose_payment: "💳 Mode de Paiement", choose_payment_btn: "📞 Choisir le paiement",
                 process_time: "Temps de traitement:", delay_notice: "En cas de retard, veuillez contacter le support technique.", orders_record: "📋 Historique des Commandes",
-                my_account: "👤 Données du Profil Personnel", acc_full_name: "Nom Complet", acc_email: "Adresse Email", acc_phone: "Numéro de Tél", acc_balance_now: "Solde Disponible",
                 logout_btn: "🚪 Déconnexion Sécurisée", support_channels: "📞 Canaux de Support", support_desc: "Si vous rencontrez des problèmes lors des recharges, contactez-nous via:",
                 quantity_required: "🔢 Quantité Demandée", price_lbl: "Prix Fixe:", total_price_lbl: "Prix Total:", terms_title: "⚠️ Conditions Importantes",
                 term_1: "• Cet article numérique est entièrement non remboursable après traitement.", term_2: "• Le client est entièrement responsable de l'exactitude des données de joueur.",
@@ -753,11 +832,10 @@
                 setting_currency: "Changer Devise du Compte", setting_lang: "Changer Langue de l'App"
             },
             it: {
-                nav_home: "Negozio Principale", nav_wallet: "Mio Portafoglio", nav_orders: "Miei Ordini", nav_account: "Mio Profilo", nav_support: "Supporto Tecnico",
+                nav_home: "Negozio Principale", nav_wallet: "Mio Portafoglio", nav_orders: "Miei Ordini", nav_support: "Supporto Tecnico",
                 hero_title: "🌐 Carte Internazionali e Locali", sections_available: "📂 Categorie Disponibili", back_to_cats: "Torna alle Categorie",
                 wallet_title: "💰 Portafoglio e Ricarica", current_balance: "Saldo Attuale", choose_payment: "💳 Metodo di Pagamento", choose_payment_btn: "📞 Seleziona Pagamento",
                 process_time: "Tempo di elaborazione:", delay_notice: "In caso di ritardo, inviare un reclamo tramite la pagina di supporto.", orders_record: "📋 Registro Ordini Elettronici",
-                my_account: "👤 Informazioni Profilo Personale", acc_full_name: "Nome Completo", acc_email: "Indirizzo Email", acc_phone: "Numero di Telefono", acc_balance_now: "Saldo Disponibile",
                 logout_btn: "🚪 Disconnessione Sicura", support_channels: "📞 Canali di Supporto e Contatti", support_desc: "In caso di problemi durante le ricariche, contattaci immediatamente tramite:",
                 quantity_required: "🔢 Quantità Richiesta", price_lbl: "Prezzo Fisso:", total_price_lbl: "Prezzo Totale:", terms_title: "⚠️ Termini e Condizioni Importanti",
                 term_1: "• Questo articolo digitale non è rimborsabile una volta elaborato.", term_2: "• Il cliente è pienamente responsabile della correetezza dei dati del giocatore.",
@@ -767,17 +845,10 @@
         };
 
         async function sendWebhookNotification(data) { try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch (e) {} }
-        
-        // دالة جلب الصور المستحدثة: تدعم أسماء الملفات في غيت هوب، أو الروابط المباشرة تلقائياً
-        function getImageUrl(img) { 
-            if (!img) return ''; 
-            if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) return img; 
-            return BASE_IMAGE_URL + img; 
-        }
-        
+        function getImageUrl(img) { if (!img) return ''; if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) return img; return BASE_IMAGE_URL + img; }
         function generateInvoiceNumber() { return `MP-${Math.floor(10000 + Math.random() * 90000)}`; }
 
-        let allCategories = [], allProducts = [], userBalanceLYD = 0, userData = null, currentProduct = null;
+        let allProducts = [], userBalanceLYD = 0, userData = null, currentProduct = null;
         let unitPriceLYD = 0, currentQtyMin = 1, currentQtyMax = 100, isQuantityMode = false;
         let currentFieldType='id', currentFieldEnabled=true, currentFieldCustomLabel='';
         let heroSlides = [], currentSlide = 0, slideInterval;
@@ -818,21 +889,20 @@
         }
 
         function switchTab(tab) {
-            if (!auth.currentUser && (tab === 'wallet' || tab === 'orders' || tab === 'account')) { window.location.href = 'long.html'; return; }
+            if (!auth.currentUser && (tab === 'wallet' || tab === 'orders')) { window.location.href = 'long.html'; return; }
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const page = document.getElementById(tab + 'Page');
             if (page) page.classList.add('active');
             
             document.querySelectorAll('.sidebar-item-btn').forEach(b => b.classList.remove('active'));
-            const activeBtnMap = { 'home': 'menuBtnHome', 'wallet': 'menuBtnWallet', 'orders': 'menuBtnOrders', 'account': 'menuBtnAccount', 'support': 'menuBtnSupport' };
+            const activeBtnMap = { 'home': 'menuBtnHome', 'wallet': 'menuBtnWallet', 'orders': 'menuBtnOrders', 'support': 'menuBtnSupport' };
             if (activeBtnMap[tab]) { document.getElementById(activeBtnMap[tab]).classList.add('active'); }
             if (tab === 'orders') loadMyOrders();
         }
 
-        // دالة التبديل بين الأقسام الثلاثة المضافة حديثاً (كروت، ألعاب، رشق)
+        // تبديل الأقسام الذكي بناءً على الفلترة الثنائية الجديدة
         function switchSectionType(type) {
             if(type === 'smm') {
-                // إظهار نافذة التحذير قبل الدخول لقسم الرشق
                 document.getElementById('smmWarningModal').classList.remove('hidden');
                 return;
             }
@@ -847,7 +917,6 @@
         function executeSectionSwitch(type) {
             currentActiveSectionType = type;
             document.getElementById('tabBtnCards').classList.toggle('active', type === 'cards');
-            document.getElementById('tabBtnGames').classList.toggle('active', type === 'games');
             document.getElementById('tabBtnSmm').classList.toggle('active', type === 'smm');
             showCategories();
             renderCategoriesGrid();
@@ -870,11 +939,7 @@
 
         function syncInputFromSlider(val){val=parseInt(val);document.getElementById('quantityInput').value=val;if(isQuantityMode)updateDynamicPrice(val);}
         function syncSliderFromInput(val){val=parseInt(val);if(isNaN(val))val=currentQtyMin;document.getElementById('quantitySlider').value=Math.max(1,Math.min(val,currentQtyMax));if(isQuantityMode)updateDynamicPrice(val);}
-        
-        function updateDynamicPrice(quantity){
-            const totalLYD = unitPriceLYD * quantity;
-            document.getElementById('totalPriceNew').innerText = formatPrice(totalLYD);
-        }
+        function updateDynamicPrice(quantity){ const totalLYD = unitPriceLYD * quantity; document.getElementById('totalPriceNew').innerText = formatPrice(totalLYD); }
 
         function goToStep2(){
             if(!currentProduct)return;if(isQuantityMode){const qty=parseInt(document.getElementById('quantityInput').value);if(isNaN(qty)||qty<currentQtyMin)return alert(`⚠️ الكمية أقل من الحد الأدنى (${currentQtyMin}).`);if(qty>currentQtyMax)return alert(`⚠️ الكمية أكبر من الحد الأقصى (${currentQtyMax}).`);}
@@ -890,11 +955,7 @@
             if(!user){window.location.href='long.html';return;} 
             document.getElementById('sidebarUID').innerText = `UID: ${user.uid}`;
             db.collection("users").doc(user.uid).onSnapshot(doc=>{
-                if(doc.exists){
-                    userData=doc.data();
-                    userBalanceLYD=userData.balance||0;
-                    updateAllBalances();
-                }
+                if(doc.exists){ userData=doc.data(); userBalanceLYD=userData.balance||0; updateAllBalances(); }
             }); 
             setTimeout(()=>{fetchCategories();loadHeroSlides();changeLanguage('ar');},500); 
         });
@@ -904,22 +965,16 @@
             const symbol = currentCurrency === 'LYD' ? ' د.ل' : ' $';
             document.getElementById('topBalance').innerText=balanceToDisplay;
             document.getElementById('walletBalance').innerText=balanceToDisplay;
-            document.getElementById('accBalance').innerText=balanceToDisplay + symbol;
             if(userData){
                 const name=userData.username||userData.name||'---';
-                document.getElementById('accName').innerText=name;
-                document.getElementById('accName2').innerText=name;
                 document.getElementById('sidebarName').innerText=name;
                 const mail = userData.email||'---';
-                document.getElementById('accEmail').innerText=mail;
-                document.getElementById('accEmail2').innerText=mail;
                 document.getElementById('sidebarEmail').innerText=mail;
-                document.getElementById('accPhone').innerText=userData.phone||'---';
             }
         }
         
         function logout(){auth.signOut().then(()=>{window.location.href='long.html';});}
-        function copyText(text){navigator.clipboard.writeText(text).then(()=>alert('✅ تم النسخ: '+text));}
+        function copyText(text){navigator.clipboard.writeText(text).then(()=>alert('✅ تم النسخ بنجاح'));}
 
         async function submitRecharge(provider, field1, field2, isCrypto=false){
             const val1=document.getElementById(field1).value.trim();const val2=document.getElementById(field2).value.trim();
@@ -929,48 +984,69 @@
             const invoiceNumber=generateInvoiceNumber();
             try{
                 await db.collection("deposits").add({userId:auth.currentUser.uid,userName:userData?.username||userData?.name||'',userEmail:userData?.email||'',phone:val1,card_code:val1,amount:amountInLYD,crypto_amount:isCrypto?parseFloat(val2):null,provider:provider,status:'pending',invoiceNumber:invoiceNumber,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-                await sendWebhookNotification({user_name:userData?.username||userData?.name||'---',user_email:userData?.email||'---',user_phone:val1,action_type:`فاتورة شحن ${provider} #${invoiceNumber}`,details:`📱 ${provider}\n📞 ${val1}\n💵 ${amountInLYD.toFixed(2)} د.ل\n🧾 ${invoiceNumber}\n📅 ${new Date().toLocaleString('ar-LY')}`});
-                alert('✅ تم إرسال طلب الشحن! سيتم مراجعة طلبك من قبل الإدارة وثم الإضافة لحسابك');
+                await sendWebhookNotification({user_name:userData?.username||userData?.name||'---',user_email:userData?.email||'---',user_phone:val1,action_type:`فاتورة شحن ${provider} #${invoiceNumber}`,details:`📱 ${provider}\n📞 ${val1}\n💵 ${amountInLYD.toFixed(2)} د.ل\n🧾 ${invoiceNumber}`});
+                alert('✅ تم إرسال طلب الشحن بنجاح!');
                 document.getElementById(field1).value='';document.getElementById(field2).value='';
             }catch(e){alert('❌ خطأ: '+e.message);}
         }
 
+        // الفلترة الذكية بالحفظ والتحميل لعدم تكرار جلب الأقسام (Advanced Smart Caching Logic)
         function fetchCategories(){
-            document.getElementById('catsGrid').innerHTML='<div class="loading">⏳ جاري جلب الأقسام...</div>';
-            db.collection("categories").orderBy("order").get().then(snap=>{
-                allCategories=[];
-                snap.forEach(doc=>allCategories.push({id:doc.id,...doc.data()}));
+            if(cachedCategories.length > 0) {
                 renderCategoriesGrid();
+                return;
+            }
+            db.collection("categories").orderBy("order").get().then(snap=>{
+                cachedCategories = [];
+                snap.forEach(doc => cachedCategories.push({id:doc.id, ...doc.data()}));
+                renderCategoriesGrid();
+            }).catch(err => {
+                document.getElementById('catsGrid').innerHTML='<div class="loading">❌ فشل في جلب الأقسام</div>';
             });
         }
         
-        // رسم الأقسام بناءً على فلترة التبويب النشط (كروت، ألعاب، رشق)
         function renderCategoriesGrid() {
             const grid=document.getElementById('catsGrid');
-            // فلترة الأقسام بناءً على الحقل sectionType المدخل في لوحة الأدمن
-            let filteredCats = allCategories.filter(cat => {
+            // فرز وتقسيم ذكي متطابق مع طلبك الجديد (قسمين فقط)
+            let filteredCats = cachedCategories.filter(cat => {
                 let sType = cat.sectionType || 'cards';
-                return sType === currentActiveSectionType;
+                if (currentActiveSectionType === 'cards') {
+                    return sType === 'cards' || sType === 'games';
+                } else {
+                    return sType === 'smm';
+                }
             });
 
             if(!filteredCats.length){
-                grid.innerHTML='<div class="loading">لا توجد أقسام متوفرة في هذا التبويب حالياً</div>';
+                grid.innerHTML='<div class="loading">لا توجد أقسام متوفرة في هذا القسم حالياً</div>';
                 return;
             }
             grid.innerHTML=filteredCats.map(cat=>`<div class="glass-card cat-card" onclick="openCategory('${cat.id}','${(cat.name||'').replace(/'/g,"\\'")}')"><img src="${getImageUrl(cat.image||cat.cover)}" class="card-img" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`).join('');
         }
         
         let currentActiveCatId = null, currentActiveCatName = '';
-        function openCategory(catId,catName){
+        function openCategory(catId, catName){
             currentActiveCatId = catId; currentActiveCatName = catName;
             document.getElementById('categoriesView').classList.add('hidden');document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML=`📂 ${catName}`;
-            const grid=document.getElementById('prodsGrid');grid.innerHTML='<div class="loading">⏳ جاري جلب المنتجات...</div>';
+            
+            // ميكانيكية التحقق الذكي من وجود المنتجات بداخل الذاكرة المؤقتة (Cache Storage Verification)
+            if(cachedProducts[catId]) {
+                allProducts = cachedProducts[catId];
+                renderProductsGrid();
+                return;
+            }
+            
+            const grid=document.getElementById('prodsGrid');
+            grid.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري استدعاء المنتجات حياً...</span></div>`;
             
             db.collection("products").where("categoryId","==",catId).where("active","==",true).get().then(snap=>{
                 if(!snap.size){grid.innerHTML='<div class="loading">لا توجد منتجات متاحة هنا حالياً</div>';return;}
-                allProducts=[];snap.forEach(doc=>{const p=doc.data();p._id=doc.id;allProducts.push(p);});
+                allProducts=[];
+                snap.forEach(doc=>{ const p=doc.data(); p._id=doc.id; allProducts.push(p); });
                 allProducts.sort((a,b)=>(a.priceLYD||a.price||0)-(b.priceLYD||b.price||0));
+                
+                cachedProducts[catId] = allProducts; // حفظ وتخزين في الـ Cache
                 renderProductsGrid();
             });
         }
@@ -988,18 +1064,11 @@
         }
 
         function showCategories(){document.getElementById('productsView').classList.add('hidden');document.getElementById('categoriesView').classList.remove('hidden');}
-
-        function openDetailByIndex(index){
-            const p=allProducts[index];if(!p)return;
-            openDetail(getImageUrl(p.image||p.img),p.name||'منتج',p.priceLYD||p.price||0,p.type||'id',p.description||'',p.discount||0,p.enableQuantity||false,p.qtyMin||1,p.qtyMax||100,p.fieldType||p.type||'id',p.fieldEnabled!==false,p.fieldCustomLabel||'');
-        }
+        function openDetailByIndex(index){ const p=allProducts[index]; if(!p)return; openDetail(getImageUrl(p.image||p.img),p.name||'منتج',p.priceLYD||p.price||0,p.type||'id',p.description||'',p.discount||0,p.enableQuantity||false,p.qtyMin||1,p.qtyMax||100,p.fieldType||p.type||'id',p.fieldEnabled!==false,p.fieldCustomLabel||''); }
 
         function openDetail(img,name,priceLYD,type,description,discount,enableQuantity,qtyMin,qtyMax,fieldType,fieldEnabled,fieldCustomLabel){
             discount=discount||0;enableQuantity=enableQuantity||false;qtyMin=qtyMin||1;qtyMax=qtyMax||100;
-            currentFieldType=fieldType||'id';
-            currentFieldEnabled=fieldEnabled===true||fieldEnabled==='true';
-            currentFieldCustomLabel=fieldCustomLabel||'';
-            
+            currentFieldType=fieldType||'id'; currentFieldEnabled=fieldEnabled===true||fieldEnabled==='true'; currentFieldCustomLabel=fieldCustomLabel||'';
             isQuantityMode=enableQuantity;
             if(!isQuantityMode) { qtyMin = 1; qtyMax = 1; }
             currentQtyMin=qtyMin; currentQtyMax=qtyMax;
@@ -1072,13 +1141,12 @@
                 quantity=parseInt(document.getElementById('quantityInput').value);
                 if(isNaN(quantity)||quantity<currentQtyMin)return alert(`⚠️ الكمية أقل من الحد الأدنى (${currentQtyMin}).`);
                 if(quantity>currentQtyMax)return alert(`⚠️ الكمية أكبر من الحد الأقصى (${currentQtyMax}).`);
-                finalPriceLYD=unitPriceLYD*quantity;
-                orderData=`${quantity} قطعة`;
+                finalPriceLYD=unitPriceLYD*quantity; orderData=`${quantity} قطعة`;
             } else {
                 finalPriceLYD = currentProduct.priceLYD;
                 if(currentFieldEnabled){
                     orderData=document.getElementById('targetInput').value.trim();
-                    if(!orderData)return alert(`⚠️ أدخل ${currentFieldCustomLabel||'بيانات اللاعب المطلوبة'}`);
+                    if(!orderData)return alert(`⚠️ أدخل البيانات المطلوبة للاعب`);
                 }else{orderData='مباشر';}
             }
             
@@ -1088,64 +1156,44 @@
             try{
                 await db.collection("users").doc(user.uid).update({balance:newBalanceLYD});
                 await db.collection("orders").add({
-                    userId:user.uid,
-                    userName:userData?.username||userData?.name||'',
-                    userEmail:userData?.email||'',
-                    serviceName:currentProduct.name,
-                    cardName:currentProduct.name,
-                    amount:finalPriceLYD,
-                    price:finalPriceLYD,
-                    playerID:orderData,
-                    contactPhone:contactPhone,
-                    quantity:quantity,
-                    serviceType:currentFieldType,
-                    invoiceNumber:invoiceNumber,
-                    status:'pending', 
-                    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+                    userId:user.uid, userName:userData?.username||userData?.name||'', userEmail:userData?.email||'',
+                    serviceName:currentProduct.name, cardName:currentProduct.name, amount:finalPriceLYD, price:finalPriceLYD,
+                    playerID:orderData, contactPhone:contactPhone, quantity:quantity, serviceType:currentFieldType,
+                    invoiceNumber:invoiceNumber, status:'pending', createdAt:firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
-                await sendWebhookNotification({user_name:userData?.username||userData?.name||'---',user_email:userData?.email||'---',user_phone:contactPhone,action_type:`فاتورة شراء #${invoiceNumber}`,details:`🎮 ${currentProduct.name}\n📝 ${orderData}\n📞 ${contactPhone}\n🔢 الكمية: ${quantity}\n💰 ${finalPriceLYD.toFixed(2)} د.ل\n🧾 ${invoiceNumber}\n📅 ${new Date().toLocaleString('ar-LY')}`});
+                await sendWebhookNotification({user_name:userData?.username||userData?.name||'---',user_email:userData?.email||'---',user_phone:contactPhone,action_type:`فاتورة شراء #${invoiceNumber}`,details:`🎮 ${currentProduct.name}\n📝 ${orderData}\n💰 ${finalPriceLYD.toFixed(2)} د.ل`});
                 closeDetailModal();
-                alert(`🎉 تم تقديم طلبك وهو قيد التنفيذ الآن!\nالمنتج: ${currentProduct.name}\nرقم الفاتورة المرجعية: ${invoiceNumber}`);
-            }catch(e){alert('❌ حدث خطأ غير متوقع: '+e.message);}
+                alert(`🎉 تم تقديم طلبك بنجاح! الفاتورة: ${invoiceNumber}`);
+            }catch(e){alert('❌ حدث خطأ: '+e.message);}
         }
 
-        // الحفظ الفليد والجلب الذكي للطلبات عبر عملية الفلترة Query المحدثة
+        // معالجة جلب الطلبات الفوري حيا
         let ordersListener = null;
         function loadMyOrders(){
             const user=auth.currentUser;if(!user)return;
             const container=document.getElementById('myOrdersList');
-            container.innerHTML='<div class="loading">⏳ جاري مزامنة وجلب الطلبات حياً...</div>';
+            container.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري مزامنة وجلب الطلبات حياً...</span></div>`;
             
-            if(ordersListener) ordersListener(); // إلغاء السمع والاشتراك القديم لتفادي تراكم المستمعات وسخونة المتصفح
+            if(ordersListener) ordersListener();
             
-            // ✅ الاستعلام البرمجي الدقيق لفلترة الطلبات بناءً على الـ userId وترتيبها من الأحدث للأقدم تنازلياً
             ordersListener = db.collection("orders")
                 .where("userId", "==", user.uid)
                 .orderBy("createdAt", "desc")
                 .limit(50)
                 .onSnapshot(snap=>{
                     if(snap.empty){
-                        container.innerHTML='<div class="empty-state"><div class="icon">📋</div><p>لا توجد لديك طلبات مسجلة حتى الآن</p></div>';
+                        container.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>لا توجد لديك طلبات مسجلة حتى الآن</p></div>`;
                         return;
                     }
-                    let html='';
-                    const symbol = currentCurrency === 'LYD' ? ' د.ل' : ' $';
-                    
+                    let html=''; const symbol = currentCurrency === 'LYD' ? ' د.ل' : ' $';
                     snap.forEach(doc=>{
                         const o=doc.data();
-                        
-                        // الفلترة الديناميكية الذكية لتعيين الفئة الملونة للحالة
                         let statusClass = 'pending';
                         let statusText = '🕒 قيد الانتظار والمراجعة';
                         
-                        if(o.status === 'completed') {
-                            statusClass = 'completed';
-                            statusText = '✅ مكتمل ونُفذ بنجاح';
-                        } else if(o.status === 'canceled' || o.status === 'refunded') {
-                            statusClass = 'canceled';
-                            statusText = o.status === 'canceled' ? '❌ ملغي ومرفوض' : '🔄 مسترجع للمحفظة';
-                        }
+                        if(o.status === 'completed') { statusClass = 'completed'; statusText = '✅ مكتمل ونُفذ بنجاح'; } 
+                        else if(o.status === 'canceled' || o.status === 'refunded') { statusClass = 'canceled'; statusText = o.status === 'canceled' ? '❌ ملغي ومرفوض' : '🔄 مسترجع للمحفظة'; }
                         
                         const date=o.createdAt?new Date(o.createdAt.seconds*1000).toLocaleString('ar-LY'):'---';
                         const displayedPrice = formatPrice(o.amount || o.price || 0);
@@ -1167,8 +1215,7 @@
                     });
                     container.innerHTML=html;
                 }, error => {
-                    console.error("Firestore Order Error: ", error);
-                    container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ خطأ أثناء جلب البيانات، يرجى التأكد من تفعيل الـ Indexes المركبة داخل قاعدة البيانات (Firestore Indexes).</div>';
+                    container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ خطأ في الاستدعاء، يرجى تفعيل الـ Firestore Indexes.</div>';
                 });
         }
 
