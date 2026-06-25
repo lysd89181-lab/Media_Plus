@@ -98,14 +98,29 @@
         .sidebar-username { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
         .sidebar-useremail { font-size: 11px; color: var(--muted); word-break: break-all; }
 
-        .sidebar-logout-rect {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
-            border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px;
-            color: #f87171; padding: 10px; text-align: center; font-size: 13px;
-            font-weight: 700; cursor: pointer; margin-bottom: 20px; transition: all 0.3s ease;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+        /* --- زر تسجيل الخروج الجديد --- */
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 90%;
+            margin: 15px auto;
+            padding: 12px;
+            background-color: rgba(231, 76, 60, 0.1); /* أحمر خفيف جداً شفاف */
+            border: 1px solid #e74c3c; /* حدود حمراء هادئة */
+            border-radius: 8px;
+            color: #e74c3c;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .sidebar-logout-rect:hover { background: rgba(239, 68, 68, 0.25); border-color: var(--red); color: #fff; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+
+        .logout-btn:hover {
+            background-color: #e74c3c; /* يتحول لأحمر كامل عند تمرير الماوس */
+            color: #fff;
+        }
 
         .sidebar-menu-list { display: flex; flex-direction: column; gap: 6px; flex-grow: 1; overflow-y: auto; }
         .sidebar-item-btn { 
@@ -443,10 +458,10 @@
             <div class="sidebar-useremail" id="sidebarEmail">---@---.---</div>
         </div>
 
-        <div class="sidebar-logout-rect" onclick="logout()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            <span>تسجيل خروج آمن</span>
-        </div>
+        <!-- --- زر تسجيل الخروج الجديد --- -->
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> <span>تسجيل خروج آمن</span>
+        </button>
 
         <div class="sidebar-menu-list">
             <button class="sidebar-item-btn active" id="menuBtnHome" onclick="switchTab('home'); toggleSidebar(false);">
@@ -796,7 +811,8 @@
                 quantity_required: "🔢 الكمية المطلوبة", price_lbl: "السعر الثابت:", total_price_lbl: "السعر الإجمالي:", terms_title: "⚠️ الشروط والأحكام المهمة",
                 term_1: "• هذا المنتج الرقمي غير قابل للإلغاء أو الاسترداد نهائياً بعد إتمام شحنه.", term_2: "• تقع المسؤولية الكاملة على العميل في صحة كتابة بيانات معرف اللاعب.",
                 continue_btn: "✅ متابعة العملية", summary_product: "🎮 المنتج:", summary_qty: "🔢 الكمية:", summary_price: "💰 السعر:", order_data_title: "📋 بيانات شحن الطلب", confirm_order_btn: "✅ تأكيد الطلب النهائي للشحن",
-                setting_currency: "تغيير عملة الحساب", setting_lang: "تغيير لغة التطبيق (5 لغات)"
+                setting_currency: "تغيير عملة الحساب", setting_lang: "تغيير لغة التطبيق (5 لغات)",
+                faq_title: "الأسئلة الشائعة", about_title: "من نحن", rights_title: "الحقوق"
             },
             en: {
                 nav_home: "Main Store", nav_wallet: "My Wallet", nav_orders: "My Orders", nav_support: "Technical Support",
@@ -807,7 +823,8 @@
                 quantity_required: "🔢 Required Quantity", price_lbl: "Fixed Price:", total_price_lbl: "Total Price:", terms_title: "⚠️ Important Terms & Conditions",
                 term_1: "• This digital item is completely non-refundable after processing.", term_2: "• The client is fully responsible for providing accurate player details.",
                 continue_btn: "✅ Continue Process", summary_product: "🎮 Product:", summary_qty: "🔢 Qty:", summary_price: "💰 Price:", order_data_title: "📋 Order Input Details", confirm_order_btn: "✅ Confirm Final Top-up Order",
-                setting_currency: "Change Account Currency", setting_lang: "Change App Language"
+                setting_currency: "Change Account Currency", setting_lang: "Change App Language",
+                faq_title: "FAQ", about_title: "About Us", rights_title: "Rights"
             },
             tr: {
                 nav_home: "Ana Mağaza", nav_wallet: "Cüzdanım", nav_orders: "Siparişlerim", nav_support: "Teknik Destek",
@@ -818,7 +835,8 @@
                 quantity_required: "🔢 Talep Edilen Miktar", price_lbl: "Sabit Fiyat:", total_price_lbl: "Toplam Fiyat:", terms_title: "⚠️ Önemli Şartlar ve Koşullar",
                 term_1: "• Bu dijital ürün işleme alındıktan sonra iade edilemez.", term_2: "• Doğru oyuncu bilgileri sağlamak tamamen müşterinin sorumluluğundadır.",
                 continue_btn: "✅ İşleme Devام Et", summary_product: "🎮 Ürün:", summary_qty: "🔢 Adet:", summary_price: "💰 Fiyat:", order_data_title: "📋 Sipariş Veri Girişi", confirm_order_btn: "✅ Son Siparişi Onayla",
-                setting_currency: "Hesap Para Birimini Değiştir", setting_lang: "Uygulama Dilini Değiştir"
+                setting_currency: "Hesap Para Birimini Değiştir", setting_lang: "Uygulama Dilini Değiştir",
+                faq_title: "SSS", about_title: "Hakkımızda", rights_title: "Haklar"
             },
             fr: {
                 nav_home: "Boutique Principale", nav_wallet: "Mon Portefeuille", nav_orders: "Mes Commandes", nav_support: "Support Technique",
@@ -829,7 +847,8 @@
                 quantity_required: "🔢 Quantité Demandée", price_lbl: "Prix Fixe:", total_price_lbl: "Prix Total:", terms_title: "⚠️ Conditions Importantes",
                 term_1: "• Cet article numérique est entièrement non remboursable après traitement.", term_2: "• Le client est entièrement responsable de l'exactitude des données de joueur.",
                 continue_btn: "✅ Continuer le Processus", summary_product: "🎮 Produit:", summary_qty: "🔢 Qté:", summary_price: "💰 Prix:", order_data_title: "📋 Informations de Commande", confirm_order_btn: "✅ Confirmer la Commande Finale",
-                setting_currency: "Changer Devise du Compte", setting_lang: "Changer Langue de l'App"
+                setting_currency: "Changer Devise du Compte", setting_lang: "Changer Langue de l'App",
+                faq_title: "FAQ", about_title: "À Propos", rights_title: "Droits"
             },
             it: {
                 nav_home: "Negozio Principale", nav_wallet: "Mio Portafoglio", nav_orders: "Miei Ordini", nav_support: "Supporto Tecnico",
@@ -840,7 +859,8 @@
                 quantity_required: "🔢 Quantità Richiesta", price_lbl: "Prezzo Fisso:", total_price_lbl: "Prezzo Totale:", terms_title: "⚠️ Termini e Condizioni Importanti",
                 term_1: "• Questo articolo digitale non è rimborsabile una volta elaborato.", term_2: "• Il cliente è pienamente responsabile della correetezza dei dati del giocatore.",
                 continue_btn: "✅ Continua Processo", summary_product: "🎮 Prodotto:", summary_qty: "🔢 Qta:", summary_price: "💰 Prezzo:", order_data_title: "📋 Dati di Input dell'Ordine", confirm_order_btn: "✅ Conferma l'Ordine Finale",
-                setting_currency: "Cambia Valuta Account", setting_lang: "Cambia Lingua dell'App"
+                setting_currency: "Cambia Valuta Account", setting_lang: "Cambia Lingua dell'App",
+                faq_title: "FAQ", about_title: "Chi Siamo", rights_title: "Diritti"
             }
         };
 
@@ -1168,20 +1188,22 @@
             }catch(e){alert('❌ حدث خطأ: '+e.message);}
         }
 
-        // معالجة جلب الطلبات الفوري حيا
+        // ========== [التعديل الأهم] دالة جلب الطلبات الحية ==========
         let ordersListener = null;
         function loadMyOrders(){
             const user=auth.currentUser;if(!user)return;
             const container=document.getElementById('myOrdersList');
             container.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري مزامنة وجلب الطلبات حياً...</span></div>`;
             
-            if(ordersListener) ordersListener();
+            if(ordersListener) ordersListener(); // تنظيف المستمع السابق
             
+            // 1. استبدال get() بـ onSnapshot() للاستماع المباشر
             ordersListener = db.collection("orders")
                 .where("userId", "==", user.uid)
                 .orderBy("createdAt", "desc")
                 .limit(50)
-                .onSnapshot(snap=>{
+                .onSnapshot(snap => {
+                    // 2. معالجة محتوى الحقن الجديد (innerHTML)
                     if(snap.empty){
                         container.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>لا توجد لديك طلبات مسجلة حتى الآن</p></div>`;
                         return;
@@ -1215,7 +1237,9 @@
                     });
                     container.innerHTML=html;
                 }, error => {
-                    container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ خطأ في الاستدعاء، يرجى تفعيل الـ Firestore Indexes.</div>';
+                    // 3. معالجة الأخطاء الاحترافية وإخفاء النص البرمجي
+                    console.error("Firestore Index Error:", error);
+                    container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ عذراً، لا يمكن عرض سجل الطلبات حالياً. الرجاء التواصل مع الدعم الفني لتفعيل الفهرسة المطلوبة في قاعدة البيانات.</div>';
                 });
         }
 
@@ -1223,4 +1247,4 @@
         document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchProducts();});
     </script>
 </body>
-</html>
+            </html>
