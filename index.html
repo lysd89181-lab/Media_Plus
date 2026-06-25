@@ -6,6 +6,7 @@
     <title>Media Plus - إدارة بطاقات الخدمات الرقمية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
         :root {
             --bg: #090e1a; --blue: #00a2ff; --cyan: #00f2fe; --white: #fff;
             --muted: #94a3b8; --gold: #f5a623; --red: #ef4444; --green: #10b981; --amber: #f59e0b;
@@ -25,6 +26,16 @@
                 radial-gradient(ellipse at 50% 80%, rgba(0,242,254,0.03) 0%, transparent 50%);
             color: var(--white); min-height: 100vh; padding-bottom: 30px; -webkit-overflow-scrolling: touch; 
             overflow-x: hidden;
+            /* منع التمرير عند فتح القائمة */
+            position: relative;
+        }
+        
+        /* كلاس يمنع تمرير الخلفية */
+        body.no-scroll {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
         }
 
         /* الشريط العلوي */
@@ -68,15 +79,18 @@
             border-right: 1px solid rgba(0,242,254,0.15);
             display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 24px 16px;
+            overflow-y: auto; /* السماح بتمرير القائمة نفسها */
+            overflow-x: hidden;
+            max-height: 100vh;
         }
         html[dir="rtl"] .app-sidebar { left: auto; right: -320px; border-right: none; border-left: 1px solid rgba(0,242,254,0.15); }
         .app-sidebar.show { left: 0; }
         html[dir="rtl"] .app-sidebar.show { right: 0; }
 
-        .sidebar-close { position: absolute; top: 16px; left: 16px; background: transparent; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; transition: color 0.2s; }
+        .sidebar-close { position: absolute; top: 16px; left: 16px; background: transparent; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; transition: color 0.2s; z-index: 10; }
         html[dir="rtl"] .sidebar-close { left: auto; right: 16px; }
         .sidebar-close:hover { color: var(--red); }
-        .sidebar-close svg { width: 22 height: 22px; }
+        .sidebar-close svg { width: 22px; height: 22px; }
 
         .sidebar-profile-section {
             text-align: center; margin-top: 20px; margin-bottom: 18px; padding-bottom: 16px;
@@ -107,8 +121,8 @@
             width: 90%;
             margin: 15px auto;
             padding: 12px;
-            background-color: rgba(231, 76, 60, 0.1); /* أحمر خفيف جداً شفاف */
-            border: 1px solid #e74c3c; /* حدود حمراء هادئة */
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
             border-radius: 8px;
             color: #e74c3c;
             font-size: 15px;
@@ -118,11 +132,11 @@
         }
 
         .logout-btn:hover {
-            background-color: #e74c3c; /* يتحول لأحمر كامل عند تمرير الماوس */
+            background-color: #e74c3c;
             color: #fff;
         }
 
-        .sidebar-menu-list { display: flex; flex-direction: column; gap: 6px; flex-grow: 1; overflow-y: auto; }
+        .sidebar-menu-list { display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
         .sidebar-item-btn { 
             background: transparent; border: none; color: #cbd5e1; padding: 11px 14px; 
             text-align: right; font-size: 14px; font-weight: 600; border-radius: 12px; 
@@ -133,8 +147,56 @@
         .sidebar-item-btn:hover, .sidebar-item-btn.active { background: rgba(0,242,254,0.08); color: #00f2fe; }
         .sidebar-item-btn svg { width: 19px; height: 19px; color: inherit; fill: none; }
 
+        /* --- أقسام الثقة والأمان في السايد بار --- */
+        .sidebar-trust-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sidebar-trust-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 10px 14px;
+            text-align: right;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.2s;
+        }
+        .sidebar-trust-btn:hover {
+            background: rgba(255,255,255,0.03);
+            color: #e2e8f0;
+        }
+        .sidebar-trust-btn i {
+            width: 18px;
+            height: 18px;
+            font-size: 14px;
+            color: var(--cyan);
+            text-align: center;
+        }
+        
+        .sidebar-copyright {
+            text-align: center;
+            padding: 12px 8px;
+            font-size: 10px;
+            color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
         .sidebar-settings-block {
-            margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+            margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
             display: flex; flex-direction: column; gap: 10px;
         }
         .config-row-title { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
@@ -144,6 +206,53 @@
         
         .lang-select-full { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px; color: var(--white); font-size: 12px; font-weight: 700; outline: none; cursor: pointer; }
         .lang-select-full option { background: #0b1529; color: #fff; }
+
+        /* --- فوتر الصفحة --- */
+        .main-footer {
+            background: rgba(11,26,48,0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0,242,254,0.12);
+            padding: 25px 16px 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .footer-link {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+            padding: 5px 0;
+        }
+        .footer-link:hover {
+            color: var(--cyan);
+        }
+        .footer-link i {
+            font-size: 13px;
+            color: var(--cyan);
+        }
+        .footer-copyright {
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+        .footer-copyright span {
+            color: var(--cyan);
+            font-weight: 700;
+        }
 
         /* شريط الصور السلايدر */
         .hero-slider { background: #0b1a30; padding: 0; text-align: center; position: relative; overflow: hidden; }
@@ -173,7 +282,6 @@
         html[dir="rtl"] .search-box button { left: 4px; right: auto; }
         .search-box button svg { width: 16px; height: 16px; color: #000; }
 
-        /* مفاتيح التبديل بين القسمين الرئيسيين الجدد */
         .main-tabs-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; }
         .tab-nav-btn {
             background: rgba(255,255,255,0.03); border: 1px solid rgba(0,242,254,0.15);
@@ -185,7 +293,6 @@
         }
         .tab-nav-btn svg { width: 18px; height: 18px; }
 
-        /* البطاقة الزجاجية */
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.25);
@@ -246,7 +353,6 @@
         .buy-btn-3d:hover { background: var(--cyan); color: #000; border-bottom: 3px solid #00c4d4; box-shadow: 0 0 15px rgba(0,242,254,0.4); }
         .buy-btn-3d:active { transform: translateY(2px); }
 
-        /* المحفظة */
         .card-white { 
             background: var(--glass-bg); backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-top: 1px solid rgba(255,255,255,0.25);
@@ -339,7 +445,6 @@
         .social-link:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .social-link svg { width: 18px; height: 18px; }
 
-        /* المودال */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 12px; }
         .modal-card {
             background: rgba(11, 20, 38, 0.96); backdrop-filter: blur(25px);
@@ -390,7 +495,6 @@
         .confirm-btn:active { transform: translateY(2px); }
         .confirm-btn svg { width: 16px; height: 16px; color: #fff; }
 
-        /* سجل طلباتي المطور */
         .order-item { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; margin-bottom: 12px; transition: all 0.3s; }
         .order-item:hover { border-color: rgba(0,242,254,0.3); }
         .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
@@ -408,7 +512,6 @@
         .empty-state { text-align: center; padding: 40px; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
         .empty-state svg { width: 48px; height: 48px; color: var(--muted); }
 
-        /* نافذة التحذير */
         .warning-modal-body { text-align: center; padding: 10px 5px; display: flex; flex-direction: column; align-items: center; }
         .warning-icon-geo { width: 48px; height: 48px; color: var(--amber); margin-bottom: 10px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
@@ -416,6 +519,28 @@
         .warning-text { font-size: 13px; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px; }
         .warning-agree-btn { width: 100%; padding: 12px; background: var(--cyan); color: #000; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .warning-agree-btn:hover { background: #00c4d4; box-shadow: 0 0 15px rgba(0,242,254,0.4); }
+
+        /* مودال أقسام الثقة */
+        .trust-modal-content {
+            padding: 15px 10px;
+            line-height: 2;
+            font-size: 13px;
+            color: #e2e8f0;
+            text-align: right;
+        }
+        html[dir="ltr"] .trust-modal-content { text-align: left; }
+        .trust-modal-content h3 {
+            color: var(--cyan);
+            margin-bottom: 12px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .trust-modal-content p {
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
 
         .hidden { display: none !important; }
         .loading { text-align: center; padding: 35px; color: var(--muted); font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -458,7 +583,6 @@
             <div class="sidebar-useremail" id="sidebarEmail">---@---.---</div>
         </div>
 
-        <!-- --- زر تسجيل الخروج الجديد --- -->
         <button class="logout-btn" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i> <span>تسجيل خروج آمن</span>
         </button>
@@ -476,6 +600,27 @@
             <button class="sidebar-item-btn" id="menuBtnSupport" onclick="switchTab('support'); toggleSidebar(false);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> <span data-i18n="nav_support">قسم الدعم وقنواتنا</span>
             </button>
+        </div>
+
+        <!-- أقسام الثقة والأمان في السايد بار -->
+        <div class="sidebar-trust-section">
+            <button class="sidebar-trust-btn" onclick="openTrustModal('about'); toggleSidebar(false);">
+                <i class="fas fa-info-circle"></i> <span data-i18n="about_title">من نحن</span>
+            </button>
+            <button class="sidebar-trust-btn" onclick="openTrustModal('contact'); toggleSidebar(false);">
+                <i class="fas fa-phone-alt"></i> <span>اتصل بنا</span>
+            </button>
+            <button class="sidebar-trust-btn" onclick="openTrustModal('faq'); toggleSidebar(false);">
+                <i class="fas fa-question-circle"></i> <span data-i18n="faq_title">الأسئلة الشائعة</span>
+            </button>
+            <button class="sidebar-trust-btn" onclick="openTrustModal('rights'); toggleSidebar(false);">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="rights_title">جميع الحقوق محفوظة</span>
+            </button>
+        </div>
+        
+        <div class="sidebar-copyright">
+            © 2025 <span style="color:var(--cyan);">Media Plus</span><br>
+            جميع الحقوق محفوظة
         </div>
 
         <div class="sidebar-settings-block">
@@ -544,6 +689,28 @@
                 <div class="prods-grid" id="prodsGrid"></div>
             </div>
         </div>
+        
+        <!-- فوتر الصفحة الرئيسية -->
+        <footer class="main-footer">
+            <div class="footer-links">
+                <button class="footer-link" onclick="openTrustModal('about')">
+                    <i class="fas fa-info-circle"></i> <span data-i18n="about_title">من نحن</span>
+                </button>
+                <button class="footer-link" onclick="openTrustModal('contact')">
+                    <i class="fas fa-phone-alt"></i> <span>اتصل بنا</span>
+                </button>
+                <button class="footer-link" onclick="openTrustModal('faq')">
+                    <i class="fas fa-question-circle"></i> <span data-i18n="faq_title">الأسئلة الشائعة</span>
+                </button>
+                <button class="footer-link" onclick="openTrustModal('rights')">
+                    <i class="fas fa-shield-alt"></i> <span data-i18n="rights_title">جميع الحقوق محفوظة</span>
+                </button>
+            </div>
+            <div class="footer-copyright">
+                © 2025 <span>Media Plus</span> - جميع الحقوق محفوظة<br>
+                تطوير وإدارة: <span>Media Plus Team</span>
+            </div>
+        </footer>
     </div>
 
     <div id="walletPage" class="page">
@@ -676,7 +843,7 @@
                 <span data-i18n="support_channels">📞 قنوات الدعم الفني والتواصل</span>
             </div>
             <div class="card-white" style="text-align:center;">
-                <p style="font-size:13px; color:var(--muted); margin-bottom:14px;" data-i18n="support_desc">إذا واجهتك أي مشكلة في عمليات الشحن أو استلاف البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:</p>
+                <p style="font-size:13px; color:var(--muted); margin-bottom:14px;" data-i18n="support_desc">إذا واجهتك أي مشكلة في عمليات الشحن أو استلام البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:</p>
                 <div class="social-support-box">
                     <a href="https://wa.me/218920414760" target="_blank" class="social-link whatsapp">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
@@ -700,6 +867,16 @@
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- مودال أقسام الثقة -->
+    <div id="trustModal" class="modal-overlay hidden" onclick="closeTrustModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeTrustModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div id="trustModalContent" class="trust-modal-content"></div>
         </div>
     </div>
 
@@ -795,11 +972,32 @@
         let currentCurrency = 'LYD'; 
         const USD_RATE = 11; 
         let currentLang = 'ar';
-        let currentActiveSectionType = 'cards'; // التصفية الجديدة لـ (cards = اشتراكات وألعاب | smm = رشق وخدمات)
+        let currentActiveSectionType = 'cards';
 
-        // مستوعبات الحفظ والتخزين الذكي للبيانات لمنع التكرار (Caching Arrays)
         let cachedCategories = [];
         let cachedProducts = {};
+
+        // محتوى أقسام الثقة
+        const trustContent = {
+            ar: {
+                about: {
+                    title: 'من نحن',
+                    content: `<p><b>Media Plus</b> هو متجر إلكتروني رائد ومتخصص في تقديم بطاقات الشحن الرقمية وخدمات الألعاب الإلكترونية وخدمات السوشيال ميديا.</p><p>نحن نضمن لك تجربة شراء سريعة وآمنة مع دعم فني متواصل على مدار الساعة. تأسس المتجر ليكون حلقة الوصل بينك وبين الخدمات الرقمية الأكثر طلباً في السوق الليبي والعربي.</p>`
+                },
+                contact: {
+                    title: 'اتصل بنا',
+                    content: `<p>نحن هنا لخدمتك على مدار الساعة. يمكنك التواصل معنا عبر:</p><p>📞 <b>واتساب:</b> <span style="color:var(--cyan);">0920414760</span></p><p>📧 <b>بريد إلكتروني:</b> <span style="color:var(--cyan);">support@media-plus.store</span></p><p>🕒 <b>أوقات العمل:</b> يومياً من 9 صباحاً حتى 12 منتصف الليل.</p>`
+                },
+                faq: {
+                    title: 'الأسئلة الشائعة',
+                    content: `<p><b>س: كم تستغرق معالجة طلب الشراء؟</b><br>ج: من دقيقة إلى 3 ساعات حسب نوع الخدمة وضغط الطلبات.</p><p><b>س: هل يمكنني استرجاع المبلغ بعد الشراء؟</b><br>ج: جميع المنتجات الرقمية غير قابلة للاسترداد بعد تنفيذها.</p><p><b>س: كيف أتأكد من وصول الشحن؟</b><br>ج: عبر سجل طلباتي، حيث يتم تحديث حالة طلبك فوراً.</p>`
+                },
+                rights: {
+                    title: 'جميع الحقوق محفوظة',
+                    content: `<p>© 2025 <b>Media Plus</b>. جميع الحقوق محفوظة.</p><p>جميع المحتويات والعلامات التجارية المعروضة في هذا المتجر هي ملك لأصحابها المعنيين. يمنع نسخ أو إعادة نشر أي محتوى من هذا التطبيق دون إذن خطي مسبق من إدارة Media Plus.</p>`
+                }
+            }
+        };
 
         const i18n = {
             ar: {
@@ -812,7 +1010,7 @@
                 term_1: "• هذا المنتج الرقمي غير قابل للإلغاء أو الاسترداد نهائياً بعد إتمام شحنه.", term_2: "• تقع المسؤولية الكاملة على العميل في صحة كتابة بيانات معرف اللاعب.",
                 continue_btn: "✅ متابعة العملية", summary_product: "🎮 المنتج:", summary_qty: "🔢 الكمية:", summary_price: "💰 السعر:", order_data_title: "📋 بيانات شحن الطلب", confirm_order_btn: "✅ تأكيد الطلب النهائي للشحن",
                 setting_currency: "تغيير عملة الحساب", setting_lang: "تغيير لغة التطبيق (5 لغات)",
-                faq_title: "الأسئلة الشائعة", about_title: "من نحن", rights_title: "الحقوق"
+                faq_title: "الأسئلة الشائعة", about_title: "من نحن", rights_title: "جميع الحقوق محفوظة"
             },
             en: {
                 nav_home: "Main Store", nav_wallet: "My Wallet", nav_orders: "My Orders", nav_support: "Technical Support",
@@ -834,7 +1032,7 @@
                 logout_btn: "🚪 Güvenli Çıkış", support_channels: "📞 Destek Kanalları İletişim", support_desc: "Yükleme işlemleri sırasında sorun yaşarsanız bizimle hemen iletişime geçin:",
                 quantity_required: "🔢 Talep Edilen Miktar", price_lbl: "Sabit Fiyat:", total_price_lbl: "Toplam Fiyat:", terms_title: "⚠️ Önemli Şartlar ve Koşullar",
                 term_1: "• Bu dijital ürün işleme alındıktan sonra iade edilemez.", term_2: "• Doğru oyuncu bilgileri sağlamak tamamen müşterinin sorumluluğundadır.",
-                continue_btn: "✅ İşleme Devام Et", summary_product: "🎮 Ürün:", summary_qty: "🔢 Adet:", summary_price: "💰 Fiyat:", order_data_title: "📋 Sipariş Veri Girişi", confirm_order_btn: "✅ Son Siparişi Onayla",
+                continue_btn: "✅ İşleme Devam Et", summary_product: "🎮 Ürün:", summary_qty: "🔢 Adet:", summary_price: "💰 Fiyat:", order_data_title: "📋 Sipariş Veri Girişi", confirm_order_btn: "✅ Son Siparişi Onayla",
                 setting_currency: "Hesap Para Birimini Değiştir", setting_lang: "Uygulama Dilini Değiştir",
                 faq_title: "SSS", about_title: "Hakkımızda", rights_title: "Haklar"
             },
@@ -873,6 +1071,22 @@
         let currentFieldType='id', currentFieldEnabled=true, currentFieldCustomLabel='';
         let heroSlides = [], currentSlide = 0, slideInterval;
 
+        // دالة فتح مودال أقسام الثقة
+        function openTrustModal(section) {
+            const modal = document.getElementById('trustModal');
+            const content = document.getElementById('trustModalContent');
+            
+            const data = trustContent.ar[section];
+            if (data) {
+                content.innerHTML = `<h3><i class="fas fa-${section === 'about' ? 'info-circle' : section === 'contact' ? 'phone-alt' : section === 'faq' ? 'question-circle' : 'shield-alt'}"></i> ${data.title}</h3>${data.content}`;
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeTrustModal() {
+            document.getElementById('trustModal').classList.add('hidden');
+        }
+
         function changeLanguage(langCode) {
             currentLang = langCode;
             document.getElementById('langSelectBox').value = langCode;
@@ -901,11 +1115,21 @@
             return priceInLYD.toFixed(3);
         }
 
+        // دالة فتح وغلق السايد بار مع منع تمرير الخلفية
         function toggleSidebar(open) {
             const sidebar = document.getElementById('appSidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            if (open) { sidebar.classList.add('show'); overlay.classList.add('show'); } 
-            else { sidebar.classList.remove('show'); overlay.classList.remove('show'); }
+            const body = document.body;
+            
+            if (open) {
+                sidebar.classList.add('show');
+                overlay.classList.add('show');
+                body.classList.add('no-scroll'); // منع تمرير الخلفية
+            } else {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                body.classList.remove('no-scroll'); // إعادة تمرير الخلفية
+            }
         }
 
         function switchTab(tab) {
@@ -920,7 +1144,6 @@
             if (tab === 'orders') loadMyOrders();
         }
 
-        // تبديل الأقسام الذكي بناءً على الفلترة الثنائية الجديدة
         function switchSectionType(type) {
             if(type === 'smm') {
                 document.getElementById('smmWarningModal').classList.remove('hidden');
@@ -1010,7 +1233,6 @@
             }catch(e){alert('❌ خطأ: '+e.message);}
         }
 
-        // الفلترة الذكية بالحفظ والتحميل لعدم تكرار جلب الأقسام (Advanced Smart Caching Logic)
         function fetchCategories(){
             if(cachedCategories.length > 0) {
                 renderCategoriesGrid();
@@ -1027,7 +1249,6 @@
         
         function renderCategoriesGrid() {
             const grid=document.getElementById('catsGrid');
-            // فرز وتقسيم ذكي متطابق مع طلبك الجديد (قسمين فقط)
             let filteredCats = cachedCategories.filter(cat => {
                 let sType = cat.sectionType || 'cards';
                 if (currentActiveSectionType === 'cards') {
@@ -1050,7 +1271,6 @@
             document.getElementById('categoriesView').classList.add('hidden');document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML=`📂 ${catName}`;
             
-            // ميكانيكية التحقق الذكي من وجود المنتجات بداخل الذاكرة المؤقتة (Cache Storage Verification)
             if(cachedProducts[catId]) {
                 allProducts = cachedProducts[catId];
                 renderProductsGrid();
@@ -1066,7 +1286,7 @@
                 snap.forEach(doc=>{ const p=doc.data(); p._id=doc.id; allProducts.push(p); });
                 allProducts.sort((a,b)=>(a.priceLYD||a.price||0)-(b.priceLYD||b.price||0));
                 
-                cachedProducts[catId] = allProducts; // حفظ وتخزين في الـ Cache
+                cachedProducts[catId] = allProducts;
                 renderProductsGrid();
             });
         }
@@ -1188,22 +1408,19 @@
             }catch(e){alert('❌ حدث خطأ: '+e.message);}
         }
 
-        // ========== [التعديل الأهم] دالة جلب الطلبات الحية ==========
         let ordersListener = null;
         function loadMyOrders(){
             const user=auth.currentUser;if(!user)return;
             const container=document.getElementById('myOrdersList');
             container.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري مزامنة وجلب الطلبات حياً...</span></div>`;
             
-            if(ordersListener) ordersListener(); // تنظيف المستمع السابق
+            if(ordersListener) ordersListener();
             
-            // 1. استبدال get() بـ onSnapshot() للاستماع المباشر
             ordersListener = db.collection("orders")
                 .where("userId", "==", user.uid)
                 .orderBy("createdAt", "desc")
                 .limit(50)
                 .onSnapshot(snap => {
-                    // 2. معالجة محتوى الحقن الجديد (innerHTML)
                     if(snap.empty){
                         container.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>لا توجد لديك طلبات مسجلة حتى الآن</p></div>`;
                         return;
@@ -1237,7 +1454,6 @@
                     });
                     container.innerHTML=html;
                 }, error => {
-                    // 3. معالجة الأخطاء الاحترافية وإخفاء النص البرمجي
                     console.error("Firestore Index Error:", error);
                     container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ عذراً، لا يمكن عرض سجل الطلبات حالياً. الرجاء التواصل مع الدعم الفني لتفعيل الفهرسة المطلوبة في قاعدة البيانات.</div>';
                 });
@@ -1247,4 +1463,4 @@
         document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchProducts();});
     </script>
 </body>
-            </html>
+    </html>
