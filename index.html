@@ -26,11 +26,9 @@
                 radial-gradient(ellipse at 50% 80%, rgba(0,242,254,0.03) 0%, transparent 50%);
             color: var(--white); min-height: 100vh; padding-bottom: 30px; -webkit-overflow-scrolling: touch; 
             overflow-x: hidden;
-            /* منع التمرير عند فتح القائمة */
             position: relative;
         }
         
-        /* كلاس يمنع تمرير الخلفية */
         body.no-scroll {
             overflow: hidden;
             position: fixed;
@@ -38,7 +36,22 @@
             height: 100%;
         }
 
-        /* الشريط العلوي */
+        .emergency-banner {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+        .emergency-banner.show { display: block; }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         .top-bar { 
             background: rgba(11,26,48,0.9); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; 
@@ -48,7 +61,6 @@
         .top-bar .right-side { display: flex; align-items: center; gap: 12px; }
         .top-bar .brand-title { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; }
         .top-bar .left-side { display: flex; align-items: center; gap: 10px; }
-
         .top-bar .balance { 
             background: rgba(0,242,254,0.08); backdrop-filter: blur(10px);
             padding: 6px 14px; border-radius: 20px; font-weight: 700; cursor: pointer; 
@@ -57,7 +69,6 @@
         }
         .top-bar .balance span { color: var(--cyan); font-size: 14px; }
         .top-bar .balance svg { width: 16px; height: 16px; color: var(--cyan); }
-
         .menu-toggle-btn {
             background: transparent; border: none; color: var(--white); cursor: pointer;
             display: flex; align-items: center; justify-content: center; padding: 4px;
@@ -66,7 +77,6 @@
         .menu-toggle-btn:hover { color: var(--cyan); }
         .menu-toggle-btn svg { width: 26px; height: 26px; }
 
-        /* القائمة الجانبية */
         .sidebar-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 990;
             opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(4px);
@@ -79,9 +89,7 @@
             border-right: 1px solid rgba(0,242,254,0.15);
             display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 24px 16px;
-            overflow-y: auto; /* السماح بتمرير القائمة نفسها */
-            overflow-x: hidden;
-            max-height: 100vh;
+            overflow-y: auto; overflow-x: hidden; max-height: 100vh;
         }
         html[dir="rtl"] .app-sidebar { left: auto; right: -320px; border-right: none; border-left: 1px solid rgba(0,242,254,0.15); }
         .app-sidebar.show { left: 0; }
@@ -96,13 +104,10 @@
             text-align: center; margin-top: 20px; margin-bottom: 18px; padding-bottom: 16px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .sidebar-avatar-container {
-            width: 85px; height: 85px; margin: 0 auto 12px; position: relative;
-        }
+        .sidebar-avatar-container { width: 85px; height: 85px; margin: 0 auto 12px; position: relative; }
         .sidebar-avatar {
             width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-            border: 2px solid var(--cyan); box-shadow: 0 0 15px rgba(0,242,254,0.4);
-            background: #0d1527;
+            border: 2px solid var(--cyan); box-shadow: 0 0 15px rgba(0,242,254,0.4); background: #0d1527;
         }
         .sidebar-uid-badge {
             background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.25);
@@ -112,29 +117,14 @@
         .sidebar-username { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
         .sidebar-useremail { font-size: 11px; color: var(--muted); word-break: break-all; }
 
-        /* --- زر تسجيل الخروج الجديد --- */
         .logout-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 90%;
-            margin: 15px auto;
-            padding: 12px;
-            background-color: rgba(231, 76, 60, 0.1);
-            border: 1px solid #e74c3c;
-            border-radius: 8px;
-            color: #e74c3c;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 90%; margin: 15px auto; padding: 12px;
+            background-color: rgba(231, 76, 60, 0.1); border: 1px solid #e74c3c;
+            border-radius: 8px; color: #e74c3c; font-size: 15px; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease;
         }
-
-        .logout-btn:hover {
-            background-color: #e74c3c;
-            color: #fff;
-        }
+        .logout-btn:hover { background-color: #e74c3c; color: #fff; }
 
         .sidebar-menu-list { display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
         .sidebar-item-btn { 
@@ -147,52 +137,22 @@
         .sidebar-item-btn:hover, .sidebar-item-btn.active { background: rgba(0,242,254,0.08); color: #00f2fe; }
         .sidebar-item-btn svg { width: 19px; height: 19px; color: inherit; fill: none; }
 
-        /* --- أقسام الثقة والأمان في السايد بار --- */
         .sidebar-trust-section {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex; flex-direction: column; gap: 4px;
         }
         .sidebar-trust-btn {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            padding: 10px 14px;
-            text-align: right;
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.2s;
+            background: transparent; border: none; color: #94a3b8; padding: 10px 14px;
+            text-align: right; font-size: 13px; font-weight: 500; border-radius: 10px;
+            cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%;
+            font-family: 'Cairo', sans-serif; transition: all 0.2s;
         }
-        .sidebar-trust-btn:hover {
-            background: rgba(255,255,255,0.03);
-            color: #e2e8f0;
-        }
-        .sidebar-trust-btn i {
-            width: 18px;
-            height: 18px;
-            font-size: 14px;
-            color: var(--cyan);
-            text-align: center;
-        }
+        .sidebar-trust-btn:hover { background: rgba(255,255,255,0.03); color: #e2e8f0; }
+        .sidebar-trust-btn i { width: 18px; height: 18px; font-size: 14px; color: var(--cyan); text-align: center; }
         
         .sidebar-copyright {
-            text-align: center;
-            padding: 12px 8px;
-            font-size: 10px;
-            color: #64748b;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 10px;
-            line-height: 1.6;
+            text-align: center; padding: 12px 8px; font-size: 10px; color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.05); margin-top: 10px; line-height: 1.6;
         }
 
         .sidebar-settings-block {
@@ -203,58 +163,9 @@
         .selector-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
         .selector-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px; color: var(--white); font-size: 11px; font-weight: 700; cursor: pointer; text-align: center; transition: all 0.2s; }
         .selector-btn.active { background: rgba(0,242,254,0.12); border-color: var(--cyan); color: var(--cyan); }
-        
         .lang-select-full { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px; color: var(--white); font-size: 12px; font-weight: 700; outline: none; cursor: pointer; }
         .lang-select-full option { background: #0b1529; color: #fff; }
 
-        /* --- فوتر الصفحة --- */
-        .main-footer {
-            background: rgba(11,26,48,0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(0,242,254,0.12);
-            padding: 25px 16px 15px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        .footer-link {
-            background: transparent;
-            border: none;
-            color: #cbd5e1;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            font-family: 'Cairo', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-            padding: 5px 0;
-        }
-        .footer-link:hover {
-            color: var(--cyan);
-        }
-        .footer-link i {
-            font-size: 13px;
-            color: var(--cyan);
-        }
-        .footer-copyright {
-            color: #64748b;
-            font-size: 11px;
-            line-height: 1.8;
-        }
-        .footer-copyright span {
-            color: var(--cyan);
-            font-weight: 700;
-        }
-
-        /* شريط الصور السلايدر */
         .hero-slider { background: #0b1a30; padding: 0; text-align: center; position: relative; overflow: hidden; }
         .hero-slider img { width: 100%; height: 180px; object-fit: cover; display: block; }
         .hero-slider .slide-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; background: #0b1a30; }
@@ -464,19 +375,15 @@
         .quantity-display-box { display: inline-block; background: rgba(10,15,26,0.9); border: 2px solid rgba(0,242,254,0.3); border-radius: 10px; padding: 6px 14px; margin-bottom: 10px; }
         .quantity-display-box input { width: 65px; background: transparent; border: none; color: var(--cyan); font-size: 22px; font-weight: 900; text-align: center; outline: none; font-family: 'Cairo', sans-serif; }
         .quantity-display-box input:disabled { color: #64748b; cursor: not-allowed; }
-
         .quantity-slider { width: 100%; -webkit-appearance: none; appearance: none; height: 8px; background: rgba(0,242,254,0.1); border-radius: 4px; outline: none; margin: 8px 0; }
         .quantity-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; background: var(--cyan); cursor: pointer; box-shadow: 0 0 14px rgba(0,242,254,0.5); }
         .quantity-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 4px; }
-        
         .price-display { font-size: 18px; font-weight: 900; margin: 12px 0; text-align: center; color: var(--white); }
         .price-display span { color: var(--cyan); font-size: 22px; text-shadow: 0 0 8px rgba(0,242,254,0.4); }
-        
         .next-btn { width: 100%; background: linear-gradient(135deg, #f5a623, #f7b84e); color: #000; border: none; padding: 14px; font-size: 16px; font-weight: 900; border-radius: 8px; cursor: pointer; font-family: 'Cairo', sans-serif; box-shadow: var(--neon-gold); border-bottom: 3px solid #d4941a; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .next-btn:active { transform: translateY(2px); }
         .next-btn svg { width: 16px; height: 16px; color: #000; }
         .step-divider { border-top: 2px dashed rgba(0,242,254,0.15); padding-top: 14px; margin-top: 14px; }
-        
         .order-summary { background: rgba(10,15,26,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0,242,254,0.15); border-radius: 12px; padding: 10px; margin-bottom: 10px; text-align: center; }
         .order-summary .summary-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 11px; }
         .order-summary .summary-label { color: var(--muted); }
@@ -484,13 +391,11 @@
         .order-summary .summary-value.price { color: var(--cyan); font-size: 13px; }
         .field-hint { font-size: 10px; color: var(--muted); margin-top: -4px; margin-bottom: 6px; text-align: right; }
         html[dir="ltr"] .field-hint { text-align: left; }
-
         .checkout-card { background: linear-gradient(145deg, rgba(13,55,64,0.9), rgba(10,42,48,0.9)); backdrop-filter: blur(15px); border-radius: 20px; box-shadow: 5px 5px 20px rgba(0,0,0,0.5); padding: 18px; margin: 10px 0; border: 1px solid rgba(0,242,254,0.12); }
         .checkout-card h3 { color: var(--white); font-size: 16px; font-weight: 900; text-align: center; margin-bottom: 6px; }
         .checkout-card input { width: 100%; padding: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(0,242,254,0.2); border-radius: 12px; color: #fff; font-size: 14px; margin: 8px 0; outline: none; font-family: 'Cairo', sans-serif; }
         html[dir="rtl"] .checkout-card input { text-align: right; }
         .checkout-card input:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0,242,254,0.2); }
-        
         .confirm-btn { width: 100%; padding: 13px; font-weight: 900; border: none; border-radius: 13px; font-size: 14px; cursor: pointer; margin-top: 10px; border-bottom: 3px solid rgba(0,0,0,0.2); transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #10b981, #34d399); color: #fff; box-shadow: var(--neon-green); }
         .confirm-btn:active { transform: translateY(2px); }
         .confirm-btn svg { width: 16px; height: 16px; color: #fff; }
@@ -499,13 +404,11 @@
         .order-item:hover { border-color: rgba(0,242,254,0.3); }
         .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
         .order-id { font-size: 12px; color: var(--white); font-weight: 700; font-family: monospace; }
-        
         .order-status { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; }
         .order-status svg { width: 12px; height: 12px; }
         .order-status.pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
         .order-status.completed { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
         .order-status.canceled, .order-status.refunded { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
-
         .order-details { font-size: 13px; color: var(--white); line-height: 1.8; text-align: right; }
         html[dir="ltr"] .order-details { text-align: left; }
         .order-details span { color: var(--muted); font-size: 11px; }
@@ -520,27 +423,26 @@
         .warning-agree-btn { width: 100%; padding: 12px; background: var(--cyan); color: #000; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .warning-agree-btn:hover { background: #00c4d4; box-shadow: 0 0 15px rgba(0,242,254,0.4); }
 
-        /* مودال أقسام الثقة */
-        .trust-modal-content {
-            padding: 15px 10px;
-            line-height: 2;
-            font-size: 13px;
-            color: #e2e8f0;
-            text-align: right;
-        }
+        .trust-modal-content { padding: 15px 10px; line-height: 2; font-size: 13px; color: #e2e8f0; text-align: right; }
         html[dir="ltr"] .trust-modal-content { text-align: left; }
-        .trust-modal-content h3 {
-            color: var(--cyan);
-            margin-bottom: 12px;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .trust-modal-content h3 { color: var(--cyan); margin-bottom: 12px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+        .trust-modal-content p { margin-bottom: 12px; color: #cbd5e1; }
+
+        .main-footer {
+            background: rgba(11,26,48,0.95); backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0,242,254,0.12); padding: 25px 16px 15px;
+            margin-top: 30px; text-align: center;
         }
-        .trust-modal-content p {
-            margin-bottom: 12px;
-            color: #cbd5e1;
+        .footer-links { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-bottom: 15px; }
+        .footer-link {
+            background: transparent; border: none; color: #cbd5e1; cursor: pointer;
+            font-size: 13px; font-weight: 600; font-family: 'Cairo', sans-serif;
+            display: flex; align-items: center; gap: 6px; transition: color 0.2s; padding: 5px 0;
         }
+        .footer-link:hover { color: var(--cyan); }
+        .footer-link i { font-size: 13px; color: var(--cyan); }
+        .footer-copyright { color: #64748b; font-size: 11px; line-height: 1.8; }
+        .footer-copyright span { color: var(--cyan); font-weight: 700; }
 
         .hidden { display: none !important; }
         .loading { text-align: center; padding: 35px; color: var(--muted); font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -551,12 +453,14 @@
 </head>
 <body>
 
+    <div class="emergency-banner" id="emergencyBanner"></div>
+
     <div class="top-bar">
         <div class="right-side">
             <button class="menu-toggle-btn" onclick="toggleSidebar(true)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
-            <div class="brand-title">Media <span style="color:var(--cyan);">Plus</span></div>
+            <div class="brand-title" id="brandTitle">Media <span style="color:var(--cyan);">Plus</span></div>
         </div>
         <div class="left-side">
             <div class="balance" onclick="switchTab('wallet')">
@@ -576,50 +480,25 @@
             <div class="sidebar-avatar-container">
                 <img class="sidebar-avatar" src="https://raw.githubusercontent.com/lysd89181-lab/Media_Plus/main/avatar-placeholder.png" alt="User Profile" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80'">
             </div>
-            <div>
-                <span class="sidebar-uid-badge" id="sidebarUID">UID: ------</span>
-            </div>
+            <div><span class="sidebar-uid-badge" id="sidebarUID">UID: ------</span></div>
             <div class="sidebar-username" id="sidebarName">جاري التحميل...</div>
             <div class="sidebar-useremail" id="sidebarEmail">---@---.---</div>
         </div>
 
         <button class="logout-btn" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i> <span>تسجيل خروج آمن</span>
+            <i class="fas fa-sign-out-alt"></i> <span data-i18n="logout_btn">تسجيل خروج آمن</span>
         </button>
 
-        <div class="sidebar-menu-list">
-            <button class="sidebar-item-btn active" id="menuBtnHome" onclick="switchTab('home'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> <span data-i18n="nav_home">المتجر الرئيسي</span>
-            </button>
-            <button class="sidebar-item-btn" id="menuBtnWallet" onclick="switchTab('wallet'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg> <span data-i18n="nav_wallet">محفظتي المالية</span>
-            </button>
-            <button class="sidebar-item-btn" id="menuBtnOrders" onclick="switchTab('orders'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="14" y2="13"/></svg> <span data-i18n="nav_orders">سجل طلباتي</span>
-            </button>
-            <button class="sidebar-item-btn" id="menuBtnSupport" onclick="switchTab('support'); toggleSidebar(false);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> <span data-i18n="nav_support">قسم الدعم وقنواتنا</span>
-            </button>
+        <div class="sidebar-menu-list" id="sidebarMenuList">
+            <!-- سيتم بناؤها تلقائياً من app_settings -->
         </div>
 
-        <!-- أقسام الثقة والأمان في السايد بار -->
-        <div class="sidebar-trust-section">
-            <button class="sidebar-trust-btn" onclick="openTrustModal('about'); toggleSidebar(false);">
-                <i class="fas fa-info-circle"></i> <span data-i18n="about_title">من نحن</span>
-            </button>
-            <button class="sidebar-trust-btn" onclick="openTrustModal('contact'); toggleSidebar(false);">
-                <i class="fas fa-phone-alt"></i> <span>اتصل بنا</span>
-            </button>
-            <button class="sidebar-trust-btn" onclick="openTrustModal('faq'); toggleSidebar(false);">
-                <i class="fas fa-question-circle"></i> <span data-i18n="faq_title">الأسئلة الشائعة</span>
-            </button>
-            <button class="sidebar-trust-btn" onclick="openTrustModal('rights'); toggleSidebar(false);">
-                <i class="fas fa-shield-alt"></i> <span data-i18n="rights_title">جميع الحقوق محفوظة</span>
-            </button>
+        <div class="sidebar-trust-section" id="sidebarTrustSection">
+            <!-- سيتم بناؤها تلقائياً من app_settings -->
         </div>
         
-        <div class="sidebar-copyright">
-            © 2025 <span style="color:var(--cyan);">Media Plus</span><br>
+        <div class="sidebar-copyright" id="sidebarCopyright">
+            © <span id="copyrightYear">2025</span> <span style="color:var(--cyan);" id="copyrightName">Media Plus</span><br>
             جميع الحقوق محفوظة
         </div>
 
@@ -631,7 +510,7 @@
             </div>
             <div class="config-row-title" data-i18n="setting_lang">تغيير اللغة (5 لغات)</div>
             <select class="lang-select-full" id="langSelectBox" onchange="changeLanguage(this.value)">
-                <option value="ar">العربية (الأكثر استخداماً)</option>
+                <option value="ar">العربية</option>
                 <option value="en">English</option>
                 <option value="tr">Türkçe</option>
                 <option value="fr">Français</option>
@@ -654,15 +533,8 @@
                 </button>
             </div>
 
-            <div class="main-tabs-nav">
-                <div class="tab-nav-btn active" id="tabBtnCards" onclick="switchSectionType('cards')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    <span>اشتراكات وألعاب</span>
-                </div>
-                <div class="tab-nav-btn" id="tabBtnSmm" onclick="switchSectionType('smm')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 22"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                    <span>رشق وخدمات السوشيال</span>
-                </div>
+            <div class="main-tabs-nav" id="mainTabsNav">
+                <!-- سيتم بناؤها تلقائياً من app_settings -->
             </div>
         </div>
 
@@ -675,7 +547,7 @@
                 <div class="cats-grid" id="catsGrid">
                     <div class="loading">
                         <svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg>
-                        <span>⏳ جاري جلب الأقسام بنظام الحفظ الذكي...</span>
+                        <span>⏳ جاري جلب الأقسام...</span>
                     </div>
                 </div>
             </div>
@@ -690,26 +562,8 @@
             </div>
         </div>
         
-        <!-- فوتر الصفحة الرئيسية -->
-        <footer class="main-footer">
-            <div class="footer-links">
-                <button class="footer-link" onclick="openTrustModal('about')">
-                    <i class="fas fa-info-circle"></i> <span data-i18n="about_title">من نحن</span>
-                </button>
-                <button class="footer-link" onclick="openTrustModal('contact')">
-                    <i class="fas fa-phone-alt"></i> <span>اتصل بنا</span>
-                </button>
-                <button class="footer-link" onclick="openTrustModal('faq')">
-                    <i class="fas fa-question-circle"></i> <span data-i18n="faq_title">الأسئلة الشائعة</span>
-                </button>
-                <button class="footer-link" onclick="openTrustModal('rights')">
-                    <i class="fas fa-shield-alt"></i> <span data-i18n="rights_title">جميع الحقوق محفوظة</span>
-                </button>
-            </div>
-            <div class="footer-copyright">
-                © 2025 <span>Media Plus</span> - جميع الحقوق محفوظة<br>
-                تطوير وإدارة: <span>Media Plus Team</span>
-            </div>
+        <footer class="main-footer" id="mainFooter">
+            <!-- سيتم بناؤها تلقائياً من app_settings -->
         </footer>
     </div>
 
@@ -726,7 +580,7 @@
                 </div>
             </div>
             
-            <div class="card-white" style="position:relative; z-index:300;">
+            <div class="card-white" style="position:relative; z-index:300;" id="paymentMethodsCard">
                 <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;color:var(--white);text-align:center;" data-i18n="choose_payment">💳 اختر طريقة الدفع</h3>
                 <div class="dropdown-container">
                     <div class="dropdown-btn" id="dropdownBtn" onclick="toggleDropdown()">
@@ -734,44 +588,18 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </div>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <div class="dropdown-item" onclick="selectPayment('libyana', '📞 ليبيانا ومدار')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                            <span>ليبيانا ومدار</span>
-                        </div>
-                        <div class="dropdown-item" onclick="selectPayment('binance', '₿ بايننس')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            <span>بايننس Pay</span>
-                        </div>
-                        <div class="dropdown-item" onclick="selectPayment('cards', '💳 كروت تعبئة')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                            <span>كروت تعبئة محلية</span>
-                        </div>
+                        <!-- سيتم بناؤها تلقائياً من app_settings -->
                     </div>
                 </div>
             </div>
             
             <div id="paymentLibyana" class="card-white hidden">
-                <div class="payment-instructions-box">
+                <div class="payment-instructions-box" id="libyanaInstructions">
                     💡 <b>تعليمات الشحن:</b> يرجى تحويل الرصيد أولاً إلى أحد الأرقام الموضحة بالأسفل، وتأكد من نسخ الرقم بشكل صحيح لتجنب الأخطاء. بعد تمام عملية التحويل بنجاح، قم بتعبئة بيانات رقمك المحول منه والقيمة المحولة بالأسفل ليتم المراجعة التلقائية.
                 </div>
                 <h3 style="color:var(--gold);margin-bottom:8px;font-size:14px;text-align:center;">📞 أرقام الحسابات المعتمدة</h3>
-                <div class="bank-container-row">
-                    <div class="bank-row-compact">
-                        <span class="label">ليبيانا</span>
-                        <span class="num">0920414760</span>
-                        <button class="copy-btn" onclick="copyText('0920414760')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            <span>نسخ</span>
-                        </button>
-                    </div>
-                    <div class="bank-row-compact">
-                        <span class="label">مدار</span>
-                        <span class="num">0912377291</span>
-                        <button class="copy-btn" onclick="copyText('0912377291')">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            <span>نسخ</span>
-                        </button>
-                    </div>
+                <div class="bank-container-row" id="libyanaNumbers">
+                    <!-- سيتم بناؤها تلقائياً من app_settings -->
                 </div>
                 <input type="text" id="phone_libyana" class="notify-input" placeholder="الرقم المحول منه" dir="ltr">
                 <input type="number" id="amount_libyana" class="notify-input" placeholder="القيمة" dir="ltr">
@@ -782,17 +610,12 @@
             </div>
 
             <div id="paymentBinance" class="card-white hidden">
-                <div class="payment-instructions-box">
+                <div class="payment-instructions-box" id="binanceInstructions">
                     💡 <b>تعليمات شحن Binance Pay:</b> قم بنسخ معرف بايننس (ID) الموضح بالأسفل وإرسال المبلغ المطلوب عبر تطبيق بايننس الرسمي. يرجى الملاحظة أن سعر الصرف المعتمد داخل التطبيق هو <b>1 دولار = 11 دينار ليبي</b>. بعد التحويل يرجى إدخال البيانات للتحقق.
                 </div>
                 <h3 style="color:var(--gold);margin-bottom:8px;font-size:14px;text-align:center;">₿ حساب البايننس</h3>
-                <div class="bank-row-compact" style="flex-direction:row;justify-content:space-around;padding:12px;">
-                    <span style="color:var(--muted);font-size:12px;">معرف بايننس</span>
-                    <span class="num">1046437963</span>
-                    <button class="copy-btn" onclick="copyText('1046437963')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        <span>نسخ</span>
-                    </button>
+                <div class="bank-row-compact" style="flex-direction:row;justify-content:space-around;padding:12px;" id="binanceInfo">
+                    <!-- سيتم بناؤها تلقائياً من app_settings -->
                 </div>
                 <input type="text" id="binance_id" class="notify-input" placeholder="المعرف المحول منه (ID)" dir="ltr">
                 <input type="number" id="binance_amount" class="notify-input" placeholder="المبلغ بالدولار ($)" dir="ltr">
@@ -803,7 +626,7 @@
             </div>
 
             <div id="paymentCards" class="card-white hidden">
-                <div class="payment-instructions-box">
+                <div class="payment-instructions-box" id="cardsInstructions">
                     💡 <b>تعليمات شحن كروت التعبئة:</b> قم بشراء كرت شحن محلي (ليبيانا أو مدار) ثم أدخل كود الشحن السري كاملاً في الحقل الأول، وقم بتدوين قيمة الكرت الفعلية في الحقل الثاني لكي يتم معالجته فوراً.
                 </div>
                 <input type="text" id="depositCardCode" class="notify-input" placeholder="رقم الكرت" dir="ltr">
@@ -815,7 +638,7 @@
             </div>
             
             <div class="shipping-info" id="shippingInfo">
-                ⏱️ <span class="highlight" data-i18n="process_time">وقت المعالجة:</span> من دقيقة إلى 3 ساعات<br>
+                ⏱️ <span class="highlight" data-i18n="process_time">وقت المعالجة:</span> <span id="processingTime">من دقيقة إلى 3 ساعات</span><br>
                 <span data-i18n="delay_notice">في حال تأخر الوقت، يرجى تقديم شكوى عبر قسم الدعم الفني.</span>
             </div>
         </div>
@@ -842,35 +665,12 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 <span data-i18n="support_channels">📞 قنوات الدعم الفني والتواصل</span>
             </div>
-            <div class="card-white" style="text-align:center;">
-                <p style="font-size:13px; color:var(--muted); margin-bottom:14px;" data-i18n="support_desc">إذا واجهتك أي مشكلة في عمليات الشحن أو استلام البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:</p>
-                <div class="social-support-box">
-                    <a href="https://wa.me/218920414760" target="_blank" class="social-link whatsapp">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                        <span>مركز دعم الواتساب المباشر</span>
-                    </a>
-                    <a href="https://t.me/media_plus_1" target="_blank" class="social-link telegram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                        <span>مراسلة دعم تيليجرام الفوري</span>
-                    </a>
-                    <a href="https://whatsapp.com/channel/0029Vb7xpppGpLHGt77Uxt0Q" target="_blank" class="social-link whatsapp">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12A10 10 0 1 1 12 2a10 10 0 0 1 10 10z"/></svg>
-                        <span>متابعة أخبارنا على قناة واتساب</span>
-                    </a>
-                    <a href="https://t.me/CD_Card1" target="_blank" class="social-link telegram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
-                        <span>متابعة أخبارنا على قناة تيليجرام</span>
-                    </a>
-                    <a href="https://www.instagram.com/1media1plus1?igsh=NGEwMmdsNDg2ODhk" target="_blank" class="social-link instagram">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                        <span>الحساب الرسمي على انستغرام</span>
-                    </a>
-                </div>
+            <div class="card-white" style="text-align:center;" id="supportContent">
+                <!-- سيتم بناؤها تلقائياً من app_settings -->
             </div>
         </div>
     </div>
 
-    <!-- مودال أقسام الثقة -->
     <div id="trustModal" class="modal-overlay hidden" onclick="closeTrustModal()">
         <div class="modal-card" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeTrustModal()">
@@ -893,14 +693,9 @@
             <div id="stepQuantity" class="modal-step">
                 <div id="quantitySection" class="quantity-section hidden">
                     <label data-i18n="quantity_required">🔢 الكمية المطلوبة</label>
-                    <div class="quantity-display-box">
-                        <input type="number" id="quantityInput" value="1" min="1" oninput="syncSliderFromInput(this.value)">
-                    </div>
+                    <div class="quantity-display-box"><input type="number" id="quantityInput" value="1" min="1" oninput="syncSliderFromInput(this.value)"></div>
                     <input type="range" id="quantitySlider" class="quantity-slider" min="1" max="100" value="1" step="1" oninput="syncInputFromSlider(this.value)">
-                    <div class="quantity-range-labels">
-                        <span id="qtyMinLabel">الحد الأدنى: 1</span>
-                        <span id="qtyMaxLabel">الحد الأقصى: 100</span>
-                    </div>
+                    <div class="quantity-range-labels"><span id="qtyMinLabel">الحد الأدنى: 1</span><span id="qtyMaxLabel">الحد الأقصى: 100</span></div>
                 </div>
                 <div id="fixedPriceSection" class="price-display hidden"><span data-i18n="price_lbl">السعر الثابت:</span> <span id="fixedPriceDisplay">0.000</span> <span class="currency-label">د.ل</span></div>
                 <div id="dynamicPriceSection" class="price-display hidden"><span data-i18n="total_price_lbl">السعر الإجمالي:</span> <span id="totalPriceNew">0.000</span> <span class="currency-label"> د.ل</span></div>
@@ -947,7 +742,7 @@
             <div class="warning-modal-body">
                 <svg class="warning-icon-geo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 <div class="warning-title">تنبيه وإخلاء مسؤولية مهم جداً</div>
-                <div class="warning-text">
+                <div class="warning-text" id="smmWarningText">
                     أنت الآن بصدد الدخول إلى قسم <b>رشق الخدمات والمتابعين</b>. يرجى العلم بأن المتجر <b>غير مسؤول نهائياً</b> عن أي نقص قد يحدث في الحسابات المرشوقة نتيجة التحديثات الدورية لمنصات التواصل الاجتماعي، ولا توجد تعويضات مالية بعد تنفيذ الطلبات. تأكد من قراءة وصف الخدمة جيداً قبل الشراء.
                 </div>
                 <button class="warning-agree-btn" onclick="acceptSmmWarning()">موافق، ومتابعة للقسم</button>
@@ -973,32 +768,365 @@
         const USD_RATE = 11; 
         let currentLang = 'ar';
         let currentActiveSectionType = 'cards';
-
         let cachedCategories = [];
         let cachedProducts = {};
-
-        // محتوى أقسام الثقة
-        const trustContent = {
-            ar: {
-                about: {
-                    title: 'من نحن',
-                    content: `<p><b>Media Plus</b> هو متجر إلكتروني رائد ومتخصص في تقديم بطاقات الشحن الرقمية وخدمات الألعاب الإلكترونية وخدمات السوشيال ميديا.</p><p>نحن نضمن لك تجربة شراء سريعة وآمنة مع دعم فني متواصل على مدار الساعة. تأسس المتجر ليكون حلقة الوصل بينك وبين الخدمات الرقمية الأكثر طلباً في السوق الليبي والعربي.</p>`
-                },
-                contact: {
-                    title: 'اتصل بنا',
-                    content: `<p>نحن هنا لخدمتك على مدار الساعة. يمكنك التواصل معنا عبر:</p><p>📞 <b>واتساب:</b> <span style="color:var(--cyan);">0920414760</span></p><p>📧 <b>بريد إلكتروني:</b> <span style="color:var(--cyan);">support@media-plus.store</span></p><p>🕒 <b>أوقات العمل:</b> يومياً من 9 صباحاً حتى 12 منتصف الليل.</p>`
-                },
-                faq: {
-                    title: 'الأسئلة الشائعة',
-                    content: `<p><b>س: كم تستغرق معالجة طلب الشراء؟</b><br>ج: من دقيقة إلى 3 ساعات حسب نوع الخدمة وضغط الطلبات.</p><p><b>س: هل يمكنني استرجاع المبلغ بعد الشراء؟</b><br>ج: جميع المنتجات الرقمية غير قابلة للاسترداد بعد تنفيذها.</p><p><b>س: كيف أتأكد من وصول الشحن؟</b><br>ج: عبر سجل طلباتي، حيث يتم تحديث حالة طلبك فوراً.</p>`
-                },
-                rights: {
-                    title: 'جميع الحقوق محفوظة',
-                    content: `<p>© 2025 <b>Media Plus</b>. جميع الحقوق محفوظة.</p><p>جميع المحتويات والعلامات التجارية المعروضة في هذا المتجر هي ملك لأصحابها المعنيين. يمنع نسخ أو إعادة نشر أي محتوى من هذا التطبيق دون إذن خطي مسبق من إدارة Media Plus.</p>`
-                }
+        
+        // ========== نظام الإعدادات العامة من app ==========
+        let appSettings = {
+            sidebar_menu: [],
+            payment_methods: [],
+            libyana_numbers: [],
+            binance_id: '1046437963',
+            support_channels: [],
+            trust_sections: [],
+            footer_links: [],
+            brand_name: 'Media Plus',
+            copyright_text: 'جميع الحقوق محفوظة',
+            emergency_banner: { active: false, message: '', bg_color: '#ef4444' },
+            processing_time: 'من دقيقة إلى 3 ساعات',
+            smm_warning_text: '',
+            main_tabs: [],
+            sections_visible: {
+                wallet: true,
+                orders: true,
+                support: true
             }
         };
 
+        // ========== إنشاء الإعدادات الافتراضية تلقائياً ==========
+        async function initializeAppSettings() {
+            const settingsRef = db.collection("app").doc("settings");
+            
+            try {
+                const doc = await settingsRef.get();
+                
+                if (!doc.exists) {
+                    // المجموعة غير موجودة، ننشئها تلقائياً مع الإعدادات الافتراضية
+                    console.log("🔄 مجموعة app غير موجودة. جاري إنشائها تلقائياً...");
+                    
+                    const defaultSettings = {
+                        brand_name: "Media Plus",
+                        copyright_text: "جميع الحقوق محفوظة",
+                        processing_time: "من دقيقة إلى 3 ساعات",
+                        emergency_banner: { active: false, message: "", bg_color: "#ef4444" },
+                        smm_warning_text: "أنت الآن بصدد الدخول إلى قسم <b>رشق الخدمات والمتابعين</b>. يرجى العلم بأن المتجر <b>غير مسؤول نهائياً</b> عن أي نقص قد يحدث في الحسابات المرشوقة نتيجة التحديثات الدورية لمنصات التواصل الاجتماعي، ولا توجد تعويضات مالية بعد تنفيذ الطلبات.",
+                        
+                        sections_visible: { wallet: true, orders: true, support: true },
+                        
+                        main_tabs: [
+                            { id: 'cards', title: 'اشتراكات وألعاب', icon: 'gamepad', active: true },
+                            { id: 'smm', title: 'رشق وخدمات السوشيال', icon: 'social', active: true }
+                        ],
+                        
+                        sidebar_menu: [
+                            { id: 'home', title: 'المتجر الرئيسي', icon: 'home', active: true, order: 1 },
+                            { id: 'wallet', title: 'محفظتي المالية', icon: 'wallet', active: true, order: 2 },
+                            { id: 'orders', title: 'سجل طلباتي', icon: 'orders', active: true, order: 3 },
+                            { id: 'support', title: 'قسم الدعم وقنواتنا', icon: 'support', active: true, order: 4 }
+                        ],
+                        
+                        payment_methods: [
+                            { id: 'libyana', title: '📞 ليبيانا ومدار', icon: 'phone', active: true },
+                            { id: 'binance', title: '₿ بايننس', icon: 'bitcoin', active: true },
+                            { id: 'cards', title: '💳 كروت تعبئة', icon: 'card', active: true }
+                        ],
+                        
+                        libyana_numbers: [
+                            { label: 'ليبيانا', number: '0920414760', active: true },
+                            { label: 'مدار', number: '0912377291', active: true }
+                        ],
+                        
+                        binance_id: '1046437963',
+                        binance_rate: 11,
+                        
+                        support_channels: [
+                            { type: 'whatsapp', title: 'مركز دعم الواتساب المباشر', url: 'https://wa.me/218920414760', active: true },
+                            { type: 'telegram', title: 'مراسلة دعم تيليجرام الفوري', url: 'https://t.me/media_plus_1', active: true },
+                            { type: 'whatsapp', title: 'متابعة أخبارنا على قناة واتساب', url: 'https://whatsapp.com/channel/0029Vb7xpppGpLHGt77Uxt0Q', active: true },
+                            { type: 'telegram', title: 'متابعة أخبارنا على قناة تيليجرام', url: 'https://t.me/CD_Card1', active: true },
+                            { type: 'instagram', title: 'الحساب الرسمي على انستغرام', url: 'https://www.instagram.com/1media1plus1?igsh=NGEwMmdsNDg2ODhk', active: true }
+                        ],
+                        
+                        trust_sections: [
+                            { id: 'about', title: 'من نحن', icon: 'info-circle', active: true, content: '<p><b>Media Plus</b> هو متجر إلكتروني رائد ومتخصص في تقديم بطاقات الشحن الرقمية وخدمات الألعاب الإلكترونية وخدمات السوشيال ميديا.</p><p>نحن نضمن لك تجربة شراء سريعة وآمنة مع دعم فني متواصل على مدار الساعة.</p>' },
+                            { id: 'contact', title: 'اتصل بنا', icon: 'phone-alt', active: true, content: '<p>📞 <b>واتساب:</b> 0920414760</p><p>📧 <b>بريد إلكتروني:</b> support@media-plus.store</p><p>🕒 <b>أوقات العمل:</b> يومياً من 9 صباحاً حتى 12 منتصف الليل.</p>' },
+                            { id: 'faq', title: 'الأسئلة الشائعة', icon: 'question-circle', active: true, content: '<p><b>س: كم تستغرق معالجة طلب الشراء؟</b><br>ج: من دقيقة إلى 3 ساعات.</p><p><b>س: هل يمكنني استرجاع المبلغ؟</b><br>ج: جميع المنتجات الرقمية غير قابلة للاسترداد.</p>' },
+                            { id: 'rights', title: 'جميع الحقوق محفوظة', icon: 'shield-alt', active: true, content: '<p>© 2025 <b>Media Plus</b>. جميع الحقوق محفوظة.</p><p>يمنع نسخ أو إعادة نشر أي محتوى من هذا التطبيق دون إذن خطي مسبق.</p>' }
+                        ],
+                        
+                        footer_links: [
+                            { id: 'about', title: 'من نحن', active: true },
+                            { id: 'contact', title: 'اتصل بنا', active: true },
+                            { id: 'faq', title: 'الأسئلة الشائعة', active: true },
+                            { id: 'rights', title: 'جميع الحقوق محفوظة', active: true }
+                        ]
+                    };
+                    
+                    await settingsRef.set(defaultSettings);
+                    console.log("✅ تم إنشاء مجموعة app بالإعدادات الافتراضية بنجاح!");
+                    appSettings = defaultSettings;
+                } else {
+                    // المجموعة موجودة، نقرأ البيانات
+                    appSettings = { ...appSettings, ...doc.data() };
+                    console.log("✅ تم تحميل إعدادات app بنجاح!");
+                }
+                
+                // تطبيق جميع الإعدادات على الواجهة
+                applyAllSettings();
+                
+            } catch (error) {
+                console.error("❌ خطأ في تهيئة الإعدادات:", error);
+            }
+            
+            // الاستماع للتحديثات المباشرة
+            settingsRef.onSnapshot(doc => {
+                if (doc.exists) {
+                    appSettings = { ...appSettings, ...doc.data() };
+                    console.log("🔄 تم تحديث الإعدادات تلقائياً من Firebase!");
+                    applyAllSettings();
+                }
+            });
+        }
+
+        // ========== تطبيق جميع الإعدادات على الواجهة ==========
+        function applyAllSettings() {
+            buildSidebarMenu();
+            buildMainTabs();
+            buildPaymentMethods();
+            buildLibyanaNumbers();
+            buildBinanceInfo();
+            buildSupportChannels();
+            buildTrustSections();
+            buildFooter();
+            applyBrandSettings();
+            applyEmergencyBanner();
+            updateProcessingTime();
+            updateSmmWarning();
+        }
+
+        function buildSidebarMenu() {
+            const menuList = document.getElementById('sidebarMenuList');
+            if (!menuList || !appSettings.sidebar_menu) return;
+            
+            const icons = {
+                home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+                wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/></svg>',
+                orders: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="14" y2="13"/></svg>',
+                support: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+            };
+            
+            const activeItems = appSettings.sidebar_menu
+                .filter(item => item.active !== false)
+                .sort((a, b) => (a.order || 0) - (b.order || 0));
+            
+            menuList.innerHTML = activeItems.map(item => `
+                <button class="sidebar-item-btn ${item.id === 'home' ? 'active' : ''}" id="menuBtn${item.id.charAt(0).toUpperCase() + item.id.slice(1)}" onclick="switchTab('${item.id}'); toggleSidebar(false);">
+                    ${icons[item.id] || '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>'}
+                    <span>${item.title}</span>
+                </button>
+            `).join('');
+        }
+
+        function buildMainTabs() {
+            const tabsNav = document.getElementById('mainTabsNav');
+            if (!tabsNav || !appSettings.main_tabs) return;
+            
+            const icons = {
+                cards: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+                smm: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 22"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>'
+            };
+            
+            const activeTabs = appSettings.main_tabs.filter(tab => tab.active !== false);
+            
+            tabsNav.innerHTML = activeTabs.map((tab, index) => `
+                <div class="tab-nav-btn ${index === 0 ? 'active' : ''}" id="tabBtn${tab.id.charAt(0).toUpperCase() + tab.id.slice(1)}" onclick="switchSectionType('${tab.id}')">
+                    ${icons[tab.id] || ''}
+                    <span>${tab.title}</span>
+                </div>
+            `).join('');
+        }
+
+        function buildPaymentMethods() {
+            const dropdown = document.getElementById('dropdownMenu');
+            if (!dropdown || !appSettings.payment_methods) return;
+            
+            const icons = {
+                libyana: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+                binance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+                cards: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>'
+            };
+            
+            const activeMethods = appSettings.payment_methods.filter(m => m.active !== false);
+            
+            dropdown.innerHTML = activeMethods.map(method => `
+                <div class="dropdown-item" onclick="selectPayment('${method.id}', '${method.title.replace(/'/g, "\\'")}')">
+                    ${icons[method.id] || ''}
+                    <span>${method.title}</span>
+                </div>
+            `).join('');
+            
+            // إخفاء كرت طرق الدفع إذا ماكانش فيه طرق نشطة
+            const methodsCard = document.getElementById('paymentMethodsCard');
+            if (methodsCard) {
+                methodsCard.style.display = activeMethods.length === 0 ? 'none' : 'block';
+            }
+        }
+
+        function buildLibyanaNumbers() {
+            const container = document.getElementById('libyanaNumbers');
+            if (!container || !appSettings.libyana_numbers) return;
+            
+            const activeNumbers = appSettings.libyana_numbers.filter(n => n.active !== false);
+            
+            if (activeNumbers.length === 0) {
+                document.getElementById('paymentLibyana').classList.add('hidden');
+                return;
+            }
+            
+            container.innerHTML = activeNumbers.map(item => `
+                <div class="bank-row-compact">
+                    <span class="label">${item.label}</span>
+                    <span class="num">${item.number}</span>
+                    <button class="copy-btn" onclick="copyText('${item.number}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>نسخ</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function buildBinanceInfo() {
+            const container = document.getElementById('binanceInfo');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <span style="color:var(--muted);font-size:12px;">معرف بايننس</span>
+                <span class="num">${appSettings.binance_id || '1046437963'}</span>
+                <button class="copy-btn" onclick="copyText('${appSettings.binance_id || '1046437963'}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>نسخ</span>
+                </button>
+            `;
+        }
+
+        function buildSupportChannels() {
+            const container = document.getElementById('supportContent');
+            if (!container || !appSettings.support_channels) return;
+            
+            const colorMap = {
+                whatsapp: 'whatsapp',
+                telegram: 'telegram',
+                instagram: 'instagram'
+            };
+            
+            const activeChannels = appSettings.support_channels.filter(ch => ch.active !== false);
+            
+            container.innerHTML = `
+                <p style="font-size:13px; color:var(--muted); margin-bottom:14px;" data-i18n="support_desc">إذا واجهتك أي مشكلة في عمليات الشحن أو استلام البطاقات، يسعدنا تواصلك الفوري معنا عبر المنصات الرسمية التالية:</p>
+                <div class="social-support-box">
+                    ${activeChannels.map(ch => `
+                        <a href="${ch.url}" target="_blank" class="social-link ${colorMap[ch.type] || 'whatsapp'}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+                            <span>${ch.title}</span>
+                        </a>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function buildTrustSections() {
+            // في السايد بار
+            const sidebarTrust = document.getElementById('sidebarTrustSection');
+            if (sidebarTrust && appSettings.trust_sections) {
+                const activeTrust = appSettings.trust_sections.filter(t => t.active !== false);
+                sidebarTrust.innerHTML = activeTrust.map(item => `
+                    <button class="sidebar-trust-btn" onclick="openTrustModal('${item.id}'); toggleSidebar(false);">
+                        <i class="fas fa-${item.icon}"></i> <span>${item.title}</span>
+                    </button>
+                `).join('');
+            }
+        }
+
+        function buildFooter() {
+            const footer = document.getElementById('mainFooter');
+            if (!footer || !appSettings.footer_links) return;
+            
+            const activeLinks = appSettings.footer_links.filter(l => l.active !== false);
+            const trustSections = appSettings.trust_sections || [];
+            
+            footer.innerHTML = `
+                <div class="footer-links">
+                    ${activeLinks.map(link => {
+                        const trustData = trustSections.find(t => t.id === link.id);
+                        const icon = trustData ? trustData.icon : 'info-circle';
+                        return `
+                            <button class="footer-link" onclick="openTrustModal('${link.id}')">
+                                <i class="fas fa-${icon}"></i> <span>${link.title}</span>
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+                <div class="footer-copyright">
+                    © <span id="copyrightYearFooter">2025</span> <span id="copyrightNameFooter">${appSettings.brand_name || 'Media Plus'}</span> - ${appSettings.copyright_text || 'جميع الحقوق محفوظة'}<br>
+                    تطوير وإدارة: <span>${appSettings.brand_name || 'Media Plus'} Team</span>
+                </div>
+            `;
+        }
+
+        function applyBrandSettings() {
+            if (appSettings.brand_name) {
+                document.getElementById('brandTitle').innerHTML = `${appSettings.brand_name} <span style="color:var(--cyan);">Plus</span>`;
+                document.getElementById('copyrightName').innerText = appSettings.brand_name;
+                document.getElementById('copyrightNameFooter').innerText = appSettings.brand_name;
+            }
+        }
+
+        function applyEmergencyBanner() {
+            const banner = document.getElementById('emergencyBanner');
+            if (!banner || !appSettings.emergency_banner) return;
+            
+            if (appSettings.emergency_banner.active && appSettings.emergency_banner.message) {
+                banner.innerText = appSettings.emergency_banner.message;
+                banner.style.background = appSettings.emergency_banner.bg_color || '#ef4444';
+                banner.classList.add('show');
+            } else {
+                banner.classList.remove('show');
+            }
+        }
+
+        function updateProcessingTime() {
+            const el = document.getElementById('processingTime');
+            if (el && appSettings.processing_time) {
+                el.innerText = appSettings.processing_time;
+            }
+        }
+
+        function updateSmmWarning() {
+            const el = document.getElementById('smmWarningText');
+            if (el && appSettings.smm_warning_text) {
+                el.innerHTML = appSettings.smm_warning_text;
+            }
+        }
+
+        // ========== دوال أقسام الثقة ==========
+        function openTrustModal(sectionId) {
+            const modal = document.getElementById('trustModal');
+            const content = document.getElementById('trustModalContent');
+            
+            if (!appSettings.trust_sections) return;
+            
+            const section = appSettings.trust_sections.find(s => s.id === sectionId);
+            if (section && section.content) {
+                content.innerHTML = `<h3><i class="fas fa-${section.icon}"></i> ${section.title}</h3>${section.content}`;
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeTrustModal() {
+            document.getElementById('trustModal').classList.add('hidden');
+        }
+
+        // ========== باقي الدوال بدون تغيير ==========
         const i18n = {
             ar: {
                 nav_home: "المتجر الرئيسي", nav_wallet: "محفظتي المالية", nav_orders: "سجل طلباتي", nav_support: "قسم الدعم وقنواتنا",
@@ -1011,54 +1139,6 @@
                 continue_btn: "✅ متابعة العملية", summary_product: "🎮 المنتج:", summary_qty: "🔢 الكمية:", summary_price: "💰 السعر:", order_data_title: "📋 بيانات شحن الطلب", confirm_order_btn: "✅ تأكيد الطلب النهائي للشحن",
                 setting_currency: "تغيير عملة الحساب", setting_lang: "تغيير لغة التطبيق (5 لغات)",
                 faq_title: "الأسئلة الشائعة", about_title: "من نحن", rights_title: "جميع الحقوق محفوظة"
-            },
-            en: {
-                nav_home: "Main Store", nav_wallet: "My Wallet", nav_orders: "My Orders", nav_support: "Technical Support",
-                hero_title: "🌐 International & Local Cards", sections_available: "📂 Available Categories", back_to_cats: "Back to Categories",
-                wallet_title: "💰 Wallet & Recharge", current_balance: "Current Balance", choose_payment: "💳 Choose Payment Method", choose_payment_btn: "📞 Select Payment Method",
-                process_time: "Processing Time:", delay_notice: "If delayed, please submit a complaint via support page.", orders_record: "📋 My Electronic Orders",
-                logout_btn: "🚪 Secure Logout", support_channels: "📞 Support Channels & Contact", support_desc: "If you face any issues during top-ups or deliveries, contact us immediately via:",
-                quantity_required: "🔢 Required Quantity", price_lbl: "Fixed Price:", total_price_lbl: "Total Price:", terms_title: "⚠️ Important Terms & Conditions",
-                term_1: "• This digital item is completely non-refundable after processing.", term_2: "• The client is fully responsible for providing accurate player details.",
-                continue_btn: "✅ Continue Process", summary_product: "🎮 Product:", summary_qty: "🔢 Qty:", summary_price: "💰 Price:", order_data_title: "📋 Order Input Details", confirm_order_btn: "✅ Confirm Final Top-up Order",
-                setting_currency: "Change Account Currency", setting_lang: "Change App Language",
-                faq_title: "FAQ", about_title: "About Us", rights_title: "Rights"
-            },
-            tr: {
-                nav_home: "Ana Mağaza", nav_wallet: "Cüzdanım", nav_orders: "Siparişlerim", nav_support: "Teknik Destek",
-                hero_title: "🌐 Uluslararası ve Yerel Kartlar", sections_available: "📂 Mevcut Kategoriler", back_to_cats: "Kategorilere Geri Dön",
-                wallet_title: "💰 Cüzdan ve Bakiye Yükleme", current_balance: "Mevcut Bakiye", choose_payment: "💳 Ödeme Yöntemi Seç", choose_payment_btn: "📞 Ödeme Yöntemi Seçiniz",
-                process_time: "İşlem Süresi:", delay_notice: "Gecikme durumunda lütfen destek sayfasından talep oluşturun.", orders_record: "📋 Elektronik Sipariş Geçmişi",
-                logout_btn: "🚪 Güvenli Çıkış", support_channels: "📞 Destek Kanalları İletişim", support_desc: "Yükleme işlemleri sırasında sorun yaşarsanız bizimle hemen iletişime geçin:",
-                quantity_required: "🔢 Talep Edilen Miktar", price_lbl: "Sabit Fiyat:", total_price_lbl: "Toplam Fiyat:", terms_title: "⚠️ Önemli Şartlar ve Koşullar",
-                term_1: "• Bu dijital ürün işleme alındıktan sonra iade edilemez.", term_2: "• Doğru oyuncu bilgileri sağlamak tamamen müşterinin sorumluluğundadır.",
-                continue_btn: "✅ İşleme Devam Et", summary_product: "🎮 Ürün:", summary_qty: "🔢 Adet:", summary_price: "💰 Fiyat:", order_data_title: "📋 Sipariş Veri Girişi", confirm_order_btn: "✅ Son Siparişi Onayla",
-                setting_currency: "Hesap Para Birimini Değiştir", setting_lang: "Uygulama Dilini Değiştir",
-                faq_title: "SSS", about_title: "Hakkımızda", rights_title: "Haklar"
-            },
-            fr: {
-                nav_home: "Boutique Principale", nav_wallet: "Mon Portefeuille", nav_orders: "Mes Commandes", nav_support: "Support Technique",
-                hero_title: "🌐 Cartes Internationales & Locales", sections_available: "📂 Catégories Disponibles", back_to_cats: "Retour aux Catégories",
-                wallet_title: "💰 Portefeuille & Recharge", current_balance: "Solde Actuel", choose_payment: "💳 Mode de Paiement", choose_payment_btn: "📞 Choisir le paiement",
-                process_time: "Temps de traitement:", delay_notice: "En cas de retard, veuillez contacter le support technique.", orders_record: "📋 Historique des Commandes",
-                logout_btn: "🚪 Déconnexion Sécurisée", support_channels: "📞 Canaux de Support", support_desc: "Si vous rencontrez des problèmes lors des recharges, contactez-nous via:",
-                quantity_required: "🔢 Quantité Demandée", price_lbl: "Prix Fixe:", total_price_lbl: "Prix Total:", terms_title: "⚠️ Conditions Importantes",
-                term_1: "• Cet article numérique est entièrement non remboursable après traitement.", term_2: "• Le client est entièrement responsable de l'exactitude des données de joueur.",
-                continue_btn: "✅ Continuer le Processus", summary_product: "🎮 Produit:", summary_qty: "🔢 Qté:", summary_price: "💰 Prix:", order_data_title: "📋 Informations de Commande", confirm_order_btn: "✅ Confirmer la Commande Finale",
-                setting_currency: "Changer Devise du Compte", setting_lang: "Changer Langue de l'App",
-                faq_title: "FAQ", about_title: "À Propos", rights_title: "Droits"
-            },
-            it: {
-                nav_home: "Negozio Principale", nav_wallet: "Mio Portafoglio", nav_orders: "Miei Ordini", nav_support: "Supporto Tecnico",
-                hero_title: "🌐 Carte Internazionali e Locali", sections_available: "📂 Categorie Disponibili", back_to_cats: "Torna alle Categorie",
-                wallet_title: "💰 Portafoglio e Ricarica", current_balance: "Saldo Attuale", choose_payment: "💳 Metodo di Pagamento", choose_payment_btn: "📞 Seleziona Pagamento",
-                process_time: "Tempo di elaborazione:", delay_notice: "In caso di ritardo, inviare un reclamo tramite la pagina di supporto.", orders_record: "📋 Registro Ordini Elettronici",
-                logout_btn: "🚪 Disconnessione Sicura", support_channels: "📞 Canali di Supporto e Contatti", support_desc: "In caso di problemi durante le ricariche, contattaci immediatamente tramite:",
-                quantity_required: "🔢 Quantità Richiesta", price_lbl: "Prezzo Fisso:", total_price_lbl: "Prezzo Totale:", terms_title: "⚠️ Termini e Condizioni Importanti",
-                term_1: "• Questo articolo digitale non è rimborsabile una volta elaborato.", term_2: "• Il cliente è pienamente responsabile della correetezza dei dati del giocatore.",
-                continue_btn: "✅ Continua Processo", summary_product: "🎮 Prodotto:", summary_qty: "🔢 Qta:", summary_price: "💰 Prezzo:", order_data_title: "📋 Dati di Input dell'Ordine", confirm_order_btn: "✅ Conferma l'Ordine Finale",
-                setting_currency: "Cambia Valuta Account", setting_lang: "Cambia Lingua dell'App",
-                faq_title: "FAQ", about_title: "Chi Siamo", rights_title: "Diritti"
             }
         };
 
@@ -1070,22 +1150,6 @@
         let unitPriceLYD = 0, currentQtyMin = 1, currentQtyMax = 100, isQuantityMode = false;
         let currentFieldType='id', currentFieldEnabled=true, currentFieldCustomLabel='';
         let heroSlides = [], currentSlide = 0, slideInterval;
-
-        // دالة فتح مودال أقسام الثقة
-        function openTrustModal(section) {
-            const modal = document.getElementById('trustModal');
-            const content = document.getElementById('trustModalContent');
-            
-            const data = trustContent.ar[section];
-            if (data) {
-                content.innerHTML = `<h3><i class="fas fa-${section === 'about' ? 'info-circle' : section === 'contact' ? 'phone-alt' : section === 'faq' ? 'question-circle' : 'shield-alt'}"></i> ${data.title}</h3>${data.content}`;
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function closeTrustModal() {
-            document.getElementById('trustModal').classList.add('hidden');
-        }
 
         function changeLanguage(langCode) {
             currentLang = langCode;
@@ -1115,32 +1179,33 @@
             return priceInLYD.toFixed(3);
         }
 
-        // دالة فتح وغلق السايد بار مع منع تمرير الخلفية
         function toggleSidebar(open) {
             const sidebar = document.getElementById('appSidebar');
             const overlay = document.getElementById('sidebarOverlay');
             const body = document.body;
-            
-            if (open) {
-                sidebar.classList.add('show');
-                overlay.classList.add('show');
-                body.classList.add('no-scroll'); // منع تمرير الخلفية
-            } else {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-                body.classList.remove('no-scroll'); // إعادة تمرير الخلفية
-            }
+            if (open) { sidebar.classList.add('show'); overlay.classList.add('show'); body.classList.add('no-scroll'); } 
+            else { sidebar.classList.remove('show'); overlay.classList.remove('show'); body.classList.remove('no-scroll'); }
         }
 
         function switchTab(tab) {
             if (!auth.currentUser && (tab === 'wallet' || tab === 'orders')) { window.location.href = 'long.html'; return; }
+            
+            // التحقق من إذا كان القسم مفعل من الإعدادات
+            if (appSettings.sections_visible && appSettings.sections_visible[tab] === false) {
+                alert('⚠️ هذا القسم غير متاح حالياً.');
+                return;
+            }
+            
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const page = document.getElementById(tab + 'Page');
             if (page) page.classList.add('active');
             
             document.querySelectorAll('.sidebar-item-btn').forEach(b => b.classList.remove('active'));
             const activeBtnMap = { 'home': 'menuBtnHome', 'wallet': 'menuBtnWallet', 'orders': 'menuBtnOrders', 'support': 'menuBtnSupport' };
-            if (activeBtnMap[tab]) { document.getElementById(activeBtnMap[tab]).classList.add('active'); }
+            if (activeBtnMap[tab]) { 
+                const btn = document.getElementById(activeBtnMap[tab]);
+                if (btn) btn.classList.add('active');
+            }
             if (tab === 'orders') loadMyOrders();
         }
 
@@ -1159,14 +1224,23 @@
 
         function executeSectionSwitch(type) {
             currentActiveSectionType = type;
-            document.getElementById('tabBtnCards').classList.toggle('active', type === 'cards');
-            document.getElementById('tabBtnSmm').classList.toggle('active', type === 'smm');
+            document.getElementById('tabBtnCards')?.classList.toggle('active', type === 'cards');
+            document.getElementById('tabBtnSmm')?.classList.toggle('active', type === 'smm');
             showCategories();
             renderCategoriesGrid();
         }
 
         function toggleDropdown() { const m=document.getElementById('dropdownMenu'); m.classList.toggle('show'); }
-        function selectPayment(type, label) { document.getElementById('paymentLibyana').classList.add('hidden'); document.getElementById('paymentBinance').classList.add('hidden'); document.getElementById('paymentCards').classList.add('hidden'); document.getElementById('shippingInfo').classList.remove('hidden'); const map={libyana:'paymentLibyana',binance:'paymentBinance',cards:'paymentCards'}; if(map[type])document.getElementById(map[type]).classList.remove('hidden'); document.getElementById('dropdownLabel').innerText=label; document.getElementById('dropdownMenu').classList.remove('show'); }
+        function selectPayment(type, label) { 
+            document.getElementById('paymentLibyana').classList.add('hidden'); 
+            document.getElementById('paymentBinance').classList.add('hidden'); 
+            document.getElementById('paymentCards').classList.add('hidden'); 
+            document.getElementById('shippingInfo').classList.remove('hidden'); 
+            const map={libyana:'paymentLibyana',binance:'paymentBinance',cards:'paymentCards'}; 
+            if(map[type])document.getElementById(map[type]).classList.remove('hidden'); 
+            document.getElementById('dropdownLabel').innerText=label; 
+            document.getElementById('dropdownMenu').classList.remove('show'); 
+        }
         document.addEventListener('click', function(e) { const c=document.querySelector('.dropdown-container'); if(c&&!c.contains(e.target)){document.getElementById('dropdownMenu').classList.remove('show');} });
 
         function loadHeroSlides() {
@@ -1200,7 +1274,7 @@
             db.collection("users").doc(user.uid).onSnapshot(doc=>{
                 if(doc.exists){ userData=doc.data(); userBalanceLYD=userData.balance||0; updateAllBalances(); }
             }); 
-            setTimeout(()=>{fetchCategories();loadHeroSlides();changeLanguage('ar');},500); 
+            setTimeout(()=>{ initializeAppSettings(); fetchCategories(); loadHeroSlides(); changeLanguage('ar'); },500); 
         });
         
         function updateAllBalances(){
@@ -1223,7 +1297,7 @@
             const val1=document.getElementById(field1).value.trim();const val2=document.getElementById(field2).value.trim();
             if(!val1)return alert('⚠️ أدخل البيانات المطلوبة');if(!val2)return alert('⚠️ أدخل القيمة');
             let amountInLYD=parseFloat(val2);
-            if(isCrypto) amountInLYD = amountInLYD * 11;
+            if(isCrypto) amountInLYD = amountInLYD * (appSettings.binance_rate || 11);
             const invoiceNumber=generateInvoiceNumber();
             try{
                 await db.collection("deposits").add({userId:auth.currentUser.uid,userName:userData?.username||userData?.name||'',userEmail:userData?.email||'',phone:val1,card_code:val1,amount:amountInLYD,crypto_amount:isCrypto?parseFloat(val2):null,provider:provider,status:'pending',invoiceNumber:invoiceNumber,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
@@ -1234,34 +1308,22 @@
         }
 
         function fetchCategories(){
-            if(cachedCategories.length > 0) {
-                renderCategoriesGrid();
-                return;
-            }
+            if(cachedCategories.length > 0) { renderCategoriesGrid(); return; }
             db.collection("categories").orderBy("order").get().then(snap=>{
                 cachedCategories = [];
                 snap.forEach(doc => cachedCategories.push({id:doc.id, ...doc.data()}));
                 renderCategoriesGrid();
-            }).catch(err => {
-                document.getElementById('catsGrid').innerHTML='<div class="loading">❌ فشل في جلب الأقسام</div>';
-            });
+            }).catch(err => { document.getElementById('catsGrid').innerHTML='<div class="loading">❌ فشل في جلب الأقسام</div>'; });
         }
         
         function renderCategoriesGrid() {
             const grid=document.getElementById('catsGrid');
             let filteredCats = cachedCategories.filter(cat => {
                 let sType = cat.sectionType || 'cards';
-                if (currentActiveSectionType === 'cards') {
-                    return sType === 'cards' || sType === 'games';
-                } else {
-                    return sType === 'smm';
-                }
+                if (currentActiveSectionType === 'cards') { return sType === 'cards' || sType === 'games'; } 
+                else { return sType === 'smm'; }
             });
-
-            if(!filteredCats.length){
-                grid.innerHTML='<div class="loading">لا توجد أقسام متوفرة في هذا القسم حالياً</div>';
-                return;
-            }
+            if(!filteredCats.length){ grid.innerHTML='<div class="loading">لا توجد أقسام متوفرة في هذا القسم حالياً</div>'; return; }
             grid.innerHTML=filteredCats.map(cat=>`<div class="glass-card cat-card" onclick="openCategory('${cat.id}','${(cat.name||'').replace(/'/g,"\\'")}')"><img src="${getImageUrl(cat.image||cat.cover)}" class="card-img" loading="lazy" onerror="this.style.display='none'"><h3>${cat.name||'قسم'}</h3></div>`).join('');
         }
         
@@ -1270,22 +1332,14 @@
             currentActiveCatId = catId; currentActiveCatName = catName;
             document.getElementById('categoriesView').classList.add('hidden');document.getElementById('productsView').classList.remove('hidden');
             document.getElementById('productsTitle').innerHTML=`📂 ${catName}`;
-            
-            if(cachedProducts[catId]) {
-                allProducts = cachedProducts[catId];
-                renderProductsGrid();
-                return;
-            }
-            
+            if(cachedProducts[catId]) { allProducts = cachedProducts[catId]; renderProductsGrid(); return; }
             const grid=document.getElementById('prodsGrid');
-            grid.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري استدعاء المنتجات حياً...</span></div>`;
-            
+            grid.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري استدعاء المنتجات...</span></div>`;
             db.collection("products").where("categoryId","==",catId).where("active","==",true).get().then(snap=>{
                 if(!snap.size){grid.innerHTML='<div class="loading">لا توجد منتجات متاحة هنا حالياً</div>';return;}
                 allProducts=[];
                 snap.forEach(doc=>{ const p=doc.data(); p._id=doc.id; allProducts.push(p); });
                 allProducts.sort((a,b)=>(a.priceLYD||a.price||0)-(b.priceLYD||b.price||0));
-                
                 cachedProducts[catId] = allProducts;
                 renderProductsGrid();
             });
@@ -1312,29 +1366,22 @@
             isQuantityMode=enableQuantity;
             if(!isQuantityMode) { qtyMin = 1; qtyMax = 1; }
             currentQtyMin=qtyMin; currentQtyMax=qtyMax;
-            
             const finalPriceLYD=discount>0?priceLYD-(priceLYD*discount/100):priceLYD;
             currentProduct={img,name,priceLYD:finalPriceLYD,type:currentFieldType,description,discount,originalPrice:priceLYD,enableQuantity,qtyMin,qtyMax};
-            
             document.getElementById('stepData').classList.add('hidden');document.getElementById('stepQuantity').classList.remove('hidden');
             document.getElementById('orderSummary').classList.add('hidden');
             document.getElementById('dImg').src=img;document.getElementById('dName').innerText=name;
-            
             document.getElementById('quantitySection').classList.add('hidden');
             document.getElementById('fixedPriceSection').classList.add('hidden');
             document.getElementById('dynamicPriceSection').classList.add('hidden');
             document.getElementById('targetInput').value='';document.getElementById('contactPhone').value='';
-            
             unitPriceLYD = enableQuantity ? (finalPriceLYD / qtyMin) : finalPriceLYD;
             renderModalPrices();
-
             if(enableQuantity){
                 document.getElementById('quantityInput').disabled = false;
                 document.getElementById('quantitySlider').classList.remove('hidden');
-                document.getElementById('quantitySlider').min=qtyMin;
-                document.getElementById('quantitySlider').max=qtyMax;
-                document.getElementById('quantitySlider').value=qtyMin;
-                document.getElementById('quantityInput').value=qtyMin;
+                document.getElementById('quantitySlider').min=qtyMin; document.getElementById('quantitySlider').max=qtyMax;
+                document.getElementById('quantitySlider').value=qtyMin; document.getElementById('quantityInput').value=qtyMin;
                 document.getElementById('qtyMinLabel').innerText=`الحد الأدنى: ${qtyMin}`;
                 document.getElementById('qtyMaxLabel').innerText=`الحد الأقصى: ${qtyMax}`;
                 document.getElementById('quantitySection').classList.remove('hidden');
@@ -1342,8 +1389,7 @@
                 updateDynamicPrice(qtyMin);
                 document.getElementById('dDesc').innerText=`عداد متحرك من (${qtyMin}-${qtyMax})`;
             }else{
-                document.getElementById('quantityInput').value=1;
-                document.getElementById('quantityInput').disabled = true;
+                document.getElementById('quantityInput').value=1; document.getElementById('quantityInput').disabled = true;
                 document.getElementById('quantitySlider').classList.add('hidden');
                 document.getElementById('fixedPriceSection').classList.remove('hidden');
                 document.getElementById('dDesc').innerText=currentFieldCustomLabel||'توصيل فوري وتلقائي';
@@ -1358,16 +1404,10 @@
             if(currentProduct.discount > 0 && !isQuantityMode){
                 badge.classList.remove('hidden');
                 badge.innerHTML=`<span class="discount-badge-big" style="background:var(--red);color:#fff;font-size:12px;font-weight:900;padding:4px 10px;border-radius:10px;display:inline-block;margin-bottom:6px;">🔥 خصم ${currentProduct.discount}%</span>`;
-                oldPrice.classList.remove('hidden');
-                oldPrice.innerText=`${formatPrice(currentProduct.originalPrice)}${symbol}`;
+                oldPrice.classList.remove('hidden'); oldPrice.innerText=`${formatPrice(currentProduct.originalPrice)}${symbol}`;
             }else{ badge.classList.add('hidden'); oldPrice.classList.add('hidden'); }
-            
-            if(isQuantityMode) {
-                const currentQty = parseInt(document.getElementById('quantityInput').value) || currentQtyMin;
-                updateDynamicPrice(currentQty);
-            } else {
-                document.getElementById('fixedPriceDisplay').innerText = formatPrice(currentProduct.priceLYD);
-            }
+            if(isQuantityMode) { const currentQty = parseInt(document.getElementById('quantityInput').value) || currentQtyMin; updateDynamicPrice(currentQty); } 
+            else { document.getElementById('fixedPriceDisplay').innerText = formatPrice(currentProduct.priceLYD); }
         }
 
         function closeDetailModal(){document.getElementById('detailModal').classList.add('hidden');}
@@ -1375,7 +1415,6 @@
         async function confirmPurchase(){
             if(!currentProduct)return;const user=auth.currentUser;if(!user)return alert('⚠️ سجل دخول أولاً');
             const contactPhone=document.getElementById('contactPhone').value.trim();if(!contactPhone)return alert('⚠️ أدخل رقم التواصل');
-            
             let finalPriceLYD, quantity=1, orderData='';
             if(isQuantityMode){
                 quantity=parseInt(document.getElementById('quantityInput').value);
@@ -1384,12 +1423,9 @@
                 finalPriceLYD=unitPriceLYD*quantity; orderData=`${quantity} قطعة`;
             } else {
                 finalPriceLYD = currentProduct.priceLYD;
-                if(currentFieldEnabled){
-                    orderData=document.getElementById('targetInput').value.trim();
-                    if(!orderData)return alert(`⚠️ أدخل البيانات المطلوبة للاعب`);
-                }else{orderData='مباشر';}
+                if(currentFieldEnabled){ orderData=document.getElementById('targetInput').value.trim(); if(!orderData)return alert(`⚠️ أدخل البيانات المطلوبة للاعب`); }
+                else{orderData='مباشر';}
             }
-            
             if(userBalanceLYD < finalPriceLYD) return alert('⚠️ رصيد حسابك الحالي غير كافٍ لإتمام العملية، يرجى شحن محفظتك أولاً.');
             const newBalanceLYD = userBalanceLYD - finalPriceLYD;
             const invoiceNumber=generateInvoiceNumber();
@@ -1401,7 +1437,6 @@
                     playerID:orderData, contactPhone:contactPhone, quantity:quantity, serviceType:currentFieldType,
                     invoiceNumber:invoiceNumber, status:'pending', createdAt:firebase.firestore.FieldValue.serverTimestamp()
                 });
-                
                 await sendWebhookNotification({user_name:userData?.username||userData?.name||'---',user_email:userData?.email||'---',user_phone:contactPhone,action_type:`فاتورة شراء #${invoiceNumber}`,details:`🎮 ${currentProduct.name}\n📝 ${orderData}\n💰 ${finalPriceLYD.toFixed(2)} د.ل`});
                 closeDetailModal();
                 alert(`🎉 تم تقديم طلبك بنجاح! الفاتورة: ${invoiceNumber}`);
@@ -1413,54 +1448,25 @@
             const user=auth.currentUser;if(!user)return;
             const container=document.getElementById('myOrdersList');
             container.innerHTML=`<div class="loading"><svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.1)"/><path d="M4 12a8 8 0 0 1 8-8"/></svg><span>⏳ جاري مزامنة وجلب الطلبات حياً...</span></div>`;
-            
             if(ordersListener) ordersListener();
-            
-            ordersListener = db.collection("orders")
-                .where("userId", "==", user.uid)
-                .orderBy("createdAt", "desc")
-                .limit(50)
-                .onSnapshot(snap => {
-                    if(snap.empty){
-                        container.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>لا توجد لديك طلبات مسجلة حتى الآن</p></div>`;
-                        return;
-                    }
-                    let html=''; const symbol = currentCurrency === 'LYD' ? ' د.ل' : ' $';
-                    snap.forEach(doc=>{
-                        const o=doc.data();
-                        let statusClass = 'pending';
-                        let statusText = '🕒 قيد الانتظار والمراجعة';
-                        
-                        if(o.status === 'completed') { statusClass = 'completed'; statusText = '✅ مكتمل ونُفذ بنجاح'; } 
-                        else if(o.status === 'canceled' || o.status === 'refunded') { statusClass = 'canceled'; statusText = o.status === 'canceled' ? '❌ ملغي ومرفوض' : '🔄 مسترجع للمحفظة'; }
-                        
-                        const date=o.createdAt?new Date(o.createdAt.seconds*1000).toLocaleString('ar-LY'):'---';
-                        const displayedPrice = formatPrice(o.amount || o.price || 0);
-                        
-                        html+=`
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">🧾 رقم الفاتورة: ${o.invoiceNumber || '---'}</span>
-                                <span class="order-status ${statusClass}">${statusText}</span>
-                            </div>
-                            <div class="order-details">
-                                🎮 <b>اسم المنتج:</b> ${o.serviceName || o.cardName || '---'}<br>
-                                🔢 <span>الكمية:</span> ${o.quantity || 1} | 💰 <span>السعر الإجمالي:</span> ${displayedPrice}${symbol}<br>
-                                📝 <span>البيانات المرفقة:</span> <span style="color:var(--cyan);font-family:monospace;">${o.playerID || '---'}</span><br>
-                                📞 <span>هاتف التواصل:</span> ${o.contactPhone || '---'}<br>
-                                📅 <span>تاريخ العمل:</span> ${date}
-                            </div>
-                        </div>`;
-                    });
-                    container.innerHTML=html;
-                }, error => {
-                    console.error("Firestore Index Error:", error);
-                    container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ عذراً، لا يمكن عرض سجل الطلبات حالياً. الرجاء التواصل مع الدعم الفني لتفعيل الفهرسة المطلوبة في قاعدة البيانات.</div>';
+            ordersListener = db.collection("orders").where("userId", "==", user.uid).orderBy("createdAt", "desc").limit(50).onSnapshot(snap => {
+                if(snap.empty){ container.innerHTML=`<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>لا توجد لديك طلبات مسجلة حتى الآن</p></div>`; return; }
+                let html=''; const symbol = currentCurrency === 'LYD' ? ' د.ل' : ' $';
+                snap.forEach(doc=>{
+                    const o=doc.data();
+                    let statusClass = 'pending'; let statusText = '🕒 قيد الانتظار والمراجعة';
+                    if(o.status === 'completed') { statusClass = 'completed'; statusText = '✅ مكتمل ونُفذ بنجاح'; } 
+                    else if(o.status === 'canceled' || o.status === 'refunded') { statusClass = 'canceled'; statusText = o.status === 'canceled' ? '❌ ملغي ومرفوض' : '🔄 مسترجع للمحفظة'; }
+                    const date=o.createdAt?new Date(o.createdAt.seconds*1000).toLocaleString('ar-LY'):'---';
+                    const displayedPrice = formatPrice(o.amount || o.price || 0);
+                    html+=`<div class="order-item"><div class="order-header"><span class="order-id">🧾 رقم الفاتورة: ${o.invoiceNumber || '---'}</span><span class="order-status ${statusClass}">${statusText}</span></div><div class="order-details">🎮 <b>اسم المنتج:</b> ${o.serviceName || o.cardName || '---'}<br>🔢 <span>الكمية:</span> ${o.quantity || 1} | 💰 <span>السعر الإجمالي:</span> ${displayedPrice}${symbol}<br>📝 <span>البيانات المرفقة:</span> <span style="color:var(--cyan);font-family:monospace;">${o.playerID || '---'}</span><br>📞 <span>هاتف التواصل:</span> ${o.contactPhone || '---'}<br>📅 <span>تاريخ العمل:</span> ${date}</div></div>`;
                 });
+                container.innerHTML=html;
+            }, error => { console.error("Firestore Index Error:", error); container.innerHTML='<div class="loading" style="color:var(--red);">⚠️ عذراً، لا يمكن عرض سجل الطلبات حالياً. الرجاء التواصل مع الدعم الفني لتفعيل الفهرسة المطلوبة في قاعدة البيانات.</div>'; });
         }
 
         function searchProducts(){const term=document.getElementById('searchInput').value.toLowerCase().trim();if(!term)return;document.getElementById('categoriesView').classList.add('hidden');document.getElementById('productsView').classList.remove('hidden');document.getElementById('productsTitle').innerHTML=`🔍 بحث: ${term}`;const grid=document.getElementById('prodsGrid');grid.innerHTML='<div class="loading">⏳ جاري البحث المستمر...</div>';db.collection("products").where("active","==",true).get().then(snap=>{allProducts=[];let html='';snap.forEach(doc=>{const p=doc.data();if(!(p.name||'').toLowerCase().includes(term))return;p._id=doc.id;allProducts.push(p);});const symbol = currentCurrency === 'LYD' ? ' د.ل' : ' $';allProducts.forEach((p,i)=>{const img=getImageUrl(p.image||p.img);const name=p.name||'منتج';const priceLYD=p.priceLYD||p.price||0;const discount=p.discount||0;const finalPriceLYD=discount>0?priceLYD-(priceLYD*discount/100):priceLYD;const desc=p.description||'';html+=`<div class="glass-card product-card" onclick="openDetailByIndex(${i})">${discount>0?`<div class="discount-badge">-${discount}%</div>`:''}<img src="${img}" class="card-img" loading="lazy" onerror="this.style.display='none'"><p class="game-name">البحث</p><h4 class="product-title">${name}</h4>${desc?`<div class="product-desc-box">📝 ${desc}</div>`:''}${discount>0?`<div class="old-price">${formatPrice(priceLYD)}${symbol}</div>`:''}<div class="product-price">${formatPrice(finalPriceLYD)}${symbol}</div><button class="buy-btn-3d" onclick="event.stopPropagation();openDetailByIndex(${i})">شراء</button></div>`;});grid.innerHTML=html||'<div class="loading">لا توجد نتائج مطابقة لبحثك</div>';});}
         document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchProducts();});
     </script>
 </body>
-    </html>
+</html>
